@@ -1,6 +1,4 @@
 // Font Sizes
-
-// Font Sizes
 .fs12 {
   font-size: rem(12px);
 }
@@ -32,9 +30,49 @@
 .fs30 {
   font-size: rem(30px);
 }
+.fs32 {
+  font-size: rem(32px);
+}
+.fs34 {
+  font-size: rem(34px);
+}
 
 .text-center {
   text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.fw100 {
+  font-weight: 100;
+}
+.fw200 {
+  font-weight: 200;
+}
+.fw300 {
+  font-weight: 300;
+}
+.fw400 {
+  font-weight: 400;
+}
+.fw500 {
+  font-weight: 500;
+}
+.fw600 {
+  font-weight: 600;
+}
+.fw700 {
+  font-weight: 700;
+}
+.fw800 {
+  font-weight: 800;
+}
+.fw900 {
+  font-weight: 900;
 }
 
 // List
@@ -77,16 +115,6 @@
   > *.full-grow {
     flex: 1;
   }
-}
-
-.text-center {
-  text-align: center;
-}
-.text-right {
-  text-align: right;
-}
-.text-left {
-  text-align: left;
 }
 
 .center-block {
@@ -272,4 +300,13 @@
 
 .margin-block {
   margin-block: 1em;
+}
+
+.shadow {
+  box-shadow: $shadow1;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  }
 }

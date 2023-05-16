@@ -4,12 +4,93 @@
 }
 .wrapper {
   grid-row: 1;
-}
-.logo-container {
-  width: 125px;
-  color: $prinaryClr1;
-  font-weight: 700;
-  .logo {
+  position: relative;
+  &::after {
+    content: "";
+    width: 110vw;
+    height: 1px;
+    background-color: $secondaryClr2;
+    position: absolute;
+    bottom: 0;
+    left: -4%;
+    box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
+  }
+
+  .logo-container {
+    width: 125px;
+    color: $prinaryClr1;
     font-weight: 700;
+    cursor: pointer;
+  }
+
+  .search-bar {
+    background-color: $secondaryClr1;
+    border: 1px solid $secondaryClr2;
+    border-radius: 40px;
+    text-align: left;
+    align-items: center;
+    color: $fontclr3;
+    display: inline-flex;
+    max-width: 100%;
+    vertical-align: middle;
+    padding-inline: 1rem;
+    line-height: em(20px);
+    gap: 0.6em;
+
+    span {
+      height: 24px;
+      width: 1px;
+      background-color: $secondaryClr2;
+    }
+
+    .btn-search {
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      text-align: inherit;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      margin: -1px;
+      height: em(48px);
+      padding-inline: em(16px);
+      &:first-child {
+        padding-left: 8px;
+        border-top-left-radius: inherit;
+        border-bottom-left-radius: inherit;
+      }
+      &:last-of-type {
+        border-top-right-radius: inherit;
+        border-bottom-right-radius: inherit;
+        color: $secondaryClr3;
+        opacity: 0.7;
+      }
+    }
+    .icon-container {
+      background-color: $prinaryClr1;
+      padding: 0.4em;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 2em;
+      color: $secondaryClr1;
+      font-size: 10px;
+      cursor: pointer;
+    }
+  }
+  .options-btns-container {
+    .btn-options {
+      background-color: inherit;
+      padding: 0.7em;
+      &:hover {
+        background-color: $secondaryClr4;
+      }
+      &:last-child {
+        background-color: $secondaryClr1;
+        border: 1px solid $secondaryClr2;
+        border-radius: 40px;
+        padding: 5px 5px 5px 12px;
+        height: em(42px);
+        gap: 0.6em;
+      }
+    }
   }
 }

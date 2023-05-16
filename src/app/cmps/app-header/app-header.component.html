@@ -1,17 +1,40 @@
 <div class="wrapper flex space-between align-center">
   <div class="logo-container flex align-center space-between fs20">
-    <fa-icon class="logo fs28" [icon]="faAirbnb"></fa-icon>
+    <fa-icon class="logo fs34" [icon]="faAirbnb"></fa-icon>
 
     <span class="logo-txt">RentRoam</span>
   </div>
-  <div class="search-bar">
-    <button class="btn-search">Anywhere</button>
-    <button class="btn-search">Any week</button>
-    <button class="btn-search">Add guests</button>
+  <div class="search-bar shadow">
+    <button class="btn-search fw600">Anywhere</button>
+    <span></span>
+    <button class="btn-search fw600">Any week</button>
+    <span></span>
+    <button class="btn-search fw400">Add guests</button>
+    <div class="icon-container flex auto-center">
+      <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
+    </div>
   </div>
   <div class="options-btns-container flex space-between">
-    <button class="btn btn-options">Airbnb your home</button
-    ><button class="btn btn-options">i18n</button
-    ><button class="btn btn-options">user</button>
+    <button class="btn btn-options btn-mode">Airbnb your home</button>
+    <button class="btn btn-options btn-lang">
+      <fa-icon
+        class="icon globe-icon fs14 fw800"
+        [icon]="faGlobe"
+      ></fa-icon></button
+    ><button class="btn btn-options btn-user flex align-center shadow">
+      <fa-icon class="icon bars-icon fs14 fw800" [icon]="faBars"></fa-icon>
+      <svg
+        viewBox="0 0 32 32"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style="display: block; height: 100%; width: 2em; fill: currentcolor"
+      >
+        <path
+          d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z"
+        ></path>
+      </svg>
+    </button>
   </div>
 </div>
