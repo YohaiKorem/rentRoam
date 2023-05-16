@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: OpenSans, sans-serif;
+  font-size: 16px;
+  scroll-behavior: smooth;
+  color: $fontclr1;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+
+  font-family: Circular, -apple-system, BlinkMacSystemFont, roboto,
+    Helvetica neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  perspective: 800px;
+
+  & > * {
+    height: 100%;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  font-weight: normal;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+ul {
+  list-style: none;
+  margin-block: 0;
+  padding-inline: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+
+  * {
+    pointer-events: none;
+  }
+}
+
+input {
+  font-family: inherit;
+  text-align: inherit;
+  border-radius: 1em;
+  border: none;
+  outline: none;
+  padding: em(8px) em(12px);
+}
+
+// MAC like scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: rgba(0, 0, 0, 0);
+  -webkit-border-radius: 100px;
+}
+
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+  -webkit-border-radius: 100px;
+}
+
+#chart {
+  height: em(500px);
+}
+
+.user-img {
+  max-width: em(80px);
+}
+
+.ng-fa-icon {
+}

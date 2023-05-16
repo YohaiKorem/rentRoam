@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../src/assets/styles/setup/variables";
+@import "../src/assets/styles/setup/functions";
+@import "../src/assets/styles/setup/mixins";
+
+@import "../src/assets/styles/basics/typography";
+@import "../src/assets/styles/basics/base";
+@import "../src/assets/styles/basics/helpers";
+@import "../src/assets/styles/basics/layout";
+@import "../src/assets/styles/basics/modals";
+@import "../src/assets/styles/basics/animations";

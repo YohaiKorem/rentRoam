@@ -1,0 +1,65 @@
+@import "../setup/functions";
+.main-container {
+  display: inline-block;
+  // max-width: $normal-breakpoint;
+  min-height: 100vh;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding: 20px;
+  margin: 0 auto;
+
+  & > * {
+    width: 100%;
+  }
+
+  @include for-mobile-layout {
+    max-width: initial;
+  }
+
+  @include for-tablet-layout {
+    max-width: $mobile-breakpoint;
+  }
+
+  @include for-normal-layout {
+    max-width: $tablet-breakpoint;
+  }
+
+  @include for-wide-layout {
+    max-width: $normal-breakpoint;
+  }
+}
+
+.main-content {
+  // height: calc(100vh - $header-height);
+}
+
+.main-layout {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: em(20px) 1fr em(20px);
+  @media (max-width: $tablet-breakpoint) {
+    grid-template-columns: em(10px) 1fr em(10px);
+    grid-template-rows: 20vh 1fr;
+  }
+
+  & > *:not(.main-header) {
+    grid-row: 2;
+  }
+
+  & > *:not(.full) {
+    grid-column: 2;
+    @media (max-width: $tablet-breakpoint) {
+      grid-column: 1/-1;
+    }
+  }
+  & .full {
+    grid-column: 1/-1;
+  }
+}
+// GRIDS
+.simple-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 30px;
+}

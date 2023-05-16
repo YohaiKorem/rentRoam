@@ -1,0 +1,15 @@
+@import "../../app-root/app.component.scss";
+:host.main-header {
+  height: $header-height;
+}
+.wrapper {
+  grid-row: 1;
+}
+.logo-container {
+  width: 125px;
+  color: $prinaryClr1;
+  font-weight: 700;
+  .logo {
+    font-weight: 700;
+  }
+}

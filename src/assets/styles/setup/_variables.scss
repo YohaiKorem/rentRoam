@@ -1,0 +1,30 @@
+// BGCOLORS
+$prinaryClr1: #ff385c;
+// FONT COLORS
+$fontclr1: rgb(113, 113, 113);
+$fontclr2: rgb(238 232 244);
+$fontclr3: rgb(131 0 255);
+$fontclr4: rgb(37, 35, 35);
+
+$navHeight: 65px;
+
+// Breakpoints
+$mobile-breakpoint: 600px;
+$tablet-breakpoint: 768px;
+$normal-breakpoint: 900px;
+$wide-breakpoint: 1080px;
+
+$header-height: 84px;
+$footer-height: 44px;
+
+$outer-padding: 20px;
+
+:root {
+  --perspective: 1000px;
+  --camera-dolly: 0px;
+  --camera-truck: 0px;
+  --camera-pedestal: 50px;
+  --camera-pan: 0deg;
+  --camera-tilt: 0deg;
+  --camera-roll: 0deg;
+}
