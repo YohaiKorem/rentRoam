@@ -12,7 +12,7 @@ import { StayService } from '../services/stay.service';
 })
 export class AppComponent {
   constructor(private stayService: StayService) {}
-  title = 'airbnb';
+
   ngOnInit(): void {
     this.stayService.loadStays().subscribe({
       error: (err) => console.log('err', err),

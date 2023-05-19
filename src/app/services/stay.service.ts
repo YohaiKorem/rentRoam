@@ -49,7 +49,6 @@ export class StayService {
     } else {
       this._stays$.next(stays);
     }
-    console.log(stays);
   }
 
   // constructor(private http: HttpClient) {

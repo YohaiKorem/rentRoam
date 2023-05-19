@@ -4,7 +4,9 @@
   margin: 0;
   margin-block: 1em;
   position: relative;
+  padding-block-end: 1em;
   .radio-filter {
+    position: relative;
     align-items: center;
     display: grid;
     grid-auto-flow: column;
@@ -16,58 +18,115 @@
       display: none;
     }
     label {
+      position: relative;
       cursor: pointer;
+      transition: 0.25s;
+      padding-block-end: 1em;
+
+      &::after {
+        content: "";
+        width: 100%;
+        height: 2px;
+        position: absolute;
+        background-color: black;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        transition: 0.25s;
+      }
+
+      &:not(.active) {
+        & img {
+          opacity: 0.5;
+          transition: 0.25s;
+        }
+
+        &:hover {
+          &::after {
+            opacity: 0.4;
+          }
+          img {
+            opacity: 0.6;
+          }
+        }
+      }
+      &.active {
+        color: black;
+        font-weight: 700;
+        & img {
+          opacity: 1;
+        }
+        & * {
+          color: black;
+          font-weight: 700;
+        }
+        &::after {
+          opacity: 1;
+        }
+      }
     }
-  }
-  .btn:not(.btn-filter) {
-    background-color: $secondaryClr1;
-    border: 0.5px solid rgb(0 0 0/0.3);
-    height: em(28px);
-    width: em(28px);
-    border-radius: 3em;
-    &.btn-left {
+    .btn:not(.btn-filter) {
+      background-color: $secondaryClr1;
+      border: 0.5px solid rgb(0 0 0/0.3);
+      height: em(28px);
+      width: em(28px);
+      border-radius: 3em;
+      &.btn-left {
+        position: absolute;
+        z-index: 10;
+      }
+
+      &.btn-right {
+        position: absolute;
+        right: -5px;
+        margin: 1em;
+      }
+    }
+    .btn-scroll-overlay {
+      z-index: 1;
+      height: em(80px);
+      width: em(50px);
       position: absolute;
-      z-index: 10;
+      background-color: $secondaryClr1;
+      &.left {
+        left: -5px;
+      }
+      &.right {
+        right: -5px;
+      }
     }
+    .btn-filter {
+      background-color: inherit;
+      border: 0.5px solid rgb(0 0 0/0.3);
+      border-radius: 1em;
+      height: em(60px);
+      width: em(110px);
+      color: $secondaryClr3;
 
-    &.btn-right {
-      margin-inline: 1em;
+      svg {
+        margin-inline-end: 1em;
+      }
     }
   }
-  .btn-scroll-overlay {
-    z-index: 1;
 
-    background-color: $secondaryClr1;
-    position: absolute;
-    left: -5px;
-    width: em(50px);
-    height: em(80px);
+  .category-scroller {
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .btn-filter {
-    background-color: inherit;
-    border: 0.5px solid rgb(0 0 0/0.3);
-    border-radius: 1em;
-    height: em(60px);
-    width: em(110px);
-    color: $secondaryClr3;
 
-    svg {
-      margin-inline-end: 1em;
-    }
+  .category-scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 }
 
-.category-scroller {
-  overflow: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.category-scroller::-webkit-scrollbar {
-  display: none;
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
+&.btn-right {
+  position: absolute;
+  right: -5px;
+  margin: 1em;
 }

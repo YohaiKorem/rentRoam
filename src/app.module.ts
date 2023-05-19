@@ -26,7 +26,13 @@ import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.compo
     FilterModalComponent,
     RadioFilterComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, FontAwesomeModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    FontAwesomeModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
