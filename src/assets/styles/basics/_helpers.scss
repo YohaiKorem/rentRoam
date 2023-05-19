@@ -310,3 +310,12 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
   }
 }
+
+.btn-left,
+.btn-right {
+  background-color: $secondaryClr1;
+  border: 0.5px solid rgb(0 0 0/0.3);
+  height: em(28px);
+  width: em(28px);
+  border-radius: 3em;
+}

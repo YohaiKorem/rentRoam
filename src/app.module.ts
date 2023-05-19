@@ -12,6 +12,7 @@ import { StayListComponent } from './app/cmps/stay-list/stay-list.component';
 import { StayPreviewComponent } from './app/cmps/stay-preview/stay-preview.component';
 import { FilterModalComponent } from './app/cmps/filter-modal/filter-modal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     StayListComponent,
     StayPreviewComponent,
     FilterModalComponent,
+    RadioFilterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, FontAwesomeModule],
   providers: [],

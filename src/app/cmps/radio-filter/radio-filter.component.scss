@@ -1,0 +1,73 @@
+@import "../../app-root/app.component.scss";
+
+.radio-filter-container {
+  margin: 0;
+  margin-block: 1em;
+  position: relative;
+  .radio-filter {
+    align-items: center;
+    display: grid;
+    grid-auto-flow: column;
+    overflow: scroll;
+    gap: 2em;
+    text-align: center;
+    white-space: nowrap;
+    input {
+      display: none;
+    }
+    label {
+      cursor: pointer;
+    }
+  }
+  .btn:not(.btn-filter) {
+    background-color: $secondaryClr1;
+    border: 0.5px solid rgb(0 0 0/0.3);
+    height: em(28px);
+    width: em(28px);
+    border-radius: 3em;
+    &.btn-left {
+      position: absolute;
+      z-index: 10;
+    }
+
+    &.btn-right {
+      margin-inline: 1em;
+    }
+  }
+  .btn-scroll-overlay {
+    z-index: 1;
+
+    background-color: $secondaryClr1;
+    position: absolute;
+    left: -5px;
+    width: em(50px);
+    height: em(80px);
+  }
+  .btn-filter {
+    background-color: inherit;
+    border: 0.5px solid rgb(0 0 0/0.3);
+    border-radius: 1em;
+    height: em(60px);
+    width: em(110px);
+    color: $secondaryClr3;
+
+    svg {
+      margin-inline-end: 1em;
+    }
+  }
+}
+
+.category-scroller {
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.category-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}

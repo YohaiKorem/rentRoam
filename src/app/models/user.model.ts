@@ -1,3 +1,9 @@
 export class User {
-  constructor(public _id: string, public name: string, public coins: number) {}
+  constructor(
+    public fullname: string,
+    public imgUrl: string,
+    public password: string,
+    public username: string,
+    public _id: string
+  ) {}
 }

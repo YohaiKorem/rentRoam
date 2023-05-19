@@ -1,1 +1,10 @@
-<p>stay-list works!</p>
+<ul class="stay-list clean-list">
+  <a
+    *ngFor="let stay of stays"
+    routerLink="{{ stay._id }}"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <stay-preview [stay]="stay"></stay-preview>
+  </a>
+</ul>

@@ -55,7 +55,13 @@ export class UserService {
   }
 
   public signup(info: any) {
-    let newUser = new User(this._getRandomId(), info.name, 100);
+    let newUser = new User(
+      info.name,
+      '',
+      info.password,
+      info.username,
+      this._getRandomId()
+    );
     newUser = this._saveLocalUser(newUser);
     return from(storageService.post(ENTITY, newUser)).pipe(
       tap((newUser) => {
@@ -72,12 +78,12 @@ export class UserService {
     return null;
   }
 
-  public changeBalance(amount: number, user: User) {
-    if (!this.loggedInUser) throw new Error('Not logged in');
+  // public changeBalance(amount: number, user: User) {
+  //   if (!this.loggedInUser) throw new Error('Not logged in');
 
-    user.coins = user.coins - amount;
-    return this.addMove(amount, user);
-  }
+  //   user.coins = user.coins - amount;
+  //   return this.addMove(amount, user);
+  // }
 
   public addMove(amount: number, user: User): User {
     const move = {

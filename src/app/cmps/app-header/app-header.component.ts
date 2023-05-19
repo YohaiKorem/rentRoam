@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { faAirbnb } from '@fortawesome/free-brands-svg-icons';
-import { faSearch, faGlobe, faBars } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSearch,
+  faGlobe,
+  faBars,
+  faTentArrowLeftRight,
+} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-header',
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss'],
   host: {
-    class: 'main-header main-layout',
+    class: 'main-header main-layout full',
   },
 })
 export class AppHeaderComponent {

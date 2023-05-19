@@ -1,0 +1,12 @@
+@import "../../app-root/app.component.scss";
+.stay-list {
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-template-columns: repeat(
+    var(--breakpoint-grid-columns),
+    minmax(270px, 1fr)
+  );
+  column-gap: em(24px);
+  row-gap: em(40px);
+  grid-auto-rows: minmax(min-content, max-content);
+}

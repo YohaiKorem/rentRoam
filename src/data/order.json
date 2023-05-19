@@ -1,0 +1,222 @@
+[
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d299c",
+      "fullname": "Patty",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/eqpw1pmf6baokrlimodg.jpg"
+    },
+    "totalPrice": 1190,
+    "checkin": "2025/10/15",
+    "checkout": "2025/10/17",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f096",
+      "name": "Westin Kaanapali KORVN 2BR",
+      "price": 595.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d299b",
+      "fullname": "Edgar",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/mst26etvqkmpoz7x48lv.jpg"
+    },
+    "totalPrice": 600,
+    "checkin": "2024/10/15",
+    "checkout": "2024/10/17",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f097",
+      "name": "Belle chambre à côté Metro Papineau",
+      "price": 300.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d299d",
+      "fullname": "Leo",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/xwyu7igl3lcqumwzyjsj.jpg"
+    },
+    "totalPrice": 399,
+    "checkin": "2023/09/15",
+    "checkout": "2023/09/18",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f099",
+      "name": "Fresh and modern 1BR in Bed-Stuy",
+      "price": 133.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d299e",
+      "fullname": "Margaux",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/verhjmfthx5w3ys4rm58.jpg"
+    },
+    "totalPrice": 700,
+    "checkin": "2023/06/21",
+    "checkout": "2023/06/25",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f09a",
+      "name": "Habitación centro de Barcelona",
+      "price": 175.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d299f",
+      "fullname": "Francine",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/heo5y74swdy88awpyh0u.jpg"
+    },
+    "totalPrice": 800,
+    "checkin": "2023/07/11",
+    "checkout": "2023/07/19",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f09f",
+      "name": "Nice Cosy Room In Taksim",
+      "price": 100.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d29a1",
+      "fullname": "Erin",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/eqpw1pmf6baokrlimodg.jpg"
+    },
+    "totalPrice": 621,
+    "checkin": "2023/12/25",
+    "checkout": "2023/12/28",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f0a7",
+      "name": "Spacious, Sunny Room in Park Slope",
+      "price": 207.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d29a3",
+      "fullname": "Fernanda",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/satmtjrlnsmzcfe2d1pj.jpg"
+    },
+    "totalPrice": 951,
+    "checkin": "2024/01/25",
+    "checkout": "2024/01/28",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f0a6",
+      "name": "302 Kanai A Nalu Ocean front/view",
+      "price": 317.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d29a4",
+      "fullname": "Stephanie",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/z0wj7tpkz2w2elj0uy5b.jpg"
+    },
+    "totalPrice": 3170,
+    "checkin": "2024/02/09",
+    "checkout": "2024/02/19",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f0a9",
+      "name": "Elegant Flat in the Center",
+      "price": 317.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d29a8",
+      "fullname": "Kyle",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/vfqumjxvkpkxrg5nqe9s.jpg"
+    },
+    "totalPrice": 2500,
+    "checkin": "2023/06/02",
+    "checkout": "2023/06/12",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f0aa",
+      "name": "Westin Kaanapali KORVS 2BR OCEAN VIEW",
+      "price": 250.0
+    },
+    "msgs": [],
+    "status": "pending"
+  },
+  {
+    "hostId": "64287b2d9c0655672e6fc43a",
+    "buyer": {
+      "_id": "64294b4142c059b5040d29ac",
+      "fullname": "Arthi",
+      "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/eysvwy8vipsuep25hnww.jpg"
+    },
+    "totalPrice": 1800,
+    "checkin": "2023/07/13",
+    "checkout": "2023/07/19",
+    "guests": {
+      "adults": 2,
+      "kids": 1
+    },
+    "stay": {
+      "_id": "642a98d0194a683b4080f0ab",
+      "name": "Burgazada da çarşıya yakın daire",
+      "price": 300.0
+    },
+    "msgs": [],
+    "status": "pending"
+  }
+]

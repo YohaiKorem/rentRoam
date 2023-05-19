@@ -1,5 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { StayService } from '../services/stay.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,12 @@ import { UserService } from '../services/user.service';
   },
 })
 export class AppComponent {
+  constructor(private stayService: StayService) {}
   title = 'airbnb';
+  ngOnInit(): void {
+    this.stayService.loadStays().subscribe({
+      error: (err) => console.log('err', err),
+    });
+    // this.bitcoinService.fetchData();
+  }
 }
