@@ -17,6 +17,5 @@ export class AppComponent {
     this.stayService.loadStays().subscribe({
       error: (err) => console.log('err', err),
     });
-    // this.bitcoinService.fetchData();
   }
 }

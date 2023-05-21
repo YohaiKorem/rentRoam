@@ -18,8 +18,13 @@ export class StayIndexComponent implements OnInit {
   subscription!: Subscription;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
-
+  isFilterModalOpen = false;
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
+  }
+
+  toggleFilterModal() {
+    this.isFilterModalOpen = !this.isFilterModalOpen;
+    console.log(this.isFilterModalOpen);
   }
 }

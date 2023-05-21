@@ -64,11 +64,12 @@ export class StayService {
   public loadStays() {
     return from(storageService.query(ENTITY)).pipe(
       tap((stays) => {
-        // const filterBy = this._stayFilter$.value;
+        const filterBy = this._stayFilter$.value;
 
-        // stays = this._filter(stays, filterBy);
+        const filteredStays = this._filter(stays, filterBy);
 
-        this._stays$.next(this._sort(stays));
+        const sortedStays = this._sort(filteredStays);
+        this._stays$.next(sortedStays);
       }),
       retry(1),
       catchError(this._handleError)
@@ -161,14 +162,25 @@ export class StayService {
     });
   }
 
-  private _filter(stays: Stay[], filterBy: any) {
+  private _filter(stays: Stay[], filterBy: any): Stay[] {
     let filteredStays = stays;
     for (let key in filterBy) {
-      const regex = new RegExp(filterBy[key], 'i');
-      filteredStays = filteredStays.filter((stay: any) => {
-        return regex.test(stay[key]);
-      });
+      switch (key) {
+        case 'labels':
+          if (!filterBy.labels.length) return filteredStays;
+          filteredStays = filteredStays.filter((stay) => {
+            return stay.labels.includes(filterBy.labels[0]);
+          });
+          break;
+        default:
+          break;
+      }
+      // const regex = new RegExp(filterBy[key], 'i');
+      // filteredStays = filteredStays.filter((stay: any) => {
+      //   return regex.test(stay[key]);
+      // });
     }
+
     return filteredStays;
   }
 

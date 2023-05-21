@@ -1,4 +1,11 @@
-import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { StayFilter } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { Subject } from 'rxjs';
@@ -11,6 +18,8 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 })
 export class RadioFilterComponent {
   constructor(private stayService: StayService) {}
+  @Output() toggleFilterModal = new EventEmitter();
+
   stayFilter = {} as StayFilter;
   private filterSubject$ = new Subject<string>();
   private destroySubject$ = new Subject<null>();
@@ -98,8 +107,14 @@ export class RadioFilterComponent {
     this.selectedLabel = ev.target.labels[0].innerText;
     this.stayFilter.labels[0] = this.selectedLabel;
     ev.target.labels[0].classList.add('active');
-    console.log(this.stayFilter);
+
+    this.stayService.setFilter(this.stayFilter);
   }
+
+  openFilterModal() {
+    this.toggleFilterModal.emit();
+  }
+
   ngOnDestroy(): void {
     this.destroySubject$.next(null);
     this.destroySubject$.unsubscribe();

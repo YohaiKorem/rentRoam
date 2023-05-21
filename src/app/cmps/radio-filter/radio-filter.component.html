@@ -1514,7 +1514,10 @@
     class="btn-scroll-overlay blurred right"
     [class.hidden]="isFirstElementInView"
   ></div>
-  <button class="btn btn-filter shadow flex align-center space-between">
+  <button
+    (click)="openFilterModal()"
+    class="btn btn-filter shadow flex align-center space-between"
+  >
     <svg
       viewBox="0 0 16 16"
       xmlns="http://www.w3.org/2000/svg"

@@ -1,1 +1,11 @@
-<radio-filter></radio-filter> <stay-list [stays]="stays$ | async"></stay-list>
+<radio-filter (toggleFilterModal)="toggleFilterModal()"></radio-filter>
+<stay-list [stays]="stays$ | async"></stay-list>
+<div
+  *ngIf="isFilterModalOpen"
+  (click)="toggleFilterModal()"
+  class="modal-wrapper"
+>
+  <dynamic-modal [title]="'Filters'" class="dynamic-modal modal-content">
+    <filter-modal></filter-modal>
+  </dynamic-modal>
+</div>

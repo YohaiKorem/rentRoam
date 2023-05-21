@@ -140,3 +140,10 @@
     font-size: 1.7rem;
   }
 }
+
+.dynamic-modal {
+  z-index: 2;
+  width: 100%;
+  max-width: 780px;
+  max-height: 100%;
+}

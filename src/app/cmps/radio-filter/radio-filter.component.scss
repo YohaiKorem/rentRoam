@@ -5,6 +5,11 @@
   margin-block: 1em;
   position: relative;
   padding-block-end: 1em;
+
+  button.btn.btn-right.shadow {
+    margin: 1em;
+  }
+
   .radio-filter {
     position: relative;
     align-items: center;
@@ -65,47 +70,43 @@
         }
       }
     }
-    .btn:not(.btn-filter) {
-      background-color: $secondaryClr1;
-      border: 0.5px solid rgb(0 0 0/0.3);
-      height: em(28px);
-      width: em(28px);
-      border-radius: 3em;
-      &.btn-left {
-        position: absolute;
-        z-index: 10;
-      }
-
-      &.btn-right {
-        position: absolute;
-        right: -5px;
-        margin: 1em;
-      }
-    }
-    .btn-scroll-overlay {
-      z-index: 1;
-      height: em(80px);
-      width: em(50px);
+  }
+  .btn:not(.btn-filter) {
+    background-color: $secondaryClr1;
+    border: 0.5px solid rgb(0 0 0/0.3);
+    height: em(28px);
+    width: em(28px);
+    border-radius: 3em;
+    z-index: 10;
+    &.btn-left {
       position: absolute;
-      background-color: $secondaryClr1;
-      &.left {
-        left: -5px;
-      }
-      &.right {
-        right: -5px;
-      }
     }
-    .btn-filter {
-      background-color: inherit;
-      border: 0.5px solid rgb(0 0 0/0.3);
-      border-radius: 1em;
-      height: em(60px);
-      width: em(110px);
-      color: $secondaryClr3;
+  }
 
-      svg {
-        margin-inline-end: 1em;
-      }
+  .btn-scroll-overlay {
+    z-index: 1;
+    height: em(80px);
+    width: em(50px);
+    position: absolute;
+    background-color: $secondaryClr1;
+    &.left {
+      left: em(-5px);
+    }
+    &.right {
+      right: em(110px);
+    }
+  }
+  .btn-filter {
+    background-color: inherit;
+    border: 0.5px solid rgb(0 0 0/0.3);
+    border-radius: 1em;
+    height: em(60px);
+    width: em(110px);
+    color: $secondaryClr3;
+    margin-inline-end: 1em;
+
+    svg {
+      margin-inline-end: 1em;
     }
   }
 
@@ -123,10 +124,4 @@
     opacity: 0;
     pointer-events: none;
   }
-}
-
-&.btn-right {
-  position: absolute;
-  right: -5px;
-  margin: 1em;
 }

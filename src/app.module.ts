@@ -13,6 +13,7 @@ import { StayPreviewComponent } from './app/cmps/stay-preview/stay-preview.compo
 import { FilterModalComponent } from './app/cmps/filter-modal/filter-modal.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.component';
+import { DynamicModalComponent } from './app/cmps/dynamic-modal/dynamic-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.compo
     StayPreviewComponent,
     FilterModalComponent,
     RadioFilterComponent,
+    DynamicModalComponent,
   ],
   imports: [
     BrowserModule,
