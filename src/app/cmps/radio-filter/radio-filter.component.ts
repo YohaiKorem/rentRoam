@@ -10,7 +10,7 @@ import { StayFilter } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-
+import { Btn } from 'src/app/models/btn.model';
 @Component({
   selector: 'radio-filter',
   templateUrl: './radio-filter.component.html',
@@ -26,7 +26,6 @@ export class RadioFilterComponent {
   isFirstElementInView: boolean = true;
   isLastElementInView: boolean = false;
   selectedLabel: string = '';
-
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   private scrollAmount = 500;
 
@@ -101,14 +100,18 @@ export class RadioFilterComponent {
   }
 
   filterStaysByLabel(ev: any) {
+    this.applyLabelStyles(ev.target.labels[0]);
+    this.selectedLabel = ev.target.labels[0].innerText;
+    this.stayFilter.labels[0] = this.selectedLabel;
+    this.stayService.setFilter(this.stayFilter);
+  }
+
+  applyLabelStyles(label: HTMLLabelElement) {
+    // this is a workaround because of copying 61 label elements, usuaslly i would rather use ngClass
     document
       .querySelectorAll('label')
       .forEach((label) => label.classList.remove('active'));
-    this.selectedLabel = ev.target.labels[0].innerText;
-    this.stayFilter.labels[0] = this.selectedLabel;
-    ev.target.labels[0].classList.add('active');
-
-    this.stayService.setFilter(this.stayFilter);
+    label.classList.add('active');
   }
 
   openFilterModal() {
