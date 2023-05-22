@@ -1,7 +1,27 @@
 <section class="dynamic-modal" (click)="handleCLick($event)">
-  <header class="flex space-around align-center">
-    <button class="btn btn-close" (click)="onCloseModal()">X</button>
-    <h3>{{ title }}</h3>
+  <header>
+    <button class="btn btn-close" (click)="onCloseModal()">
+      <svg
+        viewBox="0 0 32 32"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style="
+          display: block;
+          fill: none;
+          height: 16px;
+          width: 16px;
+          stroke: currentcolor;
+          stroke-width: 3;
+          overflow: visible;
+        "
+      >
+        <path d="m6 6 20 20"></path>
+        <path d="m26 6-20 20"></path>
+      </svg>
+    </button>
+    <h1 class="fw900 fs16">{{ title }}</h1>
   </header>
   <ng-content></ng-content>
 </section>

@@ -1,6 +1,11 @@
 <section class="filter-modal">
   <form class="price-filter flex column align-center space-between">
-    <h3>Price-range</h3>
+    <div class="form-heading-container flex column full-width">
+      <h2 class="fw800">Price-range</h2>
+      <div class="txt-headeing">
+        The average price for 5 nights is £400, including fees and taxes.
+      </div>
+    </div>
     <mat-slider min="200" [max]="currMaxPrice">
       <input
         name="slider-min-price"
@@ -16,7 +21,7 @@
     </div>
   </form>
   <form class="beds-bathroom-filter full-width">
-    <h3>Beds and bathrooms</h3>
+    <h2 class="fw800">Beds and bathrooms</h2>
     <h4>Beds</h4>
     <button
       *ngFor="let btn of btnsArray; index as i"
@@ -54,9 +59,11 @@
       <input type="checkbox" name="guest-house" id="guest-house" />
     </label>
   </form>
-  <footer class="filter-modal-footer">
-    <button class="btn btn-clear">Clear</button>
-    <button class="btn btn-submit">
+  <footer
+    class="filter-modal-footer full-width flex align-center space-between"
+  >
+    <button class="btn btn-clear">Clear all</button>
+    <button class="btn btn-submit active">
       Show
       {{ stays!.length < 1000 ? stays!.length : "1000+" }}
       places

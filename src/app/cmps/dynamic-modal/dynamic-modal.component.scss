@@ -1,0 +1,20 @@
+@import "../../app-root/app.component.scss";
+
+header {
+  display: grid;
+  align-items: center;
+  border-bottom: 1px solid #ebebeb;
+  min-height: 64px;
+  .btn {
+    background-color: inherit;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+  }
+  h1 {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: start;
+    color: $fontclr3;
+  }
+}
