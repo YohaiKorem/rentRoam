@@ -1,1 +1,65 @@
-<section class="filter-modal"></section>
+<section class="filter-modal">
+  <form class="price-filter flex column align-center space-between">
+    <h3>Price-range</h3>
+    <mat-slider min="200" [max]="currMaxPrice">
+      <input
+        name="slider-min-price"
+        [(ngModel)]="minPrice"
+        matSliderStartThumb
+      />
+      <input name="slider-max-price" [(ngModel)]="maxPrice" matSliderEndThumb />
+    </mat-slider>
+
+    <div class="txt-input-container flex space-around">
+      <input name="input-min-price" [(ngModel)]="minPrice" type="text" />
+      <input name="input-max-price" [(ngModel)]="maxPrice" type="text" />
+    </div>
+  </form>
+  <form class="beds-bathroom-filter full-width">
+    <h3>Beds and bathrooms</h3>
+    <h4>Beds</h4>
+    <button
+      *ngFor="let btn of btnsArray; index as i"
+      class="{{ btn.className }}"
+      [class.active]="stayFilter.equipment.bedsNum === i"
+      (click)="filterBeds(i)"
+    >
+      {{ i === 0 ? "Any" : i }}
+    </button>
+
+    <h4>Bathrooms</h4>
+    <button
+      *ngFor="let btn of btnsArray; index as i"
+      class="{{ btn.className }}"
+      [class.active]="stayFilter.equipment.bathNum === i"
+      (click)="filterBathrooms(i)"
+    >
+      {{ i === 0 ? "Any" : i }}
+    </button>
+  </form>
+  <form class="property-type flex space-between full-width">
+    <label for="house"
+      >house
+
+      <input type="checkbox" name="house" id="house" />
+    </label>
+    <label for="flat"
+      >flat
+
+      <input type="checkbox" name="flat" id="flat" />
+    </label>
+    <label for="guest-house"
+      >guest-house
+
+      <input type="checkbox" name="guest-house" id="guest-house" />
+    </label>
+  </form>
+  <footer class="filter-modal-footer">
+    <button class="btn btn-clear">Clear</button>
+    <button class="btn btn-submit">
+      Show
+      {{ stays!.length < 1000 ? stays!.length : "1000+" }}
+      places
+    </button>
+  </footer>
+</section>

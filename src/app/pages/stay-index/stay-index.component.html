@@ -5,7 +5,11 @@
   (click)="toggleFilterModal()"
   class="modal-wrapper"
 >
-  <dynamic-modal [title]="'Filters'" class="dynamic-modal modal-content">
-    <filter-modal></filter-modal>
+  <dynamic-modal
+    [title]="'Filters'"
+    class="dynamic-modal modal-content"
+    (closeModal)="toggleFilterModal()"
+  >
+    <filter-modal [stays]="stays$ | async" class="modal-content"></filter-modal>
   </dynamic-modal>
 </div>

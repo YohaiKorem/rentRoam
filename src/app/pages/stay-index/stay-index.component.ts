@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable, Subscription, map } from 'rxjs';
 import { Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./stay-index.component.scss'],
 })
 export class StayIndexComponent implements OnInit {
+  @Output() toggleScrolling = new EventEmitter<boolean>();
   constructor(
     private stayService: StayService,
     private route: ActivatedRoute
@@ -18,13 +19,12 @@ export class StayIndexComponent implements OnInit {
   subscription!: Subscription;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
-  isFilterModalOpen = false;
+  isFilterModalOpen = true;
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
   }
 
   toggleFilterModal() {
     this.isFilterModalOpen = !this.isFilterModalOpen;
-    console.log(this.isFilterModalOpen);
   }
 }

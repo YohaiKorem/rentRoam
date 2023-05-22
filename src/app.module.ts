@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app/app-root/app.component';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppHeaderComponent } from './app/cmps/app-header/app-header.component';
 import { StayIndexComponent } from './app/pages/stay-index/stay-index.component';
 import { StayDetailsComponent } from './app/pages/stay-details/stay-details.component';
@@ -11,10 +12,9 @@ import { LoginComponent } from './app/pages/login/login.component';
 import { StayListComponent } from './app/cmps/stay-list/stay-list.component';
 import { StayPreviewComponent } from './app/cmps/stay-preview/stay-preview.component';
 import { FilterModalComponent } from './app/cmps/filter-modal/filter-modal.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.component';
 import { DynamicModalComponent } from './app/cmps/dynamic-modal/dynamic-modal.component';
-
+import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +34,7 @@ import { DynamicModalComponent } from './app/cmps/dynamic-modal/dynamic-modal.co
     HttpClientModule,
     FormsModule,
     FontAwesomeModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

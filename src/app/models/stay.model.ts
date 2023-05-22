@@ -17,7 +17,7 @@ export class Stay {
     public reviews: Review[],
     public likedByUsers: User[],
     public labels: string[],
-    public equipment: { bedsNum: number; bathNum: number; bedroomNum: number },
+    public equipment: Equipment,
     public rate: number
   ) {}
   setId?(id: string = 's101') {
@@ -48,9 +48,16 @@ export class Stay {
 export interface StayFilter {
   labels: string[];
   price: number;
-  equipment: { bedsNum: number; bathNum: number; bedroomNum: number };
+  equipment: Equipment;
   capacity: number;
   roomType: string;
   amenities: string[];
   superhost: boolean;
+}
+
+export interface Equipment {
+  bedsNum: number;
+  bathNum: number;
+  bedroomNum: number;
+  [key: string]: number;
 }

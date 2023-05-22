@@ -1,6 +1,7 @@
 <section class="dynamic-modal" (click)="handleCLick($event)">
-  <header>
-    <button class="btn btn-close">X</button>
+  <header class="flex space-around align-center">
+    <button class="btn btn-close" (click)="onCloseModal()">X</button>
     <h3>{{ title }}</h3>
   </header>
+  <ng-content></ng-content>
 </section>

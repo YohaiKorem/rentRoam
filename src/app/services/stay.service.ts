@@ -164,21 +164,28 @@ export class StayService {
 
   private _filter(stays: Stay[], filterBy: any): Stay[] {
     let filteredStays = stays;
-    for (let key in filterBy) {
-      switch (key) {
-        case 'labels':
-          if (!filterBy.labels.length) return filteredStays;
-          filteredStays = filteredStays.filter((stay) => {
-            return stay.labels.includes(filterBy.labels[0]);
-          });
-          break;
-        default:
-          break;
+
+    if (filterBy.labels && filterBy.labels.length > 0) {
+      filteredStays = filteredStays.filter((stay) =>
+        stay.labels.includes(filterBy.labels[0])
+      );
+    }
+
+    if (
+      filterBy.equipment &&
+      (filterBy.equipment.bathNum || filterBy.equipment.bedsNum)
+    ) {
+      if (filterBy.equipment.bathNum) {
+        filteredStays = filteredStays.filter(
+          (stay) => stay.equipment.bathNum >= filterBy.equipment.bathNum
+        );
       }
-      // const regex = new RegExp(filterBy[key], 'i');
-      // filteredStays = filteredStays.filter((stay: any) => {
-      //   return regex.test(stay[key]);
-      // });
+
+      if (filterBy.equipment.bedsNum) {
+        filteredStays = filteredStays.filter(
+          (stay) => stay.equipment.bedsNum >= filterBy.equipment.bedsNum
+        );
+      }
     }
 
     return filteredStays;

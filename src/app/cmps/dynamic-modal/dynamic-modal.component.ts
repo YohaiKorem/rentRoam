@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'dynamic-modal',
@@ -7,8 +7,13 @@ import { Component, Input } from '@angular/core';
 })
 export class DynamicModalComponent {
   @Input() title!: string;
+  @Output() closeModal = new EventEmitter();
   handleCLick(event: any) {
     event.stopPropagation();
     event.preventDefault();
+  }
+
+  onCloseModal() {
+    this.closeModal.emit();
   }
 }

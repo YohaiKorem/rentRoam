@@ -18,4 +18,7 @@ export class AppComponent {
       error: (err) => console.log('err', err),
     });
   }
+  toggleScrolling(ev: any) {
+    console.log(ev);
+  }
 }

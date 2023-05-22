@@ -1,1 +1,17 @@
 @import "../../app-root/app.component.scss";
+.dynamic-modal.modal-content {
+  // max-width: 800px;
+}
+.filter-modal {
+  mat-slider.mat-mdc-slider.mdc-slider.mat-primary.mdc-slider--range {
+    width: 70%;
+  }
+  .btn.btn-form-filter.active {
+    background-color: rgb(34, 34, 34);
+    color: #fff;
+  }
+
+  .txt-input-container {
+    width: 100%;
+  }
+}
