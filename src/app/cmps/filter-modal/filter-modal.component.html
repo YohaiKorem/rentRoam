@@ -1,64 +1,122 @@
-<section class="filter-modal">
-  <form class="price-filter flex column align-center space-between">
-    <div class="form-heading-container flex column full-width">
-      <h2 class="fw800">Price-range</h2>
-      <div class="txt-headeing">
-        The average price for 5 nights is £400, including fees and taxes.
+<section class="filter-modal flex column">
+  <div class="modal-content-wrapper flex column">
+    <form class="price-filter flex column align-center space-between">
+      <div class="form-heading-container flex column full-width">
+        <h2 class="fw800">Price-range</h2>
+        <div class="txt-headeing">
+          The average price for 5 nights is £400, including fees and taxes.
+        </div>
+      </div>
+      <mat-slider class="custom-slider" min="200" [max]="currMaxPrice">
+        <input
+          name="slider-min-price"
+          [(ngModel)]="minPrice"
+          matSliderStartThumb
+        />
+        <input
+          name="slider-max-price"
+          [(ngModel)]="maxPrice"
+          matSliderEndThumb
+        />
+      </mat-slider>
+      <div class="txt-input-container flex space-around">
+        <label for="input-min-price" class="range-input-label fs16">
+          <span class="fs12">Minimum</span>
+          <span class="fs14">$</span
+          ><input
+            class="fs14"
+            name="input-min-price"
+            id="input-min-price"
+            [(ngModel)]="minPrice"
+            (focus)="toggleFocus($event)"
+            (blur)="toggleFocus($event)"
+            type="text"
+        /></label>
+        <span class="fw300">-</span>
+        <label for="input-max-price" class="range-input-label fs16">
+          <span class="fs12">Maximum</span>
+          <span class="fs14">$</span
+          ><input
+            class="fs14"
+            name="input-max-price"
+            id="input-max-price"
+            [(ngModel)]="maxPrice"
+            (focus)="toggleFocus($event)"
+            (blur)="toggleFocus($event)"
+            type="text"
+        /></label>
+      </div>
+    </form>
+    <form class="beds-bathroom-filter full-width flex column">
+      <h2 class="fw800">Beds and bathrooms</h2>
+      <h4>Beds</h4>
+      <div class="beds-bath-btns-container full-width flex space-between">
+        <button
+          *ngFor="let btn of btnsArray; index as i; last as isLast"
+          class="{{ btn.className }}"
+          [class.active]="stayFilter.equipment.bedsNum === i"
+          (click)="filterBeds(i)"
+        >
+          {{ i === 0 ? "Any" : isLast ? i + "+" : i }}
+        </button>
+      </div>
+      <h4>Bathrooms</h4>
+      <div class="beds-bath-btns-container full-width flex space-between">
+        <button
+          *ngFor="let btn of btnsArray; index as i; last as isLast"
+          class="{{ btn.className }}"
+          [class.active]="stayFilter.equipment.bathNum === i"
+          (click)="filterBathrooms(i)"
+        >
+          {{ i === 0 ? "Any" : isLast ? i + "+" : i }}
+        </button>
+      </div>
+    </form>
+    <form class="property-type flex column space-between full-width">
+      <h2>Property type</h2>
+      <div class="property-btns-container flex align-center space-between">
+        <button class="btn flex column space-between house">
+          <span
+            ><img
+              src="https://a0.muscache.com/pictures/4d7580e1-4ab2-4d26-a3d6-97f9555ba8f9.jpg"
+              class="house-img"
+          /></span>
+          <span>House</span>
+        </button>
+        <button class="btn flex column space-between flat">
+          <span
+            ><img
+              src="https://a0.muscache.com/pictures/21cfc7c9-5457-494d-9779-7b0c21d81a25.jpg"
+              class="Flat-img"
+          /></span>
+          <span>Flat</span>
+        </button>
+        <button class="btn flex column space-between guest-house">
+          <span>
+            <img
+              src="https://a0.muscache.com/pictures/6f261426-2e47-4c91-8b1a-7a847da2b21b.jpg"
+              alt=""
+              class="guest-house-img"
+            />
+          </span>
+          <span>Guest house</span>
+        </button>
+      </div>
+    </form>
+
+    <h2>Amenities</h2>
+    <h3>Essentials</h3>
+    <div class="essentials-container">
+      <div
+        *ngFor="let amenity of amenities.essentials"
+        class="amenity-filter-item"
+      >
+        <input type="checkbox" [name]="amenity" id="amenity" />
+        <label [for]="amenity">{{ amenity }}</label>
       </div>
     </div>
-    <mat-slider min="200" [max]="currMaxPrice">
-      <input
-        name="slider-min-price"
-        [(ngModel)]="minPrice"
-        matSliderStartThumb
-      />
-      <input name="slider-max-price" [(ngModel)]="maxPrice" matSliderEndThumb />
-    </mat-slider>
+  </div>
 
-    <div class="txt-input-container flex space-around">
-      <input name="input-min-price" [(ngModel)]="minPrice" type="text" />
-      <input name="input-max-price" [(ngModel)]="maxPrice" type="text" />
-    </div>
-  </form>
-  <form class="beds-bathroom-filter full-width">
-    <h2 class="fw800">Beds and bathrooms</h2>
-    <h4>Beds</h4>
-    <button
-      *ngFor="let btn of btnsArray; index as i"
-      class="{{ btn.className }}"
-      [class.active]="stayFilter.equipment.bedsNum === i"
-      (click)="filterBeds(i)"
-    >
-      {{ i === 0 ? "Any" : i }}
-    </button>
-
-    <h4>Bathrooms</h4>
-    <button
-      *ngFor="let btn of btnsArray; index as i"
-      class="{{ btn.className }}"
-      [class.active]="stayFilter.equipment.bathNum === i"
-      (click)="filterBathrooms(i)"
-    >
-      {{ i === 0 ? "Any" : i }}
-    </button>
-  </form>
-  <form class="property-type flex space-between full-width">
-    <label for="house"
-      >house
-
-      <input type="checkbox" name="house" id="house" />
-    </label>
-    <label for="flat"
-      >flat
-
-      <input type="checkbox" name="flat" id="flat" />
-    </label>
-    <label for="guest-house"
-      >guest-house
-
-      <input type="checkbox" name="guest-house" id="guest-house" />
-    </label>
-  </form>
   <footer
     class="filter-modal-footer full-width flex align-center space-between"
   >

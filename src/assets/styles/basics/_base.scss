@@ -68,7 +68,7 @@ button {
   }
 }
 
-input {
+input[type="text"] {
   font-family: inherit;
   text-align: inherit;
   border-radius: 1em;
@@ -102,4 +102,25 @@ input {
 
 .user-img {
   max-width: em(80px);
+}
+
+.mat-mdc-slider .mdc-slider__thumb-knob {
+  background-color: #fff !important;
+  border-color: #fff !important;
+}
+
+.mdc-slider__track {
+  height: 2px !important;
+  & > * {
+    height: 2px !important;
+  }
+}
+
+.mat-mdc-slider .mdc-slider__track--inactive {
+  background-color: #000000 !important;
+  opacity: 0.6 !important;
+}
+.mat-mdc-slider .mdc-slider__track--active_fill {
+  border-color: #000000 !important;
+  height: 1px !important;
 }

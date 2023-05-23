@@ -10,6 +10,9 @@
     class="dynamic-modal modal-content"
     (closeModal)="toggleFilterModal()"
   >
-    <filter-modal [stays]="stays$ | async" class="modal-content"></filter-modal>
+    <filter-modal
+      [stays]="stays$ | async"
+      class="filter-modal-container"
+    ></filter-modal>
   </dynamic-modal>
 </div>

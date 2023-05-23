@@ -76,11 +76,11 @@
 
   .modal-content {
     background: white;
+    max-height: 90%;
     // max-width: 90%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     position: relative;
     animation: scalein 0.3s ease-in-out;
-
     & > * {
       max-width: 100%;
     }

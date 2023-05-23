@@ -1,7 +1,24 @@
 @import "../../app-root/app.component.scss";
 
 .filter-modal {
-  padding-inline: 2em;
+  width: 100%;
+  margin-block-start: 2em;
+  padding-block-end: em(74px);
+  .modal-content-wrapper {
+    margin-block-end: 1em;
+    gap: 2em;
+    overflow-y: scroll;
+  }
+  form {
+    gap: 1em;
+  }
+  .custom-slider {
+    width: 70%;
+  }
+
+  & > * {
+    padding-inline: 2em;
+  }
   .form-heading-container {
     align-self: start;
   }
@@ -12,9 +29,6 @@
     font-size: 1em;
   }
 
-  mat-slider.mat-mdc-slider.mdc-slider.mat-primary.mdc-slider--range {
-    width: 70%;
-  }
   .btn.active {
     background-color: rgb(34, 34, 34);
     color: #fff;
@@ -22,14 +36,108 @@
 
   .txt-input-container {
     width: 100%;
+    gap: 1em;
+    & > span {
+      font-size: 40px;
+    }
+    .range-input-label {
+      display: grid;
+      width: 100%;
+      border: 1px solid black;
+      opacity: 0.6;
+      grid-template-columns: 1em 1fr;
+      gap: 0.5em;
+      align-items: end;
+      justify-content: center;
+      justify-items: center;
+      border-radius: 0.5em;
+      padding: 0.5em 0.3em;
+
+      &.focus {
+        outline: 2px solid black;
+      }
+
+      span {
+        opacity: 1;
+        grid-row: 2;
+        grid-column: 1;
+        justify-self: end;
+        &:first-of-type {
+          align-self: start;
+          justify-self: start;
+          grid-row: 1;
+          grid-column: 1/-1;
+        }
+      }
+      input {
+        opacity: 1;
+        color: $fontclr3;
+        grid-row: 2;
+        grid-column: 2;
+        width: 100%;
+        border: none;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+    }
   }
+
+  form.property-type {
+    .property-btns-container {
+      padding-inline-end: 12em;
+      gap: 1em;
+      .btn {
+        flex-basis: 30%;
+        gap: 1em;
+        border: 1px solid black;
+        border-color: $secondaryClr2;
+        background-color: $secondaryClr1;
+        padding: em(16px);
+        border-radius: em(12px);
+        align-items: start;
+        &:hover {
+          outline: 1px solid black;
+        }
+
+        span:first-child {
+          margin-inline-end: em(16px);
+          margin-block-end: em(12px);
+          width: em(32px);
+          height: em(32px);
+        }
+      }
+    }
+  }
+
+  .beds-bath-btns-container {
+    padding-inline-end: 7em;
+
+    .btn.btn-form-filter {
+      padding: 10px 20px;
+      border: 1px solid;
+      border-radius: em(30px);
+      outline: none;
+      min-width: em(59px);
+      &:not(.active) {
+        background-color: transparent;
+        border-color: $secondaryClr2;
+        &:hover {
+          color: #000000;
+          border-color: #000000;
+        }
+      }
+    }
+  }
+
   &-footer {
     border-top: 1px solid #ebebeb;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 24px;
-    padding-right: 24px;
-
+    padding-block: em(14px);
     .btn-clear {
       border-width: 1px;
       border-style: solid;

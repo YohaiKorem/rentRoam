@@ -61,3 +61,34 @@ export interface Equipment {
   bedroomNum: number;
   [key: string]: number;
 }
+
+export const amenities: any = {
+  essentials: [
+    'Wifi',
+    'Kitchen',
+    'Private attached bathroom',
+    'Washing machine',
+    'Dryer',
+    'Air conditioning',
+    'Heating',
+    'Dedicated workspace',
+    'TV',
+    'Hair dryer',
+  ],
+
+  features: [
+    'Pool',
+    'Hot tub',
+    'Free parking on premises',
+    'EV charger',
+    'Cot',
+    'Gym',
+    'BBQ grill',
+    'Breakfast',
+    'Indoor fireplace',
+    'Smoking allowed',
+  ],
+
+  location: ['Beachfront', 'Waterfront'],
+  safety: ['Smoke alarm', 'Carbon monoxide alarm'],
+};
