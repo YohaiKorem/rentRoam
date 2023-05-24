@@ -15,6 +15,8 @@ import { FilterModalComponent } from './app/cmps/filter-modal/filter-modal.compo
 import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.component';
 import { DynamicModalComponent } from './app/cmps/dynamic-modal/dynamic-modal.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { ChartComponent } from './app/cmps/chart/chart.component';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +29,7 @@ import { MatSliderModule } from '@angular/material/slider';
     FilterModalComponent,
     RadioFilterComponent,
     DynamicModalComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { MatSliderModule } from '@angular/material/slider';
     FormsModule,
     FontAwesomeModule,
     MatSliderModule,
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

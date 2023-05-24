@@ -47,7 +47,8 @@ export class Stay {
 
 export interface StayFilter {
   labels: string[];
-  price: number;
+  minPrice: number;
+  maxPrice: number;
   equipment: Equipment;
   capacity: number;
   roomType: string;

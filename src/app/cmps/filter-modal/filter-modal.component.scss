@@ -11,7 +11,27 @@
   }
   form {
     gap: 1em;
+    border-bottom: 1px solid #ebebeb;
+    padding-block-end: 1em;
   }
+  .price-filter {
+    .chart-item-container {
+      margin-block-start: 4em;
+      width: 70%;
+      transform: rotateX(180deg);
+      gap: 1px;
+      position: relative;
+      bottom: em(-39px);
+      .slider-chart-item {
+        background-color: $fontclr3;
+        width: 20px;
+        &.opacity {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+
   .custom-slider {
     width: 70%;
   }
@@ -132,6 +152,14 @@
           border-color: #000000;
         }
       }
+    }
+  }
+
+  .essentials-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .amenity-filter-item {
+      gap: 1em;
     }
   }
 

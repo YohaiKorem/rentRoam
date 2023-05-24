@@ -22,7 +22,8 @@ export class StayService {
   public stays$ = this._stays$.asObservable();
   private _stayFilter$ = new BehaviorSubject<StayFilter>({
     labels: [],
-    price: Infinity,
+    minPrice: 0,
+    maxPrice: 0,
     equipment: { bedsNum: 0, bathNum: 0, bedroomNum: 0 },
     capacity: Infinity,
     roomType: '',
@@ -30,7 +31,12 @@ export class StayService {
     superhost: false,
   });
   public stayFilter$ = this._stayFilter$.asObservable();
-
+  private _avgPrice$ = new BehaviorSubject<number>(0);
+  public avgPrice$ = this._avgPrice$.asObservable();
+  private _lowestPrice$ = new BehaviorSubject<number>(1);
+  public lowestPrice$ = this._lowestPrice$.asObservable();
+  private _highestPrice$ = new BehaviorSubject<number>(0);
+  public highestPrice$ = this._highestPrice$.asObservable();
   constructor(private http: HttpClient) {
     let stays = JSON.parse(localStorage.getItem(ENTITY) || 'null');
 
@@ -49,17 +55,8 @@ export class StayService {
     } else {
       this._stays$.next(stays);
     }
+    this.setAvgPrice(stays);
   }
-
-  // constructor(private http: HttpClient) {
-  //   // Handling Demo Data, fetching from storage || saving to storage
-  //   const stays = JSON.parse(localStorage.getItem(ENTITY) || 'null');
-  //   console.log(stays);
-
-  //   if (!stays || stays.length === 0) {
-  //     localStorage.setItem(ENTITY, JSON.stringify(this._createStays()));
-  //   }
-  // }
 
   public loadStays() {
     return from(storageService.query(ENTITY)).pipe(
@@ -67,7 +64,9 @@ export class StayService {
         const filterBy = this._stayFilter$.value;
 
         const filteredStays = this._filter(stays, filterBy);
-
+        this.setAvgPrice(filteredStays);
+        this.setHigheststPrice(filteredStays);
+        this.setLowestPrice(filteredStays);
         const sortedStays = this._sort(filteredStays);
         this._stays$.next(sortedStays);
       }),
@@ -114,8 +113,31 @@ export class StayService {
       likedByUsers: [],
       labels: [],
       equipment: { bedsNum: 0, bathNum: 0, bedroomNum: 0 },
-      rate: Infinity,
+      rate: 0,
     };
+  }
+  public setLowestPrice(stays: Stay[]) {
+    this._lowestPrice$.next(
+      stays.reduce(
+        (acc, stay) => (stay.price < acc ? stay.price : acc),
+        Infinity
+      )
+    );
+  }
+  public setHigheststPrice(stays: Stay[]) {
+    this._highestPrice$.next(
+      stays.reduce(
+        (acc, stay) => (stay.price > acc ? stay.price : acc),
+        -Infinity
+      )
+    );
+  }
+  public setAvgPrice(stays: Stay[]) {
+    let sumPrices = stays
+      .map((stay) => stay.price)
+      .reduce((acc, price) => acc + price, 0);
+    let avg = Math.floor(sumPrices / (stays.length - 1));
+    this._avgPrice$.next(avg);
   }
 
   public setFilter(stayFilter: StayFilter) {
@@ -187,7 +209,14 @@ export class StayService {
         );
       }
     }
-
+    if (filterBy.maxPrice)
+      filteredStays = filteredStays.filter(
+        (stay) => stay.price <= filterBy.maxPrice
+      );
+    if (filterBy.minPrice)
+      filteredStays = filteredStays.filter(
+        (stay) => stay.price >= filterBy.minPrice
+      );
     return filteredStays;
   }
 

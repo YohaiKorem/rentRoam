@@ -2,21 +2,46 @@
   <div class="modal-content-wrapper flex column">
     <form class="price-filter flex column align-center space-between">
       <div class="form-heading-container flex column full-width">
-        <h2 class="fw800">Price-range</h2>
+        <h2 class="fw600">Price-range</h2>
         <div class="txt-headeing">
-          The average price for 5 nights is £400, including fees and taxes.
+          The average price for {{ nights }} nights is £{{
+            nights! * avgStayPricePerNight
+          }}, including fees and taxes.
         </div>
       </div>
-      <mat-slider class="custom-slider" min="200" [max]="currMaxPrice">
+      <div
+        class="chart-item-container flex justify-center"
+        [style]="{
+          'gap.px': priceCountMapForDisplay.length < 30 ? 3 : 1
+        }"
+      >
+        <div
+          *ngFor="let stayPrice of priceCountMapForDisplay"
+          class="slider-chart-item"
+          [class.opacity]="
+            stayPrice.price < minPrice || stayPrice.price > maxPrice
+          "
+          [style]="{ height: stayPrice.count * 10 + 'px' }"
+        ></div>
+      </div>
+      <mat-slider
+        class="custom-slider"
+        min="{{ lowestAvailablePrice }}"
+        max="{{ highestAvailablePrice }}"
+      >
         <input
           name="slider-min-price"
           [(ngModel)]="minPrice"
           matSliderStartThumb
+          #minSlider
+          (change)="getThumbLabelPosition()"
         />
         <input
           name="slider-max-price"
           [(ngModel)]="maxPrice"
           matSliderEndThumb
+          (change)="getThumbLabelPosition()"
+          #maxSlider
         />
       </mat-slider>
       <div class="txt-input-container flex space-around">
@@ -48,7 +73,7 @@
       </div>
     </form>
     <form class="beds-bathroom-filter full-width flex column">
-      <h2 class="fw800">Beds and bathrooms</h2>
+      <h2 class="fw600">Beds and bathrooms</h2>
       <h4>Beds</h4>
       <div class="beds-bath-btns-container full-width flex space-between">
         <button
@@ -73,7 +98,7 @@
       </div>
     </form>
     <form class="property-type flex column space-between full-width">
-      <h2>Property type</h2>
+      <h2 class="fw600">Property type</h2>
       <div class="property-btns-container flex align-center space-between">
         <button class="btn flex column space-between house">
           <span
@@ -104,14 +129,14 @@
       </div>
     </form>
 
-    <h2>Amenities</h2>
+    <h2 class="fw600">Amenities</h2>
     <h3>Essentials</h3>
     <div class="essentials-container">
       <div
         *ngFor="let amenity of amenities.essentials"
-        class="amenity-filter-item"
+        class="amenity-filter-item flex"
       >
-        <input type="checkbox" [name]="amenity" id="amenity" />
+        <input type="checkbox" [name]="amenity" [id]="amenity" />
         <label [for]="amenity">{{ amenity }}</label>
       </div>
     </div>
@@ -121,7 +146,7 @@
     class="filter-modal-footer full-width flex align-center space-between"
   >
     <button class="btn btn-clear">Clear all</button>
-    <button class="btn btn-submit active">
+    <button (click)="setFilter()" class="btn btn-submit active">
       Show
       {{ stays!.length < 1000 ? stays!.length : "1000+" }}
       places
