@@ -145,6 +145,19 @@ export class StayService {
     this.loadStays().subscribe();
   }
 
+  public clearFilter() {
+    this.setFilter({
+      labels: [],
+      minPrice: 0,
+      maxPrice: 0,
+      equipment: { bedsNum: 0, bathNum: 0, bedroomNum: 0 },
+      capacity: Infinity,
+      roomType: '',
+      amenities: [],
+      superhost: false,
+    });
+  }
+
   private _updateStay(stay: Stay) {
     return from(storageService.put(ENTITY, stay)).pipe(
       tap((updatedStay) => {
@@ -187,11 +200,10 @@ export class StayService {
   private _filter(stays: Stay[], filterBy: any): Stay[] {
     let filteredStays = stays;
 
-    if (filterBy.labels && filterBy.labels.length > 0) {
+    if (filterBy.labels && filterBy.labels.length > 0)
       filteredStays = filteredStays.filter((stay) =>
         stay.labels.includes(filterBy.labels[0])
       );
-    }
 
     if (
       filterBy.equipment &&
@@ -208,6 +220,13 @@ export class StayService {
           (stay) => stay.equipment.bedsNum >= filterBy.equipment.bedsNum
         );
       }
+    }
+    if (filterBy.amenities && filterBy.amenities.length) {
+      filteredStays = filteredStays.filter((stay) => {
+        return filterBy.amenities.every((amenity: string) =>
+          stay.amenities.includes(amenity)
+        );
+      });
     }
     if (filterBy.maxPrice)
       filteredStays = filteredStays.filter(

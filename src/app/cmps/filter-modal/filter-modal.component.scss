@@ -42,11 +42,12 @@
   .form-heading-container {
     align-self: start;
   }
-  h2 {
+
+  h2,
+  h3 {
     margin: 0;
     padding: 0;
     color: $fontclr3;
-    font-size: 1em;
   }
 
   .btn.active {
@@ -155,11 +156,53 @@
     }
   }
 
-  .essentials-container {
+  .amenities-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    position: relative;
+    gap: 1.5em;
+    button {
+      place-self: start;
+      background-color: transparent;
+      text-decoration: underline;
+    }
     .amenity-filter-item {
       gap: 1em;
+      cursor: pointer;
+      &:hover {
+        .custom-checkbox {
+          opacity: 1;
+          border-color: black;
+        }
+      }
+      .custom-checkbox {
+        width: 24px;
+        height: 24px;
+        border: 1px solid;
+        border-color: #b0b0b0;
+        border-radius: 3px;
+        opacity: 0.6;
+        position: relative;
+        display: grid;
+        place-items: center;
+        svg {
+          color: #fff;
+        }
+      }
+      input:checked + .custom-checkbox {
+        background-color: #000000;
+        opacity: 1;
+
+        // &::after {
+        //   content: "✔";
+        //   position: absolute;
+        //   top: 0;
+        //   width: 1em;
+        //   height: 1em;
+        //   color: #fff;
+        //   background-color: inherit;
+        // }
+      }
     }
   }
 

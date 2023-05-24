@@ -13,6 +13,7 @@
     <filter-modal
       [stays]="stays$ | async"
       [nights]="5"
+      (closeModal)="toggleFilterModal()"
       class="filter-modal-container"
     ></filter-modal>
   </dynamic-modal>

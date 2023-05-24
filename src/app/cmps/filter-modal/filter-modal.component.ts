@@ -23,6 +23,8 @@ export class FilterModalComponent {
   constructor(private stayService: StayService) {}
   @Input() stays!: Stay[] | null;
   @Input() nights!: number | null;
+  @Output() closeModal = new EventEmitter();
+
   @ViewChild('maxSlider') maxSlider: any;
   @ViewChild('minSlider') minSlider: any;
   stayFilter = {} as StayFilter;
@@ -36,6 +38,7 @@ export class FilterModalComponent {
   btnsArray = Btn.createArray(9, 'btn btn-form-filter', '');
   avgStayPricePerNight: number = 0;
   amenities = amenities;
+  isShowAllAmenities: boolean = false;
   ngOnInit() {
     this.stayService.stayFilter$
       .pipe(takeUntil(this.destroySubject$))
@@ -138,7 +141,32 @@ export class FilterModalComponent {
     this.stayFilter.minPrice = this.minPrice;
     this.stayFilter.maxPrice = this.maxPrice;
     this.stayService.setFilter(this.stayFilter);
-    console.log(this.stayFilter);
+    this.onCloseModal();
+  }
+
+  filterAmenities(amenity: string) {
+    if (this.stayFilter.amenities.includes(amenity)) {
+      this.stayFilter.amenities = this.stayFilter.amenities.filter(
+        (a) => a !== amenity
+      );
+    } else {
+      this.stayFilter.amenities.push(amenity);
+    }
+    this.stayService.setFilter(this.stayFilter);
+  }
+
+  toggleCheckbox(amenity: any) {
+    let elAmenity: any = document.getElementById(amenity);
+    elAmenity!.checked = !elAmenity!.checked;
+  }
+
+  clearFilter() {
+    this.stayService.clearFilter();
+    this.onCloseModal();
+  }
+
+  onCloseModal() {
+    this.closeModal.emit();
   }
 
   ngOnDestroy(): void {

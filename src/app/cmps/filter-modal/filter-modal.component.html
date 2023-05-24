@@ -2,7 +2,7 @@
   <div class="modal-content-wrapper flex column">
     <form class="price-filter flex column align-center space-between">
       <div class="form-heading-container flex column full-width">
-        <h2 class="fw600">Price-range</h2>
+        <h2 class="fw600 fs22">Price-range</h2>
         <div class="txt-headeing">
           The average price for {{ nights }} nights is £{{
             nights! * avgStayPricePerNight
@@ -73,8 +73,8 @@
       </div>
     </form>
     <form class="beds-bathroom-filter full-width flex column">
-      <h2 class="fw600">Beds and bathrooms</h2>
-      <h4>Beds</h4>
+      <h2 class="fw600 fs22">Beds and bathrooms</h2>
+      <h3 class="fw600 fs16">Beds</h3>
       <div class="beds-bath-btns-container full-width flex space-between">
         <button
           *ngFor="let btn of btnsArray; index as i; last as isLast"
@@ -85,7 +85,7 @@
           {{ i === 0 ? "Any" : isLast ? i + "+" : i }}
         </button>
       </div>
-      <h4>Bathrooms</h4>
+      <h3 class="fw600 fs16">Bathrooms</h3>
       <div class="beds-bath-btns-container full-width flex space-between">
         <button
           *ngFor="let btn of btnsArray; index as i; last as isLast"
@@ -98,7 +98,7 @@
       </div>
     </form>
     <form class="property-type flex column space-between full-width">
-      <h2 class="fw600">Property type</h2>
+      <h2 class="fw600 fs22">Property type</h2>
       <div class="property-btns-container flex align-center space-between">
         <button class="btn flex column space-between house">
           <span
@@ -129,23 +129,90 @@
       </div>
     </form>
 
-    <h2 class="fw600">Amenities</h2>
-    <h3>Essentials</h3>
-    <div class="essentials-container">
+    <h2 class="fw600 fs22">Amenities</h2>
+    <h3 class="fw600 fs16">Essentials</h3>
+    <div class="amenities-container">
       <div
         *ngFor="let amenity of amenities.essentials"
         class="amenity-filter-item flex"
+        (click)="filterAmenities(amenity)"
       >
-        <input type="checkbox" [name]="amenity" [id]="amenity" />
-        <label [for]="amenity">{{ amenity }}</label>
+        <input
+          style="display: none"
+          type="checkbox"
+          [checked]="stayFilter.amenities.includes(amenity)"
+          [id]="amenity"
+        />
+        <span class="custom-checkbox">
+          <svg
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            style="
+              display: block;
+              fill: none;
+              height: 16px;
+              width: 16px;
+              stroke: currentcolor;
+              stroke-width: 4;
+              overflow: visible;
+            "
+          >
+            <path fill="none" d="m4 16.5 8 8 16-16"></path>
+          </svg>
+        </span>
+        <span>{{ amenity }} </span>
       </div>
+      <ng-container *ngIf="isShowAllAmenities">
+        <div
+          *ngFor="let amenity of amenities.all"
+          class="amenity-filter-item flex"
+          (click)="filterAmenities(amenity)"
+        >
+          <input
+            style="display: none"
+            type="checkbox"
+            [checked]="stayFilter.amenities.includes(amenity)"
+            [id]="amenity"
+          />
+          <span class="custom-checkbox">
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                fill: none;
+                height: 16px;
+                width: 16px;
+                stroke: currentcolor;
+                stroke-width: 4;
+                overflow: visible;
+              "
+            >
+              <path fill="none" d="m4 16.5 8 8 16-16"></path>
+            </svg>
+          </span>
+          <span>{{ amenity }} </span>
+        </div>
+      </ng-container>
+      <button
+        (click)="isShowAllAmenities = !isShowAllAmenities"
+        class="fs16 fw600"
+      >
+        {{ isShowAllAmenities ? "Show less" : "Show more" }}
+      </button>
     </div>
   </div>
 
   <footer
     class="filter-modal-footer full-width flex align-center space-between"
   >
-    <button class="btn btn-clear">Clear all</button>
+    <button (click)="clearFilter()" class="btn btn-clear">Clear all</button>
     <button (click)="setFilter()" class="btn btn-submit active">
       Show
       {{ stays!.length < 1000 ? stays!.length : "1000+" }}
