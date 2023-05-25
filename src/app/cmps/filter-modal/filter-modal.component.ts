@@ -144,6 +144,11 @@ export class FilterModalComponent {
     this.onCloseModal();
   }
 
+  toggleSuperHost() {
+    this.stayFilter.superhost = !this.stayFilter.superhost;
+    this.stayService.setFilter(this.stayFilter);
+  }
+
   filterAmenities(amenity: string) {
     if (this.stayFilter.amenities.includes(amenity)) {
       this.stayFilter.amenities = this.stayFilter.amenities.filter(
