@@ -4,10 +4,11 @@
   @include for-mobile-layout {
     position: fixed;
     top: 0;
-    left: 1em;
+    left: 0em;
     z-index: 30;
     background-color: #fff;
-    width: calc(100% - 2em);
+    padding-block-end: 6em;
+    width: 100vw;
   }
 }
 .wrapper {

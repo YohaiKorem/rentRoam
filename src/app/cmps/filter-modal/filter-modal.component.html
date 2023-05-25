@@ -79,6 +79,7 @@
         <button
           *ngFor="let btn of btnsArray; index as i; last as isLast"
           class="{{ btn.className }}"
+          [class.hidden-on-mobile]="i >= 5"
           [class.active]="stayFilter.equipment.bedsNum === i"
           (click)="filterBeds(i)"
         >
@@ -90,6 +91,7 @@
         <button
           *ngFor="let btn of btnsArray; index as i; last as isLast"
           class="{{ btn.className }}"
+          [class.hidden-on-mobile]="i >= 5"
           [class.active]="stayFilter.equipment.bathNum === i"
           (click)="filterBathrooms(i)"
         >

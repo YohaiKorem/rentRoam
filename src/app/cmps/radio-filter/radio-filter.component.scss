@@ -136,9 +136,9 @@
     background-color: #fff;
     position: fixed;
     top: calc($header-height * 1.1);
-    left: 2em;
+    left: 0;
     z-index: 20;
-    width: calc(100% - 4em);
+    width: calc(100vw);
     .radio-filter-container {
       padding-block-end: 0;
       padding-inline: 1em;

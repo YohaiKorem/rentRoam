@@ -6,6 +6,7 @@ import {
   faBars,
   faTentArrowLeftRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'app-header',
   templateUrl: './app-header.component.html',
@@ -20,5 +21,9 @@ export class AppHeaderComponent {
   faGlobe = faGlobe;
   faBars = faBars;
 
-  openFilterModal() {}
+  constructor(private sharedService: SharedService) {}
+
+  openFilterModal() {
+    this.sharedService.openFilterModal();
+  }
 }

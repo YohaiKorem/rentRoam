@@ -67,7 +67,7 @@
   height: 100vh;
   top: 0;
   left: 0;
-  z-index: 20;
+  z-index: 30;
   animation: fadein 0.25s ease-in-out;
 
   &.fade-out {
@@ -76,13 +76,22 @@
 
   .modal-content {
     background: white;
-    max-height: 90%;
+
     // max-width: 90%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     position: relative;
     animation: scalein 0.3s ease-in-out;
-    & > * {
-      max-width: 100%;
+    @include for-mobile-layout {
+      margin-block-end: -4em;
+      & > * {
+        max-width: 500px;
+      }
+    }
+    @include for-normal-layout {
+      max-height: 90%;
+      & > * {
+        max-width: 100%;
+      }
     }
 
     .dismiss {

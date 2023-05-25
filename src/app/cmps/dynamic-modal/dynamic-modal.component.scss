@@ -1,7 +1,9 @@
 @import "../../app-root/app.component.scss";
 .dynamic-modal {
   overflow-y: hidden;
-  max-height: 500px;
+  @include for-normal-layout {
+    max-height: 500px;
+  }
 }
 .modal-content {
   max-height: 100%;

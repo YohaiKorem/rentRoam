@@ -6,11 +6,15 @@
   width: 100%;
   max-width: 800px;
   border-radius: 12px;
-  max-height: 90%;
+  @include for-normal-layout {
+    max-height: 90%;
+  }
 
   .filter-modal-container {
     display: flex;
-    max-height: 500px;
     width: 100%;
+    @include for-normal-layout {
+      max-height: 500px;
+    }
   }
 }

@@ -249,4 +249,22 @@
       }
     }
   }
+  @include for-mobile-layout {
+    height: 90vh;
+    .property-btns-container {
+      white-space: nowrap;
+      padding-inline: 0;
+      gap: 2em;
+      .btn {
+        padding-inline: 2em;
+      }
+    }
+    .beds-bath-btns-container {
+      gap: 1em;
+    }
+    &-footer {
+      padding-block-start: 2em;
+      padding-block-end: 3em;
+    }
+  }
 }
