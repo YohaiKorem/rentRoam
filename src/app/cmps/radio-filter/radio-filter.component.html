@@ -1,7 +1,7 @@
 <section class="radio-filter-container flex align-center space-between">
   <button
     (click)="scrollToLeft()"
-    class="btn btn-left shadow"
+    class="btn btn-left shadow hidden-on-mobile"
     [class.hidden]="isFirstElementInView"
   >
     <svg
@@ -28,7 +28,7 @@
     </svg>
   </button>
   <div
-    class="btn-scroll-overlay blurred left"
+    class="btn-scroll-overlay blurred left hidden-on-mobile"
     [class.hidden]="isFirstElementInView"
   ></div>
   <div class="radio-filter category-scroller fs12" #scrollContainer>
@@ -1484,7 +1484,7 @@
   </div>
   <button
     (click)="scrollToRight()"
-    class="btn btn-right shadow"
+    class="btn btn-right shadow hidden-on-mobile"
     [class.hidden]="isLastElementInView"
   >
     <svg
@@ -1511,12 +1511,12 @@
     </svg>
   </button>
   <div
-    class="btn-scroll-overlay blurred right"
+    class="btn-scroll-overlay blurred right hidden-on-mobile"
     [class.hidden]="isFirstElementInView"
   ></div>
   <button
     (click)="openFilterModal()"
-    class="btn btn-filter shadow flex align-center space-between"
+    class="btn btn-filter shadow flex align-center space-between hidden-on-mobile"
   >
     <svg
       viewBox="0 0 16 16"

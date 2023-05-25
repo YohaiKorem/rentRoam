@@ -11,7 +11,7 @@ import {
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss'],
   host: {
-    class: 'main-header main-layout full',
+    class: 'main-header ',
   },
 })
 export class AppHeaderComponent {

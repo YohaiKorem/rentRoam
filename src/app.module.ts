@@ -15,7 +15,7 @@ import { FilterModalComponent } from './app/cmps/filter-modal/filter-modal.compo
 import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.component';
 import { DynamicModalComponent } from './app/cmps/dynamic-modal/dynamic-modal.component';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatPseudoCheckboxModule } from '@angular/material/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ChartComponent } from './app/cmps/chart/chart.component';
 import { NgChartsModule } from 'ng2-charts';
 @NgModule({
@@ -40,7 +40,7 @@ import { NgChartsModule } from 'ng2-charts';
     FontAwesomeModule,
     MatSliderModule,
     NgChartsModule,
-    MatPseudoCheckboxModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

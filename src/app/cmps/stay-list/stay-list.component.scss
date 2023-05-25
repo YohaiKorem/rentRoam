@@ -9,4 +9,13 @@
   column-gap: em(24px);
   row-gap: em(40px);
   grid-auto-rows: minmax(min-content, max-content);
+  @include for-tablet-layout {
+    margin-block-start: calc($header-height + $header-height + 2em);
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    overflow: scroll;
+  }
 }

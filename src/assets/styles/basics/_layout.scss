@@ -12,10 +12,15 @@
 
   @include for-mobile-layout {
     max-width: initial;
+    padding: 0;
+    padding: 0 1em 0 1em;
+    width: calc(100% - 2em);
   }
 
   @include for-tablet-layout {
     max-width: $mobile-breakpoint;
+    padding: 0 1em 0 1em;
+    width: calc(100% - 2em);
   }
 
   @include for-normal-layout {

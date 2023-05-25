@@ -1,3 +1,4 @@
+import { Host } from './host.model';
 import { Review } from './review.model';
 import { User } from './user.model';
 
@@ -12,7 +13,7 @@ export class Stay {
     public capacity: number,
     public amenities: string[],
     public roomType: string,
-    public host: User,
+    public host: Host,
     public loc: Location,
     public reviews: Review[],
     public likedByUsers: User[],

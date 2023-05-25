@@ -1,4 +1,7 @@
 @import "../../app-root/app.component.scss";
+:host {
+  height: 100%;
+}
 .dynamic-modal.modal-content {
   width: 100%;
   max-width: 800px;

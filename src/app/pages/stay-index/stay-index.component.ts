@@ -19,7 +19,7 @@ export class StayIndexComponent implements OnInit {
   subscription!: Subscription;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
-  isFilterModalOpen = true;
+  isFilterModalOpen = false;
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
   }

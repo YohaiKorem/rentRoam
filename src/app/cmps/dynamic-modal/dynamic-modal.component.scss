@@ -16,6 +16,43 @@ header {
     grid-row: 1;
     grid-column: 1;
     justify-self: start;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    margin-inline-start: 1em;
+    border: none;
+    background: transparent;
+    transition: transform 0.25s;
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      width: 32px;
+      height: 32px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+    &:hover {
+      color: #000000;
+
+      &::before {
+        background: #f7f7f7;
+      }
+    }
+
+    svg {
+      display: block;
+      fill: none;
+      height: 16px;
+      width: 16px;
+      stroke: currentcolor;
+      stroke-width: 3;
+      overflow: visible;
+      z-index: 20;
+    }
   }
   h1 {
     grid-row: 1;

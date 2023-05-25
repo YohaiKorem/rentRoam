@@ -319,3 +319,9 @@
   width: em(28px);
   border-radius: 3em;
 }
+
+.hidden-on-mobile {
+  @include for-tablet-layout {
+    display: none;
+  }
+}

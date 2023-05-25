@@ -1,21 +1,21 @@
-<div class="wrapper flex space-between align-center full">
-  <a routerLink="/">
+<div class="wrapper flex space-between align-center">
+  <a class="hidden-on-mobile" routerLink="/">
     <div class="logo-container flex align-center space-between fs20">
       <fa-icon class="logo fs34" [icon]="faAirbnb"></fa-icon>
       <span class="logo-txt">RentRoam</span>
     </div>
   </a>
   <div class="search-bar shadow">
-    <button class="btn-search fw600">Anywhere</button>
-    <span></span>
-    <button class="btn-search fw600">Any week</button>
-    <span></span>
-    <button class="btn-search fw400">Add guests</button>
+    <button class="btn-search anywhere fw600">Anywhere</button>
+    <span class="hidden-on-mobile"></span>
+    <button class="btn-search anyweek fw600">Any week</button>
+    <span class="hidden-on-mobile"></span>
+    <button class="btn-search guests fw400">Add guests</button>
     <div class="icon-container flex auto-center">
       <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
     </div>
   </div>
-  <div class="options-btns-container flex space-between">
+  <div class="options-btns-container flex space-between hidden-on-mobile">
     <button class="btn btn-options btn-mode">RentRoam your home</button>
     <button class="btn btn-options btn-lang">
       <fa-icon

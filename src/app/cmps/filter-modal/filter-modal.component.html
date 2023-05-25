@@ -129,45 +129,12 @@
       </div>
     </form>
 
-    <h2 class="fw600 fs22">Amenities</h2>
-    <h3 class="fw600 fs16">Essentials</h3>
-    <div class="amenities-container">
-      <div
-        *ngFor="let amenity of amenities.essentials"
-        class="amenity-filter-item flex"
-        (click)="filterAmenities(amenity)"
-      >
-        <input
-          style="display: none"
-          type="checkbox"
-          [checked]="stayFilter.amenities.includes(amenity)"
-          [id]="amenity"
-        />
-        <span class="custom-checkbox">
-          <svg
-            viewBox="0 0 32 32"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            role="presentation"
-            focusable="false"
-            style="
-              display: block;
-              fill: none;
-              height: 16px;
-              width: 16px;
-              stroke: currentcolor;
-              stroke-width: 4;
-              overflow: visible;
-            "
-          >
-            <path fill="none" d="m4 16.5 8 8 16-16"></path>
-          </svg>
-        </span>
-        <span>{{ amenity }} </span>
-      </div>
-      <ng-container *ngIf="isShowAllAmenities">
+    <form>
+      <h2 class="fw600 fs22">Amenities</h2>
+      <h3 class="fw600 fs16">Essentials</h3>
+      <div class="amenities-container">
         <div
-          *ngFor="let amenity of amenities.all"
+          *ngFor="let amenity of amenities.essentials"
           class="amenity-filter-item flex"
           (click)="filterAmenities(amenity)"
         >
@@ -199,13 +166,66 @@
           </span>
           <span>{{ amenity }} </span>
         </div>
-      </ng-container>
-      <button
-        (click)="isShowAllAmenities = !isShowAllAmenities"
-        class="fs16 fw600"
+        <ng-container *ngIf="isShowAllAmenities">
+          <div
+            *ngFor="let amenity of amenities.all"
+            class="amenity-filter-item flex"
+            (click)="filterAmenities(amenity)"
+          >
+            <input
+              style="display: none"
+              type="checkbox"
+              [checked]="stayFilter.amenities.includes(amenity)"
+              [id]="amenity"
+            />
+            <span class="custom-checkbox">
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  fill: none;
+                  height: 16px;
+                  width: 16px;
+                  stroke: currentcolor;
+                  stroke-width: 4;
+                  overflow: visible;
+                "
+              >
+                <path fill="none" d="m4 16.5 8 8 16-16"></path>
+              </svg>
+            </span>
+            <span>{{ amenity }} </span>
+          </div>
+        </ng-container>
+        <button
+          (click)="isShowAllAmenities = !isShowAllAmenities"
+          class="fs16 fw600"
+        >
+          {{ isShowAllAmenities ? "Show less" : "Show more" }}
+        </button>
+      </div>
+    </form>
+    <div class="top-stays-container">
+      <h2>Top-tier stays</h2>
+      <div
+        class="superhost-container flex space-between align-center full-width"
       >
-        {{ isShowAllAmenities ? "Show less" : "Show more" }}
-      </button>
+        <span class="superhost-txt fs16"
+          >Superhost
+
+          <p class="fs14">Stay with recognised hosts</p>
+        </span>
+        <mat-slide-toggle
+          [color]="'#222222'"
+          (change)="toggleSuperHost()"
+          [checked]="stayFilter.superhost"
+          class="superhost-toggle"
+        ></mat-slide-toggle>
+      </div>
     </div>
   </div>
 

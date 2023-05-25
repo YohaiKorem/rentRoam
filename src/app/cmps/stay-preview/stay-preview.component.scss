@@ -113,3 +113,15 @@
     }
   }
 }
+@include for-tablet-layout {
+  :host {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    .stay-preview-container {
+      width: 100%;
+      align-items: center;
+    }
+  }
+}

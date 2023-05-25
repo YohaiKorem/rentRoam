@@ -89,6 +89,9 @@
     width: em(50px);
     position: absolute;
     background-color: $secondaryClr1;
+    @include for-tablet-layout {
+      display: none;
+    }
     &.left {
       left: em(-5px);
     }
@@ -108,6 +111,9 @@
     svg {
       margin-inline-end: 1em;
     }
+    @include for-tablet-layout {
+      display: none;
+    }
   }
 
   .category-scroller {
@@ -123,5 +129,12 @@
   .hidden {
     opacity: 0;
     pointer-events: none;
+  }
+  @include for-tablet-layout {
+    background-color: #fff;
+    position: fixed;
+    top: calc($header-height - 1em);
+    z-index: 20;
+    display: none;
   }
 }

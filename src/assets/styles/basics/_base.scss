@@ -7,21 +7,18 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   color: $fontclr1;
-  overflow-x: hidden;
+  height: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
-  min-height: 100vh;
-  width: 100%;
   line-break: strict;
   font-family: Circular, -apple-system, BlinkMacSystemFont, roboto,
     Helvetica neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  perspective: 800px;
-
+  min-height: 100vh;
   & > * {
     height: 100%;
   }
@@ -104,6 +101,7 @@ input[type="text"] {
   max-width: em(80px);
 }
 
+// PRICE RANGE SLIDER
 .mat-mdc-slider .mdc-slider__thumb-knob {
   background-color: #fff !important;
   border-color: #fff !important;
@@ -123,4 +121,38 @@ input[type="text"] {
 .mat-mdc-slider .mdc-slider__track--active_fill {
   border-color: #000000 !important;
   height: 1px !important;
+}
+
+// TOGGLE SUPERHOST BUTTON
+.mat-mdc-slide-toggle .mdc-switch:enabled .mdc-switch__track::after {
+  background: #222222 !important;
+}
+
+.mdc-switch--unselected .mdc-switch__icon--off {
+  opacity: 0 !important;
+}
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--unselected:enabled
+  .mdc-switch__handle::after,
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--selected:enabled
+  .mdc-switch__handle::after {
+  background: #fff !important;
+}
+
+.mat-mdc-slide-toggle
+  .mdc-switch.mdc-switch--selected:enabled
+  .mdc-switch__icon {
+  fill: #222222 !important;
+  padding: 3px;
+}
+
+.mdc-switch__ripple {
+  opacity: 0 !important;
+}
+#mat-mdc-slide-toggle-1 {
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
 }

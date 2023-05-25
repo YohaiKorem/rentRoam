@@ -228,6 +228,12 @@ export class StayService {
         );
       });
     }
+
+    if (filterBy.superhost)
+      filteredStays = filteredStays.filter(
+        (stay) => stay.host.isSuperhost === true
+      );
+
     if (filterBy.maxPrice)
       filteredStays = filteredStays.filter(
         (stay) => stay.price <= filterBy.maxPrice
