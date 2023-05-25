@@ -321,7 +321,19 @@
 }
 
 .hidden-on-mobile {
-  @include for-tablet-layout {
+  @include for-mobile-layout {
     display: none;
+  }
+}
+.show-on-mobile {
+  display: none;
+  @include for-mobile-layout {
+    display: block;
+  }
+}
+.show-on-mobile.flex {
+  display: none;
+  @include for-mobile-layout {
+    display: flex;
   }
 }

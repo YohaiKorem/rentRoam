@@ -2,7 +2,7 @@
 
 .radio-filter-container {
   margin: 0;
-  margin-block: 1em;
+  margin-block: 2em;
   position: relative;
   padding-block-end: 1em;
 
@@ -15,7 +15,7 @@
     align-items: center;
     display: grid;
     grid-auto-flow: column;
-    overflow: scroll;
+    overflow-x: scroll;
     gap: 2em;
     text-align: center;
     white-space: nowrap;
@@ -111,7 +111,7 @@
     svg {
       margin-inline-end: 1em;
     }
-    @include for-tablet-layout {
+    @include for-mobile-layout {
       display: none;
     }
   }
@@ -130,11 +130,18 @@
     opacity: 0;
     pointer-events: none;
   }
-  @include for-tablet-layout {
+}
+:host {
+  @include for-mobile-layout {
     background-color: #fff;
     position: fixed;
-    top: calc($header-height - 1em);
+    top: calc($header-height * 1.1);
+    left: 2em;
     z-index: 20;
-    display: none;
+    width: calc(100% - 4em);
+    .radio-filter-container {
+      padding-block-end: 0;
+      padding-inline: 1em;
+    }
   }
 }

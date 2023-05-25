@@ -19,4 +19,6 @@ export class AppHeaderComponent {
   faSearch = faSearch;
   faGlobe = faGlobe;
   faBars = faBars;
+
+  openFilterModal() {}
 }

@@ -113,7 +113,7 @@
     }
   }
 }
-@include for-tablet-layout {
+@include for-mobile-layout {
   :host {
     width: 100%;
     margin: 0 auto;
@@ -122,6 +122,9 @@
     .stay-preview-container {
       width: 100%;
       align-items: center;
+      .img-container {
+        width: 90%;
+      }
     }
   }
 }
