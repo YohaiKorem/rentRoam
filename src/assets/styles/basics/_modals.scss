@@ -69,7 +69,6 @@
   left: 0;
   z-index: 30;
   animation: fadein 0.25s ease-in-out;
-
   &.fade-out {
     animation: fadeout 0.25s ease-in-out forwards;
   }
@@ -89,6 +88,7 @@
     }
     @include for-normal-layout {
       max-height: 90%;
+
       & > * {
         max-width: 100%;
       }

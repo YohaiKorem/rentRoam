@@ -6,12 +6,23 @@
     </div>
   </a>
   <div class="search-bar shadow">
-    <button class="btn-search anywhere fw600">Anywhere</button>
+    <button
+      class="btn-search anywhere fw500"
+      mat-button
+      [matMenuTriggerFor]="belowMenu"
+    >
+      Anywhere
+    </button>
+
     <span class="hidden-on-mobile"></span>
-    <button class="btn-search anyweek fw600">Any week</button>
+    <button class="btn-search anyweek fw500" (click)="openSearch('time')">
+      Any week
+    </button>
     <span class="hidden-on-mobile"></span>
-    <button class="btn-search guests fw400">Add guests</button>
-    <div class="icon-container flex auto-center">
+    <button class="btn-search guests fw400" (click)="openSearch('guests')">
+      Add guests
+    </button>
+    <div class="icon-container flex auto-center" (click)="openSearch('loc')">
       <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
     </div>
     <button
@@ -32,6 +43,10 @@
       </svg>
     </button>
   </div>
+  <mat-menu #belowMenu="matMenu" yPosition="below">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
   <div class="options-btns-container flex space-between hidden-on-mobile">
     <button class="btn btn-options btn-mode">RentRoam your home</button>
     <button class="btn btn-options btn-lang">

@@ -42,6 +42,11 @@
     @content;
   }
 }
+@mixin for-extra-wide-layout {
+  @media (min-width: $wide-breakpoint) {
+    @content;
+  }
+}
 
 /* Media  Mixins */
 @mixin aspect-ratio($width, $height) {

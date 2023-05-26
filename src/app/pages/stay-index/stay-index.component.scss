@@ -2,17 +2,31 @@
 :host {
   height: 100%;
 }
+dynamic-modal.dynamic-modal.modal-content {
+  @include for-extra-wide-layout {
+    max-height: 90%;
+  }
+  @include for-wide-layout {
+    max-height: 90%;
+  }
+  @include for-normal-layout {
+    max-height: 90%;
+  }
+}
 .dynamic-modal.modal-content {
   width: 100%;
   max-width: 800px;
   border-radius: 12px;
-  @include for-normal-layout {
-    max-height: 90%;
-  }
 
   .filter-modal-container {
     display: flex;
     width: 100%;
+    @include for-extra-wide-layout {
+      max-height: 500px;
+    }
+    @include for-wide-layout {
+      max-height: 500px;
+    }
     @include for-normal-layout {
       max-height: 500px;
     }

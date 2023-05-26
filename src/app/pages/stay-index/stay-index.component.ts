@@ -31,5 +31,6 @@ export class StayIndexComponent implements OnInit {
 
   toggleFilterModal() {
     this.isFilterModalOpen = !this.isFilterModalOpen;
+    document.querySelector('body')?.classList.toggle('modal-open');
   }
 }

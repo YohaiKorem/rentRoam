@@ -7,6 +7,8 @@
 }
 .modal-content {
   max-height: 100%;
+  @include for-normal-layout {
+  }
 }
 header {
   display: grid;

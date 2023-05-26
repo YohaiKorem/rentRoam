@@ -27,6 +27,9 @@
   @include for-wide-layout {
     max-width: $normal-breakpoint;
   }
+  @include for-extra-wide-layout {
+    // max-width: $wide-breakpoint;
+  }
 }
 
 .main-layout {

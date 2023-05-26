@@ -3,7 +3,9 @@
 .filter-modal {
   width: 100%;
   margin-block-start: 2em;
-  padding-block-end: em(74px);
+  @include for-mobile-layout {
+    padding-block-end: em(74px);
+  }
   .modal-content-wrapper {
     margin-block-end: 1em;
     gap: 2em;
@@ -263,8 +265,8 @@
       gap: 1em;
     }
     &-footer {
-      padding-block-start: 2em;
-      padding-block-end: 3em;
+      padding-block: 0;
+      padding-block-start: 1em;
     }
   }
 }

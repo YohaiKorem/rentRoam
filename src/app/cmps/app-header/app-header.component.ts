@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { faAirbnb } from '@fortawesome/free-brands-svg-icons';
 import {
   faSearch,
@@ -6,6 +6,17 @@ import {
   faBars,
   faTentArrowLeftRight,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuTrigger } from '@angular/material/menu';
+
 import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'app-header',
@@ -16,6 +27,7 @@ import { SharedService } from 'src/app/services/shared.service';
   },
 })
 export class AppHeaderComponent {
+  @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
   faAirbnb = faAirbnb;
   faSearch = faSearch;
   faGlobe = faGlobe;
@@ -25,5 +37,9 @@ export class AppHeaderComponent {
 
   openFilterModal() {
     this.sharedService.openFilterModal();
+  }
+  openSearch(str: string) {
+    console.log(this.trigger);
+    this.trigger.openMenu();
   }
 }
