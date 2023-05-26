@@ -43,6 +43,56 @@
       </svg>
     </button>
   </div>
+  <div
+    *ngIf="isSearchOpen"
+    class="search-menu-wrapper flex column align-center space-around shadow"
+  >
+    <button class="btn btn-stays">Stays</button>
+    <div class="search-bar-active flex align-center space-between">
+      <button
+        class="btn-search destination fw500 flex column space-between align-start"
+      >
+        <span>Where</span>
+        <span class="fw200">Search destinations</span>
+      </button>
+
+      <span class="hidden-on-mobile"></span>
+      <button
+        class="btn-search Check-in fw500 flex column space-between align-start"
+        (click)="openSearch('time')"
+      >
+        <span>Check in</span>
+        <span class="fw200">Add dates</span>
+      </button>
+      <span class="hidden-on-mobile"></span>
+      <button
+        class="btn-search Check-out fw500 flex column space-between align-start"
+        (click)="openSearch('time')"
+      >
+        <span>Check out</span>
+        <span class="fw200">Add dates</span>
+      </button>
+      <span class="hidden-on-mobile"></span>
+      <button
+        class="btn-search guests flex space-between align-center"
+        (click)="openSearch('guests')"
+      >
+        <div
+          class="guests-btn-txt-container flex column align-start space-between"
+        >
+          <span class="fw500">Who</span>
+          <span class="fw200">Add guests</span>
+        </div>
+        <div
+          class="icon-container flex auto-center flex space-between align-center"
+          (click)="openSearch('loc')"
+        >
+          <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
+          <span class="fw500">Search</span>
+        </div>
+      </button>
+    </div>
+  </div>
   <mat-menu #belowMenu="matMenu" yPosition="below">
     <button mat-menu-item>Item 1</button>
     <button mat-menu-item>Item 2</button>

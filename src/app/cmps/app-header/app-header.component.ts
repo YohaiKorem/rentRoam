@@ -32,14 +32,13 @@ export class AppHeaderComponent {
   faSearch = faSearch;
   faGlobe = faGlobe;
   faBars = faBars;
-
+  isSearchOpen: boolean = true;
   constructor(private sharedService: SharedService) {}
 
   openFilterModal() {
     this.sharedService.openFilterModal();
   }
   openSearch(str: string) {
-    console.log(this.trigger);
-    this.trigger.openMenu();
+    this.isSearchOpen = !this.isSearchOpen;
   }
 }

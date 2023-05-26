@@ -85,6 +85,65 @@
       cursor: pointer;
     }
   }
+
+  .search-menu-wrapper {
+    position: fixed;
+    top: $header-height;
+    left: 1em;
+    height: $header-height;
+    width: 100%;
+    background-color: #fff;
+    z-index: 40;
+    .btn-stays {
+      background-color: transparent;
+    }
+    .search-bar-active {
+      background-color: $secondaryClr5;
+      border-radius: 32px;
+      border: 1px solid $secondaryClr2;
+      margin-block-end: 2em;
+      .btn-search {
+        background-color: transparent;
+        transition: 0.25s;
+        border-radius: 32px;
+        padding: 1em 2em;
+        gap: 0.5em;
+        &:last-of-type {
+          padding: 1em 1em;
+          gap: 1em;
+          .guests-btn-txt-container {
+            gap: 0.5em;
+          }
+        }
+        &:hover {
+          background-color: $secondaryClr2;
+        }
+      }
+      .icon-container {
+        position: relative;
+        padding: 1em;
+        border-radius: em(32px);
+        background-size: 200% 200%;
+        background-position: calc((100 - var(--mouse-x, 0)) * 1%)
+          calc((100 - var(--mouse-y, 0)) * 1%);
+        --mouse-x: 22.6171875;
+        --mouse-y: 52.083333333333336;
+        background-color: #ff385c;
+        background-image: radial-gradient(
+          circle at center,
+          #ff385c 0%,
+          #e61e4d 27.5%,
+          #e31c5f 40%,
+          #d70466 57.5%,
+          #bd1e59 75%,
+          #bd1e59 100%
+        );
+        gap: 0.5em;
+        color: $fontclr2;
+      }
+    }
+  }
+
   .options-btns-container {
     .btn-options {
       background-color: inherit;
