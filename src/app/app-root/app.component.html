@@ -1,4 +1,6 @@
 <app-header> </app-header>
-<main class="main-content">
+<radio-filter></radio-filter>
+<main [class.map-active]="location" class="main-content">
   <router-outlet></router-outlet>
+  <google-map-cmp *ngIf="location"></google-map-cmp>
 </main>

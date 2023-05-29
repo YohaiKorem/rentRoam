@@ -1,18 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { faAirbnb } from '@fortawesome/free-brands-svg-icons';
-import {
-  faSearch,
-  faGlobe,
-  faBars,
-  faTentArrowLeftRight,
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { faSearch, faGlobe, faBars } from '@fortawesome/free-solid-svg-icons';
+
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -22,7 +11,6 @@ import { MatDateRangePicker } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
-import { displayPartsToString } from 'typescript';
 declare var google: any;
 @Component({
   selector: 'app-header',

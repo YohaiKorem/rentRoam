@@ -56,6 +56,27 @@
 
 .main-content {
   width: 100%;
+  &.map-active {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1em;
+    & stay-index {
+      grid-column: 1;
+      grid-row: 1;
+      width: min-content;
+      overflow-y: auto;
+      & .stay-list {
+        grid-template-columns: repeat(
+          var(--breakpoint-grid-columns-map-active),
+          minmax(270px, 1fr)
+        );
+      }
+    }
+    & google-map-cmp {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
 }
 // GRIDS
 .simple-cards-grid {

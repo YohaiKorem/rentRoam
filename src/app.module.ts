@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,7 +26,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ClickOutsideDirective } from './app/directives/click-outside';
-import { GoogleMapComponent } from './app/cmps/google-map/google-map.component';
+import { GoogleMapCmpComponent } from './app/cmps/google-map/google-map.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { GoogleMapComponent } from './app/cmps/google-map/google-map.component';
     DynamicModalComponent,
     ChartComponent,
     ClickOutsideDirective,
-    GoogleMapComponent,
+    GoogleMapCmpComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +59,7 @@ import { GoogleMapComponent } from './app/cmps/google-map/google-map.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    GoogleMapsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
