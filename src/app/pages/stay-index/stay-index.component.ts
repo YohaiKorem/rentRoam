@@ -29,6 +29,10 @@ export class StayIndexComponent implements OnInit {
     });
   }
 
+  clearFilter() {
+    this.stayService.clearFilter();
+  }
+
   toggleFilterModal() {
     this.isFilterModalOpen = !this.isFilterModalOpen;
     document.querySelector('body')?.classList.toggle('modal-open');

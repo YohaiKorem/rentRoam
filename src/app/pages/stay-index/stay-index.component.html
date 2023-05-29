@@ -1,5 +1,6 @@
 <radio-filter (toggleFilterModal)="toggleFilterModal()"></radio-filter>
-<stay-list [stays]="stays$ | async"></stay-list>
+<stay-list (clearFilter)="clearFilter()" [stays]="stays$ | async"></stay-list>
+
 <div
   *ngIf="isFilterModalOpen"
   (click)="toggleFilterModal()"
