@@ -107,7 +107,20 @@
     width: em(110px);
     color: $secondaryClr3;
     margin-inline-end: 1em;
-
+    &.active {
+      outline: 1.5px solid black;
+    }
+    span.filter-count {
+      background-color: #000000;
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      padding: 0.5em;
+      border-radius: 1em;
+      position: relative;
+      top: -1.5em;
+      right: -4.8em;
+    }
     svg {
       margin-inline-end: 1em;
     }
