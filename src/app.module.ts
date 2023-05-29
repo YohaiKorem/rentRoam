@@ -25,6 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ClickOutsideDirective } from './app/directives/click-outside';
+import { GoogleMapComponent } from './app/cmps/google-map/google-map.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ClickOutsideDirective } from './app/directives/click-outside';
     DynamicModalComponent,
     ChartComponent,
     ClickOutsideDirective,
+    GoogleMapComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Stay } from 'src/app/models/stay.model';
 
 @Component({
@@ -8,4 +8,8 @@ import { Stay } from 'src/app/models/stay.model';
 })
 export class StayListComponent {
   @Input() stays!: Stay[] | null;
+  @Output() clearFilter = new EventEmitter();
+  onClearFilter() {
+    this.clearFilter.emit();
+  }
 }

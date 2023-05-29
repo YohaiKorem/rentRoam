@@ -19,3 +19,18 @@
     overflow: scroll;
   }
 }
+
+.no-stays-container {
+  gap: 1em;
+  h3 {
+    color: #333;
+  }
+  .btn.btn-remove-filters {
+    background-color: transparent;
+    border: 1px solid $secondaryClr3;
+    border-radius: 5px;
+    &:hover {
+      outline: 1px solid #333;
+    }
+  }
+}

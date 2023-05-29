@@ -1,4 +1,4 @@
-<ul class="stay-list clean-list">
+<ul *ngIf="stays!.length" class="stay-list clean-list">
   <a
     *ngFor="let stay of stays"
     routerLink="{{ stay._id }}"
@@ -8,3 +8,17 @@
     <stay-preview [stay]="stay"></stay-preview>
   </a>
 </ul>
+
+<div
+  *ngIf="!stays!.length"
+  class="no-stays-container flex column space-between align-start"
+>
+  <h3 class="fw700 fs24">No exact matches</h3>
+  <h4>
+    Try changing or removing some of your filters or adjusting your search area.
+  </h4>
+  <button (click)="onClearFilter()" class="btn btn-remove-filters flex column">
+    <span>Remove all filters</span>
+    <span>+360 stays</span>
+  </button>
+</div>

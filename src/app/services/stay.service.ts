@@ -8,11 +8,15 @@ import {
   retry,
   catchError,
   take,
+  switchMap,
+  of,
 } from 'rxjs';
 import { storageService } from './async-storage.service';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { SearchParam, Stay, StayFilter } from '../models/stay.model';
 import _stays from '../../data/stay.json';
+import { GeocodingService } from './geocoding.service';
+import { getDistance } from 'geolib';
 const ENTITY = 'stays';
 
 @Injectable({
@@ -49,7 +53,10 @@ export class StayService {
   public lowestPrice$ = this._lowestPrice$.asObservable();
   private _highestPrice$ = new BehaviorSubject<number>(0);
   public highestPrice$ = this._highestPrice$.asObservable();
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private geocodingService: GeocodingService
+  ) {
     let stays = JSON.parse(localStorage.getItem(ENTITY) || 'null');
 
     if (!stays || stays.length === 0) {
@@ -74,18 +81,26 @@ export class StayService {
     console.log('map init');
   }
 
-  public loadStays() {
+  public loadStays(): Observable<Stay[]> {
     return from(storageService.query(ENTITY)).pipe(
-      tap((stays) => {
+      switchMap((stays: Stay[]) => {
         const filterBy = this._stayFilter$.value;
         const searchParams = this._searchParams$.value;
+
         let filteredStays = this._filter(stays, filterBy);
-        filteredStays = this.search(filteredStays, searchParams);
-        this.setAvgPrice(filteredStays);
-        this.setHigheststPrice(filteredStays);
-        this.setLowestPrice(filteredStays);
-        const sortedStays = this._sort(filteredStays);
-        this._stays$.next(sortedStays);
+
+        return this.search(filteredStays, searchParams).pipe(
+          tap((searchedStays: Stay[]) => {
+            console.log(searchedStays);
+
+            this.setAvgPrice(searchedStays);
+            this.setHigheststPrice(searchedStays);
+            this.setLowestPrice(searchedStays);
+
+            const sortedStays = this._sort(searchedStays);
+            this._stays$.next(sortedStays);
+          })
+        );
       }),
       retry(1),
       catchError(this._handleError)
@@ -184,8 +199,9 @@ export class StayService {
     });
   }
 
-  private search(stays: Stay[], searchParams: SearchParam) {
+  private search(stays: Stay[], searchParams: SearchParam): Observable<Stay[]> {
     let searchedStays = stays;
+
     if (searchParams.guests.adults) {
       searchedStays = stays.filter(
         (stay) =>
@@ -193,9 +209,39 @@ export class StayService {
           searchParams.guests.adults + searchParams.guests.children
       );
     }
-    console.log(searchParams.location);
 
-    return searchedStays;
+    if (searchParams.location && searchParams.location !== "I'm flexible") {
+      return this.geocodingService.getLatLng(searchParams.location).pipe(
+        switchMap((coords: any) => {
+          if (coords) {
+            const distanceLimitInMeters = 5000;
+            searchedStays = searchedStays.filter((stay) => {
+              if (
+                stay.loc &&
+                stay.loc.lat &&
+                stay.loc.lng &&
+                coords &&
+                coords.lat &&
+                coords.lng
+              ) {
+                const distance = getDistance(
+                  { latitude: stay.loc.lat, longitude: stay.loc.lng },
+                  { latitude: coords.lat, longitude: coords.lng }
+                );
+                return distance <= distanceLimitInMeters;
+              }
+              return false;
+            });
+            console.log('coords', coords);
+          }
+          console.log('searchedStays', searchedStays);
+
+          return of(searchedStays);
+        })
+      );
+    } else {
+      return of(searchedStays);
+    }
   }
 
   private _updateStay(stay: Stay) {

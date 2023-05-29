@@ -14,7 +14,7 @@ export class Stay {
     public amenities: string[],
     public roomType: string,
     public host: Host,
-    public loc: Location,
+    public loc: Loc,
     public reviews: Review[],
     public likedByUsers: User[],
     public labels: string[],
@@ -55,6 +55,15 @@ export interface SearchParam {
     children: number;
     infants: number;
   };
+}
+
+export interface Loc {
+  country: string;
+  countryCode: string;
+  city: string;
+  address: string;
+  lat: number;
+  lng: number;
 }
 
 export interface StayFilter {
