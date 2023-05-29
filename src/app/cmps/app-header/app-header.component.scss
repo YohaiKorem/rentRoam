@@ -32,6 +32,11 @@
     cursor: pointer;
   }
 
+  .search-bar,
+  .search-menu-wrapper {
+    transition: 0.65s ease-in;
+  }
+
   .search-bar {
     display: inline-flex;
     background-color: $secondaryClr1;
@@ -89,11 +94,27 @@
   .search-menu-wrapper {
     position: fixed;
     top: $header-height;
-    left: 1em;
+    left: 0;
     height: $header-height;
-    width: 100%;
+    width: 100vw;
     background-color: #fff;
     z-index: 40;
+
+    &.inactive {
+      .search-overlay {
+        display: none;
+      }
+    }
+
+    .search-overlay {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      top: em(170px);
+      left: 0;
+    }
+
     .btn-stays {
       background-color: transparent;
     }
@@ -102,12 +123,25 @@
       border-radius: 32px;
       border: 1px solid $secondaryClr2;
       margin-block-end: 2em;
+
       .btn-search {
         background-color: transparent;
         transition: 0.25s;
         border-radius: 32px;
         padding: 1em 2em;
-        gap: 0.5em;
+        gap: 0.4em;
+
+        input {
+          background-color: transparent;
+          border: none;
+          outline: none;
+        }
+
+        &.active-btn {
+          background-color: #fff;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
         &:last-of-type {
           padding: 1em 1em;
           gap: 1em;
@@ -120,8 +154,11 @@
         }
       }
       .icon-container {
+        cursor: pointer;
+        z-index: 40;
         position: relative;
-        padding: 1em;
+        pointer-events: all;
+        padding: 1.5em;
         border-radius: em(32px);
         background-size: 200% 200%;
         background-position: calc((100 - var(--mouse-x, 0)) * 1%)
@@ -140,10 +177,26 @@
         );
         gap: 0.5em;
         color: $fontclr2;
+        margin: 0;
+        margin-block: -1em;
+        padding-block: 1.2em;
+        padding-inline: 2em;
       }
     }
   }
-
+  .mat-btns-container {
+    background-color: #bd1e59;
+    position: absolute;
+    top: 7em;
+    left: 26em;
+    min-width: 300px;
+    gap: 11em;
+    opacity: 0;
+    pointer-events: none;
+    & :first-child {
+      margin-inline-end: 3em;
+    }
+  }
   .options-btns-container {
     .btn-options {
       background-color: inherit;
@@ -231,4 +284,83 @@
       }
     }
   }
+}
+.region-btns-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 1em;
+  button {
+    span {
+      white-space: nowrap;
+    }
+    img {
+      border-radius: 1em;
+      border: 1px solid $secondaryClr3;
+      transition: 0.25s;
+    }
+    &:hover {
+      img {
+        border: 1.5px solid black;
+      }
+    }
+  }
+}
+.loc-suggestions-container {
+  gap: 1em;
+  .btn-suggestion {
+    background-color: transparent;
+    padding: 1em;
+    &:hover {
+      background-color: rgb(247, 247, 247);
+    }
+  }
+  .img-container {
+    border-radius: 1em;
+    background-color: $secondaryClr2;
+    padding: 1em;
+    opacity: 0.7;
+  }
+}
+.guests-menu-wrapper {
+  gap: 1em;
+  padding-inline: 1em;
+  .guests-item-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    padding-block: 1em;
+    &:not(:last-child) {
+      border-bottom: 1px solid $secondaryClr2;
+    }
+
+    & > span {
+      grid-row: 2;
+      opacity: 0.6;
+      font-size: 14px;
+    }
+    .plus-minus-btns-container {
+      grid-row: 1/-1;
+      grid-column: 3;
+      .btn {
+        width: em(24px);
+        height: em(24px);
+        border-radius: 50%;
+        border: 1px solid $secondaryClr3;
+        background-color: transparent;
+        padding: 5px;
+        &.disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+.inactive {
+  position: relative;
+  transform: translateY(-200%);
+  scale: 0.6;
+  opacity: 0;
+  pointer-events: none;
 }

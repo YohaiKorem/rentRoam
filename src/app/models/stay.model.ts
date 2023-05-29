@@ -46,6 +46,17 @@ export class Stay {
   }
 }
 
+export interface SearchParam {
+  startDate: Date | null;
+  endDate: Date | null;
+  location: string | null;
+  guests: {
+    adults: number;
+    children: number;
+    infants: number;
+  };
+}
+
 export interface StayFilter {
   labels: string[];
   minPrice: number;

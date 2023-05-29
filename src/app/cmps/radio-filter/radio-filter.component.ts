@@ -26,6 +26,7 @@ export class RadioFilterComponent {
   isFirstElementInView: boolean = true;
   isLastElementInView: boolean = false;
   selectedLabel: string = '';
+  filterCount: number = 0;
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   private scrollAmount = 500;
 
@@ -40,6 +41,11 @@ export class RadioFilterComponent {
       .pipe(takeUntil(this.destroySubject$), debounceTime(500))
       .subscribe(() => {
         this.stayService.setFilter(this.stayFilter);
+      });
+    this.stayService.filterCount$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((filterCount) => {
+        this.filterCount = filterCount;
       });
   }
 

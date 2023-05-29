@@ -21,6 +21,10 @@ import { NgChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ClickOutsideDirective } from './app/directives/click-outside';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import { MatButtonModule } from '@angular/material/button';
     RadioFilterComponent,
     DynamicModalComponent,
     ChartComponent,
+    ClickOutsideDirective,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +53,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatMenuModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

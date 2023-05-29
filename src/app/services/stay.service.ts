@@ -7,10 +7,11 @@ import {
   tap,
   retry,
   catchError,
+  take,
 } from 'rxjs';
 import { storageService } from './async-storage.service';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
-import { Stay, StayFilter } from '../models/stay.model';
+import { SearchParam, Stay, StayFilter } from '../models/stay.model';
 import _stays from '../../data/stay.json';
 const ENTITY = 'stays';
 
@@ -20,17 +21,28 @@ const ENTITY = 'stays';
 export class StayService {
   private _stays$ = new BehaviorSubject<Stay[]>([]);
   public stays$ = this._stays$.asObservable();
+  public googleMapsAPI = 'AIzaSyAaeVqcfMAlJj1ZQfNXP9pkOBtojwlJwnQ';
+  public geocodeAPI = 'AIzaSyD6VYrEZ0nY107CEP22L0mZ0gmu-7eLf1Y';
   private _stayFilter$ = new BehaviorSubject<StayFilter>({
     labels: [],
     minPrice: 0,
     maxPrice: 0,
     equipment: { bedsNum: 0, bathNum: 0, bedroomNum: 0 },
-    capacity: Infinity,
+    capacity: 0,
     roomType: '',
     amenities: [],
     superhost: false,
   });
   public stayFilter$ = this._stayFilter$.asObservable();
+  private _filterCount$ = new BehaviorSubject<number>(0);
+  public filterCount$ = this._filterCount$.asObservable();
+  private _searchParams$ = new BehaviorSubject<SearchParam>({
+    startDate: null,
+    endDate: null,
+    location: null,
+    guests: { adults: 0, children: 0, infants: 0 },
+  });
+  public searchParams$ = this._searchParams$.asObservable();
   private _avgPrice$ = new BehaviorSubject<number>(0);
   public avgPrice$ = this._avgPrice$.asObservable();
   private _lowestPrice$ = new BehaviorSubject<number>(1);
@@ -58,12 +70,17 @@ export class StayService {
     this.setAvgPrice(stays);
   }
 
+  public initMap() {
+    console.log('map init');
+  }
+
   public loadStays() {
     return from(storageService.query(ENTITY)).pipe(
       tap((stays) => {
         const filterBy = this._stayFilter$.value;
-
-        const filteredStays = this._filter(stays, filterBy);
+        const searchParams = this._searchParams$.value;
+        let filteredStays = this._filter(stays, filterBy);
+        filteredStays = this.search(filteredStays, searchParams);
         this.setAvgPrice(filteredStays);
         this.setHigheststPrice(filteredStays);
         this.setLowestPrice(filteredStays);
@@ -140,9 +157,18 @@ export class StayService {
     this._avgPrice$.next(avg);
   }
 
+  public setSearchParams(searchParam: SearchParam) {
+    this._searchParams$.next({ ...searchParam });
+    this.loadStays().pipe(take(1)).subscribe();
+  }
+
   public setFilter(stayFilter: StayFilter) {
     this._stayFilter$.next({ ...stayFilter });
-    this.loadStays().subscribe();
+    this.loadStays().pipe(take(1)).subscribe();
+  }
+
+  public setFilterCount(filterCount: number) {
+    this._filterCount$.next(filterCount);
   }
 
   public clearFilter() {
@@ -151,11 +177,25 @@ export class StayService {
       minPrice: 0,
       maxPrice: 0,
       equipment: { bedsNum: 0, bathNum: 0, bedroomNum: 0 },
-      capacity: Infinity,
+      capacity: 0,
       roomType: '',
       amenities: [],
       superhost: false,
     });
+  }
+
+  private search(stays: Stay[], searchParams: SearchParam) {
+    let searchedStays = stays;
+    if (searchParams.guests.adults) {
+      searchedStays = stays.filter(
+        (stay) =>
+          stay.capacity >=
+          searchParams.guests.adults + searchParams.guests.children
+      );
+    }
+    console.log(searchParams.location);
+
+    return searchedStays;
   }
 
   private _updateStay(stay: Stay) {
@@ -199,7 +239,6 @@ export class StayService {
 
   private _filter(stays: Stay[], filterBy: any): Stay[] {
     let filteredStays = stays;
-
     if (filterBy.labels && filterBy.labels.length > 0)
       filteredStays = filteredStays.filter((stay) =>
         stay.labels.includes(filterBy.labels[0])
@@ -221,13 +260,12 @@ export class StayService {
         );
       }
     }
-    if (filterBy.amenities && filterBy.amenities.length) {
+    if (filterBy.amenities && filterBy.amenities.length)
       filteredStays = filteredStays.filter((stay) => {
         return filterBy.amenities.every((amenity: string) =>
           stay.amenities.includes(amenity)
         );
       });
-    }
 
     if (filterBy.superhost)
       filteredStays = filteredStays.filter(
@@ -242,7 +280,24 @@ export class StayService {
       filteredStays = filteredStays.filter(
         (stay) => stay.price >= filterBy.minPrice
       );
+    this._countFilters(filterBy);
     return filteredStays;
+  }
+
+  private _countFilters(filterBy: any) {
+    let count = 0;
+    if (filterBy.labels && filterBy.labels.length > 0) count++;
+    if (
+      filterBy.equipment &&
+      (filterBy.equipment.bathNum || filterBy.equipment.bedsNum)
+    )
+      count++;
+    if (filterBy.amenities && filterBy.amenities.length) count++;
+
+    if (filterBy.superhost) count++;
+
+    if (filterBy.maxPrice || filterBy.minPrice) count++;
+    this.setFilterCount(count);
   }
 
   private _createStays() {

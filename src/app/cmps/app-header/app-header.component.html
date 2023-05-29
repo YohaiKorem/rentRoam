@@ -5,22 +5,34 @@
       <span class="logo-txt">RentRoam</span>
     </div>
   </a>
-  <div class="search-bar shadow">
-    <button
-      class="btn-search anywhere fw500"
-      mat-button
-      [matMenuTriggerFor]="belowMenu"
-    >
-      Anywhere
+  <div [class.inactive]="isSearchOpen" class="search-bar shadow">
+    <button class="btn-search anywhere fw500" (click)="openSearch('loc')">
+      {{ searchParam.location ? searchParam.location : "Anywhere" }}
     </button>
 
     <span class="hidden-on-mobile"></span>
-    <button class="btn-search anyweek fw500" (click)="openSearch('time')">
-      Any week
+    <button class="btn-search anyweek fw500" (click)="openSearch('check-in')">
+      {{
+        searchParam.startDate && searchParam.endDate
+          ? searchParam.startDate.toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short"
+            }) +
+            "-" +
+            searchParam.endDate.toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short"
+            })
+          : "Any week"
+      }}
     </button>
     <span class="hidden-on-mobile"></span>
     <button class="btn-search guests fw400" (click)="openSearch('guests')">
-      Add guests
+      {{
+        searchParam.guests.adults
+          ? searchParam.guests.adults + searchParam.guests.children + " guests"
+          : "Add guests"
+      }}
     </button>
     <div class="icon-container flex auto-center" (click)="openSearch('loc')">
       <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
@@ -44,58 +56,391 @@
     </button>
   </div>
   <div
-    *ngIf="isSearchOpen"
+    [class.inactive]="!isSearchOpen"
     class="search-menu-wrapper flex column align-center space-around shadow"
   >
-    <button class="btn btn-stays">Stays</button>
+    <div class="search-overlay" (click)="closeSearch()"></div>
+    <button class="btn btn-stays" (click)="closeSearch()">Stays</button>
     <div class="search-bar-active flex align-center space-between">
       <button
+        (click)="setCurrSearch('loc'); inputField.focus()"
+        [ngClass]="{
+          'active-btn': currSearch === 'loc',
+        }"
         class="btn-search destination fw500 flex column space-between align-start"
       >
         <span>Where</span>
-        <span class="fw200">Search destinations</span>
+        <input
+          class="fw200 search-loc-input"
+          placeholder="Search destinations"
+          [(ngModel)]="locSearch"
+          (input)="getSuggestions($event)"
+          #inputField
+        />
       </button>
 
       <span class="hidden-on-mobile"></span>
       <button
         class="btn-search Check-in fw500 flex column space-between align-start"
-        (click)="openSearch('time')"
+        [ngClass]="{
+          'active-btn': currSearch === 'check-in',
+        }"
+        (click)="picker.open()"
       >
         <span>Check in</span>
-        <span class="fw200">Add dates</span>
+        <span class="fw200">{{
+          searchParam.startDate
+            ? searchParam.startDate.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              })
+            : "Add dates"
+        }}</span>
       </button>
       <span class="hidden-on-mobile"></span>
       <button
         class="btn-search Check-out fw500 flex column space-between align-start"
-        (click)="openSearch('time')"
+        [ngClass]="{
+          'active-btn': currSearch === 'check-out',
+        }"
+        (click)="picker.open()"
       >
         <span>Check out</span>
-        <span class="fw200">Add dates</span>
+        <span class="fw200">{{
+          searchParam.endDate
+            ? searchParam.endDate.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              })
+            : "Add dates"
+        }}</span>
       </button>
       <span class="hidden-on-mobile"></span>
       <button
         class="btn-search guests flex space-between align-center"
-        (click)="openSearch('guests')"
+        [ngClass]="{
+          'active-btn': currSearch === 'guests'
+        }"
+        (click)="setCurrSearch('guests')"
       >
         <div
           class="guests-btn-txt-container flex column align-start space-between"
         >
           <span class="fw500">Who</span>
-          <span class="fw200">Add guests</span>
+          <span class="fw200"
+            >{{
+              searchParam.guests.adults
+                ? searchParam.guests.adults +
+                  searchParam.guests.children +
+                  " guests"
+                : "Add guests"
+            }}{{
+              searchParam.guests.infants
+                ? searchParam.guests.infants + " inf..."
+                : ""
+            }}</span
+          >
         </div>
         <div
           class="icon-container flex auto-center flex space-between align-center"
-          (click)="openSearch('loc')"
+          (click)="setSearchParams($event)"
         >
           <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
-          <span class="fw500">Search</span>
+          <span class="fw500 fs16">Search</span>
         </div>
       </button>
     </div>
   </div>
-  <mat-menu #belowMenu="matMenu" yPosition="below">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
+  <div class="mat-btns-container flex space-between">
+    <button
+      mat-button
+      #locMenuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="locMenu"
+    >
+      loc
+    </button>
+    <button>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          placeholder="Start date"
+          [(ngModel)]="searchParam.startDate"
+        />
+        <input
+          matEndDate
+          placeholder="End date"
+          [(ngModel)]="searchParam.endDate"
+        />
+      </mat-date-range-input>
+    </button>
+    <button
+      mat-button
+      #guestsMenuTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="guestsMenu"
+    >
+      guest
+    </button>
+  </div>
+  <mat-menu #locMenu="matMenu" yPosition="below" (close)="onCloseMenu()">
+    <h3 *ngIf="!locSearch">Search by region</h3>
+
+    <div *ngIf="!locSearch" class="region-btns-container">
+      <button mat-menu-item (click)="locSearch = 'I\'m flexible'">
+        <img
+          class="i17d61fu dir dir-ltr"
+          alt=""
+          src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg"
+        />
+        <span>I'm flexible</span>
+      </button>
+      <button mat-menu-item (click)="locSearch = 'France'">
+        <img
+          class="i17d61fu dir dir-ltr"
+          alt=""
+          src="https://a0.muscache.com/im/pictures/f0ece7c0-d9b2-49d5-bb83-64173d29cbe3.jpg?im_w=320"
+        />
+        France
+      </button>
+      <button mat-menu-item (click)="locSearch = 'United States'">
+        <img
+          class="i17d61fu dir dir-ltr"
+          alt=""
+          src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg?im_w=320"
+        />
+        <span>United States</span>
+      </button>
+      <button mat-menu-item (click)="locSearch = 'Southeast Asia'">
+        <img
+          class="i17d61fu dir dir-ltr"
+          alt=""
+          src="https://a0.muscache.com/im/pictures/d77de9f5-5318-4571-88c7-e97d2355d20a.jpg?im_w=320"
+        />
+        <span>Southeast Asia</span>
+      </button>
+      <button mat-menu-item (click)="locSearch = 'Spain'">
+        <img
+          class="i17d61fu dir dir-ltr"
+          alt=""
+          src="https://a0.muscache.com/im/pictures/a0fd6dfc-6bec-4abb-850e-9ab78ed7bf37.jpg?im_w=320"
+        />
+        <span>Spain</span>
+      </button>
+      <button mat-menu-item (click)="locSearch = 'Australia'">
+        <img
+          class="i17d61fu dir dir-ltr"
+          alt=""
+          src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg?im_w=320"
+        />
+        Australia
+      </button>
+    </div>
+    <div
+      *ngIf="locSearch"
+      class="loc-suggestions-container flex column space-between"
+    >
+      <button
+        *ngFor="let place of suggestions"
+        class="btn-suggestion flex align-center space-between"
+        (click)="locSearch = place.description"
+      >
+        <div class="img-container">
+          <svg
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            style="
+              display: block;
+              height: 22px;
+              width: 22px;
+              fill: currentcolor;
+            "
+          >
+            <path
+              d="M16 0c6.627 0 12 5.373 12 12 0 6.337-3.814 12.751-11.346 19.257L16 31.82l-1.076-.932C7.671 24.509 4 18.218 4 12 4 5.423 9.397 0 16 0zm0 2C10.504 2 6 6.525 6 12c0 5.44 3.249 11.118 9.831 17.02l.169.149.576-.518c6.178-5.65 9.293-11.092 9.42-16.318L26 12c0-5.523-4.477-10-10-10zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
+            ></path>
+          </svg>
+        </div>
+        <span>{{ place.description }}</span>
+      </button>
+    </div>
+  </mat-menu>
+  <!-- <mat-menu #dateMenu="matMenu" yPosition="below" (close)="onCloseMenu()">
+  </mat-menu> -->
+
+  <mat-date-range-picker
+    (opened)="onOpenDatePicker()"
+    (closed)="onCloseMenu()"
+    #picker
+  ></mat-date-range-picker>
+  <mat-menu
+    #guestsMenu="matMenu"
+    xPosition="before"
+    yPosition="below"
+    (close)="onCloseMenu()"
+  >
+    <div class="guests-menu-wrapper flex column space-between">
+      <div class="guests-item-container">
+        <h4>Adults</h4>
+        <span>Ages 13 or above</span>
+        <div class="plus-minus-btns-container flex align-center space-between">
+          <button
+            class="btn btn-subtract adults"
+            (click)="updateGuests($event, -1)"
+            [disabled]="searchParam.guests.adults <= 0"
+            [class.disabled]="searchParam.guests.adults <= 0"
+          >
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                fill: none;
+                height: 12px;
+                width: 12px;
+                stroke: currentcolor;
+                stroke-width: 5.33333;
+                overflow: visible;
+              "
+            >
+              <path d="m2 16h28"></path>
+            </svg>
+          </button>
+          <span>{{ searchParam.guests.adults }}</span>
+          <button class="btn btn-add adults" (click)="updateGuests($event, 1)">
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                fill: none;
+                height: 12px;
+                width: 12px;
+                stroke: currentcolor;
+                stroke-width: 5.33333;
+                overflow: visible;
+              "
+            >
+              <path d="m2 16h28m-14-14v28"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="guests-item-container">
+        <h4>Children</h4>
+        <span>Ages 2-12</span>
+        <div class="plus-minus-btns-container flex align-center space-between">
+          <button
+            class="btn btn-subtract children"
+            (click)="updateGuests($event, -1)"
+            [disabled]="searchParam.guests.children <= 0"
+            [class.disabled]="searchParam.guests.children <= 0"
+          >
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                fill: none;
+                height: 12px;
+                width: 12px;
+                stroke: currentcolor;
+                stroke-width: 5.33333;
+                overflow: visible;
+              "
+            >
+              <path d="m2 16h28"></path>
+            </svg>
+          </button>
+          <span>{{ searchParam.guests.children }}</span>
+          <button
+            class="btn btn-add children"
+            (click)="updateGuests($event, 1)"
+          >
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                fill: none;
+                height: 12px;
+                width: 12px;
+                stroke: currentcolor;
+                stroke-width: 5.33333;
+                overflow: visible;
+              "
+            >
+              <path d="m2 16h28m-14-14v28"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="guests-item-container">
+        <h4>Infants</h4>
+        <span>Under 2</span>
+        <div class="plus-minus-btns-container flex align-center space-between">
+          <button
+            class="btn btn-subtract infants"
+            (click)="updateGuests($event, -1)"
+            [disabled]="searchParam.guests.infants <= 0"
+            [class.disabled]="searchParam.guests.infants <= 0"
+          >
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                fill: none;
+                height: 12px;
+                width: 12px;
+                stroke: currentcolor;
+                stroke-width: 5.33333;
+                overflow: visible;
+              "
+            >
+              <path d="m2 16h28"></path>
+            </svg>
+          </button>
+          <span>{{ searchParam.guests.infants }}</span>
+          <button class="btn btn-add infants" (click)="updateGuests($event, 1)">
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                fill: none;
+                height: 12px;
+                width: 12px;
+                stroke: currentcolor;
+                stroke-width: 5.33333;
+                overflow: visible;
+              "
+            >
+              <path d="m2 16h28m-14-14v28"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   </mat-menu>
   <div class="options-btns-container flex space-between hidden-on-mobile">
     <button class="btn btn-options btn-mode">RentRoam your home</button>
