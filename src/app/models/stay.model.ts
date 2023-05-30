@@ -49,7 +49,10 @@ export class Stay {
 export interface SearchParam {
   startDate: Date | null;
   endDate: Date | null;
-  location: string | null;
+  location: {
+    name: string | null;
+    coords: { lat: number | null; lng: number | null };
+  };
   guests: {
     adults: number;
     children: number;

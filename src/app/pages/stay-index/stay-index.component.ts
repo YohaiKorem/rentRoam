@@ -22,7 +22,7 @@ export class StayIndexComponent implements OnInit {
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
   isFilterModalOpen = false;
-  location: string | null = null;
+  location: any | null = null;
   private destroySubject$ = new Subject<null>();
 
   ngOnInit() {

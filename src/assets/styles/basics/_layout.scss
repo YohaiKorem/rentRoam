@@ -6,6 +6,11 @@
   padding: em(20px) em(100px);
   margin: 0 auto;
   overflow-x: hidden;
+
+  &:has(.map-active) {
+    padding: em(20px) 1.25em;
+  }
+
   & > * {
     width: 100%;
   }
@@ -60,11 +65,22 @@
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     gap: 1em;
+    height: calc(100vh - $header-height - $header-height - 3em);
+    .radio-filter-container {
+      margin: 0;
+      margin-block-start: 2em;
+      margin-block-end: 1em;
+      padding-block-end: 0;
+      height: $header-height;
+    }
+
     & stay-index {
       grid-column: 1;
       grid-row: 1;
-      width: min-content;
+      width: max-content;
       overflow-y: auto;
+      height: auto;
+      min-height: 100%;
       & .stay-list {
         grid-template-columns: repeat(
           var(--breakpoint-grid-columns-map-active),

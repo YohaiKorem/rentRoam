@@ -205,3 +205,39 @@ mat-datepicker-content {
   ) {
   background-color: rgb(255 255 255 / 30%) !important;
 }
+
+// MAPS
+.gm-style-iw-d {
+  max-height: none !important;
+  overflow: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+map-info-window.ng-star-inserted {
+  height: fit-content !important;
+}
+.gm-style-iw.gm-style-iw-c {
+  max-height: none !important;
+  padding: 1em !important;
+  margin: 1em !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+map-info-window.ng-star-inserted {
+  height: max-content !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+
+  .stay-preview-container {
+    width: 100%;
+    .img-container {
+      position: relative;
+      width: 100%;
+      height: 12.25em;
+    }
+  }
+}

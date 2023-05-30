@@ -11,13 +11,17 @@ import { StayService } from 'src/app/services/stay.service';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Btn } from 'src/app/models/btn.model';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'radio-filter',
   templateUrl: './radio-filter.component.html',
   styleUrls: ['./radio-filter.component.scss'],
 })
 export class RadioFilterComponent {
-  constructor(private stayService: StayService) {}
+  constructor(
+    private stayService: StayService,
+    private sharedService: SharedService
+  ) {}
   @Output() toggleFilterModal = new EventEmitter();
 
   stayFilter = {} as StayFilter;
@@ -121,7 +125,7 @@ export class RadioFilterComponent {
   }
 
   openFilterModal() {
-    this.toggleFilterModal.emit();
+    this.sharedService.openFilterModal();
   }
 
   ngOnDestroy(): void {

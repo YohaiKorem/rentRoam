@@ -1,9 +1,22 @@
 <google-map
-  height="500px"
-  width="400px"
+  height="100%"
+  width="100%"
   [center]="center"
   [zoom]="zoom"
   (mapClick)="moveMap($event)"
   (mapMousemove)="move($event)"
 >
+  <map-marker
+    *ngFor="let _marker of markers; index as i"
+    [position]="_marker.position"
+    [label]="'$' + _marker.stay.price"
+    #marker="mapMarker"
+    (mapClick)="openInfoWindow(marker, _marker.stay)"
+  >
+  </map-marker>
+  <map-info-window *ngIf="selectedStay" #infoWindow>
+    <a [routerLink]="['/stay', selectedStay._id]">
+      <stay-preview [stay]="selectedStay" />
+    </a>
+  </map-info-window>
 </google-map>

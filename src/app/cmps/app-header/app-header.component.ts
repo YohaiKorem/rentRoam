@@ -33,7 +33,7 @@ export class AppHeaderComponent {
   faSearch = faSearch;
   faGlobe = faGlobe;
   faBars = faBars;
-  isSearchOpen: boolean = true;
+  isSearchOpen: boolean = false;
   currSearch: string = '';
   locSearch: string = '';
   startDate: Date | null = null;
@@ -68,6 +68,8 @@ export class AppHeaderComponent {
   }
 
   openFilterModal() {
+    console.log('hi');
+
     this.sharedService.openFilterModal();
   }
   setCurrSearch(str: string) {
@@ -123,7 +125,7 @@ export class AppHeaderComponent {
   }
 
   setLoc() {
-    this.searchParam.location = this.locSearch;
+    this.searchParam.location.name = this.locSearch;
   }
 
   onOpenDatePicker() {

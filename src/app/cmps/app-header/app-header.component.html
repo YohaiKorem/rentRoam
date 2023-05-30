@@ -1,13 +1,13 @@
-<div class="wrapper flex space-between align-center">
+<div class="wrapper">
   <a class="hidden-on-mobile" routerLink="/">
-    <div class="logo-container flex align-center space-between fs20">
+    <div class="logo-container fs20">
       <fa-icon class="logo fs34" [icon]="faAirbnb"></fa-icon>
       <span class="logo-txt">RentRoam</span>
     </div>
   </a>
   <div [class.inactive]="isSearchOpen" class="search-bar shadow">
     <button class="btn-search anywhere fw500" (click)="openSearch('loc')">
-      {{ searchParam.location ? searchParam.location : "Anywhere" }}
+      {{ searchParam.location.name ? searchParam.location.name : "Anywhere" }}
     </button>
 
     <span class="hidden-on-mobile"></span>

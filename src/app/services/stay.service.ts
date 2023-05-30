@@ -43,7 +43,7 @@ export class StayService {
   private _searchParams$ = new BehaviorSubject<SearchParam>({
     startDate: null,
     endDate: null,
-    location: null,
+    location: { name: null, coords: { lat: null, lng: null } },
     guests: { adults: 0, children: 0, infants: 0 },
   });
   public searchParams$ = this._searchParams$.asObservable();
@@ -91,8 +91,6 @@ export class StayService {
 
         return this.search(filteredStays, searchParams).pipe(
           tap((searchedStays: Stay[]) => {
-            console.log(searchedStays);
-
             this.setAvgPrice(searchedStays);
             this.setHigheststPrice(searchedStays);
             this.setLowestPrice(searchedStays);
@@ -173,8 +171,28 @@ export class StayService {
   }
 
   public setSearchParams(searchParam: SearchParam) {
-    this._searchParams$.next({ ...searchParam });
-    this.loadStays().pipe(take(1)).subscribe();
+    if (searchParam.location.name) {
+      this.geocodingService
+        .getLatLng(searchParam.location.name)
+        .pipe(
+          take(1),
+          tap((coords: any) => {
+            if (coords) {
+              searchParam.location.coords = {
+                lat: coords.lat,
+                lng: coords.lng,
+              };
+            }
+            this._searchParams$.next({ ...searchParam });
+            this.loadStays().pipe(take(1)).subscribe();
+          }),
+          catchError(this._handleError)
+        )
+        .subscribe();
+    } else {
+      this._searchParams$.next({ ...searchParam });
+      this.loadStays().pipe(take(1)).subscribe();
+    }
   }
 
   public setFilter(stayFilter: StayFilter) {
@@ -201,6 +219,7 @@ export class StayService {
 
   private search(stays: Stay[], searchParams: SearchParam): Observable<Stay[]> {
     let searchedStays = stays;
+    console.log(searchParams);
 
     if (searchParams.guests.adults) {
       searchedStays = stays.filter(
@@ -210,38 +229,49 @@ export class StayService {
       );
     }
 
-    if (searchParams.location && searchParams.location !== "I'm flexible") {
-      return this.geocodingService.getLatLng(searchParams.location).pipe(
-        switchMap((coords: any) => {
-          if (coords) {
-            const distanceLimitInMeters = 5000;
-            searchedStays = searchedStays.filter((stay) => {
-              if (
-                stay.loc &&
-                stay.loc.lat &&
-                stay.loc.lng &&
-                coords &&
-                coords.lat &&
-                coords.lng
-              ) {
-                const distance = getDistance(
-                  { latitude: stay.loc.lat, longitude: stay.loc.lng },
-                  { latitude: coords.lat, longitude: coords.lng }
-                );
-                return distance <= distanceLimitInMeters;
-              }
-              return false;
-            });
-            console.log('coords', coords);
-          }
-          console.log('searchedStays', searchedStays);
+    if (
+      searchParams.location.coords?.lat &&
+      searchParams.location.coords?.lng
+    ) {
+      if (
+        searchParams.location.name &&
+        searchParams.location.name !== "I'm flexible"
+      ) {
+        return this.geocodingService.getLatLng(searchParams.location.name).pipe(
+          switchMap((coords: any) => {
+            if (coords) {
+              const distanceLimitInMeters = 5000;
+              searchedStays = searchedStays.filter((stay) => {
+                if (
+                  stay.loc &&
+                  stay.loc.lat &&
+                  stay.loc.lng &&
+                  coords &&
+                  coords.lat &&
+                  coords.lng
+                ) {
+                  const distance = this.getDistance(stay, coords);
+                  return distance <= distanceLimitInMeters;
+                }
+                return false;
+              });
+              searchParams.location.coords = coords;
+            }
 
-          return of(searchedStays);
-        })
-      );
-    } else {
-      return of(searchedStays);
+            return of(searchedStays);
+          })
+        );
+      }
     }
+
+    return of(searchedStays);
+  }
+
+  private getDistance(stay: Stay, coords: any) {
+    return getDistance(
+      { latitude: stay.loc.lat, longitude: stay.loc.lng },
+      { latitude: coords.lat, longitude: coords.lng }
+    );
   }
 
   private _updateStay(stay: Stay) {
@@ -286,8 +316,10 @@ export class StayService {
   private _filter(stays: Stay[], filterBy: any): Stay[] {
     let filteredStays = stays;
     if (filterBy.labels && filterBy.labels.length > 0)
-      filteredStays = filteredStays.filter((stay) =>
-        stay.labels.includes(filterBy.labels[0])
+      filteredStays = filteredStays.filter(
+        (stay) =>
+          stay.labels.includes(filterBy.labels[0]) ||
+          stay.type === filterBy.labels[0]
       );
 
     if (
