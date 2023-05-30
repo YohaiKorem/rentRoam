@@ -61,6 +61,7 @@
 
 .main-content {
   width: 100%;
+  height: calc(100vh - $header-height);
   &.map-active {
     display: grid;
     grid-template-columns: 1.5fr 1fr;

@@ -219,7 +219,6 @@ export class StayService {
 
   private search(stays: Stay[], searchParams: SearchParam): Observable<Stay[]> {
     let searchedStays = stays;
-    console.log(searchParams);
 
     if (searchParams.guests.adults) {
       searchedStays = stays.filter(
