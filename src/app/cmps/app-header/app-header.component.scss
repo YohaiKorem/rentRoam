@@ -36,7 +36,7 @@
     justify-self: start;
     .logo-container {
       width: 125px;
-      color: $prinaryClr1;
+      color: $primaryClr1;
       font-weight: 700;
       cursor: pointer;
     }
@@ -63,7 +63,7 @@
     padding-inline: 1rem;
     line-height: em(20px);
     gap: 0.6em;
-
+    white-space: nowrap;
     span {
       height: 24px;
       width: 1px;
@@ -93,7 +93,7 @@
       }
     }
     .icon-container {
-      background-color: $prinaryClr1;
+      background-color: $primaryClr1;
       padding: 0.4em;
       width: 1.7rem;
       height: 1.7rem;

@@ -106,9 +106,11 @@ export class StayService {
   }
 
   public getStayById(id: string): Observable<Stay> {
-    return from(storageService.get(ENTITY, id)).pipe(
+    let res = from(storageService.get(ENTITY, id)).pipe(
       catchError(this._handleError)
     );
+
+    return res;
   }
 
   public removeStay(id: string) {
@@ -266,7 +268,7 @@ export class StayService {
     return of(searchedStays);
   }
 
-  private getDistance(stay: Stay, coords: any) {
+  public getDistance(stay: Stay, coords: any) {
     return getDistance(
       { latitude: stay.loc.lat, longitude: stay.loc.lng },
       { latitude: coords.lat, longitude: coords.lng }

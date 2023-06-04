@@ -46,6 +46,11 @@
 .text-left {
   text-align: left;
 }
+.deco-underline {
+  text-decoration: underline;
+}
+
+// FONT WEIGHTS
 
 .fw100 {
   font-weight: 100;
@@ -339,4 +344,7 @@
   @include for-mobile-layout {
     display: flex;
   }
+}
+.full-width {
+  width: 100%;
 }

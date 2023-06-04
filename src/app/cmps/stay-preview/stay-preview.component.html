@@ -1,6 +1,12 @@
 <article class="stay-preview-container flex column">
   <div class="img-container flex">
-    <img [src]="stay.imgUrls[currImgUrl]" />
+    <img
+      [src]="
+        stay.imgUrls[currImgUrl]
+          ? stay.imgUrls[currImgUrl]
+          : 'assets/imgs/airbnbLogo.jpg'
+      "
+    />
     <div class="img-idx-container flex">
       <div
         *ngFor="let img of stay.imgUrls; let i = index"
@@ -11,7 +17,6 @@
         }"
       ></div>
     </div>
-    <span *ngIf="stay.host.isSuperhost" class="superhost fw500">Superhost</span>
     <span class="heart-icon"
       ><svg
         viewBox="0 0 32 32"
@@ -90,6 +95,9 @@
         </g>
       </svg>
     </button>
+    <div class="host-img-container">
+      <img [src]="stay.host.thumbnailUrl" alt="Image of host" />
+    </div>
     <span class="img-index"></span>
   </div>
   <div class="txt-container text-left">
@@ -114,8 +122,28 @@
       }}</span>
     </div>
     <div class="stay-name fw600">{{ stay.name }}</div>
-    <div class="stay-km-away">100 km away</div>
-    <div class="stay-dates">feb 2-8</div>
+    <div class="stay-km-away">{{ distance }} km away</div>
+    <div class="stay-dates">
+      {{
+        currDate.start.toLocaleDateString("en-GB", {
+          month: "short",
+        }) + ' ' +
+        currDate.start.toLocaleDateString("en-GB", {
+          day: "2-digit",
+        })
+
+
+
+
+
+      }}-{{
+      
+        currDate.end.toLocaleDateString("en-GB", {
+              day: "2-digit",
+            })
+
+      }}
+    </div>
     <div class="stay-price">
       <span class="fw600">${{ stay.price }}</span> night
     </div>

@@ -24,6 +24,7 @@ async function get(entityType: string, entityId: string): Promise<Entity> {
     throw new Error(
       `Cannot get, Item ${entityId} of type: ${entityType} does not exist`
     );
+
   return entity;
 }
 
