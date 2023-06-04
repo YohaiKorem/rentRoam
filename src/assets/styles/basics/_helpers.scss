@@ -125,6 +125,22 @@
   }
 }
 
+// GAP
+
+.gap-point5 {
+  gap: 0.5em;
+}
+.gap1 {
+  gap: 1em;
+}
+.gap1-point5 {
+  gap: 1.5em;
+}
+
+.gap2 {
+  gap: 2em;
+}
+
 .center-block {
   display: block;
   margin: 0 auto;
@@ -256,12 +272,18 @@
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
-  color: $fontclr1;
   transition-property: background-color, border-color, box-shadow;
   transition-duration: 85ms;
   transition-timing-function: ease;
-  border-radius: 1em;
   cursor: pointer;
+  border-radius: 0.5em;
+  background-color: transparent;
+  border: 1px solid #333;
+  color: #333;
+
+  &:hover {
+    background-color: darken(#fff, 5%);
+  }
 }
 .icon {
   max-width: 30px;

@@ -29,6 +29,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   nightSum = 5;
   guestsNumForDisplay: number = 1;
   defaultDate = { start: new Date(), end: new Date() };
+  isShowAllAmenities: boolean = false;
   ngOnInit(): void {
     this.stay$ = this.route.data.pipe(
       map((data) => {
@@ -49,6 +50,11 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     console.log(this.stay?.amenities);
+  }
+
+  getUserJoinDate(objectId: string) {
+    const timestamp = Math.floor(parseInt(objectId.substring(0, 8), 16) * 1000);
+    return new Date(timestamp);
   }
 
   setDefaultDates() {
