@@ -1,0 +1,24 @@
+@import "../../app-root/app.component.scss";
+
+.amenities-list {
+  height: 100%;
+  overflow: auto;
+  padding: 1em;
+  padding-block-end: 5em;
+
+  .separator {
+    position: relative;
+    margin-block: 1em;
+    padding-block: 0.5em;
+    &::after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      background-color: $secondaryClr3;
+      opacity: 0.7;
+      bottom: -1em;
+      left: -1em;
+      width: calc(100% + 2em);
+    }
+  }
+}

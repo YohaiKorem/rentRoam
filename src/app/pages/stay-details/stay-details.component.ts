@@ -33,7 +33,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   selectedDate: any;
   currModalContent = {
     title: '',
-    cmp: null,
+    cmp: '',
   };
   ngOnInit(): void {
     this.stay$ = this.route.data.pipe(
@@ -62,7 +62,19 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     return new Date(timestamp);
   }
 
-  openModal(str: string) {}
+  openModal(cmp: string) {
+    switch (cmp) {
+      case 'review-preview':
+        this.currModalContent = { title: 'Review', cmp: 'review-preview' };
+        // set selectedReview if needed
+        break;
+      case 'amenity-list':
+        this.currModalContent = { title: 'Amenities', cmp: 'amenity-list' };
+        break;
+      // handle other cases here
+    }
+    this.isShowModal = true;
+  }
 
   setDefaultDates() {
     if (!this.searchParam.startDate && !this.searchParam.endDate) {

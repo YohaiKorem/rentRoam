@@ -30,6 +30,7 @@ import { ClickOutsideDirective } from './app/directives/click-outside';
 import { GoogleMapCmpComponent } from './app/cmps/google-map/google-map.component';
 import { ReviewPreviewComponent } from './app/cmps/review-preview/review-preview.component';
 import { AmenityListComponent } from './app/cmps/amenity-list/amenity-list.component';
+import { ReviewListComponent } from './app/cmps/review-list/review-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,7 @@ import { AmenityListComponent } from './app/cmps/amenity-list/amenity-list.compo
     GoogleMapCmpComponent,
     ReviewPreviewComponent,
     AmenityListComponent,
+    ReviewListComponent,
   ],
   imports: [
     BrowserModule,

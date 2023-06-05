@@ -14,7 +14,12 @@
     {{ showMore ? review.txt : (review.txt | slice : 0 : 100) }}
 
     <span *ngIf="review.txt.length > 100">
-      ...<button (click)="toggleShowMore()">
+      ...
+      <br />
+      <button
+        class="show-btn deco-underline fw600 fs16"
+        (click)="toggleShowMore()"
+      >
         {{ showMore ? "Show Less" : "Show More" }}
       </button>
     </span>

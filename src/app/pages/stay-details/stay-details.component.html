@@ -697,7 +697,7 @@
     </section>
   </main>
 
-  <div class="reviews-container separator">
+  <div class="reviews-container separator flex column space-between gap1">
     <header class="reviews-list-header flex align-center gap1">
       <span class="rate flex align-center"
         ><span>
@@ -727,16 +727,16 @@
     </header>
     <ul class="reviews-list gap1">
       <review-preview
-        *ngFor="let review of stay.reviews"
+        *ngFor="let review of stay.reviews | slice : 0 : 10"
         class="review-item"
         [review]="review"
         [independentToggling]="false"
         (txtToggled)="openModal('review-preview')"
       ></review-preview>
-      <button class="btn btn-show-reviews">
-        Show all {{ stay.reviews.length }} reviews
-      </button>
     </ul>
+    <button class="btn btn-show-reviews" (click)="openModal('review-preview')">
+      Show all {{ stay.reviews.length }} reviews
+    </button>
   </div>
   <div class="loc-container"></div>
   <div class="host-container"></div>
@@ -746,6 +746,19 @@
       class="dynamic-modal modal-content"
       (closeModal)="isShowModal = false"
     >
+      <ng-container [ngSwitch]="currModalContent.cmp">
+        <li *ngSwitchCase="'review-preview'">
+          <review-preview
+            *ngFor="let review of stay.reviews"
+            [review]="review"
+          ></review-preview>
+        </li>
+        <amenity-list
+          *ngSwitchCase="'amenity-list'"
+          [amenities]="stay.amenities"
+        ></amenity-list>
+        <!-- add other components here -->
+      </ng-container>
     </dynamic-modal>
   </div>
 </section>
