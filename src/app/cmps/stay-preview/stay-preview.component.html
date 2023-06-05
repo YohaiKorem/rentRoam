@@ -39,6 +39,7 @@
         ></path>
       </svg>
     </span>
+    <span *ngIf="stay.host.isSuperhost" class="superhost">superhost</span>
     <button
       (click)="scrollToLeft($event)"
       class="btn btn-left btn-dir shadow"
@@ -131,6 +132,9 @@
         currDate.start.toLocaleDateString("en-GB", {
           day: "2-digit",
         })
+
+
+
 
 
 

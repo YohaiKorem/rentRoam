@@ -30,6 +30,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   guestsNumForDisplay: number = 1;
   defaultDate = { start: new Date(), end: new Date() };
   isShowAllAmenities: boolean = false;
+  selectedDate: any;
   ngOnInit(): void {
     this.stay$ = this.route.data.pipe(
       map((data) => {

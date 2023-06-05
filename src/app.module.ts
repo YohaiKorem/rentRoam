@@ -25,9 +25,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 import { ClickOutsideDirective } from './app/directives/click-outside';
 import { GoogleMapCmpComponent } from './app/cmps/google-map/google-map.component';
-
+import { ReviewPreviewComponent } from './app/cmps/review-preview/review-preview.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { GoogleMapCmpComponent } from './app/cmps/google-map/google-map.componen
     ChartComponent,
     ClickOutsideDirective,
     GoogleMapCmpComponent,
+    ReviewPreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +62,7 @@ import { GoogleMapCmpComponent } from './app/cmps/google-map/google-map.componen
     MatNativeDateModule,
     MatFormFieldModule,
     GoogleMapsModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
