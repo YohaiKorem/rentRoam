@@ -119,8 +119,8 @@
       <img class="stay-img" [src]="img" [alt]="i + 1 + ' image of room'" />
     </div>
   </div>
-  <main class="stay-details-main">
-    <div class="host-amenities-desc">
+  <main class="stay-details-main separator">
+    <div class="amenities-stay-desc">
       <header
         class="host-amenities-desc-header flex align-center space-between separator"
       >
@@ -286,6 +286,11 @@
           </div>
         </li>
       </ul>
+      <article class="stay-summary separator">
+        <p class="stay-summary-txt">
+          {{ stay.summary }}
+        </p>
+      </article>
       <section
         class="amenities-list-container separator flex column space-between gap1"
       >
@@ -298,93 +303,21 @@
             <span class="amenity-txt">{{ amenity }}</span>
           </li>
         </ul>
-        <button class="btn btn-show-amenities">
+        <button
+          class="btn btn-show-amenities"
+          (click)="isShowAllAmenities = true"
+        >
           Show all {{ stay.amenities.length }} amenities
         </button>
       </section>
-      <section class="host-sect separator flex column space-between gap1">
-        <header class="host-header flex align-center gap1">
-          <div class="img-container">
-            <img [src]="stay.host.thumbnailUrl" alt="picture of host" />
-          </div>
-          <div class="host-txt-container flex column space-between">
-            <h4 class="fw600 fs20">Hosted By {{ stay.host.fullname }}</h4>
-            <span class="fw400 fs14"
-              >Joined in
-              {{
-                getUserJoinDate(stay.host._id).toLocaleDateString("en-GB", {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric"
-                })
-              }}</span
-            >
-          </div>
-        </header>
-        <div class="host-info flex align-center gap1">
-          <div class="reviews flex align-center space-between gap-point5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 32 32"
-              aria-hidden="true"
-              role="presentation"
-              focusable="false"
-              style="
-                display: block;
-                height: 16px;
-                width: 16px;
-                fill: currentcolor;
-              "
-            >
-              <path
-                fill-rule="evenodd"
-                d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"
-              ></path>
-            </svg>
-            <span>{{ stay.reviews.length }} Reviews</span>
-          </div>
-          <div
-            *ngIf="stay.host.isSuperhost"
-            class="superhost flex align-center space-between gap-point5"
-          >
-            <svg
-              _ngcontent-ng-c2712826652=""
-              viewBox="0 0 12 14"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              aria-label="Bua is a Superhost."
-              role="img"
-              focusable="false"
-              style="display: block; height: 16px; width: 16px"
-            >
-              <path
-                _ngcontent-ng-c2712826652=""
-                d="m9.93333333 0c.87202857 0 1.58763737.66971256 1.66054897 1.52286029l.0061177.14380638v2.15041978c0 .54338023-.2645632 1.0492763-.7030502 1.35988148l-.1238314.07975002-3.73157298 2.1770919c1.26372053.49592199 2.15845458 1.7265679 2.15845458 3.16619015 0 1.8777681-1.52223185 3.4-3.4 3.4s-3.4-1.5222319-3.4-3.4c0-1.43962225.89473405-2.67026816 2.15845458-3.16619015l-3.73157296-2.1770919c-.46936038-.27379356-.77303698-.75722407-.8203903-1.29248482l-.00649132-.14714668v-2.15041978c0-.87202856.66971256-1.58763736 1.52286029-1.66054901l.14380638-.00611766z"
-                fill="black"
-              ></path>
-              <path
-                _ngcontent-ng-c2712826652=""
-                d="m5.8 8.2c-1.3254834 0-2.4 1.0745166-2.4 2.4 0 1.2702549.98683903 2.3100212 2.23568127 2.3944631l.16431873.0055369.16431873-.0055369c1.24884224-.0844419 2.23568127-1.1242082 2.23568127-2.3944631 0-1.3254834-1.0745166-2.4-2.4-2.4zm4.13333333-7.2h-8.26666666c-.33471803 0-.61182201.24667507-.65943829.56815155l-.00722838.09851512v2.15041978c0 .20323832.09252797.39336698.24794223.51877872l.08281042.05707388 4.13333333 2.41111111c.08896072.05189375.18694036.08154732.28620841.08896071h.09941122l.09855226-.01482678.09597544-.02965357.09168071-.04448036 4.13333338-2.41111111c.1755529-.10240591.2931599-.27812994.3231792-.47556484l.0075734-.10028776v-2.15041978c0-.33471803-.2466751-.61182201-.5681516-.65943829z"
-                fill="black"
-              ></path>
-            </svg>
-            <span>Superhost</span>
-          </div>
-        </div>
-        <div
-          *ngIf="stay.host.isSuperhost"
-          class="superhost-desc flex column space-between gap1"
-        >
-          <strong>{{ stay.host.fullname }} is a Superhost</strong>
-          <p>
-            Superhosts are experienced, highly rated hosts who are committed to
-            providing great stays for guests.
-          </p>
-          <p>Response time:{{ stay.host.responseTime }}</p>
-        </div>
-        <button class="btn btn-contact fw600">Contact Host</button>
+      <section class="date-picker separator">
+        <mat-card class="mat-card flex">
+          <mat-calendar [(selected)]="searchParam.startDate"></mat-calendar>
+          <mat-calendar [(selected)]="searchParam.endDate"></mat-calendar>
+        </mat-card>
       </section>
     </div>
+
     <div
       class="reservation-form-container flex align-center space-between column shadow"
     >
@@ -679,8 +612,144 @@
         </div>
       </div>
     </div>
+    <section class="host-sect flex column space-between gap1">
+      <header class="host-header flex align-center gap1">
+        <div class="img-container">
+          <img [src]="stay.host.thumbnailUrl" alt="picture of host" />
+        </div>
+        <div class="host-txt-container flex column space-between">
+          <h4 class="fw600 fs20">Hosted By {{ stay.host.fullname }}</h4>
+          <span class="fw400 fs14"
+            >Joined in
+            {{
+              getUserJoinDate(stay.host._id).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+              })
+            }}</span
+          >
+        </div>
+      </header>
+      <div class="host-info flex align-center gap1">
+        <div class="reviews flex align-center space-between gap-point5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            style="
+              display: block;
+              height: 16px;
+              width: 16px;
+              fill: currentcolor;
+            "
+          >
+            <path
+              fill-rule="evenodd"
+              d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"
+            ></path>
+          </svg>
+          <span>{{ stay.reviews.length }} Reviews</span>
+        </div>
+        <div
+          *ngIf="stay.host.isSuperhost"
+          class="superhost flex align-center space-between gap-point5"
+        >
+          <svg
+            _ngcontent-ng-c2712826652=""
+            viewBox="0 0 12 14"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-label="Bua is a Superhost."
+            role="img"
+            focusable="false"
+            style="display: block; height: 16px; width: 16px"
+          >
+            <path
+              _ngcontent-ng-c2712826652=""
+              d="m9.93333333 0c.87202857 0 1.58763737.66971256 1.66054897 1.52286029l.0061177.14380638v2.15041978c0 .54338023-.2645632 1.0492763-.7030502 1.35988148l-.1238314.07975002-3.73157298 2.1770919c1.26372053.49592199 2.15845458 1.7265679 2.15845458 3.16619015 0 1.8777681-1.52223185 3.4-3.4 3.4s-3.4-1.5222319-3.4-3.4c0-1.43962225.89473405-2.67026816 2.15845458-3.16619015l-3.73157296-2.1770919c-.46936038-.27379356-.77303698-.75722407-.8203903-1.29248482l-.00649132-.14714668v-2.15041978c0-.87202856.66971256-1.58763736 1.52286029-1.66054901l.14380638-.00611766z"
+              fill="black"
+            ></path>
+            <path
+              _ngcontent-ng-c2712826652=""
+              d="m5.8 8.2c-1.3254834 0-2.4 1.0745166-2.4 2.4 0 1.2702549.98683903 2.3100212 2.23568127 2.3944631l.16431873.0055369.16431873-.0055369c1.24884224-.0844419 2.23568127-1.1242082 2.23568127-2.3944631 0-1.3254834-1.0745166-2.4-2.4-2.4zm4.13333333-7.2h-8.26666666c-.33471803 0-.61182201.24667507-.65943829.56815155l-.00722838.09851512v2.15041978c0 .20323832.09252797.39336698.24794223.51877872l.08281042.05707388 4.13333333 2.41111111c.08896072.05189375.18694036.08154732.28620841.08896071h.09941122l.09855226-.01482678.09597544-.02965357.09168071-.04448036 4.13333338-2.41111111c.1755529-.10240591.2931599-.27812994.3231792-.47556484l.0075734-.10028776v-2.15041978c0-.33471803-.2466751-.61182201-.5681516-.65943829z"
+              fill="black"
+            ></path>
+          </svg>
+          <span>Superhost</span>
+        </div>
+      </div>
+      <div
+        *ngIf="stay.host.isSuperhost"
+        class="superhost-desc flex column space-between gap1"
+      >
+        <strong>{{ stay.host.fullname }} is a Superhost</strong>
+        <p>
+          Superhosts are experienced, highly rated hosts who are committed to
+          providing great stays for guests.
+        </p>
+      </div>
+      <p>Response time: {{ stay.host.responseTime }}</p>
+      <p>{{ stay.host.description }}</p>
+      <button class="btn btn-contact fw600">Contact Host</button>
+    </section>
   </main>
-  <div class="review-container"></div>
+
+  <div class="reviews-container">
+    <header class="reviews-list-header flex align-center gap1">
+      <span class="rate flex align-center"
+        ><span>
+          <svg
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+            style="
+              display: block;
+              height: 14px;
+              width: 14px;
+              fill: currentcolor;
+            "
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+          >
+            <path
+              d="M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z"
+              fill-rule="evenodd"
+            ></path>
+          </svg> </span
+        ><span>{{ stay.rate }}</span></span
+      >
+      <div class="reviews flex align-center space-between gap-point5">
+        <span>{{ stay.reviews.length }} Reviews</span>
+      </div>
+    </header>
+    <ul class="reviews-list">
+      <li *ngFor="let review of stay.reviews" class="review-item"></li>
+    </ul>
+  </div>
   <div class="loc-container"></div>
   <div class="host-container"></div>
+  <div
+    *ngIf="isShowAllAmenities"
+    class="modal-wrapper"
+    (click)="isShowAllAmenities = false"
+  >
+    <dynamic-modal
+      [title]="'What this place offers'"
+      class="dynamic-modal modal-content"
+      (closeModal)="isShowAllAmenities = false"
+    >
+      <ul class="amenities-list flex column space-between gap1">
+        <li
+          *ngFor="let amenity of stay.amenities; let last = last"
+          class="amenity"
+          [ngClass]="{ separator: !last }"
+        >
+          <span class="amenity-txt">{{ amenity }}</span>
+        </li>
+      </ul>
+    </dynamic-modal>
+  </div>
 </section>
