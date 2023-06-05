@@ -197,6 +197,14 @@
     }
   }
 
+  .reviews-container {
+    .reviews-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-flow: dense;
+    }
+  }
+
   .separator {
     position: relative;
     margin-block: 1em;

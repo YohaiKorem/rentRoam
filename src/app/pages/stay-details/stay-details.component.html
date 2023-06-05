@@ -305,7 +305,7 @@
         </ul>
         <button
           class="btn btn-show-amenities"
-          (click)="isShowAllAmenities = true"
+          (click)="openModal('amenity-list')"
         >
           Show all {{ stay.amenities.length }} amenities
         </button>
@@ -697,7 +697,7 @@
     </section>
   </main>
 
-  <div class="reviews-container">
+  <div class="reviews-container separator">
     <header class="reviews-list-header flex align-center gap1">
       <span class="rate flex align-center"
         ><span>
@@ -725,31 +725,27 @@
         <span>{{ stay.reviews.length }} Reviews</span>
       </div>
     </header>
-    <ul class="reviews-list">
-      <li *ngFor="let review of stay.reviews" class="review-item"></li>
+    <ul class="reviews-list gap1">
+      <review-preview
+        *ngFor="let review of stay.reviews"
+        class="review-item"
+        [review]="review"
+        [independentToggling]="false"
+        (txtToggled)="openModal('review-preview')"
+      ></review-preview>
+      <button class="btn btn-show-reviews">
+        Show all {{ stay.reviews.length }} reviews
+      </button>
     </ul>
   </div>
   <div class="loc-container"></div>
   <div class="host-container"></div>
-  <div
-    *ngIf="isShowAllAmenities"
-    class="modal-wrapper"
-    (click)="isShowAllAmenities = false"
-  >
+  <div *ngIf="isShowModal" class="modal-wrapper" (click)="isShowModal = false">
     <dynamic-modal
-      [title]="'What this place offers'"
+      [title]="currModalContent.title"
       class="dynamic-modal modal-content"
-      (closeModal)="isShowAllAmenities = false"
+      (closeModal)="isShowModal = false"
     >
-      <ul class="amenities-list flex column space-between gap1">
-        <li
-          *ngFor="let amenity of stay.amenities; let last = last"
-          class="amenity"
-          [ngClass]="{ separator: !last }"
-        >
-          <span class="amenity-txt">{{ amenity }}</span>
-        </li>
-      </ul>
     </dynamic-modal>
   </div>
 </section>

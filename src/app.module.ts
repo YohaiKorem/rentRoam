@@ -29,6 +29,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ClickOutsideDirective } from './app/directives/click-outside';
 import { GoogleMapCmpComponent } from './app/cmps/google-map/google-map.component';
 import { ReviewPreviewComponent } from './app/cmps/review-preview/review-preview.component';
+import { AmenityListComponent } from './app/cmps/amenity-list/amenity-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import { ReviewPreviewComponent } from './app/cmps/review-preview/review-preview
     ClickOutsideDirective,
     GoogleMapCmpComponent,
     ReviewPreviewComponent,
+    AmenityListComponent,
   ],
   imports: [
     BrowserModule,

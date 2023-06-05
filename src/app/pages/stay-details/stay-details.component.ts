@@ -29,8 +29,12 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   nightSum = 5;
   guestsNumForDisplay: number = 1;
   defaultDate = { start: new Date(), end: new Date() };
-  isShowAllAmenities: boolean = false;
+  isShowModal: boolean = false;
   selectedDate: any;
+  currModalContent = {
+    title: '',
+    cmp: null,
+  };
   ngOnInit(): void {
     this.stay$ = this.route.data.pipe(
       map((data) => {
@@ -57,6 +61,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     const timestamp = Math.floor(parseInt(objectId.substring(0, 8), 16) * 1000);
     return new Date(timestamp);
   }
+
+  openModal(str: string) {}
 
   setDefaultDates() {
     if (!this.searchParam.startDate && !this.searchParam.endDate) {
@@ -85,6 +91,10 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
         this.searchParam.location.name = this.stay?.loc.address;
       this.searchParam.location.coords = { lat, lng };
     }
+  }
+
+  txtToggled() {
+    console.log('hi');
   }
 
   updateGuestsNumForDisplay(searchParam: SearchParam) {

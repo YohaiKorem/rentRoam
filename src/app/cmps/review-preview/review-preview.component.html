@@ -1,5 +1,22 @@
-<article class="review-preview-wrapper">
-  <div class="reviewer-img-container">
-    <img [src]="review.by.imgUrl" />
+<article class="review-preview-wrapper flex column space-between gap1">
+  <div class="review-header flex align-start">
+    <div class="reviewer-img-container">
+      <img [src]="review.by.imgUrl" class="reviewer-img" />
+    </div>
+    <div class="txt-container flex align-center space-between column">
+      <span class="fw600 fs18">{{ review.by.fullname }}</span>
+      <span class="fw300 fs12">
+        {{ dateForDisplay }}
+      </span>
+    </div>
   </div>
+  <p>
+    {{ showMore ? review.txt : (review.txt | slice : 0 : 100) }}
+
+    <span *ngIf="review.txt.length > 100">
+      ...<button (click)="toggleShowMore()">
+        {{ showMore ? "Show Less" : "Show More" }}
+      </button>
+    </span>
+  </p>
 </article>

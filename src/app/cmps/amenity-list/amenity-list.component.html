@@ -1,0 +1,9 @@
+<ul class="amenities-list flex column space-between gap1">
+  <li
+    *ngFor="let amenity of amenities; let last = last"
+    class="amenity"
+    [ngClass]="{ separator: !last }"
+  >
+    <span class="amenity-txt">{{ amenity }}</span>
+  </li>
+</ul>
