@@ -60,7 +60,6 @@
     class="search-menu-wrapper flex column align-center space-around shadow"
   >
     <div class="search-overlay" (click)="closeSearch()"></div>
-    <button class="btn btn-stays" (click)="closeSearch()">Stays</button>
     <div class="search-bar-active flex align-center space-between">
       <button
         (click)="setCurrSearch('loc'); inputField.focus()"
@@ -464,5 +463,13 @@
         ></path>
       </svg>
     </button>
+  </div>
+  <div class="mobile-search-menu">
+    <header class="mobile-search-menu-header">
+      <button class="btn btn-close">X</button>
+    </header>
+    <div class="mobile-search-menu-btns-container">
+      <h3></h3>
+    </div>
   </div>
 </div>
