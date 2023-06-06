@@ -138,10 +138,23 @@
     display: flex;
     align-items: center;
     .stay-preview-container {
+      gap: 0.5em;
       width: 100%;
       align-items: center;
+      margin-inline: em(20px);
       .img-container {
-        width: 90%;
+        min-width: 350px;
+        height: 350px;
+        max-width: 90%;
+      }
+      .txt-container {
+        width: 100%;
+        gap: 0.2em;
+        .stay {
+          &-rate {
+            justify-content: end;
+          }
+        }
       }
     }
   }

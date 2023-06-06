@@ -51,7 +51,7 @@ export interface SearchParam {
   endDate: Date | null;
   location: {
     name: string | null;
-    coords: { lat: number | null; lng: number | null };
+    coords: google.maps.LatLngLiteral;
   };
   guests: {
     adults: number;

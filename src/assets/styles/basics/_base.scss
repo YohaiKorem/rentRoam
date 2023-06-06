@@ -171,8 +171,7 @@ input[type="text"] {
 
 .cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
   background: rgba(0, 0, 0, 0.5);
-  opacity: 0.6;
-  top: em(170px);
+  opacity: 0;
 }
 
 .mat-mdc-menu-panel.mat-mdc-menu-panel {
@@ -218,6 +217,15 @@ mat-datepicker-content {
   background-color: rgb(255 255 255 / 30%) !important;
 }
 
+// DATEPICKER INSIDE STAYDETAILS
+
+// MAT MENNU INSIDE STAYDETAILS
+.guests-menu-in-stay-details {
+  max-width: none !important;
+  min-width: none !important;
+  width: calc((100vw - 200px) / 4) !important;
+  border-radius: 0.5em;
+}
 // MAPS
 .gm-style-iw-d {
   max-height: none !important;

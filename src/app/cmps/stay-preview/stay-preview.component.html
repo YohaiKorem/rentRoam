@@ -96,7 +96,7 @@
         </g>
       </svg>
     </button>
-    <div class="host-img-container">
+    <div class="host-img-container hidden-on-mobile">
       <img [src]="stay.host.thumbnailUrl" alt="Image of host" />
     </div>
     <span class="img-index"></span>
@@ -132,6 +132,7 @@
         currDate.start.toLocaleDateString("en-GB", {
           day: "2-digit",
         })
+
 
 
 

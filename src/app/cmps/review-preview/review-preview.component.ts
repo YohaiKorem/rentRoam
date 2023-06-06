@@ -15,6 +15,7 @@ export class ReviewPreviewComponent implements OnInit {
   // 'txtToggled' event does not carry any value; it merely signals the parent component that a toggle was attempted.
   @Input() independentToggling: boolean = true;
   @Output() txtToggled = new EventEmitter();
+  @Input() isToggleEnabled: boolean = true;
   dateForDisplay: any;
   showMore = false;
   ngOnInit(): void {

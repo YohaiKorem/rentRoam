@@ -27,19 +27,33 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   startDate: Date | null = null;
   endDate: Date | null = null;
   nightSum = 5;
-  guestsNumForDisplay: number = 1;
+  guestsNumForDisplay: string = '1 guest';
   defaultDate = { start: new Date(), end: new Date() };
   isShowModal: boolean = false;
   selectedDate: any;
+  center!: google.maps.LatLngLiteral;
+  display!: google.maps.LatLngLiteral;
+  markerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+  };
   currModalContent = {
     title: '',
     cmp: '',
   };
+
+  homeIcon: google.maps.Icon = {
+    url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" role="presentation" focusable="false" style="display: block; height: 52px; width: 52px;"><circle cx="26" cy="26" r="26" fill="%23DA0A64"/><path transform="translate(10,8.5)" d="m16.8 3.78 1.6 1.34 14.3 13.82-1.4 1.44L28 15.5v13.5a1 1 0 0 1-.82 1H20V19a1 1 0 0 0-.82-1H13a1 1 0 0 0-1 .82V30H5a1 1 0 0 1-1-.82V15.5L1.7 16.38l-1.4-1.44L15.2 3.7a2 2 0 0 1 1.6-.92z" fill="%23ffffff"/></svg>',
+    scaledSize: new google.maps.Size(42, 42),
+  };
+
   ngOnInit(): void {
     this.stay$ = this.route.data.pipe(
       map((data) => {
         this.stay = data['stay'];
-
+        this.center = {
+          lat: this.stay?.loc.lat!,
+          lng: this.stay?.loc.lng!,
+        };
         return data['stay'];
       })
     );
@@ -48,6 +62,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       .subscribe((searchParam) => {
         this.searchParam = searchParam;
         this.updateGuestsNumForDisplay(this.searchParam);
+
         this.setDefaultLoc();
       });
     this.setDefaultDates();
@@ -96,13 +111,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   setDefaultLoc() {
-    if (!this.searchParam.location.name) {
-      let { lat, lng } = this.stay?.loc!;
-
-      if (this.stay?.loc.address)
-        this.searchParam.location.name = this.stay?.loc.address;
-      this.searchParam.location.coords = { lat, lng };
-    }
+    if (!this.searchParam.location.name)
+      this.searchParam.location.coords = this.center;
   }
 
   txtToggled() {
@@ -113,7 +123,18 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     let sum = 1;
     if (searchParam.guests.adults + searchParam.guests.children)
       sum = searchParam.guests.adults + searchParam.guests.children;
-    this.guestsNumForDisplay = sum;
+    let infantStr = '';
+    if (searchParam.guests.infants) {
+      infantStr =
+        searchParam.guests.infants === 1
+          ? `, ${1} infant`
+          : `, ${searchParam.guests.infants} infants`;
+    }
+
+    let guestsStr = sum === 1 ? `${sum} guest` : `${sum} guests`;
+    let strForDisplay = `${guestsStr}${infantStr}`;
+
+    this.guestsNumForDisplay = strForDisplay;
   }
 
   updateGuests(ev: any, num: number) {
@@ -124,6 +145,15 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       this.searchParam.guests.children += num;
     if (ev.target.className.includes('infants'))
       this.searchParam.guests.infants += num;
+    this.updateGuestsNumForDisplay(this.searchParam);
+  }
+
+  moveMap(event: google.maps.MapMouseEvent) {
+    this.center = event.latLng!.toJSON();
+  }
+
+  move(event: google.maps.MapMouseEvent) {
+    this.display = event.latLng!.toJSON();
   }
 
   ngOnDestroy(): void {

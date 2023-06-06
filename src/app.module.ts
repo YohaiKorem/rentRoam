@@ -31,6 +31,7 @@ import { GoogleMapCmpComponent } from './app/cmps/google-map/google-map.componen
 import { ReviewPreviewComponent } from './app/cmps/review-preview/review-preview.component';
 import { AmenityListComponent } from './app/cmps/amenity-list/amenity-list.component';
 import { ReviewListComponent } from './app/cmps/review-list/review-list.component';
+import { MobileSearchMenuComponent } from './app/cmps/mobile-search-menu/mobile-search-menu.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { ReviewListComponent } from './app/cmps/review-list/review-list.componen
     ReviewPreviewComponent,
     AmenityListComponent,
     ReviewListComponent,
+    MobileSearchMenuComponent,
   ],
   imports: [
     BrowserModule,

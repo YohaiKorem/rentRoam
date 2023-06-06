@@ -1,0 +1,16 @@
+@import "../../app-root/app.component.scss";
+
+.review-list-wrapper {
+  height: 100%;
+  .review-list-header {
+    input[name="search-reviews"] {
+      margin: 1em;
+    }
+  }
+  .reviews-list {
+    height: 100%;
+    overflow: auto;
+    padding: 1em;
+    padding-block-end: 5em;
+  }
+}

@@ -10,7 +10,7 @@
   row-gap: em(40px);
   grid-auto-rows: minmax(min-content, max-content);
   @include for-mobile-layout {
-    margin-block-start: calc($header-height + $header-height + 3em);
+    margin-block-start: calc($header-height + $header-height + 3.7em);
     a {
       display: flex;
       flex-direction: column;

@@ -1,1 +1,21 @@
-<p>review-list works!</p>
+<section class="review-list-wrapper flex column">
+  <div class="review-list-header flex">
+    <input
+      type="text"
+      name="search-reviews"
+      placeholder="Search reviews"
+      class="full-width"
+      (input)="onFilterReviews($event)"
+      [(ngModel)]="filterReviewsBy"
+    />
+  </div>
+  <ul class="reviews-list flex column space-between gap1">
+    <review-preview
+      *ngFor="let review of filteredReviews ? filteredReviews : reviews"
+      class="review-item"
+      [review]="review"
+      [independentToggling]="false"
+      [isToggleEnabled]="isToggleEnabled"
+    ></review-preview>
+  </ul>
+</section>

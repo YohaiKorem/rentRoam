@@ -10,18 +10,29 @@
       </span>
     </div>
   </div>
-  <p>
-    {{ showMore ? review.txt : (review.txt | slice : 0 : 100) }}
+  <ng-container
+    *ngIf="isToggleEnabled; then toggleTemplate; else noToggleTemplate"
+  >
+  </ng-container>
 
-    <span *ngIf="review.txt.length > 100">
-      ...
-      <br />
-      <button
-        class="show-btn deco-underline fw600 fs16"
-        (click)="toggleShowMore()"
-      >
-        {{ showMore ? "Show Less" : "Show More" }}
-      </button>
-    </span>
-  </p>
+  <ng-template #toggleTemplate>
+    <p>
+      {{ showMore ? review.txt : (review.txt | slice : 0 : 100) }}
+      <span *ngIf="review.txt.length > 100">
+        ...
+        <br />
+        <button
+          class="show-btn deco-underline fw600 fs16"
+          (click)="toggleShowMore()"
+        >
+          {{ showMore ? "Show Less" : "Show More" }}
+        </button>
+      </span>
+    </p>
+  </ng-template>
+  <ng-template #noToggleTemplate>
+    <p>
+      {{ review.txt }}
+    </p>
+  </ng-template>
 </article>
