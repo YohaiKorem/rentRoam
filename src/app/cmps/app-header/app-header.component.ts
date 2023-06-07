@@ -67,9 +67,11 @@ export class AppHeaderComponent {
     );
   }
 
-  openFilterModal() {
-    console.log('hi');
+  openSearchMenuMobile() {
+    this.sharedService.openSearchMenu();
+  }
 
+  openFilterModal() {
     this.sharedService.openFilterModal();
   }
   setCurrSearch(str: string) {
@@ -89,6 +91,7 @@ export class AppHeaderComponent {
   }
 
   openSearch(str: string) {
+    this.sharedService.openSearchMenu();
     this.isSearchOpen = true;
     this.setCurrSearch(str);
   }

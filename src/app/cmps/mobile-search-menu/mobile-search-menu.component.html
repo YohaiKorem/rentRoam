@@ -1,1 +1,28 @@
-<p>mobile-search-menu works!</p>
+<div
+  [ngClass]="{ active: isOpen }"
+  class="mobile-search-menu-wrapper flex auto-center"
+>
+  <header class="mobile-search-menu-header">
+    <button class="btn btn-close" (click)="toggleMenu()">X</button>
+  </header>
+  <div class="mobile-search-menu-btns-container">
+    <button
+      class="btn btn-toggle-search anywhere full-width flex align-center space-between"
+    >
+      <span>Where</span>
+      <span>this.searchParam.loc.name</span>
+    </button>
+    <button
+      class="btn btn-toggle-search anyweek full-width flex align-center space-between"
+    >
+      <span>When</span>
+      <span>this.searchParam.startDate - this.searchParam.endDate </span>
+    </button>
+    <button
+      class="btn btn-toggle-search guest full-width flex align-center space-between"
+    >
+      <span>Who</span>
+      <span>this.searchParam.guests.adults</span>
+    </button>
+  </div>
+</div>

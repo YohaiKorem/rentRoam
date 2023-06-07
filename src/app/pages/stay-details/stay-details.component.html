@@ -116,7 +116,12 @@
   </header>
   <div class="imgs-container">
     <div class="img-container" *ngFor="let img of stay.imgUrls; let i = index">
-      <img class="stay-img" [src]="img" [alt]="i + 1 + ' image of room'" />
+      <img
+        class="stay-img"
+        [src]="img"
+        [alt]="i + 1 + ' image of room'"
+        loading="lazy"
+      />
     </div>
   </div>
   <main class="stay-details-main separator">
@@ -162,12 +167,13 @@
             [src]="stay.host.thumbnailUrl"
             alt="host image"
             class="host-img"
+            loading="lazy"
           />
           <svg
+            *ngIf="stay.host.isSuperhost"
             viewBox="0 0 12 14"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-label="Bua is a Superhost."
             role="img"
             focusable="false"
             style="display: block; height: 22px; width: 20px"

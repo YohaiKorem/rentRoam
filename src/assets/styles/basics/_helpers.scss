@@ -352,7 +352,7 @@
 
 .hidden-on-mobile {
   @include for-mobile-layout {
-    display: none;
+    display: none !important;
   }
 }
 .show-on-mobile {

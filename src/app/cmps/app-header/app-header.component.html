@@ -57,7 +57,7 @@
   </div>
   <div
     [class.inactive]="!isSearchOpen"
-    class="search-menu-wrapper flex column align-center space-around shadow"
+    class="search-menu-wrapper hidden-on-mobile flex column align-center space-around shadow"
   >
     <div class="search-overlay" (click)="closeSearch()"></div>
     <div class="search-bar-active flex align-center space-between">
@@ -180,7 +180,12 @@
       guest
     </button>
   </div>
-  <mat-menu #locMenu="matMenu" yPosition="below" (close)="onCloseMenu()">
+  <mat-menu
+    class="hidden-on-mobile"
+    #locMenu="matMenu"
+    yPosition="below"
+    (close)="onCloseMenu()"
+  >
     <h3 *ngIf="!locSearch">Search by region</h3>
 
     <div *ngIf="!locSearch" class="region-btns-container">
@@ -269,11 +274,13 @@
   </mat-menu> -->
 
   <mat-date-range-picker
+    class="hidden-on-mobile"
     (opened)="onOpenDatePicker()"
     (closed)="onCloseMenu()"
     #picker
   ></mat-date-range-picker>
   <mat-menu
+    class="hidden-on-mobile"
     #guestsMenu="matMenu"
     xPosition="before"
     yPosition="below"
@@ -464,12 +471,5 @@
       </svg>
     </button>
   </div>
-  <div class="mobile-search-menu">
-    <header class="mobile-search-menu-header">
-      <button class="btn btn-close">X</button>
-    </header>
-    <div class="mobile-search-menu-btns-container">
-      <h3></h3>
-    </div>
-  </div>
+  <mobile-search-menu (toggleSearchClosed)="closeSearch()"></mobile-search-menu>
 </div>
