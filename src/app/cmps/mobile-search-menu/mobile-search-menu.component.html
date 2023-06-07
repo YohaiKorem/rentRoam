@@ -1,28 +1,88 @@
 <div
   [ngClass]="{ active: isOpen }"
-  class="mobile-search-menu-wrapper flex auto-center"
+  class="mobile-search-menu-wrapper flex column align-center gap1"
 >
   <header class="mobile-search-menu-header">
-    <button class="btn btn-close" (click)="toggleMenu()">X</button>
+    <button class="btn btn-close" (click)="toggleMenu()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style="
+          display: block;
+          fill: none;
+          height: 12px;
+          width: 12px;
+          stroke: currentcolor;
+          stroke-width: 5.33333;
+          overflow: visible;
+        "
+      >
+        <path d="m6 6 20 20M26 6 6 26"></path>
+      </svg>
+    </button>
   </header>
-  <div class="mobile-search-menu-btns-container">
+  <div
+    class="mobile-search-menu-btns-container flex column space-between gap1 full-width"
+  >
     <button
       class="btn btn-toggle-search anywhere full-width flex align-center space-between"
     >
       <span>Where</span>
-      <span>this.searchParam.loc.name</span>
+      <span>{{
+        searchParam.location.name ? searchParam.location.name : "I'm flexible"
+      }}</span>
     </button>
     <button
       class="btn btn-toggle-search anyweek full-width flex align-center space-between"
     >
       <span>When</span>
-      <span>this.searchParam.startDate - this.searchParam.endDate </span>
+      <span
+        >{{
+          searchParam.startDate && searchParam.endDate
+            ? searchParam.startDate.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              }) +
+              " - " +
+              searchParam.endDate.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              })
+            : "Add dates"
+        }}
+      </span>
     </button>
     <button
       class="btn btn-toggle-search guest full-width flex align-center space-between"
     >
       <span>Who</span>
-      <span>this.searchParam.guests.adults</span>
+      <span>{{ guestsNumStrForDisplay }}</span>
     </button>
   </div>
+  <footer
+    class="mobile-search-menu-footer flex align-center space-between full-width"
+  >
+    <button class="btn btn-clear deco-underline fw600">Clear all</button>
+    <button class="btn btn-search flex align-center space-between gap-point5">
+      <span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
+          style="display: block; height: 16px; width: 16px; fill: currentcolor"
+        >
+          <path
+            d="M13 0a13 13 0 0 1 10.5 20.67l7.91 7.92-2.82 2.82-7.92-7.91A12.94 12.94 0 0 1 13 26a13 13 0 1 1 0-26zm0 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"
+            opacity=".8"
+          ></path>
+        </svg>
+      </span>
+      <span>Search</span>
+    </button>
+  </footer>
 </div>

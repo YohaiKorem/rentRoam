@@ -4,15 +4,46 @@
   top: 0;
   height: 100vh;
   width: 100vw;
-  background-color: #fff;
+  background-color: darken(#f7f7f7, 10%);
   left: -110vw;
   &.active {
     left: 0;
   }
   .mobile-search-menu-header {
     align-self: start;
+    padding-block-start: 1em;
+    .btn {
+      border-radius: 2em;
+      width: 30px;
+      height: 30px;
+      padding: 1em;
+      background-color: #fff;
+    }
   }
   .mobile-search-menu-btns-container {
     width: 80%;
+    .btn {
+      background-color: #fff;
+    }
+  }
+  .mobile-search-menu-footer {
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 1em;
+    .btn-clear {
+      border: none;
+    }
+    .btn-search {
+      padding: 1em 1.2em;
+      background: linear-gradient(
+        to right,
+        #e61e4d 0%,
+        #e31c5f 50%,
+        #d70466 100%
+      );
+      color: #fff;
+    }
   }
 }
