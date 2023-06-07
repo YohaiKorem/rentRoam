@@ -124,10 +124,8 @@ export class FilterModalComponent {
 
   getThumbLabelPosition(): number {
     const range = this.maxSlider - this.minSlider;
-    console.log(this.priceCountMapForDisplay);
 
     const itemPercentage = (30 / this.priceCountMapForDisplay.length) * 100;
-    console.log((itemPercentage * range) / 100);
     return (itemPercentage * range) / 100;
   }
 
