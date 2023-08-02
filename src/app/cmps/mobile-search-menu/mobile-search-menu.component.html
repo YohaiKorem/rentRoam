@@ -3,7 +3,11 @@
   class="mobile-search-menu-wrapper flex column align-center gap1"
 >
   <header class="mobile-search-menu-header">
-    <button class="btn btn-close" (click)="toggleMenu()">
+    <button
+      *ngIf="!isLocSearchMenuOpen; else backBtn"
+      class="btn btn-close"
+      (click)="toggleMenu()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 32 32"
@@ -23,23 +27,53 @@
         <path d="m6 6 20 20M26 6 6 26"></path>
       </svg>
     </button>
+    <ng-template #backBtn>
+      <button class="btn btn-back" (click)="isLocSearchMenuOpen = false">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
+          style="
+            display: block;
+            fill: none;
+            height: 12px;
+            width: 12px;
+            stroke: currentcolor;
+            stroke-width: 5.33333;
+            overflow: visible;
+          "
+        >
+          <g fill="none">
+            <path d="M4 16h26M15 28 3.7 16.7a1 1 0 0 1 0-1.4L15 4"></path>
+          </g>
+        </svg>
+      </button>
+    </ng-template>
   </header>
   <div
-    class="mobile-search-menu-btns-container flex column space-between gap1 full-width"
+    class="mobile-search-menu-btns-container flex column align-center gap1 full-width"
   >
-    <button
+    <div
       [ngClass]="{ active: currSearch === 'loc', column: currSearch === 'loc' }"
-      class="btn btn-toggle-search anywhere full-width flex align-center space-between"
+      class="btn btn-toggle-search anywhere full-width flex align-center space-between shadow"
       (click)="setCurrSearch('loc')"
     >
       <div
-        class="flex column"
+        class="loc-menu-wrapper flex column gap1"
         [ngClass]="{ 'hidden-on-mobile': currSearch !== 'loc' }"
       >
-        <h3>Where to?</h3>
-
+        <h3 class="fs18 fw600">Where to?</h3>
+        <input
+          class="fw200 search-loc-input"
+          type="text"
+          [(ngModel)]="locSearch"
+          placeholder="Search destinations"
+          (focus)="toggleLocSearchMenu()"
+        />
         <div class="region-btns-container flex">
-          <button mat-menu-item (click)="locSearch = 'I\'m flexible'">
+          <button (click)="locSearch = 'I\'m flexible'">
             <img
               class="i17d61fu dir dir-ltr"
               alt=""
@@ -47,7 +81,7 @@
             />
             <span>I'm flexible</span>
           </button>
-          <button mat-menu-item (click)="locSearch = 'France'">
+          <button (click)="locSearch = 'France'">
             <img
               class="i17d61fu dir dir-ltr"
               alt=""
@@ -55,7 +89,7 @@
             />
             France
           </button>
-          <button mat-menu-item (click)="locSearch = 'United States'">
+          <button (click)="locSearch = 'United States'">
             <img
               class="i17d61fu dir dir-ltr"
               alt=""
@@ -63,7 +97,7 @@
             />
             <span>United States</span>
           </button>
-          <button mat-menu-item (click)="locSearch = 'Southeast Asia'">
+          <button (click)="locSearch = 'Southeast Asia'">
             <img
               class="i17d61fu dir dir-ltr"
               alt=""
@@ -71,7 +105,7 @@
             />
             <span>Southeast Asia</span>
           </button>
-          <button mat-menu-item (click)="locSearch = 'Spain'">
+          <button (click)="locSearch = 'Spain'">
             <img
               class="i17d61fu dir dir-ltr"
               alt=""
@@ -79,44 +113,13 @@
             />
             <span>Spain</span>
           </button>
-          <button mat-menu-item (click)="locSearch = 'Australia'">
+          <button (click)="locSearch = 'Australia'">
             <img
               class="i17d61fu dir dir-ltr"
               alt=""
               src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg?im_w=320"
             />
             Australia
-          </button>
-        </div>
-        <div
-          *ngIf="locSearch"
-          class="loc-suggestions-container flex column space-between"
-        >
-          <button
-            *ngFor="let place of suggestions"
-            class="btn-suggestion flex align-center space-between"
-            (click)="locSearch = place.description"
-          >
-            <div class="img-container">
-              <svg
-                viewBox="0 0 32 32"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                role="presentation"
-                focusable="false"
-                style="
-                  display: block;
-                  height: 22px;
-                  width: 22px;
-                  fill: currentcolor;
-                "
-              >
-                <path
-                  d="M16 0c6.627 0 12 5.373 12 12 0 6.337-3.814 12.751-11.346 19.257L16 31.82l-1.076-.932C7.671 24.509 4 18.218 4 12 4 5.423 9.397 0 16 0zm0 2C10.504 2 6 6.525 6 12c0 5.44 3.249 11.118 9.831 17.02l.169.149.576-.518c6.178-5.65 9.293-11.092 9.42-16.318L26 12c0-5.523-4.477-10-10-10zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
-                ></path>
-              </svg>
-            </div>
-            <span>{{ place.description }}</span>
           </button>
         </div>
       </div>
@@ -126,15 +129,77 @@
       <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'loc' }">{{
         searchParam.location.name ? searchParam.location.name : "I'm flexible"
       }}</span>
-    </button>
-
+    </div>
+    <div *ngIf="isLocSearchMenuOpen" class="loc-search-menu">
+      <div class="search-icon-container">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
+          style="
+            display: block;
+            fill: none;
+            height: 16px;
+            width: 16px;
+            stroke: currentcolor;
+            stroke-width: 4;
+            overflow: visible;
+          "
+        >
+          <path
+            fill="none"
+            d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"
+          ></path>
+        </svg>
+      </div>
+      <input
+        class="fw400 search-loc-input fs14"
+        type="text"
+        [(ngModel)]="locSearch"
+        (input)="getSuggestions($event)"
+        #inputField
+        placeholder="Search destinations"
+      />
+      <div class="loc-suggestions-container flex column space-between">
+        <button
+          *ngFor="let place of suggestions"
+          class="btn-suggestion flex align-center space-between"
+          (click)="locSelected(place)"
+        >
+          <div class="img-container">
+            <svg
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              role="presentation"
+              focusable="false"
+              style="
+                display: block;
+                height: 22px;
+                width: 22px;
+                fill: currentcolor;
+              "
+            >
+              <path
+                d="M16 0c6.627 0 12 5.373 12 12 0 6.337-3.814 12.751-11.346 19.257L16 31.82l-1.076-.932C7.671 24.509 4 18.218 4 12 4 5.423 9.397 0 16 0zm0 2C10.504 2 6 6.525 6 12c0 5.44 3.249 11.118 9.831 17.02l.169.149.576-.518c6.178-5.65 9.293-11.092 9.42-16.318L26 12c0-5.523-4.477-10-10-10zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
+              ></path>
+            </svg>
+          </div>
+          <span>{{ place.description }}</span>
+        </button>
+      </div>
+    </div>
     <button
       [ngClass]="{ active: currSearch === 'dates' }"
       class="btn btn-toggle-search anyweek full-width flex align-center space-between"
       (click)="setCurrSearch('dates')"
     >
-      <span>When</span>
-      <span
+      <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'dates' }"
+        >When</span
+      >
+      <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'dates' }"
         >{{
           searchParam.startDate && searchParam.endDate
             ? searchParam.startDate.toLocaleDateString("en-GB", {
@@ -155,8 +220,12 @@
       class="btn btn-toggle-search guest full-width flex align-center space-between"
       (click)="setCurrSearch('guests')"
     >
-      <span>Who</span>
-      <span>{{ guestsNumStrForDisplay }}</span>
+      <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'guests' }"
+        >Who</span
+      >
+      <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'guests' }">{{
+        guestsNumStrForDisplay
+      }}</span>
     </button>
   </div>
   <footer

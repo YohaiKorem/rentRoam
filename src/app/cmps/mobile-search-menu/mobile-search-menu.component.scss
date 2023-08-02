@@ -6,6 +6,10 @@
   width: 100vw;
   background-color: darken(#f7f7f7, 10%);
   left: -110vw;
+  pointer-events: none;
+  & * {
+    pointer-events: auto;
+  }
   &.active {
     left: 0;
 
@@ -43,12 +47,79 @@
     }
   }
   .mobile-search-menu-btns-container {
-    width: 80%;
+    width: 95%;
     .btn {
       background-color: #fff;
-      &.active {
-        background-color: #d70466;
+      &.btn-toggle-search {
+        padding: 1em;
+        border-radius: 1em;
+        border: none;
       }
+      &.active {
+        pointer-events: none;
+        .loc-menu-wrapper {
+          width: 100%;
+          input {
+            z-index: 100;
+            outline: none;
+            border: 1px solid $secondaryClr6;
+            padding-inline: em(46px);
+            padding-block: em(20px);
+          }
+          .region-btns-container {
+            overflow-x: auto;
+            button {
+              background-color: #fff;
+              pointer-events: auto;
+              img {
+                width: em(150px);
+                max-width: none;
+                border-radius: 1em;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.loc-search-menu {
+  background-color: #fff;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  z-index: 101;
+
+  .search-icon-container {
+    position: absolute;
+    top: em(40px);
+    left: em(20px);
+  }
+  input {
+    margin-block-start: 1.5em;
+    margin-inline: 0.5em;
+    outline: none;
+    border: none;
+    border-radius: 0.5em;
+    background-color: $secondaryClr4;
+    padding-inline: em(46px);
+    padding-block: em(20px);
+  }
+  .loc-suggestions-container {
+    .btn-suggestion {
+      background-color: transparent;
+      padding: 1em;
+      &:hover {
+        background-color: rgb(247, 247, 247);
+      }
+    }
+    .img-container {
+      border-radius: 1em;
+      background-color: $secondaryClr2;
+      padding: 1em;
+      opacity: 0.7;
     }
   }
 }

@@ -29,8 +29,9 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
   searchParam = {} as SearchParam;
   guestsNumStrForDisplay = '';
-  currSearch: string = 'dates';
+  currSearch: string = 'loc';
   locSearch: string = '';
+  isLocSearchMenuOpen: boolean = false;
   startDate: Date | null = null;
   endDate: Date | null = null;
   suggestions: any[] = [];
@@ -48,7 +49,9 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
         this.updateGuestsNumForDisplay(this.searchParam);
       });
   }
-
+  ngAfterViewInit() {
+    this.autocompleteService = new google.maps.places.AutocompleteService();
+  }
   updateGuestsNumForDisplay(searchParam: SearchParam) {
     let sum = 0;
     if (searchParam.guests.adults + searchParam.guests.children)
@@ -86,6 +89,28 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   onOpenDatePicker() {
     let str = 'dates';
     this.setCurrSearch(str);
+  }
+
+  toggleLocSearchMenu() {
+    this.isLocSearchMenuOpen = !this.isLocSearchMenuOpen;
+  }
+
+  getSuggestions(event: any) {
+    if (!event.target.value) {
+      this.suggestions = [];
+      return;
+    }
+    this.autocompleteService.getQueryPredictions(
+      { input: this.locSearch },
+      (predictions: any) => {
+        this.suggestions = predictions;
+      }
+    );
+  }
+
+  locSelected(loc: any) {
+    this.locSearch = loc.description;
+    this.isLocSearchMenuOpen = false;
   }
 
   autoComplete() {
