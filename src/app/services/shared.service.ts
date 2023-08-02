@@ -10,11 +10,17 @@ export class SharedService {
   openFilterModal$ = this.openFilterModalSource.asObservable();
   private openSearchMenuSource = new Subject<void>();
   openSearchMenu$ = this.openSearchMenuSource.asObservable();
+  private openSearchMenuMobileSource = new Subject<void>();
+  openSearchMenuMobile$ = this.openSearchMenuMobileSource.asObservable();
   openFilterModal() {
     this.openFilterModalSource.next();
   }
 
   openSearchMenu() {
     this.openSearchMenuSource.next();
+  }
+
+  openSearchMenuMobile() {
+    this.openSearchMenuMobileSource.next();
   }
 }

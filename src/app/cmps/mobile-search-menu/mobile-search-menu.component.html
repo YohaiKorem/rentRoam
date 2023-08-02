@@ -28,15 +28,110 @@
     class="mobile-search-menu-btns-container flex column space-between gap1 full-width"
   >
     <button
+      [ngClass]="{ active: currSearch === 'loc', column: currSearch === 'loc' }"
       class="btn btn-toggle-search anywhere full-width flex align-center space-between"
+      (click)="setCurrSearch('loc')"
     >
-      <span>Where</span>
-      <span>{{
+      <div
+        class="flex column"
+        [ngClass]="{ 'hidden-on-mobile': currSearch !== 'loc' }"
+      >
+        <h3>Where to?</h3>
+
+        <div class="region-btns-container flex">
+          <button mat-menu-item (click)="locSearch = 'I\'m flexible'">
+            <img
+              class="i17d61fu dir dir-ltr"
+              alt=""
+              src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg"
+            />
+            <span>I'm flexible</span>
+          </button>
+          <button mat-menu-item (click)="locSearch = 'France'">
+            <img
+              class="i17d61fu dir dir-ltr"
+              alt=""
+              src="https://a0.muscache.com/im/pictures/f0ece7c0-d9b2-49d5-bb83-64173d29cbe3.jpg?im_w=320"
+            />
+            France
+          </button>
+          <button mat-menu-item (click)="locSearch = 'United States'">
+            <img
+              class="i17d61fu dir dir-ltr"
+              alt=""
+              src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg?im_w=320"
+            />
+            <span>United States</span>
+          </button>
+          <button mat-menu-item (click)="locSearch = 'Southeast Asia'">
+            <img
+              class="i17d61fu dir dir-ltr"
+              alt=""
+              src="https://a0.muscache.com/im/pictures/d77de9f5-5318-4571-88c7-e97d2355d20a.jpg?im_w=320"
+            />
+            <span>Southeast Asia</span>
+          </button>
+          <button mat-menu-item (click)="locSearch = 'Spain'">
+            <img
+              class="i17d61fu dir dir-ltr"
+              alt=""
+              src="https://a0.muscache.com/im/pictures/a0fd6dfc-6bec-4abb-850e-9ab78ed7bf37.jpg?im_w=320"
+            />
+            <span>Spain</span>
+          </button>
+          <button mat-menu-item (click)="locSearch = 'Australia'">
+            <img
+              class="i17d61fu dir dir-ltr"
+              alt=""
+              src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg?im_w=320"
+            />
+            Australia
+          </button>
+        </div>
+        <div
+          *ngIf="locSearch"
+          class="loc-suggestions-container flex column space-between"
+        >
+          <button
+            *ngFor="let place of suggestions"
+            class="btn-suggestion flex align-center space-between"
+            (click)="locSearch = place.description"
+          >
+            <div class="img-container">
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  height: 22px;
+                  width: 22px;
+                  fill: currentcolor;
+                "
+              >
+                <path
+                  d="M16 0c6.627 0 12 5.373 12 12 0 6.337-3.814 12.751-11.346 19.257L16 31.82l-1.076-.932C7.671 24.509 4 18.218 4 12 4 5.423 9.397 0 16 0zm0 2C10.504 2 6 6.525 6 12c0 5.44 3.249 11.118 9.831 17.02l.169.149.576-.518c6.178-5.65 9.293-11.092 9.42-16.318L26 12c0-5.523-4.477-10-10-10zm0 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
+                ></path>
+              </svg>
+            </div>
+            <span>{{ place.description }}</span>
+          </button>
+        </div>
+      </div>
+      <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'loc' }"
+        >Where</span
+      >
+      <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'loc' }">{{
         searchParam.location.name ? searchParam.location.name : "I'm flexible"
       }}</span>
     </button>
+
     <button
+      [ngClass]="{ active: currSearch === 'dates' }"
       class="btn btn-toggle-search anyweek full-width flex align-center space-between"
+      (click)="setCurrSearch('dates')"
     >
       <span>When</span>
       <span
@@ -56,7 +151,9 @@
       </span>
     </button>
     <button
+      [ngClass]="{ active: currSearch === 'guests' }"
       class="btn btn-toggle-search guest full-width flex align-center space-between"
+      (click)="setCurrSearch('guests')"
     >
       <span>Who</span>
       <span>{{ guestsNumStrForDisplay }}</span>

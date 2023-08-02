@@ -40,6 +40,7 @@ export class AppHeaderComponent {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
+  isMobile = window.innerWidth <= 780;
   constructor(
     private sharedService: SharedService,
     private stayService: StayService
@@ -68,11 +69,19 @@ export class AppHeaderComponent {
   }
 
   openSearchMenuMobile() {
-    this.sharedService.openSearchMenu();
+    this.sharedService.openSearchMenuMobile();
   }
 
   openFilterModal() {
     this.sharedService.openFilterModal();
+  }
+
+  openSearch(str: string) {
+    this.isMobile
+      ? this.openSearchMenuMobile()
+      : this.sharedService.openSearchMenu();
+    this.isSearchOpen = true;
+    this.setCurrSearch(str);
   }
   setCurrSearch(str: string) {
     if (str === 'loc') {
@@ -86,14 +95,7 @@ export class AppHeaderComponent {
       this.guestsMenuTrigger.openMenu();
       document.querySelector('.cdk-overlay-connected-position-bounding-box');
     }
-
     this.currSearch = str;
-  }
-
-  openSearch(str: string) {
-    this.sharedService.openSearchMenu();
-    this.isSearchOpen = true;
-    this.setCurrSearch(str);
   }
 
   autoComplete() {
