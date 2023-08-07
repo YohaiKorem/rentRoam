@@ -54,6 +54,11 @@
         padding: 1em;
         border-radius: 1em;
         border: none;
+        &.anyweek {
+          mat-calendar {
+            width: 100%;
+          }
+        }
       }
       &.active {
         pointer-events: none;

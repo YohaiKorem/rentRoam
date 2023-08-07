@@ -191,11 +191,34 @@
         </button>
       </div>
     </div>
-    <button
+    <div
       [ngClass]="{ active: currSearch === 'dates' }"
       class="btn btn-toggle-search anyweek full-width flex align-center space-between"
       (click)="setCurrSearch('dates')"
     >
+      <mat-calendar
+        *ngIf="currSearch === 'dates'"
+        [(selected)]="startDate"
+      ></mat-calendar>
+      <!-- <button class="hidden-on-mobile">
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            matStartDate
+            placeholder="Start date"
+            [(ngModel)]="searchParam.startDate"
+          />
+          <input
+            matEndDate
+            placeholder="End date"
+            [(ngModel)]="searchParam.endDate"
+          />
+        </mat-date-range-input>
+      </button> -->
+      <!-- <mat-date-range-picker
+        (opened)="onOpenDatePicker()"
+        (closed)="onCloseMenu()"
+        #picker
+      ></mat-date-range-picker> -->
       <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'dates' }"
         >When</span
       >
@@ -214,8 +237,8 @@
             : "Add dates"
         }}
       </span>
-    </button>
-    <button
+    </div>
+    <div
       [ngClass]="{ active: currSearch === 'guests' }"
       class="btn btn-toggle-search guest full-width flex align-center space-between"
       (click)="setCurrSearch('guests')"
@@ -226,7 +249,7 @@
       <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'guests' }">{{
         guestsNumStrForDisplay
       }}</span>
-    </button>
+    </div>
   </div>
   <footer
     class="mobile-search-menu-footer flex align-center space-between full-width"

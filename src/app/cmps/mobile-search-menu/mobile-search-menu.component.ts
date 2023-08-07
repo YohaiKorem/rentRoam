@@ -6,6 +6,7 @@ import {
   ViewChild,
   OnDestroy,
 } from '@angular/core';
+import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
@@ -19,8 +20,8 @@ import { StayService } from 'src/app/services/stay.service';
 })
 export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   @ViewChild('locMenuTrigger') locMenuTrigger!: MatMenuTrigger;
-  @ViewChild('dateMenuTrigger') dateMenuTrigger!: MatMenuTrigger;
   @ViewChild('guestsMenuTrigger') guestsMenuTrigger!: MatMenuTrigger;
+  // @ViewChild('picker') picker!: MatDateRangePicker<any>;
   @Output() toggleSearchClosed = new EventEmitter();
   constructor(
     private sharedService: SharedService,
@@ -36,6 +37,7 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
+
   private destroySubject$ = new Subject<null>();
 
   ngOnInit(): void {
@@ -79,6 +81,7 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
     if (str === 'loc') {
       console.log(str);
     } else if (str === 'dates') {
+      // this.picker.open();
       console.log(str);
     } else if (str === 'guests') {
       console.log(str);

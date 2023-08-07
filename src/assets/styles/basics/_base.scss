@@ -169,11 +169,11 @@ input[type="text"] {
 
 // APPHEADER
 
-.cdk-overlay-container {
-  @include for-mobile-layout {
-    display: none !important;
-  }
-}
+// .cdk-overlay-container {
+//   @include for-mobile-layout {
+//     display: none !important;
+//   }
+// }
 
 .cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
   background: rgba(0, 0, 0, 0.5);
