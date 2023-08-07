@@ -64,7 +64,8 @@
   height: calc(100vh - $header-height);
   &.map-active {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 1em;
     height: calc(100vh - $header-height - $header-height - 3em);
     .radio-filter-container {
@@ -77,7 +78,7 @@
 
     & stay-index {
       grid-column: 1;
-      grid-row: 1;
+      grid-row: 2;
       width: max-content;
       overflow-y: auto;
       height: auto;
@@ -90,7 +91,7 @@
       }
     }
     & google-map-cmp {
-      grid-column: 2;
+      grid-column: 1;
       grid-row: 1;
     }
   }

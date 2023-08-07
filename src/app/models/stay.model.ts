@@ -57,6 +57,7 @@ export interface SearchParam {
     adults: number;
     children: number;
     infants: number;
+    [key: string]: number;
   };
 }
 
