@@ -240,7 +240,7 @@
           >
             <button
               class="btn btn-subtract adults"
-              (click)="updateGuests($event, -1)"
+              (click)="updateGuests($event, -1, 'adults')"
               [disabled]="searchParam.guests.adults <= 0"
               [class.disabled]="searchParam.guests.adults <= 0"
             >
@@ -266,7 +266,7 @@
             <span>{{ searchParam.guests.adults }}</span>
             <button
               class="btn btn-add adults"
-              (click)="updateGuests($event, 1)"
+              (click)="updateGuests($event, 1, 'adults')"
             >
               <svg
                 viewBox="0 0 32 32"
@@ -303,7 +303,7 @@
           >
             <button
               class="btn btn-subtract children"
-              (click)="updateGuests($event, -1)"
+              (click)="updateGuests($event, -1, 'children')"
               [disabled]="searchParam.guests.children <= 0"
               [class.disabled]="searchParam.guests.children <= 0"
             >
@@ -329,7 +329,7 @@
             <span>{{ searchParam.guests.children }}</span>
             <button
               class="btn btn-add children"
-              (click)="updateGuests($event, 1)"
+              (click)="updateGuests($event, 1, 'children')"
             >
               <svg
                 viewBox="0 0 32 32"
@@ -366,7 +366,7 @@
           >
             <button
               class="btn btn-subtract infants"
-              (click)="updateGuests($event, -1)"
+              (click)="updateGuests($event, -1, 'infants')"
               [disabled]="searchParam.guests.infants <= 0"
               [class.disabled]="searchParam.guests.infants <= 0"
             >
@@ -392,7 +392,7 @@
             <span>{{ searchParam.guests.infants }}</span>
             <button
               class="btn btn-add infants"
-              (click)="updateGuests($event, 1)"
+              (click)="updateGuests($event, 1, 'infants')"
             >
               <svg
                 viewBox="0 0 32 32"

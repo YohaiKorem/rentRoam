@@ -141,14 +141,21 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
 
     this.stayService.setSearchParams(this.searchParam);
   }
-  updateGuests(ev: any, num: number) {
+  updateGuests(ev: any, num: number, guestType: string) {
     ev.stopPropagation();
-    if (ev.target.className.includes('adults'))
-      this.searchParam.guests.adults += num;
-    if (ev.target.className.includes('children'))
-      this.searchParam.guests.children += num;
-    if (ev.target.className.includes('infants'))
-      this.searchParam.guests.infants += num;
+    switch (guestType) {
+      case 'adults':
+        this.searchParam.guests.adults += num;
+        break;
+      case 'children':
+        this.searchParam.guests.children += num;
+        break;
+      case 'infants':
+        this.searchParam.guests.infants += num;
+        break;
+      default:
+        break;
+    }
     this.updateGuestsNumForDisplay(this.searchParam);
   }
 

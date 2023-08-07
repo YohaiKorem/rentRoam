@@ -86,14 +86,22 @@
         }
         .guests-menu-wrapper {
           padding: 1em;
+          .txt-container {
+            span {
+              opacity: 0.6;
+            }
+          }
           .guests-item-container {
-            // &:not(:last-of-type) {
-            margin-block-end: 1em;
-            // }
+            &:not(:last-of-type) {
+              margin-block-end: 1em;
+            }
             .btn {
-              padding: 1em;
+              padding: 0.5em;
               border-radius: 2em;
               opacity: 0.6;
+              &.disabled {
+                opacity: 0;
+              }
             }
           }
         }
