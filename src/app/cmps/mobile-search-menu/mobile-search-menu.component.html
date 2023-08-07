@@ -428,7 +428,10 @@
     class="mobile-search-menu-footer flex align-center space-between full-width"
   >
     <button class="btn btn-clear deco-underline fw600">Clear all</button>
-    <button class="btn btn-search flex align-center space-between gap-point5">
+    <button
+      class="btn btn-search flex align-center space-between gap-point5"
+      (click)="setSearchParams($event)"
+    >
       <span>
         <svg
           xmlns="http://www.w3.org/2000/svg"

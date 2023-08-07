@@ -241,6 +241,7 @@
     .search-bar {
       gap: 1.2em;
       width: 100%;
+      min-height: 4em;
       display: grid;
       grid-template-columns: 2em 1fr 1fr 2em;
       grid-template-rows: 1fr 1fr;

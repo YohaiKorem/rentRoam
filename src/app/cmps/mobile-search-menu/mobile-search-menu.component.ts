@@ -138,8 +138,8 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   setSearchParams(ev: any) {
     ev.stopPropagation();
     this.setLoc();
-
     this.stayService.setSearchParams(this.searchParam);
+    this.sharedService.openSearchMenuMobile();
   }
   updateGuests(ev: any, num: number, guestType: string) {
     ev.stopPropagation();

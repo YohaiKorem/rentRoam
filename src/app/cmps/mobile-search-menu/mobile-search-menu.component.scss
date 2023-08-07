@@ -94,6 +94,16 @@
           .guests-item-container {
             &:not(:last-of-type) {
               margin-block-end: 1em;
+              position: relative;
+              &::after {
+                content: "";
+                width: 100%;
+                height: 1px;
+                position: absolute;
+                bottom: em(-10px);
+                background-color: $secondaryClr3;
+                opacity: 0.7;
+              }
             }
             .btn {
               padding: 0.5em;
