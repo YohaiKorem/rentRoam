@@ -30,7 +30,7 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
   searchParam = {} as SearchParam;
   guestsNumStrForDisplay = '';
-  currSearch: string = 'loc';
+  currSearch: string = 'guests';
   locSearch: string = '';
   isLocSearchMenuOpen: boolean = false;
   startDate: Date | null = null;
@@ -87,6 +87,12 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
       console.log(str);
     }
     this.currSearch = str;
+  }
+
+  setDateRange(dateRange: any) {
+    console.log(dateRange);
+    this.searchParam.startDate = dateRange.start;
+    this.searchParam.endDate = dateRange.end;
   }
 
   onOpenDatePicker() {

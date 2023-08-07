@@ -127,7 +127,7 @@
         >Where</span
       >
       <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'loc' }">{{
-        searchParam.location.name ? searchParam.location.name : "I'm flexible"
+        locSearch ? locSearch : "I'm flexible"
       }}</span>
     </div>
     <div *ngIf="isLocSearchMenuOpen" class="loc-search-menu">
@@ -193,32 +193,14 @@
     </div>
     <div
       [ngClass]="{ active: currSearch === 'dates' }"
-      class="btn btn-toggle-search anyweek full-width flex align-center space-between"
+      class="btn btn-toggle-search anyweek full-width flex align-center space-between shadow"
       (click)="setCurrSearch('dates')"
     >
-      <mat-calendar
+      <inline-range-calendar
         *ngIf="currSearch === 'dates'"
-        [(selected)]="startDate"
-      ></mat-calendar>
-      <!-- <button class="hidden-on-mobile">
-        <mat-date-range-input [rangePicker]="picker">
-          <input
-            matStartDate
-            placeholder="Start date"
-            [(ngModel)]="searchParam.startDate"
-          />
-          <input
-            matEndDate
-            placeholder="End date"
-            [(ngModel)]="searchParam.endDate"
-          />
-        </mat-date-range-input>
-      </button> -->
-      <!-- <mat-date-range-picker
-        (opened)="onOpenDatePicker()"
-        (closed)="onCloseMenu()"
-        #picker
-      ></mat-date-range-picker> -->
+        (selectedRangeValueChange)="setDateRange($event)"
+      ></inline-range-calendar>
+
       <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'dates' }"
         >When</span
       >
@@ -240,9 +222,200 @@
     </div>
     <div
       [ngClass]="{ active: currSearch === 'guests' }"
-      class="btn btn-toggle-search guest full-width flex align-center space-between"
+      class="btn btn-toggle-search guest full-width flex align-center space-between shadow"
       (click)="setCurrSearch('guests')"
     >
+      <div
+        *ngIf="currSearch === 'guests'"
+        class="guests-menu-wrapper flex column space-between full-width gap1"
+      >
+        <h3 class="fw800 fs22">Who's coming?</h3>
+        <div class="guests-item-container flex align-center space-between gap1">
+          <div class="txt-container flex column space-between gap-point5">
+            <h4 class="fw600 fs16">Adults</h4>
+            <span class="fs14 fw400">Ages 13 or above</span>
+          </div>
+          <div
+            class="plus-minus-btns-container flex align-center space-between gap-point5"
+          >
+            <button
+              class="btn btn-subtract adults"
+              (click)="updateGuests($event, -1)"
+              [disabled]="searchParam.guests.adults <= 0"
+              [class.disabled]="searchParam.guests.adults <= 0"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  fill: none;
+                  height: 12px;
+                  width: 12px;
+                  stroke: currentcolor;
+                  stroke-width: 5.33333;
+                  overflow: visible;
+                "
+              >
+                <path d="m2 16h28"></path>
+              </svg>
+            </button>
+            <span>{{ searchParam.guests.adults }}</span>
+            <button
+              class="btn btn-add adults"
+              (click)="updateGuests($event, 1)"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  fill: none;
+                  height: 12px;
+                  width: 12px;
+                  stroke: currentcolor;
+                  stroke-width: 5.33333;
+                  overflow: visible;
+                "
+              >
+                <path d="m2 16h28m-14-14v28"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="guests-item-container flex flex align-center space-between gap1"
+        >
+          <div
+            class="txt-container flex column space-between align-center gap-point5"
+          >
+            <h4 class="fw600 fs16">Children</h4>
+            <span class="fs14 fw400">Ages 2-12</span>
+          </div>
+          <div
+            class="plus-minus-btns-container flex align-center space-between gap-point5"
+          >
+            <button
+              class="btn btn-subtract children"
+              (click)="updateGuests($event, -1)"
+              [disabled]="searchParam.guests.children <= 0"
+              [class.disabled]="searchParam.guests.children <= 0"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  fill: none;
+                  height: 12px;
+                  width: 12px;
+                  stroke: currentcolor;
+                  stroke-width: 5.33333;
+                  overflow: visible;
+                "
+              >
+                <path d="m2 16h28"></path>
+              </svg>
+            </button>
+            <span>{{ searchParam.guests.children }}</span>
+            <button
+              class="btn btn-add children"
+              (click)="updateGuests($event, 1)"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  fill: none;
+                  height: 12px;
+                  width: 12px;
+                  stroke: currentcolor;
+                  stroke-width: 5.33333;
+                  overflow: visible;
+                "
+              >
+                <path d="m2 16h28m-14-14v28"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="guests-item-container flex flex align-center space-between gap1"
+        >
+          <div
+            class="txt-container flex column space-between align-center gap-point5"
+          >
+            <h4 class="fw600 fs16">Infants</h4>
+            <span class="fs14 fw400">Under 2</span>
+          </div>
+          <div
+            class="plus-minus-btns-container flex align-center space-between gap-point5"
+          >
+            <button
+              class="btn btn-subtract infants"
+              (click)="updateGuests($event, -1)"
+              [disabled]="searchParam.guests.infants <= 0"
+              [class.disabled]="searchParam.guests.infants <= 0"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  fill: none;
+                  height: 12px;
+                  width: 12px;
+                  stroke: currentcolor;
+                  stroke-width: 5.33333;
+                  overflow: visible;
+                "
+              >
+                <path d="m2 16h28"></path>
+              </svg>
+            </button>
+            <span>{{ searchParam.guests.infants }}</span>
+            <button
+              class="btn btn-add infants"
+              (click)="updateGuests($event, 1)"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+                style="
+                  display: block;
+                  fill: none;
+                  height: 12px;
+                  width: 12px;
+                  stroke: currentcolor;
+                  stroke-width: 5.33333;
+                  overflow: visible;
+                "
+              >
+                <path d="m2 16h28m-14-14v28"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
       <span [ngClass]="{ 'hidden-on-mobile': currSearch === 'guests' }"
         >Who</span
       >

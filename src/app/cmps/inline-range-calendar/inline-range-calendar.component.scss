@@ -1,0 +1,8 @@
+@import "../../app-root/app.component.scss";
+
+:host {
+  width: 100%;
+  mat-calendar {
+    width: 100%;
+  }
+}
