@@ -159,6 +159,15 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
     this.updateGuestsNumForDisplay(this.searchParam);
   }
 
+  clearSearch() {
+    this.searchParam.startDate = null;
+    this.searchParam.endDate = null;
+    this.searchParam.location.name = '';
+    for (const guestType in this.searchParam.guests) {
+      this.searchParam.guests[guestType] = 0;
+    }
+  }
+
   onCloseMenu() {
     this.setCurrSearch('');
   }
