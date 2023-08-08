@@ -8,7 +8,15 @@
   overflow: auto !important;
 
   &:has(.map-active) {
-    padding: em(20px) 1.25em;
+    @include for-normal-layout {
+      padding: em(20px) 1.25em;
+    }
+    @include for-wide-layout {
+      padding: em(20px) 1.25em;
+    }
+    @include for-extra-wide-layout {
+      padding: em(20px) 1.25em;
+    }
   }
 
   & > * {
@@ -64,10 +72,21 @@
   height: calc(100vh - $header-height);
   &.map-active {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
     gap: 1em;
-    height: calc(100vh - $header-height - $header-height - 3em);
+    grid-template-columns: 1fr;
+    @include for-normal-layout {
+      grid-template-columns: 1.1fr 1fr;
+      grid-template-rows: 1fr;
+      height: calc(100vh - $header-height - $header-height - 3em);
+    }
+    @include for-wide-layout {
+      grid-template-columns: 1.25fr 1fr;
+      grid-template-rows: 1fr;
+    }
+    @include for-extra-wide-layout {
+      grid-template-columns: 1.25fr 1fr;
+      grid-template-rows: 1fr;
+    }
     .radio-filter-container {
       margin: 0;
       margin-block-start: 2em;
@@ -78,20 +97,48 @@
 
     & stay-index {
       grid-column: 1;
-      grid-row: 2;
+      @include for-normal-layout {
+        grid-row: 1;
+      }
+      @include for-wide-layout {
+        grid-row: 1;
+      }
+      @include for-extra-wide-layout {
+        grid-row: 1;
+      }
+      @include for-mobile-layout {
+        grid-row: 4;
+      }
       width: max-content;
       overflow-y: auto;
       height: auto;
       min-height: 100%;
       & .stay-list {
+        margin-block-start: 0;
         grid-template-columns: repeat(
           var(--breakpoint-grid-columns-map-active),
-          minmax(270px, 1fr)
+          minmax(12.875em, 1fr)
         );
+        .stay-preview-container {
+          width: 12.875em;
+          gap: 1em;
+
+          .img-container {
+            width: 12.875em;
+            height: 12.25em;
+          }
+          .txt-container {
+            grid-template-columns: 10em 1fr;
+          }
+        }
       }
     }
     & google-map-cmp {
-      grid-column: 1;
+      @include for-mobile-layout {
+        grid-column: 1;
+        grid-row: 2/4;
+      }
+      grid-column: 2;
       grid-row: 1;
     }
   }
