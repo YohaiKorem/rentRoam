@@ -141,10 +141,10 @@
       gap: 0.5em;
       width: 100%;
       align-items: center;
-      margin-inline: em(20px);
+      // margin-inline: em(20px);
       .img-container {
-        min-width: 350px;
-        height: 350px;
+        min-width: em(330px);
+        height: em(350px);
         max-width: 90%;
       }
       .txt-container {
