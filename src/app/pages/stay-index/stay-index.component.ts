@@ -1,9 +1,11 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { Observable, Subscription, map, Subject, takeUntil } from 'rxjs';
 import { Stay } from 'src/app/models/stay.model';
@@ -18,11 +20,12 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class StayIndexComponent implements OnInit {
   @Output() toggleScrolling = new EventEmitter<boolean>();
-  // @HostListener('window:scroll', ['$event']);
+
   constructor(
     private stayService: StayService,
     private route: ActivatedRoute,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private elementRef: ElementRef
   ) {}
 
   subscription!: Subscription;
@@ -42,14 +45,16 @@ export class StayIndexComponent implements OnInit {
       .subscribe((searchParam) => (this.location = searchParam.location));
   }
 
-  // onScroll(event: any) {
-  //   // Get the scroll position
-  //   const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  onScroll(event: any) {
+    event.stopPropagation();
+    console.log(event);
 
-  //   // Calculate the new position for the parallax container
-  //   const parallaxContainer = document.querySelector('.parallax-container');
-  //   parallaxContainer.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-  // }
+    const scrollPosition = event.target.scrollTop;
+    console.log(scrollPosition);
+
+    // const parallaxContainer = document.querySelector('.parallax-container');
+    // parallaxContainer!.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+  }
 
   clearFilter() {
     this.stayService.clearFilter();

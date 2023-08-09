@@ -232,7 +232,7 @@
     }
   }
   @include for-mobile-layout {
-    padding-block: 30px;
+    padding-block: 15px;
     &::after {
       opacity: 0;
     }

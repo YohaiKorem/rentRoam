@@ -1,4 +1,10 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  OnInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Observable, Subscription, map, Subject, takeUntil } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { StayService } from '../services/stay.service';
@@ -33,9 +39,5 @@ export class AppComponent {
 
   isHomePage() {
     return this.router.url === '/stay';
-  }
-
-  toggleScrolling(ev: any) {
-    console.log(ev);
   }
 }
