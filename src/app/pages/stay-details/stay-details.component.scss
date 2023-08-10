@@ -258,11 +258,15 @@
 
   @include for-mobile-layout {
     padding-block-start: 0;
+
     .separator {
       margin-block: 0.2em;
       padding-block: 0.2em;
     }
     .stay-details-mobile-header {
+      & > *:not(.img-container) {
+        padding-inline: 1em;
+      }
       .img-container {
         position: relative;
         & > *:not(:first-child) {
@@ -293,10 +297,52 @@
           opacity: 0.7;
         }
       }
+      h1 {
+        margin-block: 0.5em;
+      }
+      .stay-details-header-info {
+        .loc {
+          flex-grow: 1;
+        }
+      }
     }
 
     .stay-details-main {
+      padding-inline: 1em;
+
       grid-template-columns: 1fr;
+
+      .stay-summary {
+        margin-block-start: 1.5em;
+      }
+    }
+    dynamic-modal {
+      position: fixed !important;
+      top: 1.4em;
+      height: 100vh !important;
+    }
+    .date-picker {
+      margin-block-start: 2em;
+    }
+    .reviews-container {
+      padding-inline: 1em;
+      .reviews-list {
+        max-height: 300px;
+        overflow-x: scroll;
+        display: flex !important;
+      }
+    }
+    .loc-container {
+      padding-inline: 1em;
+      .map-container {
+        border-radius: 0.7em;
+      }
+    }
+    .host-sect {
+      padding-inline: 1em;
+      .btn-contact {
+        width: 100%;
+      }
     }
   }
 }

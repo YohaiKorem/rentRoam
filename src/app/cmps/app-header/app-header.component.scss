@@ -233,6 +233,8 @@
   }
   @include for-mobile-layout {
     padding-block: 15px;
+    display: flex;
+    padding-inline: 1em;
     &::after {
       opacity: 0;
     }

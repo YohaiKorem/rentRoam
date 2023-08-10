@@ -34,6 +34,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   defaultDate = { start: new Date(), end: new Date() };
   isShowModal: boolean = false;
   selectedDate: any;
+  hostDescShowMore: boolean = false;
+  summaryShowMore: boolean = false;
   center!: google.maps.LatLngLiteral;
   display!: google.maps.LatLngLiteral;
   markerOptions: google.maps.MarkerOptions = {
@@ -115,6 +117,12 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  setDateRange(dateRange: any) {
+    console.log(dateRange);
+    this.searchParam.startDate = dateRange.start;
+    this.searchParam.endDate = dateRange.end;
+  }
+
   setDefaultLoc() {
     if (!this.searchParam.location.name)
       this.searchParam.location.coords = this.center;
@@ -122,6 +130,13 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   txtToggled() {
     console.log('hi');
+  }
+
+  toggleHostDescShowMore() {
+    this.hostDescShowMore = true;
+  }
+  toggleSummaryShowMore() {
+    this.summaryShowMore = true;
   }
 
   updateGuestsNumForDisplay(searchParam: SearchParam) {
