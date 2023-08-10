@@ -5,6 +5,7 @@ import {
   Output,
   ElementRef,
   ViewChild,
+  HostListener,
 } from '@angular/core';
 import { Stay } from 'src/app/models/stay.model';
 
@@ -17,6 +18,7 @@ export class StayListComponent {
   constructor(private elementRef: ElementRef) {}
   @Input() stays!: Stay[] | null;
   @Output() clearFilter = new EventEmitter();
+
   // @ViewChild('stayList', { static: false }) stayList!: ElementRef;
 
   onClearFilter() {

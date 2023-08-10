@@ -36,6 +36,21 @@ export class AppComponent {
       .subscribe((searchParam) => (this.location = searchParam.location));
     this.stays$ = this.stayService.stays$;
   }
+  onScroll(event: any) {
+    event.stopPropagation();
+
+    const scrollPosition = event.target.scrollTop;
+
+    const elStayIndex = document.querySelector(
+      '.map-active stay-index'
+    ) as HTMLElement;
+    if (elStayIndex && scrollPosition <= 200) {
+      elStayIndex!.style.transform = `translateY(${-scrollPosition}px)`;
+      console.log('hi');
+    }
+
+    // elStayIndex.style.height = `${206 + scrollPosition}px`;
+  }
 
   isHomePage() {
     return this.router.url === '/stay';

@@ -1,5 +1,9 @@
 @import "../../app-root/app.component.scss";
 
+.map-active-place-num {
+  display: none;
+}
+
 .stay-list {
   display: grid;
   grid-auto-flow: row dense;

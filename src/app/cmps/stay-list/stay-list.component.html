@@ -1,3 +1,8 @@
+<p class="map-active-place-num fs20 fw500">
+  Over
+  {{ stays!.length < 1000 ? stays!.length : "1000+" }}
+  places
+</p>
 <ul *ngIf="stays!.length" class="stay-list clean-list">
   <a
     *ngFor="let stay of stays"

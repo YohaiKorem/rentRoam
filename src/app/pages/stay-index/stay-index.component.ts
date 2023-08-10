@@ -45,17 +45,6 @@ export class StayIndexComponent implements OnInit {
       .subscribe((searchParam) => (this.location = searchParam.location));
   }
 
-  onScroll(event: any) {
-    event.stopPropagation();
-    console.log(event);
-
-    const scrollPosition = event.target.scrollTop;
-    console.log(scrollPosition);
-
-    // const parallaxContainer = document.querySelector('.parallax-container');
-    // parallaxContainer!.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-  }
-
   clearFilter() {
     this.stayService.clearFilter();
   }

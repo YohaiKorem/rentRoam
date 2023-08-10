@@ -1,8 +1,4 @@
-<stay-list
-  (clearFilter)="clearFilter()"
-  [stays]="stays$ | async"
-  (scroll)="onScroll($event)"
-></stay-list>
+<stay-list (clearFilter)="clearFilter()" [stays]="stays$ | async"></stay-list>
 
 <div
   *ngIf="isFilterModalOpen"
