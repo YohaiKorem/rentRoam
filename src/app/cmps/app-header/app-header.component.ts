@@ -129,6 +129,13 @@ export class AppHeaderComponent {
     this.onCloseMenu();
   }
 
+  clearSearch() {
+    this.searchParam.startDate = null;
+    this.searchParam.endDate = null;
+    this.searchParam.location.name = null;
+    this.searchParam.guests.adults = 0;
+  }
+
   setLoc() {
     this.searchParam.location.name = this.locSearch;
   }

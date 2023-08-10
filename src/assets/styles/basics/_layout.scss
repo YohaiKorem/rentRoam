@@ -180,6 +180,19 @@
     }
   }
 }
+
+.modal-open {
+  .map-active {
+    stay-index {
+      @include for-mobile-layout {
+        position: fixed;
+        top: 0;
+        z-index: 100;
+      }
+    }
+  }
+}
+
 // GRIDS
 .simple-cards-grid {
   display: grid;
