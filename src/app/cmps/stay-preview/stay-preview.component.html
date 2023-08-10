@@ -2,8 +2,8 @@
   <div class="img-container flex">
     <img
       [src]="
-        stay.imgUrls[currImgUrl]
-          ? stay.imgUrls[currImgUrl]
+        stay.imgUrls[currImgUrlIdx]
+          ? stay.imgUrls[currImgUrlIdx]
           : 'assets/imgs/airbnbLogo.jpg'
       "
       loading="lazy"
@@ -13,8 +13,8 @@
         *ngFor="let img of stay.imgUrls; let i = index"
         class="img-idx"
         [ngClass]="{
-          active: i === currImgUrl,
-          'next-prev': i === currImgUrl + 1 || i === currImgUrl - 1
+          active: i === currImgUrlIdx,
+          'next-prev': i === currImgUrlIdx + 1 || i === currImgUrlIdx - 1
         }"
       ></div>
     </div>
@@ -133,6 +133,7 @@
         currDate.start.toLocaleDateString("en-GB", {
           day: "2-digit",
         })
+
 
 
 

@@ -20,6 +20,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     public router: Router,
     private route: ActivatedRoute
   ) {}
+  elMainHeader: HTMLElement | null = null;
+  currImgUrlIdx = 0;
+  isMobile = window.innerWidth <= 780;
   stay: Stay | null = null;
   stay$!: Observable<Stay>;
   res: any;
@@ -69,7 +72,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    console.log(this.stay?.amenities);
+    this.elMainHeader = document.querySelector('app-header') as HTMLElement;
+
+    if (this.elMainHeader) this.elMainHeader.classList.add('hidden-on-mobile');
   }
 
   getUserJoinDate(objectId: string) {
@@ -160,5 +165,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.searchParam.startDate = null;
     this.searchParam.endDate = null;
+    if (this.elMainHeader)
+      this.elMainHeader.classList.remove('hidden-on-mobile');
   }
 }

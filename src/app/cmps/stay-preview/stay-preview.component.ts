@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectorRef,
+  OnDestroy,
+  AfterViewInit,
+} from '@angular/core';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 
@@ -18,7 +25,7 @@ export class StayPreviewComponent implements OnInit {
 
   isFirstElementInView = true;
   isLastElementInView = false;
-  currImgUrl = 0;
+  currImgUrlIdx = 0;
   searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
   distance: number = 0;
@@ -70,8 +77,8 @@ export class StayPreviewComponent implements OnInit {
   scrollToLeft(event: Event) {
     event.stopPropagation();
     event.preventDefault();
-    this.currImgUrl =
-      this.currImgUrl === 0 ? this.currImgUrl : this.currImgUrl - 1;
+    this.currImgUrlIdx =
+      this.currImgUrlIdx === 0 ? this.currImgUrlIdx : this.currImgUrlIdx - 1;
     this.checkInView();
   }
 
@@ -102,16 +109,16 @@ export class StayPreviewComponent implements OnInit {
   scrollToRight(event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    this.currImgUrl =
-      this.currImgUrl === this.stay.imgUrls.length - 1
-        ? this.currImgUrl
-        : this.currImgUrl + 1;
+    this.currImgUrlIdx =
+      this.currImgUrlIdx === this.stay.imgUrls.length - 1
+        ? this.currImgUrlIdx
+        : this.currImgUrlIdx + 1;
     this.checkInView();
   }
 
   checkInView() {
-    this.isFirstElementInView = this.currImgUrl === 0 ? true : false;
+    this.isFirstElementInView = this.currImgUrlIdx === 0 ? true : false;
     this.isLastElementInView =
-      this.currImgUrl === this.stay?.imgUrls.length - 1 ? true : false;
+      this.currImgUrlIdx === this.stay?.imgUrls.length - 1 ? true : false;
   }
 }

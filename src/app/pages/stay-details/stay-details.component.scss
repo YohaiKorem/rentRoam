@@ -255,6 +255,50 @@
     border-radius: 12px;
     height: 500px;
   }
+
+  @include for-mobile-layout {
+    padding-block-start: 0;
+    .separator {
+      margin-block: 0.2em;
+      padding-block: 0.2em;
+    }
+    .stay-details-mobile-header {
+      .img-container {
+        position: relative;
+        & > *:not(:first-child) {
+          position: absolute;
+        }
+        & .btn {
+          top: em(10px);
+          background-color: #fff;
+          padding: 0.5em;
+          border-radius: 2em;
+
+          &.btn-back {
+            left: em(10px);
+          }
+          &.btn-share {
+            right: 4em;
+          }
+          &.btn-save {
+            right: em(10px);
+          }
+        }
+        span {
+          bottom: 10px;
+          right: em(10px);
+          color: #fff;
+          background-color: #333;
+          padding: 0.5em;
+          opacity: 0.7;
+        }
+      }
+    }
+
+    .stay-details-main {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 .icon-wrapper {
