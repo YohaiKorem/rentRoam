@@ -3,7 +3,12 @@
   class="stay-details-wrapper flex align-center column"
 >
   <header class="stay-details-mobile-header show-on-mobile">
-    <div class="img-container">
+    <div
+      class="img-container"
+      appSwipe
+      (swipeLeft)="onSwipe(1)"
+      (swipeRight)="onSwipe(-1)"
+    >
       <img
         [src]="stay.imgUrls[currImgUrlIdx]"
         alt=""
@@ -108,9 +113,9 @@
           </svg> </span
         ><span>{{ stay.rate }}</span></span
       >
-      <span class="reviews deco-underline"
-        >{{ stay.reviews.length }} reviews</span
-      >
+      <span class="reviews deco-underline" (click)="openModal('review-preview')"
+        >{{ stay.reviews.length }} reviews
+      </span>
       <span
         *ngIf="stay.host.isSuperhost"
         class="superhost flex align-center space-between gap-point5"
@@ -452,7 +457,7 @@
             ...<br
           /></span>
           <button
-            [class.hidden]="summaryShowMore"
+            [class.hidden]="summaryShowMore || stay.summary.length < 100"
             class="show-btn deco-underline fw600 fs16"
             (click)="toggleSummaryShowMore()"
           >
@@ -803,8 +808,8 @@
   </main>
 
   <div class="reviews-container separator flex column space-between gap1">
-    <header class="reviews-list-header flex align-center gap1">
-      <span class="rate flex align-center"
+    <header class="reviews-list-header flex align-center fs22 fw500 gap1">
+      <span class="rate flex align-center gap-point5"
         ><span>
           <svg
             viewBox="0 0 32 32"
@@ -943,7 +948,7 @@
         ...<br
       /></span>
       <button
-        [class.hidden]="hostDescShowMore"
+        [class.hidden]="hostDescShowMore || stay.host.description.length < 100"
         class="show-btn deco-underline fw600 fs16"
         (click)="toggleHostDescShowMore()"
       >

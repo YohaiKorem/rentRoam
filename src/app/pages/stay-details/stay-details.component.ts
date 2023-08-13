@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, map, takeUntil, Subject } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
-
+import { SwipeDirectiveDirective } from 'src/app/directives/swipe-directive.directive';
 @Component({
   selector: 'stay-details',
   templateUrl: './stay-details.component.html',
@@ -130,6 +130,14 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   txtToggled() {
     console.log('hi');
+  }
+
+  onSwipe(moveBy: number) {
+    this.currImgUrlIdx += moveBy;
+    if (this.currImgUrlIdx >= this.stay?.imgUrls.length! - 1)
+      this.currImgUrlIdx = 0;
+    else if (this.currImgUrlIdx <= 0)
+      this.currImgUrlIdx = this.stay?.imgUrls.length! - 1;
   }
 
   toggleHostDescShowMore() {

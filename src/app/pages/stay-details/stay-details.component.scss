@@ -1,6 +1,7 @@
 @import "../../app-root/app.component.scss";
 .stay-details-wrapper {
   position: relative;
+  overflow-x: hidden;
   padding-block-start: 2em;
   color: rgb(34, 34, 34);
   gap: 1em;
