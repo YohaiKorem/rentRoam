@@ -17,37 +17,16 @@ import { Stay } from 'src/app/models/stay.model';
 export class StayListComponent {
   constructor(private elementRef: ElementRef) {}
   @Input() stays!: Stay[] | null;
-  @Output() clearFilter = new EventEmitter();
+  @Input() areMonthsDifferent!: boolean;
+  @Input() endMonth!: string;
+  @Input() currDate!: { start: Date; end: Date };
 
-  // @ViewChild('stayList', { static: false }) stayList!: ElementRef;
+  @Output() clearFilter = new EventEmitter();
 
   onClearFilter() {
     this.clearFilter.emit();
   }
-  // ngAfterViewInit() {
-  //   this.attachScrollListener();
-  // }
-
-  // attachScrollListener() {
-  //   const scrollContainerElement = this.stayList.nativeElement;
-  //   console.log(this.stayList.nativeElement);
-
-  //   scrollContainerElement.addEventListener('scroll', this.onScroll.bind(this));
-  // }
-  // onScroll(event: any) {
-  //   console.log(event);
-
-  //   const scrollPosition = event.target.scrollTop;
-  //   console.log(scrollPosition);
-
-  //   // const parallaxContainer = document.querySelector('.parallax-container');
-  //   // parallaxContainer!.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-  // }
-  // ngOnDestroy() {
-  //   const scrollContainerElement = this.stayList.nativeElement;
-  //   scrollContainerElement.removeEventListener(
-  //     'scroll',
-  //     this.onScroll.bind(this)
-  //   );
-  // }
+  ngAfterViewInit() {
+    console.log(this.currDate);
+  }
 }
