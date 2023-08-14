@@ -17,6 +17,7 @@ import { SearchParam, Stay, StayFilter } from '../models/stay.model';
 import _stays from '../../data/stay.json';
 import { GeocodingService } from './geocoding.service';
 import { getDistance } from 'geolib';
+import { environment } from 'src/environments/env';
 const ENTITY = 'stays';
 
 @Injectable({
@@ -25,8 +26,8 @@ const ENTITY = 'stays';
 export class StayService {
   private _stays$ = new BehaviorSubject<Stay[]>([]);
   public stays$ = this._stays$.asObservable();
-  public googleMapsAPI = 'AIzaSyAaeVqcfMAlJj1ZQfNXP9pkOBtojwlJwnQ';
-  public geocodeAPI = 'AIzaSyD6VYrEZ0nY107CEP22L0mZ0gmu-7eLf1Y';
+  public googleMapsAPI = environment.googleMapsAPI;
+  public geocodeAPI = environment.geocodeAPI;
   private _stayFilter$ = new BehaviorSubject<StayFilter>({
     labels: [],
     minPrice: 0,

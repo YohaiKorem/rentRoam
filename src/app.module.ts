@@ -34,6 +34,7 @@ import { ReviewListComponent } from './app/cmps/review-list/review-list.componen
 import { MobileSearchMenuComponent } from './app/cmps/mobile-search-menu/mobile-search-menu.component';
 import { InlineRangeCalendarComponent } from './app/cmps/inline-range-calendar/inline-range-calendar.component';
 import { SwipeDirectiveDirective } from './app/directives/swipe-directive.directive';
+import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import { SwipeDirectiveDirective } from './app/directives/swipe-directive.direct
     MobileSearchMenuComponent,
     InlineRangeCalendarComponent,
     SwipeDirectiveDirective,
+    SignupModalComponent,
   ],
   imports: [
     BrowserModule,

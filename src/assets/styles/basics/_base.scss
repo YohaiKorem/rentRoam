@@ -192,10 +192,21 @@ input[type="text"] {
   background: transparent !important;
 }
 
+.options-btns-container {
+  span.mdc-button__label {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0.6em;
+    align-items: center;
+  }
+}
+
 // STAYDETAILS
+
 span.mdc-button__label {
   display: flex !important;
   flex-direction: column !important;
+
   .guest-txt {
     margin-block-end: -1em;
     color: $secondaryClr3;

@@ -1,4 +1,7 @@
 @import "../../app-root/app.component.scss";
+:host {
+  border-radius: 12px;
+}
 .dynamic-modal {
   overflow-y: hidden;
   height: 100%;

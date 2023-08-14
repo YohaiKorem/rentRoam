@@ -1,7 +1,6 @@
 @import "../../app-root/app.component.scss";
 .stay-details-wrapper {
   position: relative;
-  overflow-x: hidden;
   padding-block-start: 2em;
   color: rgb(34, 34, 34);
   gap: 1em;
@@ -259,6 +258,7 @@
 
   @include for-mobile-layout {
     padding-block-start: 0;
+    overflow-x: hidden;
 
     .separator {
       margin-block: 0.2em;

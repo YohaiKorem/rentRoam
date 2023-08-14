@@ -1,0 +1,29 @@
+<section
+  class="signup-modal-wrapper flex column modal-content-wrapper flex column"
+>
+  <header class="signup-modal-header">
+    <h2 class="fs22 fw600">Welcome to RentRoam</h2>
+  </header>
+
+  <form (ngSubmit)="handleLogIn()" class="flex column align-center">
+    <input
+      type="text"
+      [(ngModel)]="credentials.name"
+      name="name"
+      placeholder="Enter name"
+    />
+    <input
+      type="password"
+      [(ngModel)]="credentials.password"
+      name="password"
+      placeholder="Enter password"
+    />
+    <button class="btn btn-purple" type="submit">Continue</button>
+  </form>
+  <div>or</div>
+  <div class="sign-in-btns-container">
+    <button class="btn btn-facebook">continue with Facebook</button>
+    <button class="btn btn-google">continue with Google</button>
+    <button class="btn btn-email">continue with email</button>
+  </div>
+</section>

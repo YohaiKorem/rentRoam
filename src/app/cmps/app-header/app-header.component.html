@@ -488,7 +488,13 @@
         class="icon globe-icon fs14 fw800"
         [icon]="faGlobe"
       ></fa-icon></button
-    ><button class="btn btn-options btn-user flex align-center shadow">
+    ><button
+      mat-button
+      #loginSignupTrigger="matMenuTrigger"
+      [matMenuTriggerFor]="loginSignup"
+      class="btn btn-options btn-user flex align-center shadow"
+      (click)="openLoginSignup()"
+    >
       <fa-icon class="icon bars-icon fs14 fw800" [icon]="faBars"></fa-icon>
       <svg
         viewBox="0 0 32 32"
@@ -504,5 +510,22 @@
       </svg>
     </button>
   </div>
+  <mat-menu #loginSignup="matMenu" yPosition="below">
+    <button mat-menu-item (click)="doLogin()">Log in</button>
+    <button mat-menu-item (click)="doSignup()">Sign up</button>
+  </mat-menu>
   <mobile-search-menu (toggleSearchClosed)="closeSearch()"></mobile-search-menu>
+  <div
+    *ngIf="isShowSignupModal"
+    class="modal-wrapper"
+    (click)="isShowSignupModal = false"
+  >
+    <dynamic-modal
+      [title]="'Log in or sign up'"
+      class="dynamic-modal modal-content"
+      (closeModal)="isShowSignupModal = false"
+    >
+      <signup-modal></signup-modal>
+    </dynamic-modal>
+  </div>
 </div>

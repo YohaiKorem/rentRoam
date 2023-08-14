@@ -20,6 +20,12 @@
             "outputPath": "dist/airbnb",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "fileReplacements": [
+              {
+                "replace": "src/environments/env.ts",
+                "with": "src/environments/env.prod.ts"
+              }
+            ],
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",

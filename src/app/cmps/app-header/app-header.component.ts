@@ -24,6 +24,7 @@ export class AppHeaderComponent {
   @ViewChild('locMenuTrigger') locMenuTrigger!: MatMenuTrigger;
   @ViewChild('dateMenuTrigger') dateMenuTrigger!: MatMenuTrigger;
   @ViewChild('guestsMenuTrigger') guestsMenuTrigger!: MatMenuTrigger;
+  @ViewChild('loginSignupTrigger') loginSignupTrigger!: MatMenuTrigger;
   @ViewChild('picker') picker!: MatDateRangePicker<any>;
   @ViewChild('inputField') inputField!: ElementRef;
   searchParam = {} as SearchParam;
@@ -40,6 +41,7 @@ export class AppHeaderComponent {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
+  isShowSignupModal: boolean = true;
   isMobile = window.innerWidth <= 780;
   constructor(
     private sharedService: SharedService,
@@ -138,6 +140,18 @@ export class AppHeaderComponent {
 
   setLoc() {
     this.searchParam.location.name = this.locSearch;
+  }
+
+  openLoginSignup() {
+    console.log('menu open');
+  }
+
+  doLogin() {
+    this.isShowSignupModal = true;
+  }
+
+  doSignup() {
+    this.isShowSignupModal = true;
   }
 
   onOpenDatePicker() {
