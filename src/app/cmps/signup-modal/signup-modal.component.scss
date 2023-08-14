@@ -1,0 +1,60 @@
+@import "../../app-root/app.component.scss";
+.signup-modal-wrapper {
+  width: 500px;
+  .simple-form {
+    padding: 1em;
+    button[type="submit"] {
+      background-size: 200% 200%;
+      background: linear-gradient(
+        to right,
+        #e61e4d 0%,
+        #e31c5f 50%,
+        #d70466 100%
+      );
+      transition: opacity 1.25s;
+      color: $secondaryClr1;
+      &:hover {
+        background: linear-gradient(
+          to left,
+          #e61e4d 0%,
+          #e31c5f 50%,
+          #d70466 100%
+        );
+      }
+    }
+  }
+
+  .or {
+    display: flex;
+    align-items: center;
+    &::after {
+      content: "";
+      height: 1px;
+      width: 220px;
+      background-color: $secondaryClr2;
+      margin-inline-start: 1rem;
+    }
+    &::before {
+      content: "";
+      height: 1px;
+      width: 220px;
+      background-color: $secondaryClr2;
+      margin-inline-end: 1rem;
+    }
+  }
+
+  .sign-in-btns-container {
+    padding: 1em;
+    .btn {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 2fr 3fr;
+      .icon-container {
+        justify-self: start;
+      }
+      .txt-container {
+        justify-self: start;
+      }
+    }
+  }
+}

@@ -69,7 +69,8 @@ button {
   }
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   font-family: inherit;
   text-align: inherit;
   border-radius: 1em;
