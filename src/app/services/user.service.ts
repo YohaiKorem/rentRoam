@@ -12,6 +12,7 @@ import {
 } from 'rxjs';
 import { storageService } from './async-storage.service';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import _users from '../../data/user.json';
 import { SignupInfo } from '../models/signup-info.model';
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
@@ -26,7 +27,13 @@ export class UserService {
   private _loggedInUser$ = new BehaviorSubject<User>(this.sessionStorageUser);
   public loggedInUser = this._loggedInUser$.asObservable();
   constructor(private http: HttpClient) {
-    this.getUsers().subscribe((users) => this._users$.next(users));
+    this.getUsers().subscribe((users) => {
+      if (users && users.length === 0) {
+        this._createUsers();
+      } else {
+        this._users$.next(users);
+      }
+    });
   }
 
   public getUsers() {
@@ -37,6 +44,8 @@ export class UserService {
   }
 
   public login(info: any): Observable<User> {
+    console.log(info);
+
     return this.getUsers().pipe(
       map((users) => {
         const user = users.find((user) => user.name === info.name);
@@ -106,6 +115,7 @@ export class UserService {
     const users = this._users$.value;
     const userIdx = users.findIndex((_user) => _user._id === user._id);
     users.splice(userIdx, 1, user);
+    console.log(user);
 
     return user;
   }
@@ -120,7 +130,8 @@ export class UserService {
   }
 
   private _createUsers() {
-    console.log('creating users');
+    _users.forEach((user) => storageService.post(ENTITY, user));
+    this._users$.next(_users);
   }
 
   private _getRandomId(length = 8): string {

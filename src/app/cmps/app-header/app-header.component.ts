@@ -5,7 +5,9 @@ import { faSearch, faGlobe, faBars } from '@fortawesome/free-solid-svg-icons';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuTrigger } from '@angular/material/menu';
-
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
+import { Observable, Subscription } from 'rxjs';
 import { SharedService } from 'src/app/services/shared.service';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
@@ -42,10 +44,13 @@ export class AppHeaderComponent {
   suggestions: any[] = [];
   autocompleteService: any;
   isShowSignupModal: boolean = true;
+  loggedInUser: User | null = null;
+  loggedInUser$!: Observable<User>;
   isMobile = window.innerWidth <= 780;
   constructor(
     private sharedService: SharedService,
-    private stayService: StayService
+    private stayService: StayService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {

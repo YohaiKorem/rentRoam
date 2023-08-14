@@ -123,7 +123,9 @@
         stay.rate === 4 || stay.rate === 5 ? stay.rate + ".0" : stay.rate
       }}</span>
     </div>
-    <div class="stay-name fw600">{{ stay.name }}</div>
+    <div class="stay-name fw600">
+      {{ stay.loc.city }}, {{ stay.loc.country }}
+    </div>
     <div class="stay-km-away">{{ distance }} km away</div>
     <div class="stay-dates">
       {{
@@ -137,14 +139,8 @@
 
 
 
-
-
-
-
-
-
-
-      }}-{{
+      }}-<span *ngIf="areMonthsDifferent">{{ endMonth }}</span>
+      {{
       
         currDate.end.toLocaleDateString("en-GB", {
               day: "2-digit",

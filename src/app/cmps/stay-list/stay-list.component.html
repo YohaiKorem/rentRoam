@@ -10,7 +10,12 @@
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
   >
-    <stay-preview [stay]="stay"></stay-preview>
+    <stay-preview
+      [areMonthsDifferent]="areMonthsDifferent"
+      [endMonth]="endMonth"
+      [currDate]="currDate"
+      [stay]="stay"
+    ></stay-preview>
   </a>
 </ul>
 

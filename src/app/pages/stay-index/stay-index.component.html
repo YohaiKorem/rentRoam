@@ -1,4 +1,10 @@
-<stay-list (clearFilter)="clearFilter()" [stays]="stays$ | async"></stay-list>
+<stay-list
+  (clearFilter)="clearFilter()"
+  [stays]="stays$ | async"
+  [areMonthsDifferent]="areMonthsDifferent"
+  [endMonth]="endMonth"
+  [currDate]="currDate"
+></stay-list>
 
 <div
   *ngIf="isFilterModalOpen"

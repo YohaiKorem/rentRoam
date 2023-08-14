@@ -2,10 +2,10 @@
   class="signup-modal-wrapper flex column modal-content-wrapper flex column"
 >
   <header class="signup-modal-header">
-    <h2 class="fs22 fw600">Welcome to RentRoam</h2>
+    <h2 class="fs22 fw500">Welcome to RentRoam</h2>
   </header>
 
-  <form (ngSubmit)="handleLogIn()" class="simple-form full-width">
+  <form class="simple-form full-width">
     <input
       type="text"
       [(ngModel)]="credentials.name"
@@ -18,7 +18,13 @@
       name="password"
       placeholder="Enter password"
     />
-    <button class="btn btn-continue fw600" type="submit">Continue</button>
+    <button
+      class="btn btn-continue fw600"
+      type="submit"
+      (click)="handleLogIn()"
+    >
+      Continue
+    </button>
   </form>
   <div class="or text-center fs12">or</div>
   <div class="sign-in-btns-container flex column space-between gap-point5">

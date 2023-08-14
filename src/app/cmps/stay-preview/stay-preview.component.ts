@@ -16,6 +16,9 @@ import { StayService } from 'src/app/services/stay.service';
 })
 export class StayPreviewComponent implements OnInit {
   @Input() stay!: Stay;
+  @Input() areMonthsDifferent!: boolean;
+  @Input() endMonth!: string;
+  @Input() currDate!: { start: Date; end: Date };
   constructor(
     private stayService: StayService,
     private cdr: ChangeDetectorRef
@@ -27,25 +30,33 @@ export class StayPreviewComponent implements OnInit {
   isLastElementInView = false;
   currImgUrlIdx = 0;
   searchParam = {} as SearchParam;
-  currDate = { start: new Date(), end: new Date() };
+  // currDate = { start: new Date(), end: new Date() };
   distance: number = 0;
   userLoc: any = { lat: null, lng: null };
+
   ngOnInit() {
     this.checkInView();
+
+    // this.setDefaultDates();
   }
 
-  setDistance() {
-    if (this.searchParam.location) {
-      let { lat, lng } = this.searchParam.location?.coords;
-      if (lng && lat)
-        this.distance = this.stayService.getDistance(
-          this.stay,
-          this.searchParam.location.coords
-        );
-      return;
-    }
-    // this.distance = this.stayService.getDistance(this.stay, this.userLoc);
-  }
+  // ngAfterViewInit() {
+  //   this.getUserLocation();
+  // }
+
+  // setDistance() {
+  //   if (this.searchParam.location) {
+  //     let { lat, lng } = this.searchParam.location?.coords;
+  //     if (lng && lat)
+  //       this.distance = this.stayService.getDistance(
+  //         this.stay,
+  //         this.searchParam.location.coords
+  //       );
+  //     return;
+  //   }
+  //   this.distance = this.stayService.getDistance(this.stay, this.userLoc);
+  //   console.log(this.distance);
+  // }
 
   // getUserLocation() {
   //   if (navigator.geolocation) {
@@ -65,6 +76,7 @@ export class StayPreviewComponent implements OnInit {
   //   } else {
   //     console.error('Browser does not support geolocation');
   //   }
+  //   // this.setDistance();
   // }
 
   // ngAfterViewInit() {
@@ -82,29 +94,43 @@ export class StayPreviewComponent implements OnInit {
     this.checkInView();
   }
 
-  setDefaultDates() {
-    if (!this.searchParam.startDate && !this.searchParam.endDate) {
-      const currentDate = new Date();
+  // setDefaultDates() {
+  //   if (!this.searchParam.startDate && !this.searchParam.endDate) {
+  //     const currentDate = new Date();
 
-      const startDate = new Date(
-        currentDate.getTime() + 7 * 24 * 60 * 60 * 1000
-      );
+  //     const startDate = new Date(
+  //       currentDate.getTime() + 7 * 24 * 60 * 60 * 1000
+  //     );
 
-      const endDate = new Date(startDate.getTime() + 5 * 24 * 60 * 60 * 1000);
+  //     const endDate = new Date(startDate.getTime() + 5 * 24 * 60 * 60 * 1000);
 
-      this.currDate = {
-        start: startDate,
-        end: endDate,
-      };
-      this.searchParam.startDate = startDate;
-      this.searchParam.endDate = endDate;
-      return;
-    }
-    this.currDate = {
-      start: this.searchParam.startDate!,
-      end: this.searchParam.endDate!,
-    };
-  }
+  //     this.currDate = {
+  //       start: startDate,
+  //       end: endDate,
+  //     };
+  //     this.searchParam.startDate = startDate;
+  //     this.searchParam.endDate = endDate;
+  //     return;
+  //   }
+  //   this.currDate = {
+  //     start: this.searchParam.startDate!,
+  //     end: this.searchParam.endDate!,
+  //   };
+  // }
+
+  // get areMonthsDifferent(): boolean {
+  //   const startMonth = this.currDate.start.toLocaleDateString('en-GB', {
+  //     month: 'short',
+  //   });
+  //   const endMonth = this.currDate.end.toLocaleDateString('en-GB', {
+  //     month: 'short',
+  //   });
+  //   return startMonth !== endMonth;
+  // }
+
+  // get endMonth(): string {
+  //   return this.currDate.end.toLocaleDateString('en-GB', { month: 'short' });
+  // }
 
   scrollToRight(event: Event) {
     event.preventDefault();

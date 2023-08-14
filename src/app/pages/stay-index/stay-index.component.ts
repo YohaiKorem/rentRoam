@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable, Subscription, map, Subject, takeUntil } from 'rxjs';
-import { Stay } from 'src/app/models/stay.model';
+import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
@@ -33,10 +33,15 @@ export class StayIndexComponent implements OnInit {
   stays$!: Observable<Stay[]>;
   isFilterModalOpen = false;
   location: any | null = null;
+  searchParam = {} as SearchParam;
+  currDate = { start: new Date(), end: new Date() };
+  distance: number = 0;
+  userLoc: any = { lat: null, lng: null };
   private destroySubject$ = new Subject<null>();
 
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
+    this.setDefaultDates();
     this.sharedService.openFilterModal$.subscribe(() => {
       this.toggleFilterModal();
     });
@@ -52,5 +57,42 @@ export class StayIndexComponent implements OnInit {
   toggleFilterModal() {
     this.isFilterModalOpen = !this.isFilterModalOpen;
     document.querySelector('body')?.classList.toggle('modal-open');
+  }
+  setDefaultDates() {
+    if (!this.searchParam.startDate && !this.searchParam.endDate) {
+      const currentDate = new Date();
+
+      const startDate = new Date(
+        currentDate.getTime() + 7 * 24 * 60 * 60 * 1000
+      );
+
+      const endDate = new Date(startDate.getTime() + 5 * 24 * 60 * 60 * 1000);
+
+      this.currDate = {
+        start: startDate,
+        end: endDate,
+      };
+      this.searchParam.startDate = startDate;
+      this.searchParam.endDate = endDate;
+      return;
+    }
+    this.currDate = {
+      start: this.searchParam.startDate!,
+      end: this.searchParam.endDate!,
+    };
+  }
+
+  get areMonthsDifferent(): boolean {
+    const startMonth = this.currDate.start.toLocaleDateString('en-GB', {
+      month: 'short',
+    });
+    const endMonth = this.currDate.end.toLocaleDateString('en-GB', {
+      month: 'short',
+    });
+    return startMonth !== endMonth;
+  }
+
+  get endMonth(): string {
+    return this.currDate.end.toLocaleDateString('en-GB', { month: 'short' });
   }
 }
