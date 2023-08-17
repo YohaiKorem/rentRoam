@@ -57,6 +57,10 @@ export class AppHeaderComponent {
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.searchParam = searchParam));
+
+    this.userService.loggedInUser$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((user) => (this.loggedInUser = user));
   }
   ngAfterViewInit() {
     this.autocompleteService = new google.maps.places.AutocompleteService();

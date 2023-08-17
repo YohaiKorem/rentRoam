@@ -25,7 +25,7 @@ export class UserService {
   private _users$ = new BehaviorSubject<User[]>([]);
   public users$ = this._users$.asObservable();
   private _loggedInUser$ = new BehaviorSubject<User>(this.sessionStorageUser);
-  public loggedInUser = this._loggedInUser$.asObservable();
+  public loggedInUser$ = this._loggedInUser$.asObservable();
   constructor(private http: HttpClient) {
     this.getUsers().subscribe((users) => {
       if (users && users.length === 0) {
@@ -48,7 +48,8 @@ export class UserService {
 
     return this.getUsers().pipe(
       map((users) => {
-        const user = users.find((user) => user.name === info.name);
+        const user = users.find((user) => user.username === info.name);
+        console.log(users);
 
         if (user) {
           return this._saveLocalUser(user);

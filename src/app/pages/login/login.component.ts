@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   signupInfo: any = {};
 
   ngOnInit(): void {
-    this.loggedInUser$ = this.userService.loggedInUser;
+    this.loggedInUser$ = this.userService.loggedInUser$;
     this.loggedInUser$.subscribe((user) => {
       this.loggedInUser = user;
     });
