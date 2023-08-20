@@ -35,6 +35,12 @@ import { MobileSearchMenuComponent } from './app/cmps/mobile-search-menu/mobile-
 import { InlineRangeCalendarComponent } from './app/cmps/inline-range-calendar/inline-range-calendar.component';
 import { SwipeDirectiveDirective } from './app/directives/swipe-directive.directive';
 import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.component';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule,
+} from '@abacritt/angularx-social-login';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,8 +81,29 @@ import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.compo
     MatFormFieldModule,
     GoogleMapsModule,
     MatCardModule,
+    SocialLoginModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          // {
+          //   id: GoogleLoginProvider.PROVIDER_ID,
+          //   provider: new GoogleLoginProvider('clientId'),
+          // },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('644003741032425'),
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        },
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

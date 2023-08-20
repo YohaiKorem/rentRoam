@@ -9,9 +9,12 @@ import {
   retry,
   catchError,
   map,
+  of,
+  switchMap,
 } from 'rxjs';
 import { storageService } from './async-storage.service';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import _users from '../../data/user.json';
 import { SignupInfo } from '../models/signup-info.model';
 
@@ -27,14 +30,16 @@ export class UserService {
   private _loggedInUser$ = new BehaviorSubject<User>(this.sessionStorageUser);
   public loggedInUser$ = this._loggedInUser$.asObservable();
   constructor(private http: HttpClient) {
-    this.getUsers().subscribe((users) => {
-      if (users && users.length === 0) {
-        this._createUsers();
-      } else {
-        this._users$.next(users);
-      }
-    });
+    //   // this.getUsers().subscribe((users) => {
+    let users = JSON.parse(localStorage.getItem(ENTITY) || 'null');
+    if (!users || users.length === 0) {
+      users = this._createUsers();
+      localStorage.setItem(ENTITY, JSON.stringify(users));
+    } else {
+      this._users$.next(users);
+    }
   }
+  // }
 
   public getUsers() {
     return from(storageService.query(ENTITY)).pipe(
@@ -44,41 +49,105 @@ export class UserService {
   }
 
   public login(info: any): Observable<User> {
-    console.log(info);
+    let user;
 
+    if (info instanceof SocialUser) {
+      user = this._socialLogin(info);
+      console.log('user that returns from social login', user);
+      user.pipe(
+        tap((user: SocialUser) => {
+          const socialUser = User.fromSocial(user);
+
+          this._loggedInUser$.next(socialUser);
+          console.log('socialLogin inside login method', user);
+          console.log('socialLogin inside login method', socialUser);
+        })
+      );
+      return user;
+    } else {
+      console.log('app login', info);
+
+      user = this._appLogin(info);
+    }
+    if (user) {
+      return user.pipe(
+        tap((user) => {
+          this._loggedInUser$.next(user);
+        }),
+        catchError(this._handleError)
+      );
+    } else throw new Error('Invalid credentials/social credentials');
+  }
+
+  private _appLogin(info: any) {
     return this.getUsers().pipe(
       map((users) => {
-        const user = users.find((user) => user.username === info.name);
-        console.log(users);
+        const user = users.find(
+          (user) =>
+            user.username === info.name && user.password === info.password
+        );
 
         if (user) {
           return this._saveLocalUser(user);
         } else {
           throw new Error('Invalid credentials');
         }
-      }),
-      tap((user) => {
-        this._loggedInUser$.next(user);
-      }),
-      catchError(this._handleError)
+      })
     );
   }
 
-  public signup(info: any) {
-    let newUser = new User(
-      info.name,
-      '',
-      info.password,
-      info.username,
-      this._getRandomId()
+  private _socialLogin(info: SocialUser) {
+    let socialUser;
+    return this.getUsers().pipe(
+      map((users) => {
+        const user = users.find(
+          (user) =>
+            user.username === info.name && user.password === info.authToken
+        );
+
+        if (user) {
+          console.log('social login user truthy');
+
+          socialUser = this._saveLocalUser(user);
+          return socialUser;
+        } else {
+          console.log('social login user falsy');
+
+          socialUser = this.signup(info);
+          return socialUser;
+        }
+      })
     );
+    console.log(
+      'social user inside socialLogin before final return',
+      socialUser
+    );
+
+    return socialUser;
+  }
+
+  public signup(info: any) {
+    let newUser: User;
+    if (info instanceof SocialUser) {
+      newUser = User.fromSocial(info);
+    } else {
+      newUser = new User(
+        info.name,
+        '',
+        info.password,
+        info.username,
+        this._getRandomId()
+      );
+    }
+
     newUser = this._saveLocalUser(newUser);
+
     return from(storageService.post(ENTITY, newUser)).pipe(
-      tap((newUser) => {
+      switchMap(() => {
         const users = this._users$.value;
         this._users$.next([...users, newUser]);
+        return of(newUser);
       }),
-      retry(1),
       catchError(this._handleError)
     );
   }
@@ -131,8 +200,10 @@ export class UserService {
   }
 
   private _createUsers() {
-    _users.forEach((user) => storageService.post(ENTITY, user));
-    this._users$.next(_users);
+    // _users.forEach((user) => storageService.post(ENTITY, user));
+    //   storageService.post(ENTITY, _users);
+    //   this._users$.next(_users);
+    return _users;
   }
 
   private _getRandomId(length = 8): string {

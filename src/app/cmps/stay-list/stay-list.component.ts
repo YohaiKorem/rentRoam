@@ -26,7 +26,5 @@ export class StayListComponent {
   onClearFilter() {
     this.clearFilter.emit();
   }
-  ngAfterViewInit() {
-    console.log(this.currDate);
-  }
+  ngAfterViewInit() {}
 }
