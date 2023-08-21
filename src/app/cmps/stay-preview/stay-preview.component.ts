@@ -6,8 +6,11 @@ import {
   OnDestroy,
   AfterViewInit,
 } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
+import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'stay-preview',
@@ -19,9 +22,14 @@ export class StayPreviewComponent implements OnInit {
   @Input() areMonthsDifferent!: boolean;
   @Input() endMonth!: string;
   @Input() currDate!: { start: Date; end: Date };
+  private destroySubject$ = new Subject<null>();
+
+  loggedInUser: User | null = null;
+  loggedInUser$!: Observable<User>;
   constructor(
     private stayService: StayService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private userService: UserService
   ) {
     // this.getUserLocation();
   }
@@ -36,8 +44,11 @@ export class StayPreviewComponent implements OnInit {
 
   ngOnInit() {
     this.checkInView();
-
-    // this.setDefaultDates();
+    this.userService.loggedInUser$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((user) => {
+        this.loggedInUser = user;
+      });
   }
 
   // ngAfterViewInit() {
@@ -79,12 +90,13 @@ export class StayPreviewComponent implements OnInit {
   //   // this.setDistance();
   // }
 
-  // ngAfterViewInit() {
-  //   if (!this.searchParam.startDate && !this.searchParam.endDate) {
-  //     this.setDefaultDates();
-  //   }
-  //   this.cdr.detectChanges();
-  // }
+  onAddToWishlist(ev: any, id: string) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    // this.loggedInUser?.wishlist.push(id);
+    this.userService.toggleStayInWishlist(id, this.loggedInUser!);
+    console.log(this.loggedInUser);
+  }
 
   scrollToLeft(event: Event) {
     event.stopPropagation();
@@ -94,43 +106,9 @@ export class StayPreviewComponent implements OnInit {
     this.checkInView();
   }
 
-  // setDefaultDates() {
-  //   if (!this.searchParam.startDate && !this.searchParam.endDate) {
-  //     const currentDate = new Date();
-
-  //     const startDate = new Date(
-  //       currentDate.getTime() + 7 * 24 * 60 * 60 * 1000
-  //     );
-
-  //     const endDate = new Date(startDate.getTime() + 5 * 24 * 60 * 60 * 1000);
-
-  //     this.currDate = {
-  //       start: startDate,
-  //       end: endDate,
-  //     };
-  //     this.searchParam.startDate = startDate;
-  //     this.searchParam.endDate = endDate;
-  //     return;
-  //   }
-  //   this.currDate = {
-  //     start: this.searchParam.startDate!,
-  //     end: this.searchParam.endDate!,
-  //   };
-  // }
-
-  // get areMonthsDifferent(): boolean {
-  //   const startMonth = this.currDate.start.toLocaleDateString('en-GB', {
-  //     month: 'short',
-  //   });
-  //   const endMonth = this.currDate.end.toLocaleDateString('en-GB', {
-  //     month: 'short',
-  //   });
-  //   return startMonth !== endMonth;
-  // }
-
-  // get endMonth(): string {
-  //   return this.currDate.end.toLocaleDateString('en-GB', { month: 'short' });
-  // }
+  onImgErr(ev: any) {
+    ev.target.style.opacity = '0';
+  }
 
   scrollToRight(event: Event) {
     event.preventDefault();
