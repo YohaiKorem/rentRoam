@@ -27,7 +27,9 @@ const ENTITY = 'user';
 export class UserService {
   private _users$ = new BehaviorSubject<User[]>([]);
   public users$ = this._users$.asObservable();
-  private _loggedInUser$ = new BehaviorSubject<User>(this.sessionStorageUser);
+  private _loggedInUser$ = new BehaviorSubject<User | null>(
+    this.sessionStorageUser
+  );
   public loggedInUser$ = this._loggedInUser$.asObservable();
   constructor(private http: HttpClient) {
     //   // this.getUsers().subscribe((users) => {
@@ -98,12 +100,11 @@ export class UserService {
 
   private _socialLogin(info: SocialUser) {
     let socialUser;
+    const socialInfo = User.fromSocial(info);
+    console.log('socialInfo', socialInfo);
     return this.getUsers().pipe(
       map((users) => {
-        const user = users.find(
-          (user) =>
-            user.username === info.name && user.password === info.authToken
-        );
+        const user = users.find((user) => user._id === socialInfo._id);
 
         if (user) {
           console.log('social login user truthy');
@@ -117,10 +118,6 @@ export class UserService {
           return socialUser;
         }
       })
-    );
-    console.log(
-      'social user inside socialLogin before final return',
-      socialUser
     );
 
     return socialUser;
@@ -141,7 +138,7 @@ export class UserService {
     }
 
     newUser = this._saveLocalUser(newUser);
-
+    this._loggedInUser$.next(newUser);
     return from(storageService.post(ENTITY, newUser)).pipe(
       switchMap(() => {
         const users = this._users$.value;
@@ -154,6 +151,8 @@ export class UserService {
 
   public logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
+
+    this._loggedInUser$.next(null);
     return null;
   }
 
@@ -181,12 +180,12 @@ export class UserService {
   }
 
   private _saveLocalUser(user: User) {
-    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user));
+    this.sessionStorageUser = user;
     const users = this._users$.value;
     const userIdx = users.findIndex((_user) => _user._id === user._id);
     users.splice(userIdx, 1, user);
     console.log(user);
-
+    this._loggedInUser$.next(user);
     return user;
   }
 

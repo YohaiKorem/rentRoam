@@ -187,6 +187,9 @@ input[type="password"] {
   max-width: em(460px) !important;
   border-radius: 2em !important;
   padding: 1em !important;
+  &:has(.btn-logout, .btn-login) {
+    padding: 0 !important;
+  }
 }
 
 .mat-mdc-menu-item:hover {

@@ -518,8 +518,22 @@
     </button>
   </div>
   <mat-menu #loginSignup="matMenu" yPosition="below">
-    <button mat-menu-item (click)="doLogin()">Log in</button>
-    <button mat-menu-item (click)="doSignup()">Sign up</button>
+    <ng-container *ngIf="!loggedInUser; else userMenuOptions">
+      <button mat-menu-item (click)="doLogin()" class="btn-login">
+        Log in
+      </button>
+      <button mat-menu-item (click)="doSignup()" class="btn-signup">
+        Sign up
+      </button>
+    </ng-container>
+    <ng-template #userMenuOptions>
+      <button mat-menu-item class="btn-dashboard">Dashboard</button>
+      <button mat-menu-item class="btn-my-trips">My trips</button>
+      <button mat-menu-item class="btn-wishlist">Wishlist</button>
+      <button mat-menu-item class="btn-logout" (click)="onLogout()">
+        Logout
+      </button>
+    </ng-template>
   </mat-menu>
   <mobile-search-menu (toggleSearchClosed)="closeSearch()"></mobile-search-menu>
   <div

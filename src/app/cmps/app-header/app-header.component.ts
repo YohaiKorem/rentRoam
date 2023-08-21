@@ -13,6 +13,7 @@ import { MatDateRangePicker } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 declare var google: any;
 @Component({
   selector: 'app-header',
@@ -43,14 +44,15 @@ export class AppHeaderComponent {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
-  isShowSignupModal: boolean = true;
+  isShowSignupModal: boolean = false;
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   isMobile = window.innerWidth <= 780;
   constructor(
     private sharedService: SharedService,
     private stayService: StayService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit() {
@@ -60,7 +62,11 @@ export class AppHeaderComponent {
 
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
-      .subscribe((user) => (this.loggedInUser = user));
+      .subscribe((user) => {
+        this.loggedInUser = user;
+        if (this.loggedInUser != null) this.isShowSignupModal = false;
+        console.log(this.loggedInUser);
+      });
   }
   ngAfterViewInit() {
     this.autocompleteService = new google.maps.places.AutocompleteService();
@@ -77,6 +83,10 @@ export class AppHeaderComponent {
         this.suggestions = predictions;
       }
     );
+  }
+
+  toggleSignupModal() {
+    this.sharedService.toggleSignUpModal();
   }
 
   openSearchMenuMobile() {
@@ -161,6 +171,15 @@ export class AppHeaderComponent {
 
   doSignup() {
     this.isShowSignupModal = true;
+  }
+
+  onLogout() {
+    this.loggedInUser = this.userService.logout();
+    this.socialSignOut();
+  }
+
+  socialSignOut(): void {
+    this.authService.signOut();
   }
 
   onOpenDatePicker() {

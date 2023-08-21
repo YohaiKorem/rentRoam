@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
 })
 export class SharedService {
   constructor() {}
-
+  private toggleSignupModalSource = new Subject<void>();
+  toggleSignupModal$ = this.toggleSignupModalSource.asObservable();
   private openFilterModalSource = new Subject<void>();
   openFilterModal$ = this.openFilterModalSource.asObservable();
   private openSearchMenuSource = new Subject<void>();
@@ -22,5 +23,9 @@ export class SharedService {
 
   openSearchMenuMobile() {
     this.openSearchMenuMobileSource.next();
+  }
+
+  toggleSignUpModal() {
+    this.toggleSignupModalSource.next();
   }
 }

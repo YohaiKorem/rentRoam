@@ -243,6 +243,7 @@
       }
     }
   }
+
   @include for-mobile-layout {
     padding-block: 15px;
     display: flex;
@@ -392,6 +393,15 @@
     }
   }
 }
+
+.btn-dashboard {
+  border-bottom: 1px solid $secondaryClr2;
+}
+
+.btn-logout {
+  border-top: 1px solid $secondaryClr2;
+}
+
 .inactive {
   position: relative;
   transform: translateY(-200%);

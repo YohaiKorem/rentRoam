@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user.model';
 import { Observable, Subscription } from 'rxjs';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'signup-modal',
   templateUrl: './signup-modal.component.html',
@@ -12,6 +13,7 @@ import { FacebookLoginProvider } from '@abacritt/angularx-social-login';
 export class SignupModalComponent implements OnInit {
   constructor(
     private userService: UserService,
+    private sharedService: SharedService,
     private authService: SocialAuthService
   ) {}
   user!: SocialUser;
@@ -34,6 +36,7 @@ export class SignupModalComponent implements OnInit {
     this.userService.login(this.credentials).subscribe((user) => {
       this.loggedInUser = user;
     });
+    this.sharedService.toggleSignUpModal();
   }
 
   signInWithFB(): void {

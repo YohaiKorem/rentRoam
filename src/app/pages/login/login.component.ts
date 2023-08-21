@@ -11,7 +11,7 @@ import { Observable, Subscription } from 'rxjs';
 export class LoginComponent implements OnInit {
   constructor(private userService: UserService) {}
   loggedInUser: User | null = null;
-  loggedInUser$!: Observable<User>;
+  loggedInUser$!: Observable<User | null>;
   isLoginClicked: boolean = false;
   isSignupClicked: boolean = true;
   credentials: any = {};
