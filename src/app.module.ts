@@ -38,6 +38,7 @@ import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.compo
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
+  GoogleSigninButtonModule,
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
@@ -82,6 +83,7 @@ import {
     GoogleMapsModule,
     MatCardModule,
     SocialLoginModule,
+    GoogleSigninButtonModule,
   ],
   providers: [
     {
@@ -89,10 +91,12 @@ import {
       useValue: {
         autoLogin: false,
         providers: [
-          // {
-          //   id: GoogleLoginProvider.PROVIDER_ID,
-          //   provider: new GoogleLoginProvider('clientId'),
-          // },
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '346749624393-mah9uga9dklfedeg946m1dlkknji4v6e.apps.googleusercontent.com'
+            ),
+          },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider('644003741032425'),

@@ -55,10 +55,10 @@ export class UserService {
 
     if (info instanceof SocialUser) {
       user = this._socialLogin(info);
-      console.log('user that returns from social login', user);
-      user.pipe(
+
+      return user.pipe(
         tap((user: SocialUser) => {
-          const socialUser = User.fromSocial(user);
+          const socialUser = User.fromFacebook(user);
 
           this._loggedInUser$.next(socialUser);
           console.log('socialLogin inside login method', user);
@@ -99,8 +99,14 @@ export class UserService {
   }
 
   private _socialLogin(info: SocialUser) {
+    console.log(info);
+
     let socialUser;
-    const socialInfo = User.fromSocial(info);
+
+    const socialInfo =
+      info.provider === 'GOOGLE'
+        ? User.fromGoogle(info)
+        : User.fromFacebook(info);
     console.log('socialInfo', socialInfo);
     return this.getUsers().pipe(
       map((users) => {
@@ -126,7 +132,11 @@ export class UserService {
   public signup(info: any) {
     let newUser: User;
     if (info instanceof SocialUser) {
-      newUser = User.fromSocial(info);
+      console.log(info);
+      newUser =
+        info.provider === 'GOOGLE'
+          ? User.fromGoogle(info)
+          : User.fromFacebook(info);
     } else {
       newUser = new User(
         info.name,
