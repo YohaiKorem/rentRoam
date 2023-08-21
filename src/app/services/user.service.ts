@@ -143,7 +143,8 @@ export class UserService {
         '',
         info.password,
         info.username,
-        this._getRandomId()
+        this._getRandomId(),
+        []
       );
     }
 
@@ -173,18 +174,24 @@ export class UserService {
   //   return this.addMove(amount, user);
   // }
 
-  public addMove(amount: number, user: User): User {
-    const move = {
-      id: this._getRandomId(),
-      amount,
-      at: Date.now(),
-    };
+  public toggleStayInWishlist(
+    stayId: string,
+    user: User = this.sessionStorageUser
+  ): User {
+    if (!user || !user.wishlist) {
+      throw new Error('Invalid user or wishlist');
+    }
+    user = { ...user, wishlist: [...user.wishlist] };
+    let stayIdx = user.wishlist.findIndex((id) => id === stayId);
+    stayIdx === -1
+      ? user.wishlist.push(stayId)
+      : user.wishlist.splice(stayIdx, 1);
+
     this._updateUser(user);
     return user;
   }
 
   private _updateUser(user: User) {
-    console.log('before');
     storageService.put(ENTITY, user);
     this._saveLocalUser(user);
   }
@@ -194,7 +201,6 @@ export class UserService {
     const users = this._users$.value;
     const userIdx = users.findIndex((_user) => _user._id === user._id);
     users.splice(userIdx, 1, user);
-    console.log(user);
     this._loggedInUser$.next(user);
     return user;
   }

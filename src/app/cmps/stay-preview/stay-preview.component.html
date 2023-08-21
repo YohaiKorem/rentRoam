@@ -18,27 +18,56 @@
         }"
       ></div>
     </div>
-    <span class="heart-icon"
-      ><svg
-        viewBox="0 0 32 32"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        role="presentation"
-        focusable="false"
-        style="
-          display: block;
-          fill: rgba(0, 0, 0, 0.5);
-          height: 24px;
-          width: 24px;
-          stroke: var(--f-mkcy-f);
-          stroke-width: 2;
-          overflow: visible;
+    <span class="heart-icon" (click)="onAddToWishlist($event, stay._id)">
+      <ng-container
+        *ngIf="
+          loggedInUser && !loggedInUser!.wishlist!.includes(stay._id);
+          else filledHeartIcon
         "
       >
-        <path
-          d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"
-        ></path>
-      </svg>
+        <svg
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
+          style="
+            display: block;
+            fill: rgba(0, 0, 0, 0.5);
+            height: 24px;
+            width: 24px;
+            stroke: var(--f-mkcy-f);
+            stroke-width: 2;
+            overflow: visible;
+          "
+        >
+          <path
+            d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"
+          ></path>
+        </svg>
+      </ng-container>
+      <ng-template #filledHeartIcon>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
+          style="
+            display: block;
+            fill: #ff385c;
+            height: 24px;
+            width: 24px;
+            stroke: #ffffff;
+            stroke-width: 2;
+            overflow: visible;
+          "
+        >
+          <path
+            d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"
+          ></path>
+        </svg>
+      </ng-template>
     </span>
     <span *ngIf="stay.host.isSuperhost" class="superhost">superhost</span>
     <button
@@ -98,7 +127,12 @@
       </svg>
     </button>
     <div class="host-img-container hidden-on-mobile">
-      <img [src]="stay.host.thumbnailUrl" alt="Image of host" />
+      <img
+        [src]="stay.host.thumbnailUrl"
+        alt="Image of host"
+        loading="lazy"
+        (error)="onImgErr($event)"
+      />
     </div>
     <span class="img-index"></span>
   </div>
@@ -135,6 +169,16 @@
         currDate.start.toLocaleDateString("en-GB", {
           day: "2-digit",
         })
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -5,7 +5,8 @@ export class User {
     public imgUrl: string,
     public password: string,
     public username: string,
-    public _id: string
+    public _id: string,
+    public wishlist: string[]
   ) {}
 
   public static fromFacebook(social: SocialUser): User {
@@ -14,7 +15,8 @@ export class User {
       social.response.picture.data.url,
       social.authToken,
       social.firstName,
-      social.id
+      social.id,
+      []
     );
   }
   public static fromGoogle(social: SocialUser): User {
@@ -23,7 +25,8 @@ export class User {
       social.photoUrl,
       social.idToken,
       social.firstName,
-      social.id
+      social.id,
+      []
     );
   }
 }

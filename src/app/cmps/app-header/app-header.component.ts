@@ -65,7 +65,6 @@ export class AppHeaderComponent {
       .subscribe((user) => {
         this.loggedInUser = user;
         if (this.loggedInUser != null) this.isShowSignupModal = false;
-        console.log(this.loggedInUser);
       });
   }
   ngAfterViewInit() {
