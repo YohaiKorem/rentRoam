@@ -3,7 +3,12 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription } from 'rxjs';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-import { FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import {
+  FacebookLoginProvider,
+  GoogleSigninButtonDirective,
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
+
 import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'signup-modal',
@@ -26,6 +31,8 @@ export class SignupModalComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.user = user;
       this.isLoggedIn = user != null;
+      console.log(user);
+
       this.userService.login(this.user).subscribe((user) => {
         this.loggedInUser = user;
       });
