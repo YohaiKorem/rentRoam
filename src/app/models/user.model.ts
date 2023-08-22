@@ -1,4 +1,5 @@
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { Wishlist } from './wishlist.model';
 export class User {
   constructor(
     public fullname: string,
@@ -6,7 +7,7 @@ export class User {
     public password: string,
     public username: string,
     public _id: string,
-    public wishlist: string[]
+    public wishlists: Wishlist[]
   ) {}
 
   public static fromFacebook(social: SocialUser): User {

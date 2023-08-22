@@ -12,6 +12,8 @@ import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'stay-index',
@@ -25,6 +27,7 @@ export class StayIndexComponent implements OnInit {
     private stayService: StayService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
+    private userService: UserService,
     private elementRef: ElementRef
   ) {}
 
@@ -40,6 +43,8 @@ export class StayIndexComponent implements OnInit {
   distance: number = 0;
   userLoc: any = { lat: null, lng: null };
   modalTitle: string = '';
+  loggedInUser: User | null = null;
+  loggedInUser$!: Observable<User>;
   private destroySubject$ = new Subject<null>();
 
   ngOnInit() {
@@ -52,6 +57,9 @@ export class StayIndexComponent implements OnInit {
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.location = searchParam.location));
+    this.userService.loggedInUser$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((user) => (this.loggedInUser = user));
   }
 
   clearFilter() {
@@ -75,7 +83,13 @@ export class StayIndexComponent implements OnInit {
     document.querySelector('body')?.classList.remove('modal-open');
   }
 
-  toggleWishlistModal() {}
+  getModalTitle() {
+    let res = '';
+    if (this.modalTitle === 'Filters') res = 'Filters';
+    if (this.modalTitle === 'wishlist') res = 'Your wishlists';
+    if (this.modalTitle === 'wishlistEdit') res = 'Name this wishlist';
+    return res;
+  }
 
   setDefaultDates() {
     if (!this.searchParam.startDate && !this.searchParam.endDate) {

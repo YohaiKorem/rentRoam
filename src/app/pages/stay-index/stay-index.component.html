@@ -8,7 +8,7 @@
 
 <div *ngIf="isModalOpen" (click)="toggleModal()" class="modal-wrapper">
   <dynamic-modal
-    [title]="modalTitle"
+    [title]="getModalTitle()"
     class="dynamic-modal modal-content"
     (closeModal)="toggleModal()"
   >
@@ -21,8 +21,8 @@
       ></filter-modal>
     </ng-container>
 
-    <ng-container *ngIf="modalTitle === 'wishlist'">
-      <wishlist-list></wishlist-list>
+    <ng-container *ngIf="modalTitle === 'wishlist' && loggedInUser">
+      <wishlist-list [user]="loggedInUser"></wishlist-list>
     </ng-container>
 
     <ng-container *ngIf="modalTitle === 'wishlistEdit'">

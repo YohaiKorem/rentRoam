@@ -174,22 +174,26 @@ export class UserService {
   //   return this.addMove(amount, user);
   // }
 
-  public toggleStayInWishlist(
-    stayId: string,
-    user: User = this.sessionStorageUser
-  ): User {
-    if (!user || !user.wishlist) {
-      throw new Error('Invalid user or wishlist');
-    }
-    user = { ...user, wishlist: [...user.wishlist] };
-    let stayIdx = user.wishlist.findIndex((id) => id === stayId);
-    stayIdx === -1
-      ? user.wishlist.push(stayId)
-      : user.wishlist.splice(stayIdx, 1);
+  // public toggleStayInWishlist(
+  //   wishlistId: string,
+  //   user: User = this.sessionStorageUser
+  // ): User {
+  //   if (!user || !user.wishlists) {
+  //     throw new Error('Invalid user or wishlist');
+  //   }
+  //   user = { ...user, wishlists: [...user.wishlists] };
+  //   let stayIdx = user.wishlists.findIndex((wishlist) => wishlist.id === wishlistId);
+  //   stayIdx === -1
+  //     ? user.wishlists.push(wishlistId)
+  //     : user.wishlists.splice(stayIdx, 1);
 
-    this._updateUser(user);
-    return user;
-  }
+  //   this._updateUser(user);
+  //   return user;
+  // }
+  public toggleStayInWishlist(
+    wishlistId: string,
+    user: User = this.sessionStorageUser
+  ) {}
 
   private _updateUser(user: User) {
     storageService.put(ENTITY, user);
