@@ -9,6 +9,7 @@ import {
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
+import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -29,7 +30,8 @@ export class StayPreviewComponent implements OnInit {
   constructor(
     private stayService: StayService,
     private cdr: ChangeDetectorRef,
-    private userService: UserService
+    private userService: UserService,
+    private sharedService: SharedService
   ) {
     // this.getUserLocation();
   }
@@ -94,8 +96,8 @@ export class StayPreviewComponent implements OnInit {
     ev.stopPropagation();
     ev.preventDefault();
     // this.loggedInUser?.wishlist.push(id);
+    this.sharedService.openModal('wishlist');
     this.userService.toggleStayInWishlist(id, this.loggedInUser!);
-    console.log(this.loggedInUser);
   }
 
   scrollToLeft(event: Event) {

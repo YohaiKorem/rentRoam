@@ -32,18 +32,22 @@ export class StayIndexComponent implements OnInit {
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
   isFilterModalOpen = false;
+  isWishlistModalOpen = false;
+  isModalOpen: boolean = false;
   location: any | null = null;
   searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
   distance: number = 0;
   userLoc: any = { lat: null, lng: null };
+  modalTitle: string = '';
   private destroySubject$ = new Subject<null>();
 
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
     this.setDefaultDates();
-    this.sharedService.openFilterModal$.subscribe(() => {
-      this.toggleFilterModal();
+    this.sharedService.openModal$.subscribe((str) => {
+      // this.toggleFilterModal();
+      this.toggleModal(str);
     });
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
@@ -57,7 +61,22 @@ export class StayIndexComponent implements OnInit {
   toggleFilterModal() {
     this.isFilterModalOpen = !this.isFilterModalOpen;
     document.querySelector('body')?.classList.toggle('modal-open');
+    this.isFilterModalOpen ? (this.modalTitle = 'Filters') : '';
   }
+
+  toggleModal(title = '') {
+    if (title) {
+      this.modalTitle = title;
+      this.isModalOpen = true;
+      document.querySelector('body')?.classList.add('modal-open');
+      return;
+    }
+    this.isModalOpen = false;
+    document.querySelector('body')?.classList.remove('modal-open');
+  }
+
+  toggleWishlistModal() {}
+
   setDefaultDates() {
     if (!this.searchParam.startDate && !this.searchParam.endDate) {
       const currentDate = new Date();

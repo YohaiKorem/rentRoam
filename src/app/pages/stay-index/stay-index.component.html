@@ -6,21 +6,27 @@
   [currDate]="currDate"
 ></stay-list>
 
-<div
-  *ngIf="isFilterModalOpen"
-  (click)="toggleFilterModal()"
-  class="modal-wrapper"
->
+<div *ngIf="isModalOpen" (click)="toggleModal()" class="modal-wrapper">
   <dynamic-modal
-    [title]="'Filters'"
+    [title]="modalTitle"
     class="dynamic-modal modal-content"
-    (closeModal)="toggleFilterModal()"
+    (closeModal)="toggleModal()"
   >
-    <filter-modal
-      [stays]="stays$ | async"
-      [nights]="5"
-      (closeModal)="toggleFilterModal()"
-      class="filter-modal-container"
-    ></filter-modal>
+    <ng-container *ngIf="modalTitle === 'Filter'">
+      <filter-modal
+        [stays]="stays$ | async"
+        [nights]="5"
+        (closeModal)="toggleModal()"
+        class="filter-modal-container"
+      ></filter-modal>
+    </ng-container>
+
+    <ng-container *ngIf="modalTitle === 'wishlist'">
+      <wishlist-list></wishlist-list>
+    </ng-container>
+
+    <ng-container *ngIf="modalTitle === 'wishlistEdit'">
+      <wishlist-edit></wishlist-edit>
+    </ng-container>
   </dynamic-modal>
 </div>

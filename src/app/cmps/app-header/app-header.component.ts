@@ -93,7 +93,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   openFilterModal() {
-    this.sharedService.openFilterModal();
+    this.sharedService.openModal('Filters');
   }
 
   openSearch(str: string) {

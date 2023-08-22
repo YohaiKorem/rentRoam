@@ -125,7 +125,8 @@ export class RadioFilterComponent {
   }
 
   openFilterModal() {
-    this.sharedService.openFilterModal();
+    // this.sharedService.openFilterModal();
+    this.sharedService.openModal('Filters');
   }
 
   ngOnDestroy(): void {

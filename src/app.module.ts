@@ -44,6 +44,8 @@ import {
 } from '@abacritt/angularx-social-login';
 import { WishlistComponent } from './app/pages/wishlist/wishlist.component';
 import { WishlistPreviewComponent } from './app/cmps/wishlist-preview/wishlist-preview.component';
+import { WishlistEditComponent } from './app/cmps/wishlist-edit/wishlist-edit.component';
+import { WishlistListComponent } from './app/cmps/wishlist-list/wishlist-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +70,8 @@ import { WishlistPreviewComponent } from './app/cmps/wishlist-preview/wishlist-p
     SignupModalComponent,
     WishlistComponent,
     WishlistPreviewComponent,
+    WishlistEditComponent,
+    WishlistListComponent,
   ],
   imports: [
     BrowserModule,

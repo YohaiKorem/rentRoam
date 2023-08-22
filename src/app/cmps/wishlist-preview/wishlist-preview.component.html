@@ -1,1 +1,8 @@
-<p>wishlist-preview works!</p>
+<div class="wishlist-preview-wrapper">
+  <div
+    *ngFor="let img of stayImgsForDisplay | slice : 0 : 3; let i = index"
+    class="img-container"
+  >
+    <img [src]="img" alt="Stay Preview" />
+  </div>
+</div>

@@ -7,6 +7,8 @@ export class SharedService {
   constructor() {}
   private toggleSignupModalSource = new Subject<void>();
   toggleSignupModal$ = this.toggleSignupModalSource.asObservable();
+  private openModalSource = new Subject<string>();
+  openModal$ = this.openModalSource.asObservable();
   private openFilterModalSource = new Subject<void>();
   openFilterModal$ = this.openFilterModalSource.asObservable();
   private openSearchMenuSource = new Subject<void>();
@@ -15,6 +17,10 @@ export class SharedService {
   openSearchMenuMobile$ = this.openSearchMenuMobileSource.asObservable();
   openFilterModal() {
     this.openFilterModalSource.next();
+  }
+
+  openModal(str = '') {
+    this.openModalSource.next(str);
   }
 
   openSearchMenu() {
