@@ -42,6 +42,8 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
+import { WishlistComponent } from './app/pages/wishlist/wishlist.component';
+import { WishlistPreviewComponent } from './app/cmps/wishlist-preview/wishlist-preview.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +66,8 @@ import {
     InlineRangeCalendarComponent,
     SwipeDirectiveDirective,
     SignupModalComponent,
+    WishlistComponent,
+    WishlistPreviewComponent,
   ],
   imports: [
     BrowserModule,

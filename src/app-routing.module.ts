@@ -4,7 +4,8 @@ import { LoginComponent } from './app/pages/login/login.component';
 import { StayIndexComponent } from './app/pages/stay-index/stay-index.component';
 import { StayDetailsComponent } from './app/pages/stay-details/stay-details.component';
 import { StayResolver } from './app/services/stay-resolver';
-
+// import { UserResolver } from './app/services/user-resolver';
+import { WishlistComponent } from './app/pages/wishlist/wishlist.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
     path: 'stay/:id',
     component: StayDetailsComponent,
     resolve: { stay: StayResolver },
+  },
+  {
+    path: 'wishlist',
+    component: WishlistComponent,
+    // resolve: { user: UserResolver },
   },
   {
     path: '',

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { faAirbnb } from '@fortawesome/free-brands-svg-icons';
 import { faSearch, faGlobe, faBars } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,7 +23,7 @@ declare var google: any;
     class: 'main-header ',
   },
 })
-export class AppHeaderComponent {
+export class AppHeaderComponent implements OnInit {
   @ViewChild('locMenuTrigger') locMenuTrigger!: MatMenuTrigger;
   @ViewChild('dateMenuTrigger') dateMenuTrigger!: MatMenuTrigger;
   @ViewChild('guestsMenuTrigger') guestsMenuTrigger!: MatMenuTrigger;

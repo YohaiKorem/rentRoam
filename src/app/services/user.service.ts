@@ -214,6 +214,12 @@ export class UserService {
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user));
   }
 
+  public getUserById(id: string) {
+    const users = this._users$.value;
+    const user = users.find((_user) => _user._id === id);
+    return user;
+  }
+
   private _createUsers() {
     // _users.forEach((user) => storageService.post(ENTITY, user));
     //   storageService.post(ENTITY, _users);

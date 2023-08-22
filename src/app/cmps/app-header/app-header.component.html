@@ -529,7 +529,9 @@
     <ng-template #userMenuOptions>
       <button mat-menu-item class="btn-dashboard">Dashboard</button>
       <button mat-menu-item class="btn-my-trips">My trips</button>
-      <button mat-menu-item class="btn-wishlist">Wishlist</button>
+      <a routerLink="wishlist">
+        <button mat-menu-item class="btn-wishlist">Wishlist</button>
+      </a>
       <button mat-menu-item class="btn-logout" (click)="onLogout()">
         Logout
       </button>
