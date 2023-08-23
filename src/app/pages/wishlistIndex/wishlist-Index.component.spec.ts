@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WishlistComponent } from './wishlist.component';
+import { WishlistComponent } from './wishlist-Index.component';
 
 describe('WishlistComponent', () => {
   let component: WishlistComponent;
@@ -8,7 +8,7 @@ describe('WishlistComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [WishlistComponent]
+      declarations: [WishlistComponent],
     });
     fixture = TestBed.createComponent(WishlistComponent);
     component = fixture.componentInstance;

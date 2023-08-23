@@ -42,7 +42,7 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
-import { WishlistComponent } from './app/pages/wishlist/wishlist.component';
+import { WishlistIndexComponent } from './app/pages/wishlistIndex/wishlist-Index.component';
 import { WishlistPreviewComponent } from './app/cmps/wishlist-preview/wishlist-preview.component';
 import { WishlistEditComponent } from './app/cmps/wishlist-edit/wishlist-edit.component';
 import { WishlistListComponent } from './app/cmps/wishlist-list/wishlist-list.component';
@@ -68,7 +68,7 @@ import { WishlistListComponent } from './app/cmps/wishlist-list/wishlist-list.co
     InlineRangeCalendarComponent,
     SwipeDirectiveDirective,
     SignupModalComponent,
-    WishlistComponent,
+    WishlistIndexComponent,
     WishlistPreviewComponent,
     WishlistEditComponent,
     WishlistListComponent,

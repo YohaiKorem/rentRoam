@@ -3,11 +3,11 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 @Component({
-  selector: 'wishlist',
-  templateUrl: './wishlist.component.html',
-  styleUrls: ['./wishlist.component.scss'],
+  selector: 'wishlist-index',
+  templateUrl: './wishlist-Index.component.html',
+  styleUrls: ['./wishlist-Index.component.scss'],
 })
-export class WishlistComponent implements OnInit {
+export class WishlistIndexComponent implements OnInit {
   private destroySubject$ = new Subject<null>();
 
   loggedInUser: User | null = null;

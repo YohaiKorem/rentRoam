@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class WishlistListComponent implements OnInit {
   // @Input() wishlist!: Wishlist;
   @Input() user!: User;
-  @Input() isModal: boolean = false;
+  @Input() isModal: boolean = true;
   private destroySubject$ = new Subject<null>();
 
   constructor(

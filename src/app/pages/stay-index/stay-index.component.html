@@ -22,8 +22,26 @@
     </ng-container>
 
     <ng-container *ngIf="modalTitle === 'wishlist' && loggedInUser">
-      <button class="btn btn-edit-wishlist">Create new wishlist</button>
-      <wishlist-list [user]="loggedInUser"></wishlist-list>
+      <div class="wrapper-inside-modal flex column">
+        <button
+          class="btn btn-edit-wishlist flex align-center gap1"
+          (click)="toggleModal('wishlistEdit')"
+        >
+          <div class="plus-btn-img-container">
+            <img
+              class="i9if2t0 i1mla2as i1cqnm0r dir dir-ltr"
+              aria-hidden="true"
+              alt=""
+              elementtiming="LCP-target"
+              src="https://a0.muscache.com/im/pictures/da1a2f06-efb0-4079-abce-0f6fc82089e0.jpg"
+              data-original-uri="https://a0.muscache.com/im/pictures/da1a2f06-efb0-4079-abce-0f6fc82089e0.jpg"
+              style="--dls-liteimage-object-fit: cover"
+            />
+          </div>
+          <span class="fw500 fs18">Create new wishlist</span>
+        </button>
+        <wishlist-list [user]="loggedInUser"></wishlist-list>
+      </div>
     </ng-container>
 
     <ng-container *ngIf="modalTitle === 'wishlistEdit'">

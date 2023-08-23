@@ -1,1 +1,9 @@
-<p>wishlist-edit works!</p>
+<form
+  (submit)="onCreateWishlist($event)"
+  class="wishlist-edit flex column gap1"
+>
+  <input type="text" placeholder="Name" [(ngModel)]="wishlistName" />
+  <button [disabled]="!wishlistName" class="btn btn-create-wishlist">
+    Create
+  </button>
+</form>

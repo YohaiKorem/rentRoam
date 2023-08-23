@@ -1,6 +1,22 @@
-<div class="wishlist-preview-wrapper flex align-center gap1-point5">
-  <div class="img-container">
-    <img [src]="wishlist.stays[0].thumbnail" alt="" />
-  </div>
-  <h3 class="fw500">{{ wishlist.name }}</h3>
+<div
+  ngClass="{{ isModal ? 'for-modal' : '' }}"
+  class="wishlist-preview-wrapper flex align-center gap1-point5"
+>
+  <ng-container *ngIf="isModal; else normalPreviewLayout">
+    <div class="img-container for-modal">
+      <img [src]="wishlist.stays[0].thumbnail" alt="" />
+    </div>
+    <h3 class="fw500 fs18">{{ wishlist.name }}</h3>
+  </ng-container>
+  <ng-template #normalPreviewLayout>
+    <div class="imgs-container">
+      <div
+        class="img-container"
+        *ngFor="let stay of wishlist.stays; let i = index"
+      >
+        <img [src]="stay.thumbnail" loading="lazy" />
+      </div>
+    </div>
+    <h3 class="fw500">{{ wishlist.name }}</h3>
+  </ng-template>
 </div>

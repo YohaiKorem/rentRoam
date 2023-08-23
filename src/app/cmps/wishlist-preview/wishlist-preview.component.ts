@@ -10,6 +10,7 @@ import { StayService } from 'src/app/services/stay.service';
 export class WishlistPreviewComponent implements OnInit {
   constructor(private stayService: StayService) {}
   @Input() wishlist!: Wishlist;
+  @Input() isModal: boolean = true;
   stayImgsForDisplay!: string[];
 
   ngOnInit(): void {}

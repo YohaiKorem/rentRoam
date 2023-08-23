@@ -1,8 +1,11 @@
-<ul class="wishlist-list-wrapper">
+<ul class="wishlist-list-wrapper flex">
   <a
     routerLink="wishlist"
     *ngFor="let wishlist of user.wishlists; let i = index"
   >
-    <wishlist-preview [wishlist]="wishlist"></wishlist-preview>
+    <wishlist-preview
+      [isModal]="isModal"
+      [wishlist]="wishlist"
+    ></wishlist-preview>
   </a>
 </ul>

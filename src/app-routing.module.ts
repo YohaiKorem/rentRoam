@@ -5,7 +5,7 @@ import { StayIndexComponent } from './app/pages/stay-index/stay-index.component'
 import { StayDetailsComponent } from './app/pages/stay-details/stay-details.component';
 import { StayResolver } from './app/services/stay-resolver';
 // import { UserResolver } from './app/services/user-resolver';
-import { WishlistComponent } from './app/pages/wishlist/wishlist.component';
+import { WishlistIndexComponent } from './app/pages/wishlistIndex/wishlist-Index.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -19,9 +19,14 @@ const routes: Routes = [
   },
   {
     path: 'wishlist',
-    component: WishlistComponent,
+    component: WishlistIndexComponent,
     // resolve: { user: UserResolver },
   },
+  // {
+  //   path: 'wishlist/:id',
+  //   component: WishlistDetailsComponent,
+  //   // resolve: { user: UserResolver },
+  // },
   {
     path: '',
     redirectTo: 'stay', // Redirect to '/stay' if the route is empty

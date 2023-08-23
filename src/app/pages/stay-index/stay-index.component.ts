@@ -36,13 +36,13 @@ export class StayIndexComponent implements OnInit {
   stays$!: Observable<Stay[]>;
   isFilterModalOpen = false;
   isWishlistModalOpen = false;
-  isModalOpen: boolean = false;
+  isModalOpen: boolean = true;
   location: any | null = null;
   searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
   distance: number = 0;
   userLoc: any = { lat: null, lng: null };
-  modalTitle: string = '';
+  modalTitle: string = 'wishlistEdit';
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   private destroySubject$ = new Subject<null>();
