@@ -22,6 +22,7 @@
     </ng-container>
 
     <ng-container *ngIf="modalTitle === 'wishlist' && loggedInUser">
+      <button class="btn btn-edit-wishlist">Create new wishlist</button>
       <wishlist-list [user]="loggedInUser"></wishlist-list>
     </ng-container>
 

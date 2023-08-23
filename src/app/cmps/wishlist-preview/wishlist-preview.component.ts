@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Wishlist } from 'src/app/models/wishlist.model';
 import { StayService } from 'src/app/services/stay.service';
 
 @Component({
@@ -8,20 +9,8 @@ import { StayService } from 'src/app/services/stay.service';
 })
 export class WishlistPreviewComponent implements OnInit {
   constructor(private stayService: StayService) {}
-  @Input() wishlist!: any;
+  @Input() wishlist!: Wishlist;
   stayImgsForDisplay!: string[];
 
-  ngOnInit(): void {
-    this.loadStayImages();
-  }
-
-  loadStayImages(): void {
-    this.stayImgsForDisplay = [];
-
-    this.wishlist.forEach((stayId: string) => {
-      this.stayService.getStayById(stayId).subscribe((stay) => {
-        this.stayImgsForDisplay.push(stay.imgUrls[0]);
-      });
-    });
-  }
+  ngOnInit(): void {}
 }

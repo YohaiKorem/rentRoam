@@ -1,8 +1,6 @@
-<div class="wishlist-preview-wrapper">
-  <div
-    *ngFor="let img of stayImgsForDisplay | slice : 0 : 3; let i = index"
-    class="img-container"
-  >
-    <img [src]="img" alt="Stay Preview" />
+<div class="wishlist-preview-wrapper flex align-center gap1-point5">
+  <div class="img-container">
+    <img [src]="wishlist.stays[0].thumbnail" alt="" />
   </div>
+  <h3 class="fw500">{{ wishlist.name }}</h3>
 </div>

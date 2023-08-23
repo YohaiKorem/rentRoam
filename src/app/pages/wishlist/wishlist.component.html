@@ -2,5 +2,7 @@
   <header class="wishlist-header">
     <h1 class="fs24 fw500">Wishlists</h1>
   </header>
-  <wishlist-preview [wishlist]="loggedInUser!.wishlists"></wishlist-preview>
+  <wishlist-list [user]="loggedInUser!"></wishlist-list>
+
+  <!-- <wishlist-preview [wishlist]="loggedInUser!.wishlists"></wishlist-preview> -->
 </div>
