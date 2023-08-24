@@ -9,7 +9,7 @@ export class WishlistEditComponent {
   @Input() isModal: boolean = true;
   wishlistName: string = '';
 
-  onCreateWishlist(ev: any) {
-    ev.preventDefault();
+  onCreateWishlist() {
+    console.log('this.wishlistName', this.wishlistName);
   }
 }
