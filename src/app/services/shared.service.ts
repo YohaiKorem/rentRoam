@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Stay } from '../models/stay.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -7,7 +8,7 @@ export class SharedService {
   constructor() {}
   private toggleSignupModalSource = new Subject<void>();
   toggleSignupModal$ = this.toggleSignupModalSource.asObservable();
-  private openModalSource = new Subject<string>();
+  private openModalSource = new Subject<{ str: string; data: Stay | null }>();
   openModal$ = this.openModalSource.asObservable();
 
   private openSearchMenuSource = new Subject<void>();
@@ -15,8 +16,8 @@ export class SharedService {
   private openSearchMenuMobileSource = new Subject<void>();
   openSearchMenuMobile$ = this.openSearchMenuMobileSource.asObservable();
 
-  openModal(str = '') {
-    this.openModalSource.next(str);
+  openModal(str = '', data: Stay | null = null) {
+    this.openModalSource.next({ str, data });
   }
 
   openSearchMenu() {

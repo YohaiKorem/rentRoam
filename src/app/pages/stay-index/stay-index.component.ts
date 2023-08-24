@@ -36,23 +36,24 @@ export class StayIndexComponent implements OnInit {
   stays$!: Observable<Stay[]>;
   isFilterModalOpen = false;
   isWishlistModalOpen = false;
-  isModalOpen: boolean = true;
+  isModalOpen: boolean = false;
   location: any | null = null;
   searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
   distance: number = 0;
   userLoc: any = { lat: null, lng: null };
-  modalTitle: string = 'wishlistEdit';
+  modalTitle: string = '';
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
+  selectedStay: Stay | null = null;
   private destroySubject$ = new Subject<null>();
 
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
     this.setDefaultDates();
-    this.sharedService.openModal$.subscribe((str) => {
+    this.sharedService.openModal$.subscribe(({ str, data }) => {
       // this.toggleFilterModal();
-      this.toggleModal(str);
+      this.toggleModal(str, data);
     });
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
@@ -72,7 +73,10 @@ export class StayIndexComponent implements OnInit {
     this.isFilterModalOpen ? (this.modalTitle = 'Filters') : '';
   }
 
-  toggleModal(title = '') {
+  toggleModal(title = '', data: Stay | null = null) {
+    this.selectedStay = data;
+    console.log('this.selectedStay', this.selectedStay);
+
     if (title) {
       this.modalTitle = title;
       this.isModalOpen = true;

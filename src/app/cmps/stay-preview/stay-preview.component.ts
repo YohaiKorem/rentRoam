@@ -96,7 +96,7 @@ export class StayPreviewComponent implements OnInit {
     ev.stopPropagation();
     ev.preventDefault();
     // this.loggedInUser?.wishlist.push(id);
-    this.sharedService.openModal('wishlist');
+    this.sharedService.openModal('wishlist', this.stay);
     this.userService.toggleStayInWishlist(id, this.loggedInUser!);
   }
 

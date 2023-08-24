@@ -1,4 +1,8 @@
 @import "../../app-root/app.component.scss";
 .wishlist-list-wrapper {
   padding: 1em;
+
+  .btn-wishlist {
+    background-color: transparent;
+  }
 }

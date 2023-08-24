@@ -17,6 +17,7 @@ import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import _users from '../../data/user.json';
 import { SignupInfo } from '../models/signup-info.model';
+import { Wishlist } from '../models/wishlist.model';
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
 
@@ -194,6 +195,12 @@ export class UserService {
     wishlistId: string,
     user: User = this.sessionStorageUser
   ) {}
+
+  public addWishlistToUser(wishlist: Wishlist, user: User) {
+    const updatedUser = { ...user };
+    updatedUser.wishlists.push(wishlist);
+    this._updateUser(updatedUser);
+  }
 
   private _updateUser(user: User) {
     storageService.put(ENTITY, user);

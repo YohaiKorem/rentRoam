@@ -4,7 +4,13 @@
 >
   <ng-container *ngIf="isModal; else normalPreviewLayout">
     <div class="img-container for-modal">
-      <img [src]="wishlist.stays[0].thumbnail" alt="" />
+      <img
+        [src]="
+          wishlist.stays[0]
+            ? wishlist.stays[0].thumbnail
+            : 'https://a0.muscache.com/im/pictures/1366a633-171a-4592-9a51-cd4e6f46a897.jpg'
+        "
+      />
     </div>
     <h3 class="fw500 fs18">{{ wishlist.name }}</h3>
   </ng-container>
