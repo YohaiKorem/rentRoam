@@ -12,6 +12,7 @@ import { User } from 'src/app/models/user.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'stay-preview',
@@ -31,7 +32,8 @@ export class StayPreviewComponent implements OnInit {
     private stayService: StayService,
     private cdr: ChangeDetectorRef,
     private userService: UserService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private wishlistService: WishlistService
   ) {
     // this.getUserLocation();
   }
@@ -92,14 +94,36 @@ export class StayPreviewComponent implements OnInit {
   //   // this.setDistance();
   // }
 
+  isInWishlist() {
+    return this.loggedInUser?.wishlists.some((wishlist) => {
+      return wishlist.stays.some((stay) => stay._id === this.stay._id);
+    });
+  }
+
   onAddToWishlist(ev: any, id: string) {
     ev.stopPropagation();
     ev.preventDefault();
     // this.loggedInUser?.wishlist.push(id);
-    this.sharedService.openModal('wishlist', this.stay);
-    this.userService.toggleStayInWishlist(id, this.loggedInUser!);
+    this.isInWishlist()
+      ? this.onRemoveFromWishlist()
+      : this.sharedService.openModal('wishlist', this.stay);
   }
-
+  onRemoveFromWishlist() {
+    const wishlistIdx = this.loggedInUser?.wishlists.findIndex((wishlist) => {
+      return wishlist.stays.some((s) => s._id === this.stay._id);
+    });
+    if (wishlistIdx === undefined) return;
+    const wishlistToUpdate = this.loggedInUser?.wishlists[wishlistIdx];
+    const updatedWishlist = this.wishlistService.toggleStayInWishlist(
+      wishlistToUpdate!,
+      this.stay
+    );
+    const updatedUser = this.userService.updateWishlistInUser(
+      updatedWishlist,
+      this.loggedInUser!
+    );
+    this.loggedInUser = updatedUser;
+  }
   scrollToLeft(event: Event) {
     event.stopPropagation();
     event.preventDefault();

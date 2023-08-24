@@ -25,6 +25,8 @@ dynamic-modal.dynamic-modal.modal-content {
     align-self: self-start;
     padding: 1em;
     gap: 1.5em;
+    width: 100%;
+    justify-content: flex-start;
     .plus-btn-img-container {
       width: em(60px);
     }

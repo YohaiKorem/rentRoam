@@ -175,26 +175,22 @@ export class UserService {
   //   return this.addMove(amount, user);
   // }
 
-  // public toggleStayInWishlist(
-  //   wishlistId: string,
-  //   user: User = this.sessionStorageUser
-  // ): User {
-  //   if (!user || !user.wishlists) {
-  //     throw new Error('Invalid user or wishlist');
-  //   }
-  //   user = { ...user, wishlists: [...user.wishlists] };
-  //   let stayIdx = user.wishlists.findIndex((wishlist) => wishlist.id === wishlistId);
-  //   stayIdx === -1
-  //     ? user.wishlists.push(wishlistId)
-  //     : user.wishlists.splice(stayIdx, 1);
-
-  //   this._updateUser(user);
-  //   return user;
-  // }
-  public toggleStayInWishlist(
-    wishlistId: string,
+  public updateWishlistInUser(
+    wishlist: Wishlist,
     user: User = this.sessionStorageUser
-  ) {}
+  ): User {
+    if (!user || !user.wishlists) {
+      throw new Error('Invalid user or wishlist');
+    }
+    user = { ...user, wishlists: [...user.wishlists] };
+    const wishlistIdx = user.wishlists.findIndex((w) => w.id === wishlist.id);
+    wishlistIdx === -1
+      ? user.wishlists.push(wishlist)
+      : user.wishlists.splice(wishlistIdx, 1, wishlist);
+
+    this._updateUser(user);
+    return user;
+  }
 
   public addWishlistToUser(wishlist: Wishlist, user: User) {
     const updatedUser = { ...user };

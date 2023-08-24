@@ -27,12 +27,15 @@ export class WishlistListComponent implements OnInit {
   ngOnInit(): void {}
 
   addStayToWishlist(wishlist: Wishlist) {
-    console.log(this.stay);
-    console.log(wishlist);
     const updatedWishlist = this.wishlistService.toggleStayInWishlist(
       wishlist,
       this.stay
     );
-    console.log(updatedWishlist);
+    const updatedUser = this.userService.updateWishlistInUser(
+      updatedWishlist,
+      this.user
+    );
+    this.user = updatedUser;
+    this.sharedService.openModal();
   }
 }

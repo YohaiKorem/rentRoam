@@ -15,9 +15,13 @@ export class WishlistService {
     const newWishlist = new Wishlist(name, [stayPreview], undefined);
     return newWishlist;
   }
-  public toggleStayInWishlist(wishlist: Wishlist, stay: Stay) {
+  public toggleStayInWishlist(wishlist: Wishlist, stay: Stay): Wishlist {
     const stayPreview = new StayPreview(stay);
-    const updatedWishlist = { ...wishlist };
+    const updatedWishlist = new Wishlist(
+      wishlist.name,
+      wishlist.stays,
+      wishlist.id
+    );
     let hasStay = updatedWishlist.stays.some((stay) => {
       return stay._id === stayPreview._id;
     });
