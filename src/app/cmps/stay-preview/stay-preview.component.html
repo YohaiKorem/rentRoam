@@ -1,5 +1,5 @@
 <article class="stay-preview-container flex column">
-  <div class="img-container flex">
+  <div class="img-container flex" [hidden]="isLoadingImg">
     <img
       [src]="
         stay.imgUrls[currImgUrlIdx]
@@ -7,6 +7,8 @@
           : 'assets/imgs/airbnbLogo.jpg'
       "
       loading="lazy"
+      (load)="onImageLoad()"
+      (error)="onImageError()"
     />
     <div class="img-idx-container flex">
       <div
@@ -126,12 +128,12 @@
         [src]="stay.host.thumbnailUrl"
         alt="Image of host"
         loading="lazy"
-        (error)="onImgErr($event)"
+        (error)="onHostImgErr($event)"
       />
     </div>
     <span class="img-index"></span>
   </div>
-  <div class="txt-container text-left">
+  <div class="txt-container text-left" [hidden]="isLoadingImg">
     <div class="stay-rate flex align-center space-between">
       <span class="icon">
         <svg
@@ -158,26 +160,12 @@
     <div class="stay-km-away">{{ distance }} km away</div>
     <div class="stay-dates">
       {{
-        currDate.start.toLocaleDateString("en-GB", {
-          month: "short",
-        }) + ' ' +
-        currDate.start.toLocaleDateString("en-GB", {
-          day: "2-digit",
-        })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          currDate.start.toLocaleDateString("en-GB", {
+            month: "short",
+          }) + ' ' +
+          currDate.start.toLocaleDateString("en-GB", {
+            day: "2-digit",
+          })
 
 
 
@@ -187,11 +175,9 @@
 
       }}-<span *ngIf="areMonthsDifferent">{{ endMonth }}</span>
       {{
-      
-        currDate.end.toLocaleDateString("en-GB", {
-              day: "2-digit",
-            })
-
+          currDate.end.toLocaleDateString("en-GB", {
+                day: "2-digit",
+              })
       }}
     </div>
     <div class="stay-price">

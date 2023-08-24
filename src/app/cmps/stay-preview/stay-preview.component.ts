@@ -25,9 +25,15 @@ export class StayPreviewComponent implements OnInit {
   @Input() endMonth!: string;
   @Input() currDate!: { start: Date; end: Date };
   private destroySubject$ = new Subject<null>();
-
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
+  isLoadingImg: boolean = true;
+  isFirstElementInView = true;
+  isLastElementInView = false;
+  currImgUrlIdx = 0;
+  searchParam = {} as SearchParam;
+  distance: number = 0;
+  userLoc: any = { lat: null, lng: null };
   constructor(
     private stayService: StayService,
     private cdr: ChangeDetectorRef,
@@ -37,14 +43,6 @@ export class StayPreviewComponent implements OnInit {
   ) {
     // this.getUserLocation();
   }
-
-  isFirstElementInView = true;
-  isLastElementInView = false;
-  currImgUrlIdx = 0;
-  searchParam = {} as SearchParam;
-  // currDate = { start: new Date(), end: new Date() };
-  distance: number = 0;
-  userLoc: any = { lat: null, lng: null };
 
   ngOnInit() {
     this.checkInView();
@@ -132,8 +130,16 @@ export class StayPreviewComponent implements OnInit {
     this.checkInView();
   }
 
-  onImgErr(ev: any) {
+  onHostImgErr(ev: any) {
     ev.target.style.opacity = '0';
+  }
+
+  onImageLoad() {
+    this.isLoadingImg = false;
+  }
+
+  onImageError() {
+    this.isLoadingImg = false;
   }
 
   scrollToRight(event: Event) {
