@@ -13,6 +13,14 @@
     width: em(270px);
     height: em(260px);
 
+    &.loading {
+      opacity: 0;
+      visibility: hidden;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+    }
+
     .btn-dir {
       position: absolute;
       top: 50%;
@@ -20,10 +28,6 @@
       opacity: 0;
       &:hover {
         scale: 1.08;
-      }
-      &.hidden {
-        opacity: 0;
-        pointer-events: none;
       }
     }
     .btn-right {
@@ -128,6 +132,13 @@
       &-price {
         grid-row: 4;
       }
+    }
+    &.loading {
+      opacity: 0;
+      visibility: hidden;
+      height: 0;
+      width: 0;
+      overflow: hidden;
     }
   }
 }

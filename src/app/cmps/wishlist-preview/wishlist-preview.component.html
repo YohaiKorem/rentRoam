@@ -16,12 +16,23 @@
   </ng-container>
   <ng-template #normalPreviewLayout>
     <div class="imgs-container">
-      <div
-        class="img-container"
-        *ngFor="let stay of wishlist.stays; let i = index"
-      >
-        <img [src]="stay.thumbnail" loading="lazy" />
-      </div>
+      <ng-container *ngIf="isShortList; else longList">
+        <div
+          class="img-container"
+          *ngFor="let img of extraImgs | slice : 0 : 3; let i = index"
+        >
+          <img [src]="img" loading="lazy" />
+        </div>
+      </ng-container>
+
+      <ng-template #longList>
+        <div
+          class="img-container"
+          *ngFor="let stay of wishlist.stays | slice : 0 : 3; let i = index"
+        >
+          <img [src]="stay.thumbnail" loading="lazy" />
+        </div>
+      </ng-template>
     </div>
     <h3 class="fw500">{{ wishlist.name }}</h3>
   </ng-template>

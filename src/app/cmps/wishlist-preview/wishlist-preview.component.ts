@@ -12,6 +12,22 @@ export class WishlistPreviewComponent implements OnInit {
   @Input() wishlist!: Wishlist;
   @Input() isModal: boolean = true;
   stayImgsForDisplay!: string[];
+  isShortList!: boolean;
+  extraImgs: string[] | null = null;
+  ngOnInit(): void {
+    if (this.wishlist.stays.length <= 3) {
+      this.isShortList = true;
+      this.getImgsForShortList();
+      return;
+    }
+    this.isShortList = false;
+  }
 
-  ngOnInit(): void {}
+  getImgsForShortList() {
+    const stay = this.stayService.getStayById(this.wishlist.stays[0]._id);
+    stay.subscribe((stay) => (this.extraImgs = stay.imgUrls));
+
+    console.log(this.wishlist.stays.length);
+    console.log(this.isShortList);
+  }
 }

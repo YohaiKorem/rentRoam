@@ -1,5 +1,6 @@
 <article class="stay-preview-container flex column">
-  <div class="img-container flex" [hidden]="isLoadingImg">
+  <stay-preview-loader *ngIf="isLoadingImg"></stay-preview-loader>
+  <div class="img-container flex" [class.loading]="isLoadingImg">
     <img
       [src]="
         stay.imgUrls[currImgUrlIdx]
@@ -63,8 +64,9 @@
         >
           <path
             d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"
-          ></path></svg
-      ></ng-template>
+          ></path>
+        </svg>
+      </ng-template>
     </span>
     <span *ngIf="stay.host.isSuperhost" class="superhost">superhost</span>
     <button
@@ -133,7 +135,7 @@
     </div>
     <span class="img-index"></span>
   </div>
-  <div class="txt-container text-left" [hidden]="isLoadingImg">
+  <div class="txt-container text-left" [class.loading]="isLoadingImg">
     <div class="stay-rate flex align-center space-between">
       <span class="icon">
         <svg
@@ -166,6 +168,16 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
+
+
+
+
+
+
+
+
+
+
 
 
 

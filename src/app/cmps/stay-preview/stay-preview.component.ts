@@ -136,6 +136,8 @@ export class StayPreviewComponent implements OnInit {
 
   onImageLoad() {
     this.isLoadingImg = false;
+    let els = document.querySelectorAll('.stay-preview-container .hidden');
+    console.log(els);
   }
 
   onImageError() {
