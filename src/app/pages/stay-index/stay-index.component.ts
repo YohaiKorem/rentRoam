@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Observable, Subscription, map, Subject, takeUntil } from 'rxjs';
+import { Observable, Subscription, map, Subject, takeUntil, take } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { ActivatedRoute } from '@angular/router';
@@ -40,8 +40,12 @@ export class StayIndexComponent implements OnInit {
   location: any | null = null;
   searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
-  distance: number = 0;
-  userLoc: any = { lat: null, lng: null };
+  distances!: { _id: string; distance: number }[];
+
+  userLoc: { lat: number | null; lng: number | null } = {
+    lat: null,
+    lng: null,
+  };
   modalTitle: string = '';
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
@@ -52,19 +56,66 @@ export class StayIndexComponent implements OnInit {
     this.stays$ = this.stayService.stays$;
     this.setDefaultDates();
     this.sharedService.openModal$.subscribe(({ str, data }) => {
-      // this.toggleFilterModal();
       this.toggleModal(str, data);
     });
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
-      .subscribe((searchParam) => (this.location = searchParam.location));
+      .subscribe((searchParam) => {
+        this.location = searchParam.location;
+        if (this.location.name) this.setDistance();
+      });
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((user) => (this.loggedInUser = user));
+    this.userService.userCoords$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((coords) => {
+        this.userLoc = coords;
+        if (this.userLoc.lat !== null && this.userLoc.lng !== null)
+          this.setDistance();
+      });
   }
 
   clearFilter() {
     this.stayService.clearFilter();
+  }
+
+  setDistance() {
+    let stays: Stay[];
+    this.stays$.pipe(take(1)).subscribe((s) => (stays = s));
+
+    if (!stays! || !stays.length) {
+      console.log('Stays not available');
+      return;
+    }
+
+    let targetCoords: { lat: number | null; lng: number | null } | null = null;
+
+    if (this.location && this.location.coords) {
+      targetCoords = this.location.coords;
+    } else if (
+      this.userLoc &&
+      this.userLoc.lat !== null &&
+      this.userLoc.lng !== null
+    ) {
+      targetCoords = this.userLoc;
+    }
+
+    if (!targetCoords) {
+      console.log('No location or userLoc available');
+      return;
+    }
+
+    const distances = stays.map((stay) => {
+      const distance = Math.ceil(
+        this.stayService.getDistance(stay, targetCoords) / 1000
+      );
+      const _id = stay._id;
+      return { _id, distance };
+    });
+
+    this.distances = [...distances];
+    console.log(this.distances);
   }
 
   toggleFilterModal() {

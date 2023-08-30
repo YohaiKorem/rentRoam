@@ -23,7 +23,11 @@ export class StayPreviewComponent implements OnInit {
   @Input() stay!: Stay;
   @Input() areMonthsDifferent!: boolean;
   @Input() endMonth!: string;
+  @Input() distance!: number;
+
   @Input() currDate!: { start: Date; end: Date };
+  @Input() userLoc!: { lat: number | null; lng: number | null };
+
   private destroySubject$ = new Subject<null>();
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
@@ -32,17 +36,13 @@ export class StayPreviewComponent implements OnInit {
   isLastElementInView = false;
   currImgUrlIdx = 0;
   searchParam = {} as SearchParam;
-  distance: number = 0;
-  userLoc: any = { lat: null, lng: null };
   constructor(
     private stayService: StayService,
     private cdr: ChangeDetectorRef,
     private userService: UserService,
     private sharedService: SharedService,
     private wishlistService: WishlistService
-  ) {
-    // this.getUserLocation();
-  }
+  ) {}
 
   ngOnInit() {
     this.checkInView();
@@ -51,46 +51,8 @@ export class StayPreviewComponent implements OnInit {
       .subscribe((user) => {
         this.loggedInUser = user;
       });
+    console.log(this.distance);
   }
-
-  // ngAfterViewInit() {
-  //   this.getUserLocation();
-  // }
-
-  // setDistance() {
-  //   if (this.searchParam.location) {
-  //     let { lat, lng } = this.searchParam.location?.coords;
-  //     if (lng && lat)
-  //       this.distance = this.stayService.getDistance(
-  //         this.stay,
-  //         this.searchParam.location.coords
-  //       );
-  //     return;
-  //   }
-  //   this.distance = this.stayService.getDistance(this.stay, this.userLoc);
-  //   console.log(this.distance);
-  // }
-
-  // getUserLocation() {
-  //   if (navigator.geolocation) {
-  //     setInterval(
-  //       () =>
-  //         navigator.geolocation.getCurrentPosition(
-  //           (position) => {
-  //             this.userLoc.lat = position.coords.latitude;
-  //             this.userLoc.lng = position.coords.longitude;
-  //           },
-  //           () => {
-  //             console.error('Error obtaining geolocation');
-  //           }
-  //         ),
-  //       5000
-  //     );
-  //   } else {
-  //     console.error('Browser does not support geolocation');
-  //   }
-  //   // this.setDistance();
-  // }
 
   isInWishlist() {
     return this.loggedInUser?.wishlists.some((wishlist) => {
@@ -101,7 +63,6 @@ export class StayPreviewComponent implements OnInit {
   onAddToWishlist(ev: any, id: string) {
     ev.stopPropagation();
     ev.preventDefault();
-    // this.loggedInUser?.wishlist.push(id);
     this.isInWishlist()
       ? this.onRemoveFromWishlist()
       : this.sharedService.openModal('wishlist', this.stay);
@@ -136,8 +97,6 @@ export class StayPreviewComponent implements OnInit {
 
   onImageLoad() {
     this.isLoadingImg = false;
-    let els = document.querySelectorAll('.stay-preview-container .hidden');
-    console.log(els);
   }
 
   onImageError() {

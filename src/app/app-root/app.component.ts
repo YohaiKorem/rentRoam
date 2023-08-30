@@ -20,13 +20,19 @@ import { ActivatedRoute, Router } from '@angular/router';
   },
 })
 export class AppComponent {
-  constructor(private stayService: StayService, public router: Router) {}
+  constructor(
+    private stayService: StayService,
+    public router: Router,
+    private userService: UserService
+  ) {}
   subscription!: Subscription;
   private destroySubject$ = new Subject<null>();
   location: any | null = null;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
   currentUrl!: string;
+  userLoc: any = { lat: null, lng: null };
+
   ngOnInit(): void {
     this.stayService.loadStays().subscribe({
       error: (err) => console.log('err', err),
@@ -36,6 +42,11 @@ export class AppComponent {
       .subscribe((searchParam) => (this.location = searchParam.location));
     this.stays$ = this.stayService.stays$;
   }
+
+  ngAfterViewInit() {
+    this.userService.getUserLoc();
+  }
+
   onScroll(event: any) {
     event.stopPropagation();
 

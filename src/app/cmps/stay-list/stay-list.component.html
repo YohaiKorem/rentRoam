@@ -3,21 +3,47 @@
   {{ stays!.length < 1000 ? stays!.length : "1000+" }}
   places
 </p>
-<ul *ngIf="stays!.length" class="stay-list clean-list">
-  <a
-    *ngFor="let stay of stays"
-    routerLink="{{ stay._id }}"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-  >
-    <stay-preview
-      [areMonthsDifferent]="areMonthsDifferent"
-      [endMonth]="endMonth"
-      [currDate]="currDate"
-      [stay]="stay"
-    ></stay-preview>
-  </a>
-</ul>
+<ng-container
+  *ngIf="staysWithDistance && staysWithDistance.length; else regularStays"
+>
+  <ul class="stay-list clean-list">
+    <a
+      *ngFor="let stay of staysWithDistance"
+      routerLink="{{ stay._id }}"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <stay-preview
+        [areMonthsDifferent]="areMonthsDifferent"
+        [endMonth]="endMonth"
+        [currDate]="currDate"
+        [stay]="stay"
+        [userLoc]="userLoc"
+        [distance]="stay.distance"
+      ></stay-preview>
+    </a>
+  </ul>
+</ng-container>
+
+<ng-template #regularStays>
+  <ul class="stay-list clean-list">
+    <a
+      *ngFor="let stay of stays"
+      routerLink="{{ stay._id }}"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <stay-preview
+        [areMonthsDifferent]="areMonthsDifferent"
+        [endMonth]="endMonth"
+        [currDate]="currDate"
+        [stay]="stay"
+        [userLoc]="userLoc"
+        [distance]="0"
+      ></stay-preview>
+    </a>
+  </ul>
+</ng-template>
 
 <div
   *ngIf="!stays!.length"

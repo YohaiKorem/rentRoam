@@ -32,6 +32,12 @@ export class UserService {
     this.sessionStorageUser
   );
   public loggedInUser$ = this._loggedInUser$.asObservable();
+  private _userCoords$ = new BehaviorSubject<{
+    lat: number | null;
+    lng: number | null;
+  }>({ lat: null, lng: null });
+  public userCoords$ = this._userCoords$.asObservable();
+  public locInterval: any;
   constructor(private http: HttpClient) {
     //   // this.getUsers().subscribe((users) => {
     let users = JSON.parse(localStorage.getItem(ENTITY) || 'null');
@@ -43,6 +49,32 @@ export class UserService {
     }
   }
   // }
+
+  public getUserLoc() {
+    if (navigator.geolocation) {
+      this.locInterval = setInterval(
+        () =>
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              let userLoc = { lat: 0, lng: 0 };
+              userLoc.lat = position.coords.latitude;
+              userLoc.lng = position.coords.longitude;
+              this._userCoords$.next(userLoc);
+            },
+            () => {
+              console.error('Error obtaining geolocation');
+            }
+          ),
+        60000
+      );
+    } else {
+      console.error('Browser does not support geolocation');
+    }
+  }
+
+  public clearInterval() {
+    this.locInterval.clearInterval();
+  }
 
   public getUsers() {
     return from(storageService.query(ENTITY)).pipe(
