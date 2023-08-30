@@ -26,6 +26,8 @@ const ENTITY = 'stays';
 export class StayService {
   private _stays$ = new BehaviorSubject<Stay[]>([]);
   public stays$ = this._stays$.asObservable();
+  private _staysWithDistances$ = new BehaviorSubject<Stay[]>([]);
+  public staysWithDistances$ = this._stays$.asObservable();
   public googleMapsAPI = environment.googleMapsAPI;
   public geocodeAPI = environment.geocodeAPI;
   private _stayFilter$ = new BehaviorSubject<StayFilter>({
@@ -113,6 +115,10 @@ export class StayService {
 
     return res;
   }
+
+  public setStaysWithDistances(
+    distances: { _id: string; distance: number }[]
+  ) {}
 
   public removeStay(id: string) {
     return from(storageService.remove(ENTITY, id)).pipe(
