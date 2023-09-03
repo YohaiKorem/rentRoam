@@ -244,6 +244,10 @@ export class UserService {
     return user;
   }
 
+  public getLoggedInUser() {
+    return this._loggedInUser$.value;
+  }
+
   public get sessionStorageUser(): User {
     const user = sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER);
     return user ? JSON.parse(user) : null;
@@ -253,10 +257,11 @@ export class UserService {
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user));
   }
 
-  public getUserById(id: string) {
+  public getUserById(id: string): Observable<User> {
     const users = this._users$.value;
     const user = users.find((_user) => _user._id === id);
-    return user;
+    if (user) return of(user);
+    throw new Error('user not found');
   }
 
   private _createUsers() {

@@ -1,6 +1,9 @@
-<ul *ngIf="!isModal; else modalWishlist" class="wishlist-list-wrapper flex">
+<ul
+  *ngIf="!isModal; else modalWishlist"
+  class="wishlist-list-wrapper flex gap1-point5"
+>
   <a
-    routerLink="wishlist"
+    routerLink="{{ wishlist.id }}"
     *ngFor="let wishlist of user.wishlists; let i = index"
   >
     <wishlist-preview

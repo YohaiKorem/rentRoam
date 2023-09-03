@@ -47,6 +47,7 @@ import { WishlistPreviewComponent } from './app/cmps/wishlist-preview/wishlist-p
 import { WishlistEditComponent } from './app/cmps/wishlist-edit/wishlist-edit.component';
 import { WishlistListComponent } from './app/cmps/wishlist-list/wishlist-list.component';
 import { StayPreviewLoaderComponent } from './app/cmps/stay-preview-loader/stay-preview-loader.component';
+import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +75,7 @@ import { StayPreviewLoaderComponent } from './app/cmps/stay-preview-loader/stay-
     WishlistEditComponent,
     WishlistListComponent,
     StayPreviewLoaderComponent,
+    WishlistDetailsComponent,
   ],
   imports: [
     BrowserModule,

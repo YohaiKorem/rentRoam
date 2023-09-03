@@ -4,8 +4,10 @@ import { LoginComponent } from './app/pages/login/login.component';
 import { StayIndexComponent } from './app/pages/stay-index/stay-index.component';
 import { StayDetailsComponent } from './app/pages/stay-details/stay-details.component';
 import { StayResolver } from './app/services/stay-resolver';
-// import { UserResolver } from './app/services/user-resolver';
+import { UserResolver } from './app/services/user-resolver';
 import { WishlistIndexComponent } from './app/pages/wishlistIndex/wishlist-Index.component';
+import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-details.component';
+import { authGuard } from './app/guards/auth-guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -18,18 +20,21 @@ const routes: Routes = [
     resolve: { stay: StayResolver },
   },
   {
-    path: 'wishlist',
+    path: 'wishlist/:userId',
     component: WishlistIndexComponent,
-    // resolve: { user: UserResolver },
+    resolve: { user: UserResolver },
+    canActivate: [authGuard],
   },
-  // {
-  //   path: 'wishlist/:id',
-  //   component: WishlistDetailsComponent,
-  //   // resolve: { user: UserResolver },
-  // },
+  {
+    path: 'wishlist/:userId/:wishlistId',
+    resolve: { user: UserResolver },
+    canActivate: [authGuard],
+
+    component: WishlistDetailsComponent,
+  },
   {
     path: '',
-    redirectTo: 'stay', // Redirect to '/stay' if the route is empty
+    redirectTo: 'stay',
     pathMatch: 'full',
   },
 ];

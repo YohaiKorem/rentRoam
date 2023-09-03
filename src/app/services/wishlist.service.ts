@@ -35,4 +35,9 @@ export class WishlistService {
     }
     return updatedWishlist;
   }
+  public findWishlist(user: User, wishlistId: string) {
+    return user.wishlists.find(
+      (wishlist: Wishlist) => wishlist.id === wishlistId
+    );
+  }
 }
