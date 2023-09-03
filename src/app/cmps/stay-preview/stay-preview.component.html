@@ -159,7 +159,11 @@
     <div class="stay-name fw600">
       {{ stay.loc.city }}, {{ stay.loc.country }}
     </div>
-    <div class="stay-km-away">{{ distance }} km away</div>
+    <div *ngIf="distance" class="stay-km-away">
+      {{ distance }} km away from your
+      {{ searchParam.location.name ? "searched" : "current" }} location
+    </div>
+
     <div class="stay-dates">
       {{
           currDate.start.toLocaleDateString("en-GB", {
@@ -168,6 +172,21 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
