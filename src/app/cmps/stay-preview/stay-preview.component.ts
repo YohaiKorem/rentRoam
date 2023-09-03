@@ -6,8 +6,8 @@ import {
   OnDestroy,
   AfterViewInit,
 } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { SearchParam, Stay } from 'src/app/models/stay.model';
+import { Observable, Subject, first, takeUntil } from 'rxjs';
+import { SearchParam, Stay, StayDistance } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
@@ -23,8 +23,7 @@ export class StayPreviewComponent implements OnInit {
   @Input() stay!: Stay;
   @Input() areMonthsDifferent!: boolean;
   @Input() endMonth!: string;
-  @Input() distance!: number;
-
+  @Input() distances!: StayDistance[] | null;
   @Input() currDate!: { start: Date; end: Date };
   @Input() userLoc!: { lat: number | null; lng: number | null };
 
@@ -36,6 +35,7 @@ export class StayPreviewComponent implements OnInit {
   isLastElementInView = false;
   currImgUrlIdx = 0;
   searchParam = {} as SearchParam;
+  distance: number | undefined = undefined;
   constructor(
     private stayService: StayService,
     private cdr: ChangeDetectorRef,
@@ -51,7 +51,6 @@ export class StayPreviewComponent implements OnInit {
       .subscribe((user) => {
         this.loggedInUser = user;
       });
-    console.log(this.distance);
   }
 
   isInWishlist() {
@@ -97,10 +96,25 @@ export class StayPreviewComponent implements OnInit {
 
   onImageLoad() {
     this.isLoadingImg = false;
+    this.setDistance();
   }
 
   onImageError() {
     this.isLoadingImg = false;
+    this.setDistance();
+  }
+
+  setDistance() {
+    if (this.distances === undefined) {
+      setTimeout(this.setDistance, 1000);
+      return;
+    }
+    const distanceItem = this.distances!.find((d) => d._id === this.stay._id);
+    this.distance = distanceItem?.distance;
+    this.stayService.searchParams$.pipe(first()).subscribe((searchParam) => {
+      this.searchParam = searchParam;
+      this.cdr.detectChanges();
+    });
   }
 
   scrollToRight(event: Event) {

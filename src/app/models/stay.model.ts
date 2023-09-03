@@ -69,6 +69,10 @@ export interface Loc {
   lat: number;
   lng: number;
 }
+export interface StayDistance {
+  _id: string;
+  distance: number;
+}
 
 export interface StayFilter {
   labels: string[];

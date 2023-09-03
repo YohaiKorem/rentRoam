@@ -10,14 +10,21 @@ import {
   take,
   switchMap,
   of,
+  combineLatest,
 } from 'rxjs';
 import { storageService } from './async-storage.service';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
-import { SearchParam, Stay, StayFilter } from '../models/stay.model';
+import {
+  SearchParam,
+  Stay,
+  StayDistance,
+  StayFilter,
+} from '../models/stay.model';
 import _stays from '../../data/stay.json';
 import { GeocodingService } from './geocoding.service';
 import { getDistance } from 'geolib';
 import { environment } from 'src/environments/env';
+import { UserService } from './user.service';
 const ENTITY = 'stays';
 
 @Injectable({
@@ -26,8 +33,8 @@ const ENTITY = 'stays';
 export class StayService {
   private _stays$ = new BehaviorSubject<Stay[]>([]);
   public stays$ = this._stays$.asObservable();
-  private _staysWithDistances$ = new BehaviorSubject<Stay[]>([]);
-  public staysWithDistances$ = this._stays$.asObservable();
+  private _distances$ = new BehaviorSubject<StayDistance[]>([]);
+  public distances$ = this._distances$.asObservable();
   public googleMapsAPI = environment.googleMapsAPI;
   public geocodeAPI = environment.geocodeAPI;
   private _stayFilter$ = new BehaviorSubject<StayFilter>({
@@ -58,7 +65,8 @@ export class StayService {
   public highestPrice$ = this._highestPrice$.asObservable();
   constructor(
     private http: HttpClient,
-    private geocodingService: GeocodingService
+    private geocodingService: GeocodingService,
+    private userService: UserService
   ) {
     let stays = JSON.parse(localStorage.getItem(ENTITY) || 'null');
 
@@ -97,9 +105,9 @@ export class StayService {
             this.setAvgPrice(searchedStays);
             this.setHigheststPrice(searchedStays);
             this.setLowestPrice(searchedStays);
-
             const sortedStays = this._sort(searchedStays);
             this._stays$.next(sortedStays);
+            this.setStaysWithDistances();
           })
         );
       }),
@@ -116,9 +124,45 @@ export class StayService {
     return res;
   }
 
-  public setStaysWithDistances(
-    distances: { _id: string; distance: number }[]
-  ) {}
+  public setStaysWithDistances() {
+    combineLatest([
+      this.userService.userCoords$,
+      this.searchParams$,
+      this.stays$,
+    ])
+      .pipe(take(1))
+      .subscribe(([userLoc, searchParams, stays]) => {
+        if (!stays || !stays.length) {
+          console.log('Stays not available');
+          return;
+        }
+
+        const targetCoords = this.getTargetCoords(userLoc, searchParams);
+        if (!targetCoords) {
+          console.log('No location or userLoc available');
+          return;
+        }
+
+        const distances: StayDistance[] = stays.map((stay) => {
+          let { _id } = stay;
+          const distance = Math.ceil(
+            this.getDistance(stay, targetCoords) / 1000
+          );
+          return { _id, distance };
+        });
+        this._distances$.next(distances);
+        console.log(distances);
+      });
+  }
+
+  private getTargetCoords(userLoc: any, searchParams: any) {
+    if (searchParams && searchParams.location && searchParams.location.coords) {
+      return searchParams.location.coords;
+    } else if (userLoc && userLoc.lat !== null && userLoc.lng !== null) {
+      return userLoc;
+    }
+    return null;
+  }
 
   public removeStay(id: string) {
     return from(storageService.remove(ENTITY, id)).pipe(

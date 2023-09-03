@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable, Subscription, map, Subject, takeUntil, take } from 'rxjs';
-import { SearchParam, Stay } from 'src/app/models/stay.model';
+import { SearchParam, Stay, StayDistance } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
@@ -37,10 +37,10 @@ export class StayIndexComponent implements OnInit {
   isFilterModalOpen = false;
   isWishlistModalOpen = false;
   isModalOpen: boolean = false;
-  location: any | null = null;
+  searchedLocation: any | null = null;
   searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
-  distances!: { _id: string; distance: number }[];
+  distances!: Observable<StayDistance[]>;
 
   userLoc: { lat: number | null; lng: number | null } = {
     lat: null,
@@ -54,6 +54,7 @@ export class StayIndexComponent implements OnInit {
 
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
+    this.distances = this.stayService.distances$;
     this.setDefaultDates();
     this.sharedService.openModal$.subscribe(({ str, data }) => {
       this.toggleModal(str, data);
@@ -61,8 +62,8 @@ export class StayIndexComponent implements OnInit {
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => {
-        this.location = searchParam.location;
-        if (this.location.name) this.setDistance();
+        this.searchedLocation = searchParam.location;
+        if (this.searchedLocation.name) this.setDistance();
       });
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
@@ -91,8 +92,8 @@ export class StayIndexComponent implements OnInit {
 
     let targetCoords: { lat: number | null; lng: number | null } | null = null;
 
-    if (this.location && this.location.coords) {
-      targetCoords = this.location.coords;
+    if (this.searchedLocation && this.searchedLocation.coords) {
+      targetCoords = this.searchedLocation.coords;
     } else if (
       this.userLoc &&
       this.userLoc.lat !== null &&
@@ -114,7 +115,6 @@ export class StayIndexComponent implements OnInit {
       return { _id, distance };
     });
 
-    this.distances = [...distances];
     console.log(this.distances);
   }
 

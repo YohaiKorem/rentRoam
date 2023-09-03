@@ -5,7 +5,7 @@
   [endMonth]="endMonth"
   [currDate]="currDate"
   [userLoc]="userLoc"
-  [distances]="distances"
+  [distances]="distances | async"
 ></stay-list>
 
 <div *ngIf="isModalOpen" (click)="toggleModal()" class="modal-wrapper">
