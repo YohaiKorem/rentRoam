@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription, of, take, pipe } from 'rxjs';
+import { Location } from '@angular/common';
+
 import { ActivatedRoute } from '@angular/router';
 import { first, map, takeWhile } from 'rxjs/operators';
 import { Wishlist } from 'src/app/models/wishlist.model';
@@ -21,10 +23,11 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   userSubscription!: Subscription;
   stays$!: Observable<Stay[]>;
   currDate = { start: new Date(), end: new Date() };
-
+  isModalOpen: boolean = false;
   constructor(
     private route: ActivatedRoute,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,18 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
     console.log(this.wishlist);
 
     this.getStaysArrFromWishlist();
+  }
+
+  onBack() {
+    this.location.back();
+  }
+
+  onEdit() {
+    this.toggleModal();
+  }
+
+  toggleModal() {
+    this.isModalOpen = !this.isModalOpen;
   }
 
   getStaysArrFromWishlist() {

@@ -1,17 +1,46 @@
-<form (ngSubmit)="onCreateWishlist()" class="wishlist-edit flex column gap1">
-  <input
-    type="text"
-    placeholder="Name"
-    name="wishlistName"
-    [(ngModel)]="wishlistName"
-  />
-  <button
-    [disabled]="!wishlistName"
-    [class.disabled]="!wishlistName"
-    type="submit"
-    class="btn btn-create-wishlist fw600"
-    (click)="onCreateWishlist()"
-  >
-    Create
-  </button>
-</form>
+<ng-container *ngIf="!isWishlistDetails; else wishlistDetails">
+  <form (ngSubmit)="onCreateWishlist()" class="wishlist-edit flex column gap1">
+    <input
+      type="text"
+      placeholder="Name"
+      name="wishlistName"
+      [(ngModel)]="wishlistName"
+    />
+    <button
+      [disabled]="!wishlistName"
+      [class.disabled]="!wishlistName"
+      type="submit"
+      class="btn btn-create-wishlist fw600"
+      (click)="onCreateWishlist()"
+    >
+      Create
+    </button>
+  </form>
+</ng-container>
+<ng-template #wishlistDetails>
+  <form (ngSubmit)="onEditWishlist()" class="wishlist-edit flex column gap1">
+    <input
+      type="text"
+      placeholder="Name"
+      name="wishlistName"
+      [(ngModel)]="wishlistName"
+    />
+    <footer class="wishlist-edit-footer flex align-center space-between gap1">
+      <button
+        class="btn btn-remove deco-underline"
+        (click)="onRemoveWishlist()"
+      >
+        Delete
+      </button>
+      <button
+        [disabled]="!wishlistName"
+        [class.disabled]="!wishlistName"
+        type="submit"
+        class="btn btn-create-wishlist fw600"
+        (click)="onEditWishlist()"
+      >
+        Save
+      </button>
+    </footer>
+  </form>
+</ng-template>

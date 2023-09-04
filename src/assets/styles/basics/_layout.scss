@@ -8,6 +8,12 @@
     overflow: auto !important;
   }
 
+  &:has(wishlist-details) {
+    radio-filter {
+      display: none;
+    }
+  }
+
   &:has(.map-active) {
     @include for-mobile-layout {
       radio-filter {

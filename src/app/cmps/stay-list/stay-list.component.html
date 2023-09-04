@@ -8,7 +8,7 @@
   <a
     class="stay-link"
     *ngFor="let stay of stays"
-    routerLink="stay/{{ stay._id }}"
+    routerLink="/stay/{{ stay._id }}"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
   >

@@ -21,4 +21,10 @@
       background: $secondaryClr2;
     }
   }
+  &-footer {
+    padding: 1em;
+    .btn-remove {
+      border: none;
+    }
+  }
 }
