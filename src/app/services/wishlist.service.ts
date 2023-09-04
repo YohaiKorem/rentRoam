@@ -47,4 +47,8 @@ export class WishlistService {
       wishlist.stays.map((stay) => this.stayService.getStayById(stay._id))
     );
   }
+
+  public editWishlist(wishlist: Wishlist): Wishlist {
+    return new Wishlist(wishlist.name, wishlist.stays, wishlist.id);
+  }
 }

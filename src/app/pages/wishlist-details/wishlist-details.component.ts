@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription, of, take, pipe } from 'rxjs';
 import { Location } from '@angular/common';
@@ -23,11 +23,12 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   userSubscription!: Subscription;
   stays$!: Observable<Stay[]>;
   currDate = { start: new Date(), end: new Date() };
-  isModalOpen: boolean = false;
+  isModalOpen: boolean = true;
   constructor(
     private route: ActivatedRoute,
     private wishlistService: WishlistService,
-    private location: Location
+    private location: Location,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +57,14 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   }
 
   onEdit() {
+    this.toggleModal();
+  }
+
+  recieveUserData(res: { user: User; wishlist: Wishlist }) {
+    const { user, wishlist } = res;
+    this.user = { ...user };
+    this.wishlist = JSON.parse(JSON.stringify(wishlist));
+    this.cdr.detectChanges();
     this.toggleModal();
   }
 

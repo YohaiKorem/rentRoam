@@ -4,30 +4,42 @@
       type="text"
       placeholder="Name"
       name="wishlistName"
+      maxlength="50"
       [(ngModel)]="wishlistName"
+      required
     />
+    <p class="fs14 fw400">50 characters maximum</p>
+
     <button
       [disabled]="!wishlistName"
       [class.disabled]="!wishlistName"
       type="submit"
       class="btn btn-create-wishlist fw600"
-      (click)="onCreateWishlist()"
     >
       Create
     </button>
   </form>
 </ng-container>
+
 <ng-template #wishlistDetails>
-  <form (ngSubmit)="onEditWishlist()" class="wishlist-edit flex column gap1">
-    <input
-      type="text"
-      placeholder="Name"
-      name="wishlistName"
-      [(ngModel)]="wishlistName"
-    />
+  <form
+    [name]="'wishlist-edit-inside-details'"
+    class="wishlist-edit inside-wishlist-details flex column gap1"
+  >
+    <div class="input-container flex column space-between gap1">
+      <input
+        type="text"
+        placeholder="Name"
+        name="wishlistName"
+        [(ngModel)]="wishlistName"
+        maxlength="50"
+        required
+      />
+      <p class="fs14 fw400">50 characters maximum</p>
+    </div>
     <footer class="wishlist-edit-footer flex align-center space-between gap1">
       <button
-        class="btn btn-remove deco-underline"
+        class="btn btn-remove deco-underline fw600"
         (click)="onRemoveWishlist()"
       >
         Delete

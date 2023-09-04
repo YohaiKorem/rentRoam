@@ -24,7 +24,10 @@ export class StayPreviewComponent implements OnInit {
   @Input() areMonthsDifferent!: boolean;
   @Input() endMonth!: string;
   @Input() distances!: StayDistance[] | null;
-  @Input() currDate!: { start: Date; end: Date };
+  @Input() currDate: { start: Date; end: Date } = {
+    start: new Date(),
+    end: new Date(),
+  };
   @Input() userLoc!: { lat: number | null; lng: number | null };
 
   private destroySubject$ = new Subject<null>();

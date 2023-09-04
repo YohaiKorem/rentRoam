@@ -21,7 +21,16 @@
       background: $secondaryClr2;
     }
   }
+
+  &.inside-wishlist-details {
+    padding: 0;
+
+    .input-container {
+      padding: 1em;
+    }
+  }
   &-footer {
+    border-block-start: 1px solid $secondaryClr2;
     padding: 1em;
     .btn-remove {
       border: none;

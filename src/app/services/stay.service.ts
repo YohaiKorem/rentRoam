@@ -151,7 +151,6 @@ export class StayService {
           return { _id, distance };
         });
         this._distances$.next(distances);
-        console.log(distances);
       });
   }
 
@@ -435,7 +434,7 @@ export class StayService {
   }
 
   private _handleError(err: HttpErrorResponse) {
-    console.log('error in pet service:', err);
+    console.log('error in stay service:', err);
     return throwError(() => err);
   }
 

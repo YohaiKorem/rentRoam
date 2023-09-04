@@ -73,8 +73,6 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
     } else {
       columns = 1;
     }
-    console.log(element);
-    console.log('containerWidth', containerWidth);
 
     gridList.style.setProperty('--breakpoint-grid-columns', `${columns}`);
   }

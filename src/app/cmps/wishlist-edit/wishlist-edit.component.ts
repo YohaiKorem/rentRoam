@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { Wishlist } from 'src/app/models/wishlist.model';
@@ -17,7 +17,8 @@ export class WishlistEditComponent {
   @Input() user!: User;
   @Input() isWishlistDetails: boolean = false;
   @Input() wishlist: Wishlist | null = null;
-  wishlistName: string = '';
+  @Input() wishlistName: string = '';
+  @Output() editFinished = new EventEmitter();
 
   constructor(
     private wishlistService: WishlistService,
@@ -35,7 +36,24 @@ export class WishlistEditComponent {
 
     this.sharedSerivce.openModal();
   }
-  onEditWishlist() {}
+  onEditWishlist() {
+    if (!this.wishlist || !this.user) return;
+    let wishlist: Wishlist = JSON.parse(JSON.stringify(this.wishlist));
+    wishlist.name = this.wishlistName;
+    const updatedWishlist = this.wishlistService.editWishlist(wishlist);
+    this.wishlist = updatedWishlist;
+    this.user = this.userSerivce.updateWishlistInUser(
+      updatedWishlist,
+      this.user
+    );
+
+    this.onEditFinished();
+  }
 
   onRemoveWishlist() {}
+
+  onEditFinished() {
+    let res = { user: this.user, wishlist: this.wishlist };
+    this.editFinished.emit(res);
+  }
 }

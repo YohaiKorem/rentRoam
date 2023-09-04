@@ -63,9 +63,12 @@
     (closeModal)="toggleModal()"
   >
     <wishlist-edit
+      (editFinished)="recieveUserData($event)"
       [isWishlistDetails]="true"
       [user]="user!"
       [isModal]="true"
+      [wishlistName]="wishlist!.name"
+      [wishlist]="wishlist!"
     ></wishlist-edit>
   </dynamic-modal>
 </div>
