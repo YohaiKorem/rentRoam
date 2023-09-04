@@ -2,7 +2,7 @@
 
 .stay-preview-container {
   gap: 1em;
-  width: em(270px);
+  width: var(--stay-preview-width);
   cursor: pointer;
   &:hover .img-container .btn-dir {
     opacity: 1;
@@ -10,8 +10,8 @@
 
   .img-container {
     position: relative;
-    width: em(270px);
-    height: em(260px);
+    width: var(--stay-preview-width);
+    height: var(--stay-preview-height);
 
     &.loading {
       opacity: 0;
@@ -103,7 +103,7 @@
   }
   .txt-container {
     display: grid;
-    grid-template-columns: em(224px) 1fr;
+    grid-template-columns: var(--stay-preview-width) 1fr;
     grid-template-rows: 25px;
     align-items: center;
     gap: 0.5em;
@@ -154,8 +154,6 @@
       align-items: center;
       // margin-inline: em(20px);
       .img-container {
-        min-width: em(330px);
-        height: em(350px);
         max-width: 90%;
       }
       .txt-container {

@@ -1,6 +1,5 @@
 import { StayPreview } from './stay-preview.model';
 import { Stay } from './stay.model';
-
 export class Wishlist {
   constructor(
     public name: string,

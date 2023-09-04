@@ -1,6 +1,6 @@
-<p class="map-active-place-num fs20 fw500">
+<p *ngIf="stays && stays.length" class="map-active-place-num fs20 fw500">
   Over
-  {{ stays!.length < 1000 ? stays!.length : "1000+" }}
+  {{ stays.length < 1000 ? stays.length : "1000+" }}
   places
 </p>
 <ng-container
@@ -46,7 +46,7 @@
 </ng-template>
 
 <div
-  *ngIf="!stays!.length"
+  *ngIf="stays && !stays!.length"
   class="no-stays-container flex column space-between align-start"
 >
   <h3 class="fw700 fs24">No exact matches</h3>

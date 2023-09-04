@@ -29,7 +29,6 @@ const routes: Routes = [
     path: 'wishlist/:userId/:wishlistId',
     resolve: { user: UserResolver },
     canActivate: [authGuard],
-
     component: WishlistDetailsComponent,
   },
   {

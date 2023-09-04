@@ -1,25 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { Observable, Subscription, map, takeUntil, Subject } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription, of, take, pipe } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { first, map, takeWhile } from 'rxjs/operators';
+import { Wishlist } from 'src/app/models/wishlist.model';
+import { WishlistService } from 'src/app/services/wishlist.service';
+import { Stay } from 'src/app/models/stay.model';
 
 @Component({
   selector: 'wishlist-details',
   templateUrl: './wishlist-details.component.html',
   styleUrls: ['./wishlist-details.component.scss'],
 })
-export class WishlistDetailsComponent implements OnInit {
+export class WishlistDetailsComponent implements OnInit, OnDestroy {
   user: User | null = null;
-  user$!: Observable<User>;
-  constructor(private route: ActivatedRoute) {}
+  user$!: Observable<User | null>;
+  wishlist: Wishlist | undefined;
+  wishlistId!: string;
+  paramsSubscription!: Subscription;
+  userSubscription!: Subscription;
+  stays$!: Observable<Stay[]>;
+  currDate = { start: new Date(), end: new Date() };
+
+  constructor(
+    private route: ActivatedRoute,
+    private wishlistService: WishlistService
+  ) {}
+
   ngOnInit(): void {
-    this.user$ = this.route.data.pipe(
-      map((data) => {
-        this.user = data['user'];
-        return data['user'];
-      })
-    );
-    console.log(this.user);
-    console.log(this.user$);
+    this.userSubscription = this.route.data.subscribe((data) => {
+      this.user = data['user'];
+      this.user$ = of(this.user);
+    });
+    this.paramsSubscription = this.route.params.subscribe((val) => {
+      if (val && val['wishlistId']) {
+        this.wishlistId = val['wishlistId'];
+      }
+    });
+    if (this.user) {
+      this.wishlist = this.wishlistService.findWishlist(
+        this.user,
+        this.wishlistId
+      );
+    }
+    console.log(this.wishlist);
+
+    this.getStaysArrFromWishlist();
+  }
+
+  getStaysArrFromWishlist() {
+    if (this.wishlist)
+      this.stays$ = this.wishlistService.getStaysArrFromWishlist(this.wishlist);
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to avoid memory leaks
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 }

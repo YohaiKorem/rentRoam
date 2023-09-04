@@ -9,7 +9,7 @@
   grid-auto-flow: row dense;
   grid-template-columns: repeat(
     var(--breakpoint-grid-columns),
-    minmax(em(270px), 1fr)
+    minmax(var(--stay-preview-width), 1fr)
   );
   column-gap: em(24px);
   row-gap: em(40px);

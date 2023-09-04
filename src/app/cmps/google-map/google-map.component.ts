@@ -16,12 +16,13 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 })
 export class GoogleMapCmpComponent implements OnInit {
   @Input() stays!: Stay[] | null;
+  @Input() zoom:number = 15
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   constructor(private stayService: StayService) {}
   searchParam = {} as SearchParam;
   private destroySubject$ = new Subject<null>();
   center: google.maps.LatLngLiteral = { lat: 24, lng: 12 };
-  zoom = 15;
+ 
 
   display!: google.maps.LatLngLiteral;
   markerOptions: google.maps.MarkerOptions = {

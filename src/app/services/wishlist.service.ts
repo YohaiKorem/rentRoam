@@ -3,12 +3,13 @@ import { Stay } from '../models/stay.model';
 import { User } from '../models/user.model';
 import { StayPreview } from '../models/stay-preview.model';
 import { Wishlist } from '../models/wishlist.model';
-
+import { StayService } from './stay.service';
+import { Observable, forkJoin } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class WishlistService {
-  constructor() {}
+  constructor(private stayService: StayService) {}
 
   public createWishlist(name: string, stay: Stay): Wishlist {
     const stayPreview = new StayPreview(stay);
@@ -38,6 +39,12 @@ export class WishlistService {
   public findWishlist(user: User, wishlistId: string) {
     return user.wishlists.find(
       (wishlist: Wishlist) => wishlist.id === wishlistId
+    );
+  }
+
+  public getStaysArrFromWishlist(wishlist: Wishlist): Observable<Stay[]> {
+    return forkJoin(
+      wishlist.stays.map((stay) => this.stayService.getStayById(stay._id))
     );
   }
 }
