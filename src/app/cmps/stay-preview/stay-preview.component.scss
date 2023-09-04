@@ -103,7 +103,7 @@
   }
   .txt-container {
     display: grid;
-    grid-template-columns: var(--stay-preview-width) 1fr;
+    grid-template-columns: 70% 1fr;
     grid-template-rows: 25px;
     align-items: center;
     gap: 0.5em;

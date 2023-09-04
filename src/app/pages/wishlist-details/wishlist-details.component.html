@@ -1,6 +1,6 @@
-<section class="wishlist-details-wrapper flex align-center">
+<section class="wishlist-details-wrapper">
   <section class="stay-list-container">
-    <header class="wishlist-details-header">
+    <header class="wishlist-details-header flex column space-between gap1">
       <div class="btns-container">
         <button class="btn btn-back">
           <svg
@@ -25,9 +25,13 @@
           </svg>
         </button>
       </div>
-      <h1>{{ wishlist?.name }}</h1>
+      <h1 class="fs24 fw500">{{ wishlist?.name }}</h1>
     </header>
-    <stay-list [stays]="stays$ | async" [currDate]="currDate"></stay-list>
+    <stay-list
+      class="inside-wishlist-details"
+      [stays]="stays$ | async"
+      [currDate]="currDate"
+    ></stay-list>
   </section>
   <section class="map-container">
     <google-map-cmp [zoom]="2" [stays]="stays$ | async"></google-map-cmp>

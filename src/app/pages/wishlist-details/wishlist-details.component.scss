@@ -1,13 +1,29 @@
 @import "../../app-root/app.component.scss";
 .wishlist-details-wrapper {
+  padding-block-start: 1em;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns:
+    calc(
+      var(--breakpoint-grid-columns) * var(--stay-preview-width) -
+        (var(--breakpoint-grid-columns) * 5em)
+    )
+    minmax(40%, 1fr);
+
   .map-container {
     width: 100%;
     height: 100%;
   }
   .stay-list-container {
-    .stay-list {
+    header {
+      margin-block-end: 1em;
+      h1 {
+        color: $fontclr3;
+      }
+      .btn.btn-back {
+        border: none;
+        border-radius: 1.5em;
+        padding: 1em;
+      }
     }
   }
 }
