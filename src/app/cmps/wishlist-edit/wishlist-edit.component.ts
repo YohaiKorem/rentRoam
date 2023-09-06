@@ -5,6 +5,7 @@ import { Wishlist } from 'src/app/models/wishlist.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'wishlist-edit',
@@ -19,11 +20,12 @@ export class WishlistEditComponent {
   @Input() wishlist: Wishlist | null = null;
   @Input() wishlistName: string = '';
   @Output() editFinished = new EventEmitter();
-
+  isRemovingWishlist: boolean = false;
   constructor(
     private wishlistService: WishlistService,
     private userSerivce: UserService,
-    private sharedSerivce: SharedService
+    private sharedSerivce: SharedService,
+    private router: Router
   ) {}
 
   onCreateWishlist() {
@@ -50,7 +52,17 @@ export class WishlistEditComponent {
     this.onEditFinished();
   }
 
-  onRemoveWishlist() {}
+  toggleRemoveWishlist() {
+    this.isRemovingWishlist = true;
+  }
+
+  onRemoveWishlist() {
+    if (!this.wishlist?.id) return;
+    this.user = this.userSerivce.removeWishlist(this.wishlist!.id, this.user);
+    this.wishlist = null;
+    this.onEditFinished();
+    this.router.navigate([`/wishlist/${this.user._id}`]);
+  }
 
   onEditFinished() {
     let res = { user: this.user, wishlist: this.wishlist };

@@ -224,6 +224,16 @@ export class UserService {
     return user;
   }
 
+  public removeWishlist(wishlistId: string, user: User) {
+    const wishlistIdx = user.wishlists.findIndex(
+      (wishlist: Wishlist) => wishlist.id === wishlistId
+    );
+    const updatedUser: User = JSON.parse(JSON.stringify(user));
+    updatedUser.wishlists.splice(wishlistIdx, 1);
+    this._updateUser(updatedUser);
+    return updatedUser;
+  }
+
   public addWishlistToUser(wishlist: Wishlist, user: User) {
     const updatedUser = { ...user };
     updatedUser.wishlists.push(wishlist);

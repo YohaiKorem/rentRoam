@@ -126,7 +126,8 @@ export class StayIndexComponent implements OnInit {
 
   toggleModal(title = '', data: Stay | null = null) {
     this.selectedStay = data;
-    console.log('this.selectedStay', this.selectedStay);
+
+    console.log(title);
 
     if (title) {
       this.modalTitle = title;

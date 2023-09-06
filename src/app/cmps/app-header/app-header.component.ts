@@ -48,6 +48,9 @@ export class AppHeaderComponent implements OnInit {
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   isMobile = window.innerWidth <= 780;
+  fallbackImg: string = 'assets/imgs/airbnbLogo.jpg';
+
+  userImgForDisplay!: string;
   constructor(
     private sharedService: SharedService,
     private stayService: StayService,
@@ -64,6 +67,9 @@ export class AppHeaderComponent implements OnInit {
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((user) => {
         this.loggedInUser = user;
+        this.userImgForDisplay = this.loggedInUser?.imgUrl
+          ? this.loggedInUser.imgUrl
+          : this.fallbackImg;
         if (this.loggedInUser != null) this.isShowSignupModal = false;
       });
   }
@@ -179,6 +185,10 @@ export class AppHeaderComponent implements OnInit {
 
   socialSignOut(): void {
     this.authService.signOut();
+  }
+
+  onUserImgErr() {
+    this.userImgForDisplay = this.fallbackImg;
   }
 
   onOpenDatePicker() {

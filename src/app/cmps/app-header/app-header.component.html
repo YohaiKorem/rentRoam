@@ -248,13 +248,13 @@
         />
         <span>United States</span>
       </button>
-      <button mat-menu-item (click)="locSearch = 'Southeast Asia'">
+      <button mat-menu-item (click)="locSearch = 'Portugal'">
         <img
           class="i17d61fu dir dir-ltr"
           alt=""
-          src="https://a0.muscache.com/im/pictures/d77de9f5-5318-4571-88c7-e97d2355d20a.jpg?im_w=320"
+          src="https://a0.muscache.com/im/pictures/53a3d619-7012-4c3b-a7eb-e91553e96f6b.jpg?im_w=320"
         />
-        <span>Southeast Asia</span>
+        <span>Portugal</span>
       </button>
       <button mat-menu-item (click)="locSearch = 'Spain'">
         <img
@@ -264,7 +264,7 @@
         />
         <span>Spain</span>
       </button>
-      <button mat-menu-item (click)="locSearch = 'Australia'">
+      <button mat-menu-item (click)="locSearch = 'Sydney, Australia'">
         <img
           class="i17d61fu dir dir-ltr"
           alt=""
@@ -512,7 +512,11 @@
       </ng-container>
       <ng-template #userImg>
         <div class="img-container">
-          <img [src]="loggedInUser!.imgUrl" alt="image of user" />
+          <img
+            [src]="userImgForDisplay"
+            alt="App logo"
+            (error)="onUserImgErr()"
+          />
         </div>
       </ng-template>
     </button>

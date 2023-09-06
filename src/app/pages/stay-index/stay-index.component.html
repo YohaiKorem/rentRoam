@@ -14,7 +14,7 @@
     class="dynamic-modal modal-content"
     (closeModal)="toggleModal()"
   >
-    <ng-container *ngIf="modalTitle === 'Filter'">
+    <ng-container *ngIf="modalTitle === 'Filters'">
       <filter-modal
         [stays]="stays$ | async"
         [nights]="5"

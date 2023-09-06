@@ -1,6 +1,19 @@
 @import "../../app-root/app.component.scss";
 :host.main-header {
   height: $header-height;
+  position: relative;
+  &::after {
+    content: "";
+    width: 110vw;
+    height: 1px;
+    background-color: $secondaryClr2;
+    position: absolute;
+    bottom: -1em;
+    left: -10%;
+    box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
+    opacity: 0.7;
+  }
+
   @include for-mobile-layout {
     position: fixed;
     top: 0;
@@ -17,18 +30,6 @@
   grid-template-rows: 1fr;
   column-gap: 2em;
   place-items: center;
-
-  &::after {
-    content: "";
-    width: 110vw;
-    height: 1px;
-    background-color: $secondaryClr2;
-    position: absolute;
-    bottom: -1em;
-    left: -10%;
-    box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
-    opacity: 0.7;
-  }
 
   a {
     grid-column: 1;

@@ -1,16 +1,14 @@
 @import "../../app-root/app.component.scss";
 .wishlist-edit {
-  padding: 1em;
-
   input[name="wishlistName"] {
     outline: none;
     border: 1px solid;
     padding: 1em 0.5em;
     border-radius: 0.5em;
   }
-  .btn-create-wishlist {
+  .btn-create-wishlist,
+  .btn-remove {
     align-self: center;
-    width: 100%;
     background-color: #000000;
     color: $fontclr2;
     padding: 1em;
@@ -32,7 +30,8 @@
   &-footer {
     border-block-start: 1px solid $secondaryClr2;
     padding: 1em;
-    .btn-remove {
+    .btn-toggle-remove,
+    .btn-cancel {
       border: none;
     }
   }

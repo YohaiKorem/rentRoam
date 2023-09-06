@@ -23,7 +23,7 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   userSubscription!: Subscription;
   stays$!: Observable<Stay[]>;
   currDate = { start: new Date(), end: new Date() };
-  isModalOpen: boolean = true;
+  isModalOpen: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private wishlistService: WishlistService,
