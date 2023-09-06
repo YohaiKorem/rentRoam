@@ -127,10 +127,10 @@
     </button>
     <div class="host-img-container hidden-on-mobile">
       <img
+        imgError
         [src]="stay.host.thumbnailUrl"
         alt="Image of host"
         loading="lazy"
-        (error)="onHostImgErr($event)"
       />
     </div>
     <span class="img-index"></span>
@@ -172,37 +172,6 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
       }}-<span *ngIf="areMonthsDifferent">{{ endMonth }}</span>

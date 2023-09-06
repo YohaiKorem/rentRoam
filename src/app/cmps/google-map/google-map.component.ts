@@ -16,13 +16,12 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 })
 export class GoogleMapCmpComponent implements OnInit {
   @Input() stays!: Stay[] | null;
-  @Input() zoom:number = 15
+  @Input() zoom: number = 15;
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   constructor(private stayService: StayService) {}
   searchParam = {} as SearchParam;
   private destroySubject$ = new Subject<null>();
   center: google.maps.LatLngLiteral = { lat: 24, lng: 12 };
- 
 
   display!: google.maps.LatLngLiteral;
   markerOptions: google.maps.MarkerOptions = {
@@ -31,6 +30,7 @@ export class GoogleMapCmpComponent implements OnInit {
   staysCoords: any = null;
   markers: any = [];
   selectedStay: Stay | null = null;
+
   ngOnInit(): void {
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
@@ -63,20 +63,25 @@ export class GoogleMapCmpComponent implements OnInit {
   }
 
   makeIntoCustomMarker(stay: Stay) {
-    // const { Map } = (await google.maps.importLibrary(
-    //   'maps'
-    // )) as google.maps.MapsLibrary;
-    // const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-    //   'marker'
-    // )) as google.maps.MarkerLibrary;
-
-    // const priceTag = document.createElement('div');
-    // priceTag.className = 'price-tag';
-    // priceTag.textContent = '$2.5M';
-
+    const pillIcon: google.maps.Icon = {
+      url: `data:image/svg+xml;utf8,
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 60" role="presentation" focusable="false" style="display: block; height: 62px; width: 62px;">
+        <defs>
+          <filter id="f1" x="0" y="0" width="150%" height="150%">
+            <feOffset result="offOut" in="SourceAlpha" dx="3" dy="3" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+          </filter>
+        </defs>
+        <rect x="0" y="0" rx="30" ry="30" width="250" height="60" fill="%23FFFFFF" filter="url(%23f1)"/>
+        <text x="125" y="45" font-family="Circular, -apple-system, BlinkMacSystemFont, roboto, Helvetica neue, sans-serif" font-size="46" text-anchor="middle" fill="%23000000">$${stay.price}</text>
+      </svg>`,
+      scaledSize: new google.maps.Size(62, 62),
+    };
     return {
       position: { lat: stay.loc.lat, lng: stay.loc.lng },
       stay,
+      pillIcon,
     };
   }
 

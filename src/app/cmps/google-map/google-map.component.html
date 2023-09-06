@@ -9,8 +9,8 @@
   <map-marker
     *ngFor="let _marker of markers; index as i"
     [position]="_marker.position"
-    [label]="'$' + _marker.stay.price"
     #marker="mapMarker"
+    [icon]="_marker.pillIcon"
     (mapClick)="openInfoWindow(marker, _marker.stay)"
   >
   </map-marker>

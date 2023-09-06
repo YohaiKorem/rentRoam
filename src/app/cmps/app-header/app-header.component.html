@@ -512,11 +512,7 @@
       </ng-container>
       <ng-template #userImg>
         <div class="img-container">
-          <img
-            [src]="userImgForDisplay"
-            alt="App logo"
-            (error)="onUserImgErr()"
-          />
+          <img imgError [src]="loggedInUser!.imgUrl" alt="User Image" />
         </div>
       </ng-template>
     </button>
