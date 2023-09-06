@@ -49,6 +49,7 @@ import { WishlistListComponent } from './app/cmps/wishlist-list/wishlist-list.co
 import { StayPreviewLoaderComponent } from './app/cmps/stay-preview-loader/stay-preview-loader.component';
 import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-details.component';
 import { ImgErrorDirective } from './app/directives/img-error.directive';
+import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +79,7 @@ import { ImgErrorDirective } from './app/directives/img-error.directive';
     StayPreviewLoaderComponent,
     WishlistDetailsComponent,
     ImgErrorDirective,
+    StayEditComponent,
   ],
   imports: [
     BrowserModule,

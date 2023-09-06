@@ -8,6 +8,7 @@ import { UserResolver } from './app/services/user-resolver';
 import { WishlistIndexComponent } from './app/pages/wishlistIndex/wishlist-Index.component';
 import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-details.component';
 import { authGuard } from './app/guards/auth-guard';
+import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -18,6 +19,12 @@ const routes: Routes = [
     path: 'stay/:id',
     component: StayDetailsComponent,
     resolve: { stay: StayResolver },
+  },
+  {
+    path: 'stay/edit',
+    component: StayEditComponent,
+    canActivate: [authGuard],
+    resolve: { user: UserResolver },
   },
   {
     path: 'wishlist/:userId',
