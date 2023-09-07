@@ -44,6 +44,26 @@ export class Stay {
       obj.rate || 0
     );
   }
+  public static getEmptyStay(): Stay {
+    return new Stay(
+      '',
+      '',
+      '',
+      [],
+      0,
+      '',
+      0,
+      [],
+      '',
+      {} as Host,
+      {} as Loc,
+      [],
+      [],
+      [],
+      { bedsNum: 0, bathNum: 0, bedroomNum: 0 },
+      0
+    );
+  }
 }
 
 export interface SearchParam {

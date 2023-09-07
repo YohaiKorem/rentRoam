@@ -16,16 +16,16 @@ const routes: Routes = [
     component: StayIndexComponent,
   },
   {
+    path: 'stay/edit',
+    component: StayEditComponent,
+    canActivate: [authGuard],
+  },
+  {
     path: 'stay/:id',
     component: StayDetailsComponent,
     resolve: { stay: StayResolver },
   },
-  {
-    path: 'stay/edit',
-    component: StayEditComponent,
-    canActivate: [authGuard],
-    resolve: { user: UserResolver },
-  },
+
   {
     path: 'wishlist/:userId',
     component: WishlistIndexComponent,

@@ -1,1 +1,44 @@
-<p>stay-edit works!</p>
+<section class="stay-edit-wrapper">
+  <form class="stay-edit-form">
+    <!-- <div
+      *ngFor="let property of generateKeys(emptyStay); let i = index"
+      type="text"
+    >
+      <label for="{{ property.key }}">{{ property.key }}</label>
+
+      <div [ngSwitch]="determineType(property.value)">
+        <ng-container *ngSwitchCase="'string'">
+          <input
+            id="{{ property.key }}"
+            [(ngModel)]="emptyStay[property.key]"
+          />
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'number'">
+          <input
+            id="{{ property.key }}"
+            [(ngModel)]="emptyStay[property.key]"
+            type="number"
+          />
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'array'">
+          <div *ngFor="let item of property.value; let i = index">
+            <input [(ngModel)]="property.value[i]" />
+          </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'object'">
+          <div *ngFor="let subProp of property.value | keyvalue">
+            <label for="{{ subProp.key }}">{{ subProp.key }}</label>
+            <input
+              id="{{ subProp.key }}"
+              [(ngModel)]="property.value[subProp.key]"
+            />
+          </div>
+        </ng-container>
+
+      </div>
+    </div> -->
+  </form>
+</section>

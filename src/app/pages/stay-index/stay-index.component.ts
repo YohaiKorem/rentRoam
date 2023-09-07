@@ -4,6 +4,7 @@ import {
   EventEmitter,
   HostListener,
   OnInit,
+  OnDestroy,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -20,7 +21,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './stay-index.component.html',
   styleUrls: ['./stay-index.component.scss'],
 })
-export class StayIndexComponent implements OnInit {
+export class StayIndexComponent implements OnInit, OnDestroy {
   @Output() toggleScrolling = new EventEmitter<boolean>();
 
   constructor(
@@ -114,8 +115,6 @@ export class StayIndexComponent implements OnInit {
       const _id = stay._id;
       return { _id, distance };
     });
-
-    console.log(this.distances);
   }
 
   toggleFilterModal() {
@@ -183,5 +182,10 @@ export class StayIndexComponent implements OnInit {
 
   get endMonth(): string {
     return this.currDate.end.toLocaleDateString('en-GB', { month: 'short' });
+  }
+
+  ngOnDestroy() {
+    this.destroySubject$.next(null);
+    this.destroySubject$.complete();
   }
 }

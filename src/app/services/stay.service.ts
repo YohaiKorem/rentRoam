@@ -53,10 +53,13 @@ export class StayService {
   private _searchParams$ = new BehaviorSubject<SearchParam>({
     startDate: null,
     endDate: null,
-    location: {
-      name: 'Porto, Portugal',
-      coords: { lat: 41.1462, lng: -8.59275 },
-    },
+    location: { name: null, coords: { lat: 24, lng: 26 } },
+    // for debuggin location
+    // location: {
+    //   name: 'Porto, Portugal',
+    //   coords: { lat: 41.1462, lng: -8.59275 },
+
+    // },
     guests: { adults: 0, children: 0, infants: 0 },
   });
   public searchParams$ = this._searchParams$.asObservable();

@@ -5,6 +5,10 @@ import { Observable, Subscription, map, takeUntil, Subject } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { SwipeDirectiveDirective } from 'src/app/directives/swipe-directive.directive';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'stay-details',
   templateUrl: './stay-details.component.html',
@@ -18,13 +22,19 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private stayService: StayService,
     public router: Router,
-    private route: ActivatedRoute
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private sharedService: SharedService,
+
+    private wishlistService: WishlistService
   ) {}
   elMainHeader: HTMLElement | null = null;
   currImgUrlIdx = 0;
   isMobile = window.innerWidth <= 780;
   stay: Stay | null = null;
   stay$!: Observable<Stay>;
+  user: User | null = null;
+  user$!: Observable<User>;
   res: any;
   searchParam = {} as SearchParam;
   startDate: Date | null = null;
@@ -62,6 +72,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
         return data['stay'];
       })
     );
+    this.userService.loggedInUser$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((user) => (this.user = user));
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => {
@@ -70,6 +83,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
         this.setDefaultLoc();
       });
+    this.sharedService.openModal$.subscribe(() => {
+      this.toggleModal('close');
+    });
     this.setDefaultDates();
   }
 
@@ -84,17 +100,62 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     return new Date(timestamp);
   }
 
-  openModal(cmp: string) {
+  isInWishlist() {
+    return this.user?.wishlists.some((wishlist) => {
+      return wishlist.stays.some((stay) => stay._id === this.stay!._id);
+    });
+  }
+
+  onRemoveFromWishlist() {
+    const wishlistIdx = this.user?.wishlists.findIndex((wishlist) => {
+      return wishlist.stays.some((s) => s._id === this.stay!._id);
+    });
+    if (wishlistIdx === undefined) return;
+    const wishlistToUpdate = this.user?.wishlists[wishlistIdx];
+    const updatedWishlist = this.wishlistService.toggleStayInWishlist(
+      wishlistToUpdate!,
+      this.stay!
+    );
+    const updatedUser = this.userService.updateWishlistInUser(
+      updatedWishlist,
+      this.user!
+    );
+    this.user = updatedUser;
+  }
+
+  toggleModal(cmp: string) {
+    console.log(cmp);
+
     switch (cmp) {
       case 'review-preview':
         this.currModalContent = { title: 'Review', cmp: 'review-preview' };
-        // set selectedReview if needed
         break;
       case 'amenity-list':
         this.currModalContent = { title: 'Amenities', cmp: 'amenity-list' };
         break;
-      // handle other cases here
+      case 'share':
+        this.currModalContent = {
+          title: 'Share this place',
+          cmp: 'share-modal',
+        };
+        break;
+      case 'save':
+        this.currModalContent = {
+          title: 'Your wishlists',
+          cmp: 'wishlist-list',
+        };
+        break;
+      case 'edit':
+        this.currModalContent = {
+          title: 'Name this wishlist',
+          cmp: 'wishlist-edit',
+        };
+        break;
+      case 'close':
+        this.isShowModal = false;
+        return;
     }
+
     this.isShowModal = true;
   }
 
@@ -115,6 +176,12 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       this.searchParam.startDate = startDate;
       this.searchParam.endDate = endDate;
     }
+  }
+
+  onAddToWishlist() {
+    this.isInWishlist()
+      ? this.onRemoveFromWishlist()
+      : this.toggleModal('save');
   }
 
   setDateRange(dateRange: any) {

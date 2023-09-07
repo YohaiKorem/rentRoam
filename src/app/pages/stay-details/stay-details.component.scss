@@ -4,16 +4,7 @@
   padding-block-start: 2em;
   color: rgb(34, 34, 34);
   gap: 1em;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 1em;
-    left: em(-100px);
-    height: 1px;
-    width: 110vw;
-    opacity: 0.2;
-    background-color: $secondaryClr3;
-  }
+
   & > * {
     width: 100%;
   }
@@ -72,6 +63,8 @@
         position: relative;
         .host-img-container {
           position: relative;
+          width: em(30px);
+          height: em(30px);
           .host-img {
             border-radius: 2em;
           }
@@ -196,6 +189,8 @@
     padding-block-end: 2em;
     header {
       .img-container {
+        width: em(30px);
+        height: em(30px);
         img {
           border-radius: 2em;
         }
@@ -254,8 +249,22 @@
     max-width: 800px;
     border-radius: 12px;
     height: 500px;
+    &:has(wishlist-edit) {
+      max-width: em(300px);
+      max-height: em(350px);
+    }
   }
-
+  .btn-edit-wishlist {
+    border: none;
+    align-self: self-start;
+    padding: 1em;
+    gap: 1.5em;
+    width: 100%;
+    justify-content: flex-start;
+    .plus-btn-img-container {
+      width: em(60px);
+    }
+  }
   @include for-mobile-layout {
     padding-block-start: 0;
     overflow-x: hidden;
