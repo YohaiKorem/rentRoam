@@ -1,5 +1,5 @@
 <section class="stay-edit-wrapper">
-  <form class="stay-edit-form flex column" name="stay-edit-form">
+  <form class="stay-edit-form flex column gap1" name="stay-edit-form">
     <ng-container
       *ngFor="
         let property of keysForEdit | slice : 1 : keysForEdit.length;
@@ -17,7 +17,6 @@
           property !== 'type'
         "
       >
-        <label for="{{ property }}">{{ property }}</label>
         <div
           class="input-wrapper {{ property }}"
           [ngSwitch]="determineType(emptyStay[property])"
@@ -26,7 +25,6 @@
             <ng-container [ngSwitch]="property">
               <input
                 *ngSwitchDefault
-                id="{{ property }}"
                 [(ngModel)]="emptyStay[property]"
                 [name]="property"
                 [placeholder]="property"
@@ -34,17 +32,17 @@
               <textarea
                 *ngSwitchCase="'summary'"
                 [name]="property"
-                id="property"
                 cols="30"
                 rows="10"
               ></textarea>
-              <select *ngSwitchCase="'roomType'" [name]="property" id="">
+              <select *ngSwitchCase="'roomType'" [name]="property">
                 <option value="Entire home/apt">Entire home/apt</option>
                 <option value="Private room">Private room</option>
               </select>
             </ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'number'">
+            <label [for]="property">{{ property }}: </label>
             <input
               id="{{ property }}"
               [(ngModel)]="emptyStay[property]"
@@ -61,7 +59,7 @@
                 >
                   <label class="img-label"
                     ><input type="file" name="{{ property }}_{{ i }}" hidden />
-                    <span>Upload Image {{ i }}</span>
+                    <span>Upload Image {{ i + 1 }}</span>
                   </label>
                 </div>
               </ng-container>
@@ -98,13 +96,28 @@
                   subProp.key !== 'lng'
                 "
               >
-                <label for="{{ subProp.key }}">{{ subProp.key }}</label>
-                <input
-                  id="{{ subProp.key }}"
-                  [(ngModel)]="emptyStay[property].subProp"
-                  name="{{ property }} {{ subProp.key }}"
-                  [placeholder]="'Enter ' + subProp.key"
-                />
+                <ng-container [ngSwitch]="property">
+                  <ng-container *ngSwitchCase="'loc'">
+                    <!-- <label for="{{ subProp.key }}">{{ subProp.key }}</label> -->
+                    <input
+                      [(ngModel)]="emptyStay[property].subProp"
+                      name="{{ property }} {{ subProp.key }}"
+                      [placeholder]="'Enter ' + subProp.key"
+                    />
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'equipment'">
+                    <!-- <label for="{{ subProp.key }}">{{
+                      getLabelForInput(subProp.key)
+                    }}</label> -->
+                    <input
+                      [(ngModel)]="emptyStay[property].subProp"
+                      name="{{ property }} {{ subProp.key }}"
+                      [placeholder]="'Enter ' + getLabelForInput(subProp.key)"
+                      type="number"
+                      class="full-width"
+                    />
+                  </ng-container>
+                </ng-container>
               </div>
             </ng-container>
           </ng-container>

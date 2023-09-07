@@ -45,6 +45,13 @@ export class StayEditComponent implements OnInit {
     return Object.getOwnPropertyNames(stay);
   }
 
+  getLabelForInput(str: any) {
+    if (str === 'bathNum') return 'Number of bathrooms';
+    if (str === 'bedroomNum') return 'Number of bedrooms';
+    if (str === 'bedsNum') return 'Number of beds';
+    return null;
+  }
+
   determineType(value: any): string {
     if (typeof value === 'string') return 'string';
     if (typeof value === 'number') return 'number';
