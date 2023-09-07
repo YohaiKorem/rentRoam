@@ -2,7 +2,7 @@ import { Host } from './host.model';
 import { Review } from './review.model';
 import { User } from './user.model';
 
-export class Stay {
+export class Stay implements IStay {
   constructor(
     public _id: string,
     public name: string,
@@ -49,14 +49,14 @@ export class Stay {
       '',
       '',
       '',
-      [],
+      ['', '', '', '', ''],
       0,
       '',
       0,
       [],
       '',
       {} as Host,
-      {} as Loc,
+      { country: '', countryCode: '', city: '', address: '', lat: 0, lng: 0 },
       [],
       [],
       [],
@@ -64,6 +64,27 @@ export class Stay {
       0
     );
   }
+}
+
+export interface IStay {
+  [key: string]: any;
+
+  _id: string;
+  name: string;
+  type: string;
+  imgUrls: string[];
+  price: number;
+  summary: string;
+  capacity: number;
+  amenities: string[];
+  roomType: string;
+  host: Host;
+  loc: Loc;
+  reviews: Review[];
+  likedByUsers: User[];
+  labels: string[];
+  equipment: Equipment;
+  rate: number;
 }
 
 export interface SearchParam {
@@ -112,7 +133,41 @@ export interface Equipment {
   [key: string]: number;
 }
 
-export const amenities: any = {
+export const Labels: string[] = [
+  'Rooms',
+  'Amazing pools',
+  'Amazing views',
+  'OMG!',
+  'Design',
+  'Castles',
+  'Lakefront',
+  'Cabins',
+  'Islands',
+  'Beachfront',
+  'Luxe',
+  'Trending',
+  'Countryside',
+  'National parks',
+  'Off-the-grid',
+  'Play',
+  'Earth homes',
+  'Tropical',
+  'Caves',
+  'Boats',
+  'Iconic',
+  'Skiing',
+  'Ski-in/out',
+  'Ryokans',
+  'casas particulares',
+  'Hanoks',
+  'Campers',
+  'Golfing',
+  'Minsus',
+  'Adapted',
+  'Beach',
+];
+
+export const amenities: { [key: string]: string[] } = {
   essentials: [
     'Wifi',
     'Kitchen',

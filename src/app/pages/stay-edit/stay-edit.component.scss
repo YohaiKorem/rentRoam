@@ -1,0 +1,51 @@
+@import "../../app-root/app.component.scss";
+.stay-edit-wrapper {
+  .stay-edit-form {
+    .name-wrapper {
+      order: 0;
+      input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid $secondaryClr2;
+      }
+    }
+    .loc-wrapper {
+      order: 1;
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .loc.address {
+          order: 2;
+        }
+        .loc.country {
+          order: 0;
+        }
+        .loc.city {
+          order: 1;
+        }
+      }
+    }
+    .imgUrls-wrapper {
+      order: 2;
+    }
+    .equipment-wrapper {
+      order: 3;
+    }
+    .roomType-wrapper {
+      order: 4;
+    }
+    .price-wrapper {
+      order: 5;
+    }
+    .summary-wrapper {
+      order: 6;
+    }
+    .amenities-wrapper {
+      order: 7;
+    }
+    .labels-wrapper {
+      order: 8;
+    }
+  }
+}

@@ -140,7 +140,7 @@
       <h3 class="fw600 fs16">Essentials</h3>
       <div class="amenities-container">
         <div
-          *ngFor="let amenity of amenities.essentials"
+          *ngFor="let amenity of amenities['essentials']"
           class="amenity-filter-item flex"
           (click)="filterAmenities(amenity)"
         >
@@ -174,7 +174,7 @@
         </div>
         <ng-container *ngIf="isShowAllAmenities">
           <div
-            *ngFor="let amenity of amenities.all"
+            *ngFor="let amenity of amenities['all']"
             class="amenity-filter-item flex"
             (click)="filterAmenities(amenity)"
           >

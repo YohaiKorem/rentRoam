@@ -1,44 +1,115 @@
 <section class="stay-edit-wrapper">
-  <form class="stay-edit-form">
-    <!-- <div
-      *ngFor="let property of generateKeys(emptyStay); let i = index"
-      type="text"
+  <form class="stay-edit-form flex column" name="stay-edit-form">
+    <ng-container
+      *ngFor="
+        let property of keysForEdit | slice : 1 : keysForEdit.length;
+        let i = index
+      "
     >
-      <label for="{{ property.key }}">{{ property.key }}</label>
-
-      <div [ngSwitch]="determineType(property.value)">
-        <ng-container *ngSwitchCase="'string'">
-          <input
-            id="{{ property.key }}"
-            [(ngModel)]="emptyStay[property.key]"
-          />
-        </ng-container>
-
-        <ng-container *ngSwitchCase="'number'">
-          <input
-            id="{{ property.key }}"
-            [(ngModel)]="emptyStay[property.key]"
-            type="number"
-          />
-        </ng-container>
-
-        <ng-container *ngSwitchCase="'array'">
-          <div *ngFor="let item of property.value; let i = index">
-            <input [(ngModel)]="property.value[i]" />
-          </div>
-        </ng-container>
-
-        <ng-container *ngSwitchCase="'object'">
-          <div *ngFor="let subProp of property.value | keyvalue">
-            <label for="{{ subProp.key }}">{{ subProp.key }}</label>
+      <div
+        class="{{ property }}-wrapper"
+        *ngIf="
+          property !== 'rate' &&
+          property !== 'host' &&
+          property !== 'reviews' &&
+          property !== 'likedByUsers' &&
+          property !== 'capacity' &&
+          property !== 'type'
+        "
+      >
+        <label for="{{ property }}">{{ property }}</label>
+        <div
+          class="input-wrapper {{ property }}"
+          [ngSwitch]="determineType(emptyStay[property])"
+        >
+          <ng-container *ngSwitchCase="'string'">
+            <ng-container [ngSwitch]="property">
+              <input
+                *ngSwitchDefault
+                id="{{ property }}"
+                [(ngModel)]="emptyStay[property]"
+                [name]="property"
+                [placeholder]="property"
+              />
+              <textarea
+                *ngSwitchCase="'summary'"
+                [name]="property"
+                id="property"
+                cols="30"
+                rows="10"
+              ></textarea>
+              <select *ngSwitchCase="'roomType'" [name]="property" id="">
+                <option value="Entire home/apt">Entire home/apt</option>
+                <option value="Private room">Private room</option>
+              </select>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'number'">
             <input
-              id="{{ subProp.key }}"
-              [(ngModel)]="property.value[subProp.key]"
+              id="{{ property }}"
+              [(ngModel)]="emptyStay[property]"
+              type="number"
+              [name]="property"
             />
-          </div>
-        </ng-container>
-
+          </ng-container>
+          <ng-container *ngSwitchCase="'array'">
+            <ng-container [ngSwitch]="property">
+              <ng-container *ngSwitchCase="'imgUrls'">
+                <div
+                  class="input-container"
+                  *ngFor="let img of emptyStay[property]; let i = index"
+                >
+                  <label class="img-label"
+                    ><input type="file" name="{{ property }}_{{ i }}" hidden />
+                    <span>Upload Image {{ i }}</span>
+                  </label>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchCase="'amenities'">
+                <div *ngFor="let amenity of allAmenities; let i = index">
+                  <label class="amenity-label">
+                    <input type="checkbox" name="{{ amenity }}" />
+                    <span (click)="test(amenity)">{{ amenity }}</span>
+                  </label>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchCase="'labels'">
+                <div *ngFor="let label of labels; let i = index">
+                  <label class="label-label">
+                    <input type="checkbox" name="{{ label }}" />
+                    <span (click)="test(label)">{{ label }}</span>
+                  </label>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'object'">
+            <ng-container
+              *ngFor="
+                let subProp of emptyStay[property] | keyvalue;
+                let i = index
+              "
+            >
+              <div
+                [ngClass]="[property + ' ' + subProp.key]"
+                *ngIf="
+                  subProp.key !== 'countryCode' &&
+                  subProp.key !== 'lat' &&
+                  subProp.key !== 'lng'
+                "
+              >
+                <label for="{{ subProp.key }}">{{ subProp.key }}</label>
+                <input
+                  id="{{ subProp.key }}"
+                  [(ngModel)]="emptyStay[property].subProp"
+                  name="{{ property }} {{ subProp.key }}"
+                  [placeholder]="'Enter ' + subProp.key"
+                />
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
       </div>
-    </div> -->
+    </ng-container>
   </form>
 </section>
