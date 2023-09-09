@@ -1,6 +1,6 @@
 <ul
   *ngIf="!isModal; else modalWishlist"
-  class="wishlist-list-wrapper flex gap1-point5"
+  class="wishlist-list-wrapper flex gap1-5"
 >
   <a
     routerLink="{{ wishlist.id }}"
@@ -13,7 +13,7 @@
   </a>
 </ul>
 <ng-template #modalWishlist>
-  <ul class="wishlist-list-wrapper in-modal flex column gap-point5">
+  <ul class="wishlist-list-wrapper in-modal flex column gap0-5">
     <li *ngFor="let wishlist of user.wishlists; let i = index">
       <button class="btn-wishlist" (click)="addStayToWishlist(wishlist)">
         <wishlist-preview

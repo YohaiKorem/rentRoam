@@ -385,13 +385,13 @@ export class StayService {
     ) {
       if (filterBy.equipment.bathNum) {
         filteredStays = filteredStays.filter(
-          (stay) => stay.equipment.bathNum >= filterBy.equipment.bathNum
+          (stay) => stay.equipment.bathNum! >= filterBy.equipment.bathNum
         );
       }
 
       if (filterBy.equipment.bedsNum) {
         filteredStays = filteredStays.filter(
-          (stay) => stay.equipment.bedsNum >= filterBy.equipment.bedsNum
+          (stay) => stay.equipment.bedsNum! >= filterBy.equipment.bedsNum
         );
       }
     }

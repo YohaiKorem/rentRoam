@@ -134,13 +134,13 @@
 
 // GAP
 
-.gap-point5 {
+.gap0-5 {
   gap: 0.5em;
 }
 .gap1 {
   gap: 1em;
 }
-.gap1-point5 {
+.gap1-5 {
   gap: 1.5em;
 }
 
@@ -209,24 +209,169 @@
   transition: 0.7s all;
 }
 
-// Spacing
+// Padding
 .p1 {
   padding: 1em;
 }
-.p1point5 {
+.p1-5 {
   padding: 1.5em;
 }
 .p2 {
   padding: 2em;
 }
-.m5 {
-  margin: 5px;
+.pb1 {
+  padding-block: 1em;
 }
-.m10 {
-  margin: 10px;
+.pb1-5 {
+  padding-block: 1.5em;
 }
-.m20 {
-  margin: 20px;
+.pb2 {
+  padding-block: 2em;
+}
+.pb2-5 {
+  padding-block: 2.5em;
+}
+.pbs1 {
+  padding-block-start: 1em;
+}
+.pbs1-5 {
+  padding-block-start: 1.5em;
+}
+.pbs2 {
+  padding-block-start: 2em;
+}
+.pbs2-5 {
+  padding-block-start: 2.5em;
+}
+.pbe1 {
+  padding-block-end: 1em;
+}
+.pbe1-5 {
+  padding-block-end: 1.5em;
+}
+.pbe2 {
+  padding-block-end: 2em;
+}
+.pbe2-5 {
+  padding-block-end: 2.5em;
+}
+.pi1 {
+  padding-inline: 1em;
+}
+.pi1-5 {
+  padding-inline: 1.5em;
+}
+.pi2 {
+  padding-inline: 2em;
+}
+.pi2-5 {
+  padding-inline: 2.5em;
+}
+.pis1 {
+  padding-inline-start: 1em;
+}
+.pis1-5 {
+  padding-inline-start: 1.5em;
+}
+.pis2 {
+  padding-inline-start: 2em;
+}
+.pis2-5 {
+  padding-inline-start: 2.5em;
+}
+.pie1 {
+  padding-inline-end: 1em;
+}
+.pie1-5 {
+  padding-inline-end: 1.5em;
+}
+.pie2 {
+  padding-inline-end: 2em;
+}
+.pie2-5 {
+  padding-inline-end: 2.5em;
+}
+// Margin
+.m1 {
+  margin: 1em;
+}
+.m1-5 {
+  margin: 1.5em;
+}
+.m2 {
+  margin: 2em;
+}
+.mb1 {
+  margin-block: 1em;
+}
+.mb1-5 {
+  margin-block: 1.5em;
+}
+.mb2 {
+  margin-block: 2em;
+}
+.mb2-5 {
+  margin-block: 2.5em;
+}
+.mbs1 {
+  margin-block-start: 1em;
+}
+.mbs1-5 {
+  margin-block-start: 1.5em;
+}
+.mbs2 {
+  margin-block-start: 2em;
+}
+.mbs2-5 {
+  margin-block-start: 2.5em;
+}
+.mbe1 {
+  margin-block-end: 1em;
+}
+.mbe1-5 {
+  margin-block-end: 1.5em;
+}
+.mbe2 {
+  margin-block-end: 2em;
+}
+.mbe2-5 {
+  margin-block-end: 2.5em;
+}
+.mi1 {
+  margin-inline: 1em;
+}
+.mi1-5 {
+  margin-inline: 1.5em;
+}
+.mi2 {
+  margin-inline: 2em;
+}
+.mi2-5 {
+  margin-inline: 2.5em;
+}
+.mis1 {
+  margin-inline-start: 1em;
+}
+.mis1-5 {
+  margin-inline-start: 1.5em;
+}
+.mis2 {
+  margin-inline-start: 2em;
+}
+.mis2-5 {
+  margin-inline-start: 2.5em;
+}
+.mie1 {
+  margin-inline-end: 1em;
+}
+.mie1-5 {
+  margin-inline-end: 1.5em;
+}
+.mie2 {
+  margin-inline-end: 2em;
+}
+.mie2-5 {
+  margin-inline-end: 2.5em;
 }
 
 // Normalize Background

@@ -68,6 +68,19 @@ button {
     pointer-events: none;
   }
 }
+textarea {
+  resize: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 
 input[type="text"],
 input[type="password"] {

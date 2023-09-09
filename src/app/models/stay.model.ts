@@ -60,7 +60,7 @@ export class Stay implements IStay {
       [],
       [],
       [],
-      { bedsNum: 0, bathNum: 0, bedroomNum: 0 },
+      { bedsNum: null, bathNum: null, bedroomNum: null },
       0
     );
   }
@@ -127,10 +127,10 @@ export interface StayFilter {
 }
 
 export interface Equipment {
-  bedsNum: number;
-  bathNum: number;
-  bedroomNum: number;
-  [key: string]: number;
+  bedsNum: number | null;
+  bathNum: number | null;
+  bedroomNum: number | null;
+  [key: string]: number | null;
 }
 
 export const Labels: string[] = [
