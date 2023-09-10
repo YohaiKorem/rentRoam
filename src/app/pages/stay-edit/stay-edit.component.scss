@@ -1,18 +1,35 @@
 @import "../../app-root/app.component.scss";
 .stay-edit-wrapper {
   background-color: #f3f3f3;
+
   input {
     outline: 0;
     border: none;
     border-bottom: 1px solid $secondaryClr2;
 
+    &[type="file"] {
+      opacity: 0;
+      //   pointer-events: none;
+      position: absolute;
+    }
     &:focus-within {
       border: none;
     }
   }
-  .stay-edit-form {
+  form {
     background-color: #fff;
     border-radius: 1em;
+    button[type="submit"] {
+      background-color: $primaryClr1;
+      color: $fontclr2;
+      font-weight: 500;
+    }
+  }
+  .host-form {
+    .btn {
+    }
+  }
+  .stay-edit-form {
     h3 {
       color: $fontclr3;
       position: relative;
@@ -36,13 +53,22 @@
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: 1fr 1fr;
       grid-auto-flow: column;
-      min-height: 300px;
+      height: 300px;
       gap: 1em;
+
       > * {
         background-color: $secondaryClr3;
         color: $fontclr2;
         display: grid;
         place-items: center;
+        width: 100%;
+        height: 100%;
+        & img {
+          background-repeat: no-repeat;
+          background-size: cover;
+          width: 100%;
+          height: 100%;
+        }
       }
 
       & :first-child {

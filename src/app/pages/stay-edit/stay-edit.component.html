@@ -1,12 +1,44 @@
 <section class="stay-edit-wrapper p1">
-  <form class="stay-edit-form flex column gap1 p1" name="stay-edit-form">
+  <form class="host-form p1" *ngIf="!hasHost">
+    <div class="host-inputs-container flex column gap1-5 space-between">
+      <label for="host-loc">
+        Enter your location
+        <input
+          type="text"
+          [(ngModel)]="stayHost.location"
+          name="host-loc"
+          id="host-loc"
+          class="mis1"
+          placeholder="e.g., New York, USA"
+        />
+      </label>
+      <label for="host-loc">
+        Upload your photo (displayed to users)
+        <input type="file" name="host-img" id="host-loc"
+      /></label>
+      <textarea
+        [(ngModel)]="stayHost.description"
+        name="host-desc"
+        cols="30"
+        rows="10"
+        class="p1"
+        placeholder="Share a brief introduction or interesting facts about yourself."
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-next mbs1">Next</button>
+  </form>
+  <form
+    class="stay-edit-form flex column gap1 p1"
+    name="stay-edit-form"
+    *ngIf="hasHost"
+  >
     <div class="name-input-wrapper">
       <input
         type="text"
         name="stay-name"
         placeholder="Stay name"
         class="fs28 fw500"
-        [(ngModel)]="emptyStay.name"
+        [(ngModel)]="stay.name"
       />
     </div>
     <div class="loc-inputs-wrapper flex align-center gap1">
@@ -14,68 +46,48 @@
         type="text"
         placeholder="Enter country"
         name="stay-country"
-        [(ngModel)]="emptyStay.loc.country"
+        [(ngModel)]="stay.loc.country"
       />
       <input
         type="text"
         placeholder="Enter city"
         name="stay-city"
-        [(ngModel)]="emptyStay.loc.city"
+        [(ngModel)]="stay.loc.city"
       /><input
         type="text"
         name="stay-address"
         placeholder="enter address"
-        [(ngModel)]="emptyStay.loc.address"
+        [(ngModel)]="stay.loc.address"
       />
     </div>
     <div class="imgs-inputs-container">
-      <label for="img-input-1" class="input-container input-file-label">
-        <span>Upload image </span>
-        <input
-          type="file"
-          hidden
-          name="img-input-1"
-          [(ngModel)]="emptyStay.imgUrls[0]"
-        />
-      </label>
-      <div for="img-input-2" class="input-container input-file-label">
-        <span>Upload image </span>
-        <input
-          type="file"
-          hidden
-          name="img-input-2"
-          [(ngModel)]="emptyStay.imgUrls[1]"
-        />
-      </div>
-      <label for="img-input-3" class="input-container input-file-label">
-        <span>Upload image </span>
-        <input
-          type="file"
-          hidden
-          name="img-input 3"
-          [(ngModel)]="emptyStay.imgUrls[2]"
-        />
-      </label>
-      <label for="img-input 4" class="input-container input-file-label">
-        <span
-          >Upload image
-          <input
-            type="file"
-            hidden
-            name="img-input 4"
-            [(ngModel)]="emptyStay.imgUrls[3]"
-        /></span>
-      </label>
-      <label for="img-input-5" class="input-container input-file-label">
+      <ng-container *ngFor="let img of stay.imgUrls; let i = index">
         <label
-          >Upload image
+          *ngIf="!img; else imgContainer"
+          [for]="'img-input-' + i"
+          class="input-container input-file-label"
+        >
+          <span>Upload image </span>
           <input
             type="file"
-            hidden
-            name="img-input-5"
-            [(ngModel)]="emptyStay.imgUrls[4]"
-        /></label>
-      </label>
+            [id]="'img-input-' + i"
+            (change)="onImgUpload($event, i)"
+          />
+        </label>
+        <ng-template #imgContainer>
+          <label
+            [for]="'img-input-' + i"
+            class="input-container input-file-label"
+          >
+            <img [src]="img" />
+            <input
+              type="file"
+              [id]="'img-input-' + i"
+              (change)="onImgUpload($event, i)"
+            />
+          </label>
+        </ng-template>
+      </ng-container>
     </div>
     <div class="equipment-inputs-wrapper flex align-center gap1">
       <div class="equipment-input-container">
@@ -84,7 +96,7 @@
             type="number"
             name="beds-num"
             placeholder="Enter number of beds"
-            [(ngModel)]="emptyStay.equipment.bedsNum"
+            [(ngModel)]="stay.equipment.bedsNum"
         /></label>
       </div>
       <div class="equipment-input-container">
@@ -92,7 +104,7 @@
           ><input
             type="number"
             name="bedroom-num"
-            [(ngModel)]="emptyStay.equipment.bedroomNum"
+            [(ngModel)]="stay.equipment.bedroomNum"
             placeholder="Enter number of bedrooms"
         /></label>
       </div>
@@ -101,7 +113,7 @@
           ><input
             type="number"
             name="bath-num"
-            [(ngModel)]="emptyStay.equipment.bathNum"
+            [(ngModel)]="stay.equipment.bathNum"
             placeholder="Enter number of bathrooms"
         /></label>
       </div>
@@ -113,13 +125,13 @@
           <input
             type="number"
             name="stay-price"
-            [(ngModel)]="emptyStay.price"
+            [(ngModel)]="stay.price"
           />/night</label
         >
       </div>
       <div class="room-type-container">
         <label for="stay-type">Stay type: </label>
-        <select name="stay-type" [(ngModel)]="emptyStay.roomType">
+        <select name="stay-type" [(ngModel)]="stay.roomType">
           <option value="Entire home/apt">Entire home/apt</option>
           <option value="Private room">Private room</option>
         </select>
@@ -132,7 +144,7 @@
         cols="30"
         rows="10"
         class="full-width"
-        [(ngModel)]="emptyStay.summary"
+        [(ngModel)]="stay.summary"
       ></textarea>
     </div>
     <div class="amenities-wrapper flex column gap1 space-between">
@@ -143,7 +155,13 @@
           [class]="'amenity-input-container' + ' ' + amenity"
         >
           <label [for]="amenity">
-            <input type="checkbox" [name]="amenity" />
+            <input
+              (change)="onToggleCheckboxEntity($event, amenity, 'amenities')"
+              type="checkbox"
+              [checked]="stay.amenities.includes(amenity)"
+              [name]="amenity"
+              [id]="amenity"
+            />
             {{ amenity }}
           </label>
         </div>
@@ -154,12 +172,17 @@
       <div class="labels-container">
         <div *ngFor="let label of labels" class="stay-label-input">
           <label [for]="label">
-            <input type="checkbox" [name]="label" />
+            <input
+              type="checkbox"
+              [id]="label"
+              [checked]="stay.labels.includes(label)"
+              (change)="onToggleCheckboxEntity($event, label, 'labels')"
+            />
             {{ label }}
           </label>
         </div>
       </div>
     </div>
-    <button class="btn btn-save-stay">Save</button>
+    <button type="submit" class="btn btn-save-stay">Save</button>
   </form>
 </section>

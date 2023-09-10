@@ -50,6 +50,7 @@ import { StayPreviewLoaderComponent } from './app/cmps/stay-preview-loader/stay-
 import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-details.component';
 import { ImgErrorDirective } from './app/directives/img-error.directive';
 import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
+import { GooglePlacesAutocompleteDirective } from './app/directives/google-places-autocomplete.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +81,7 @@ import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
     WishlistDetailsComponent,
     ImgErrorDirective,
     StayEditComponent,
+    GooglePlacesAutocompleteDirective,
   ],
   imports: [
     BrowserModule,

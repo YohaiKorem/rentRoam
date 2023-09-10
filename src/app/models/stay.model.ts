@@ -1,4 +1,4 @@
-import { Host } from './host.model';
+import { StayHost } from './host.model';
 import { Review } from './review.model';
 import { User } from './user.model';
 
@@ -13,7 +13,7 @@ export class Stay implements IStay {
     public capacity: number,
     public amenities: string[],
     public roomType: string,
-    public host: Host,
+    public host: StayHost,
     public loc: Loc,
     public reviews: Review[],
     public likedByUsers: User[],
@@ -55,7 +55,7 @@ export class Stay implements IStay {
       0,
       [],
       '',
-      {} as Host,
+      {} as StayHost,
       { country: '', countryCode: '', city: '', address: '', lat: 0, lng: 0 },
       [],
       [],
@@ -78,7 +78,7 @@ export interface IStay {
   capacity: number;
   amenities: string[];
   roomType: string;
-  host: Host;
+  host: StayHost;
   loc: Loc;
   reviews: Review[];
   likedByUsers: User[];

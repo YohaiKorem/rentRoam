@@ -70,6 +70,8 @@ button {
 }
 textarea {
   resize: none;
+  font-family: inherit;
+  outline: 0;
 }
 
 input::-webkit-outer-spin-button,

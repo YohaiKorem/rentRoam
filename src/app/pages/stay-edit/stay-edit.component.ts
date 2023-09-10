@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IStay, Labels, Stay, amenities } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
+import { StayHost } from 'src/app/models/host.model';
 import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -11,13 +12,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class StayEditComponent implements OnInit {
   user!: User;
-  emptyStay: IStay = Stay.getEmptyStay();
-  keysForEdit: string[] = this.generateKeys(this.emptyStay);
+  stay: IStay = Stay.getEmptyStay();
   amenities = amenities;
   allAmenities: string[] = ([] as string[]).concat(
     ...Object.values(this.amenities)
   );
+  stayHost!: StayHost;
   labels = Labels;
+  hasHost!: boolean;
   constructor(
     private userService: UserService,
     private stayService: StayService
@@ -25,38 +27,39 @@ export class StayEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe((user) => (this.user = user!));
-    this.emptyStay = Stay.getEmptyStay();
-
-    const arr = this.keysForEdit.map(
-      (property) => (this.emptyStay as any)[property]
-    );
-    const items = arr.map((item) => this.determineType(item));
-    console.log(this.keysForEdit);
-    console.log(arr);
-    console.log(items);
-    console.log(this.allAmenities);
+    if (!this.stay.host.fullname) {
+      this.stayHost = StayHost.newHostFromUser(this.user);
+      this.hasHost = false;
+    } else {
+      this.hasHost = true;
+    }
   }
 
   test(str: any) {
-    console.log(this.emptyStay);
+    console.log(this.stay);
   }
 
-  generateKeys(stay: Stay) {
-    return Object.getOwnPropertyNames(stay);
+  onImgUpload(ev: any, idx: number) {
+    if (ev.target.files && ev.target.files.length) {
+      const file = ev.target.files[0];
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.stay.imgUrls[idx] = reader.result as string;
+      };
+
+      reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+      };
+    }
   }
 
-  getLabelForInput(str: any) {
-    if (str === 'bathNum') return 'Number of bathrooms';
-    if (str === 'bedroomNum') return 'Number of bedrooms';
-    if (str === 'bedsNum') return 'Number of beds';
-    return null;
-  }
-
-  determineType(value: any): string {
-    if (typeof value === 'string') return 'string';
-    if (typeof value === 'number') return 'number';
-    if (typeof value === 'object' && Array.isArray(value)) return 'array';
-    if (typeof value === 'object' && value !== null) return 'object';
-    return '';
+  onToggleCheckboxEntity(ev: Event, str: string, entity: string) {
+    this.stay[entity].includes(str)
+      ? this.stay[entity].filter((e: string) => e === str)
+      : this.stay[entity].push(str);
+    console.log(this.stay);
   }
 }

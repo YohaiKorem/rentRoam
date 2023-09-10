@@ -148,17 +148,7 @@
             width: 100%;
             margin-inline-start: 0.5em;
             color: $secondaryClr3;
-            &.check-in {
-            }
-            &.check-out {
-            }
           }
-          // .separator {
-          //   width: 1px;
-          //   height: 100%;
-          //   background-color: $secondaryClr3;
-          //   opacity: 0.7;
-          // }
         }
         .btn-guests-menu-trigger {
           align-self: start;
@@ -223,10 +213,6 @@
     height: 400px;
     display: grid;
     grid-template-rows: 2em 1fr;
-    google-map {
-    }
-    h4 {
-    }
   }
 
   .separator {
