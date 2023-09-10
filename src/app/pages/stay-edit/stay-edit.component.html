@@ -4,6 +4,8 @@
       <label for="host-loc">
         Enter your location
         <input
+          googlePlacesAutocomplete
+          (onSelect)="handlePlaceSelection($event, 'host')"
           type="text"
           [(ngModel)]="stayHost.location"
           name="host-loc"
@@ -12,9 +14,18 @@
           placeholder="e.g., New York, USA"
         />
       </label>
-      <label for="host-loc">
-        Upload your photo (displayed to users)
-        <input type="file" name="host-img" id="host-loc"
+      <label for="host-img">
+        <span *ngIf="!stayHost.thumbnailUrl"
+          >Upload your photo (displayed to users)</span
+        >
+        <div class="img-container">
+          <img [src]="stayHost.thumbnailUrl" />
+        </div>
+        <input
+          (change)="onImgUpload($event)"
+          type="file"
+          name="host-img"
+          id="host-img"
       /></label>
       <textarea
         [(ngModel)]="stayHost.description"
@@ -25,7 +36,13 @@
         placeholder="Share a brief introduction or interesting facts about yourself."
       ></textarea>
     </div>
-    <button type="submit" class="btn btn-next mbs1">Next</button>
+    <button
+      (click)="handleHostFormSubmit()"
+      type="submit"
+      class="btn btn-next mbs1"
+    >
+      Next
+    </button>
   </form>
   <form
     class="stay-edit-form flex column gap1 p1"
@@ -44,20 +61,30 @@
     <div class="loc-inputs-wrapper flex align-center gap1">
       <input
         type="text"
-        placeholder="Enter country"
+        placeholder="Country (e.g., USA)"
         name="stay-country"
         [(ngModel)]="stay.loc.country"
+        googlePlacesAutocomplete
+        (onSelect)="handlePlaceSelection($event, 'stay-country')"
       />
       <input
         type="text"
-        placeholder="Enter city"
+        placeholder="City (e.g., New York)"
         name="stay-city"
         [(ngModel)]="stay.loc.city"
-      /><input
+        [typeRestriction]="'(cities)'"
+        [countryRestriction]="selectedCountry"
+        googlePlacesAutocomplete
+        (onSelect)="handlePlaceSelection($event, 'stay-city')"
+      />
+
+      <input
         type="text"
+        placeholder="Street address (e.g., 123 Elm St)"
         name="stay-address"
-        placeholder="enter address"
         [(ngModel)]="stay.loc.address"
+        googlePlacesAutocomplete
+        (onSelect)="handlePlaceSelection($event, 'stay-address')"
       />
     </div>
     <div class="imgs-inputs-container">
@@ -183,6 +210,12 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-save-stay">Save</button>
+    <button
+      (click)="handleStaySubmit()"
+      type="submit"
+      class="btn btn-save-stay"
+    >
+      Save
+    </button>
   </form>
 </section>

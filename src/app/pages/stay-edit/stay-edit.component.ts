@@ -19,7 +19,9 @@ export class StayEditComponent implements OnInit {
   );
   stayHost!: StayHost;
   labels = Labels;
-  hasHost!: boolean;
+  hasHost: boolean = true;
+  selectedCountry: any;
+  selectedCity: any;
   constructor(
     private userService: UserService,
     private stayService: StayService
@@ -27,19 +29,35 @@ export class StayEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe((user) => (this.user = user!));
-    if (!this.stay.host.fullname) {
-      this.stayHost = StayHost.newHostFromUser(this.user);
-      this.hasHost = false;
-    } else {
-      this.hasHost = true;
-    }
+    // if (!this.stay.host.fullname) {
+    //   this.stayHost = StayHost.newHostFromUser(this.user);
+    //   this.hasHost = false;
+    // } else {
+    //   this.hasHost = true;
+    // }
+    this.stayHost = StayHost.newHostFromUser(this.user);
   }
 
   test(str: any) {
     console.log(this.stay);
   }
 
-  onImgUpload(ev: any, idx: number) {
+  handleHostFormSubmit() {
+    if (
+      this.stayHost.fullname &&
+      this.stayHost.description &&
+      this.stayHost.location &&
+      this.stayHost.thumbnailUrl
+    )
+      this.hasHost = true;
+    console.log(this.hasHost);
+  }
+
+  handleStaySubmit() {
+    console.log(this.stay);
+  }
+
+  onImgUpload(ev: any, idx: number = -1) {
     if (ev.target.files && ev.target.files.length) {
       const file = ev.target.files[0];
 
@@ -47,13 +65,32 @@ export class StayEditComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        this.stay.imgUrls[idx] = reader.result as string;
+        idx === -1
+          ? (this.stayHost.thumbnailUrl = reader.result as string)
+          : (this.stay.imgUrls[idx] = reader.result as string);
       };
 
       reader.onerror = (error) => {
         console.error('Error reading file:', error);
       };
     }
+  }
+
+  updateStayLoc(place: any) {
+    console.log(place);
+  }
+
+  handlePlaceSelection(place: any, type: string) {
+    if (!place || !place.address_components) {
+      return;
+    }
+    if (type === 'stay-country') {
+      this.selectedCountry = place.address_components[0].short_name;
+    } else if (type === 'stay-city') {
+      this.selectedCity = place.address_components[0].long_name;
+    }
+    console.log(this.selectedCountry);
+    console.log(this.selectedCity);
   }
 
   onToggleCheckboxEntity(ev: Event, str: string, entity: string) {
