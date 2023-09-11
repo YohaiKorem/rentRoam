@@ -55,7 +55,7 @@
         name="stay-name"
         placeholder="Stay name"
         class="fs28 fw500"
-        [(ngModel)]="stay.name"
+        [(ngModel)]="stay!.name"
       />
     </div>
     <div class="loc-inputs-wrapper flex align-center gap1">
@@ -63,7 +63,8 @@
         type="text"
         placeholder="Country (e.g., USA)"
         name="stay-country"
-        [(ngModel)]="selectedCountry"
+        [(ngModel)]="stay!.loc.country"
+        (change)="detectChanges()"
         googlePlacesAutocomplete
         (onSelect)="handlePlaceSelection($event, 'stay-country')"
       />
@@ -72,8 +73,9 @@
           type="text"
           placeholder="City (e.g., New York)"
           name="stay-city"
-          [class.disabled]="!selectedCountry"
-          [(ngModel)]="selectedCity"
+          (change)="detectChanges()"
+          [class.disabled]="!selectedCountry || !stay.loc.country"
+          [(ngModel)]="stay!.loc.city"
           [typeRestriction]="'(cities)'"
           [countryRestriction]="selectedCountry"
           googlePlacesAutocomplete
@@ -89,10 +91,15 @@
           type="text"
           placeholder="Street address (e.g., 123 Elm St)"
           name="stay-address"
-          [(ngModel)]="stay.loc.address"
+          [(ngModel)]="stay!.loc.address"
           googlePlacesAutocomplete
           [typeRestriction]="'address'"
-          [class.disabled]="!selectedCountry || !selectedCity"
+          [class.disabled]="
+            !selectedCountry ||
+            !selectedCity ||
+            !stay.loc.country ||
+            !stay.loc.city
+          "
           [countryRestriction]="selectedCountry"
           [cityRestriction]="selectedCity"
           (onSelect)="handlePlaceSelection($event, 'stay-address')"
@@ -100,7 +107,7 @@
       </div>
     </div>
     <div class="imgs-inputs-container">
-      <ng-container *ngFor="let img of stay.imgUrls; let i = index">
+      <ng-container *ngFor="let img of stay!.imgUrls; let i = index">
         <label
           *ngIf="!img; else imgContainer"
           [for]="'img-input-' + i"
@@ -128,14 +135,14 @@
         </ng-template>
       </ng-container>
     </div>
-    <div class="equipment-inputs-wrapper flex align-center gap1">
+    <div class="equipment-inputs-wrapper flex align-center gap1 mb1">
       <div class="equipment-input-container">
         <label for="beds-num" class="equipment-input-label"
           ><input
             type="number"
             name="beds-num"
             placeholder="Enter number of beds"
-            [(ngModel)]="stay.equipment.bedsNum"
+            [(ngModel)]="stay!.equipment.bedsNum"
         /></label>
       </div>
       <div class="equipment-input-container">
@@ -143,7 +150,7 @@
           ><input
             type="number"
             name="bedroom-num"
-            [(ngModel)]="stay.equipment.bedroomNum"
+            [(ngModel)]="stay!.equipment.bedroomNum"
             placeholder="Enter number of bedrooms"
         /></label>
       </div>
@@ -152,7 +159,7 @@
           ><input
             type="number"
             name="bath-num"
-            [(ngModel)]="stay.equipment.bathNum"
+            [(ngModel)]="stay!.equipment.bathNum"
             placeholder="Enter number of bathrooms"
         /></label>
       </div>
@@ -164,13 +171,13 @@
           <input
             type="number"
             name="stay-price"
-            [(ngModel)]="stay.price"
+            [(ngModel)]="stay!.price"
           />/night</label
         >
       </div>
       <div class="room-type-container">
         <label for="stay-type">Stay type: </label>
-        <select name="stay-type" [(ngModel)]="stay.roomType">
+        <select name="stay-type" [(ngModel)]="stay!.roomType">
           <option value="Entire home/apt">Entire home/apt</option>
           <option value="Private room">Private room</option>
         </select>
@@ -183,7 +190,7 @@
         cols="30"
         rows="10"
         class="full-width"
-        [(ngModel)]="stay.summary"
+        [(ngModel)]="stay!.summary"
       ></textarea>
     </div>
     <div class="amenities-wrapper flex column gap1 space-between">
@@ -197,7 +204,7 @@
             <input
               (change)="onToggleCheckboxEntity($event, amenity, 'amenities')"
               type="checkbox"
-              [checked]="stay.amenities.includes(amenity)"
+              [checked]="stay!.amenities.includes(amenity)"
               [name]="amenity"
               [id]="amenity"
             />
@@ -214,7 +221,7 @@
             <input
               type="checkbox"
               [id]="label"
-              [checked]="stay.labels.includes(label)"
+              [checked]="stay!.labels.includes(label)"
               (change)="onToggleCheckboxEntity($event, label, 'labels')"
             />
             {{ label }}

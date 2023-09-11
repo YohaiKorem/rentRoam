@@ -48,8 +48,6 @@ export class GooglePlacesAutocompleteDirective {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-
     if (changes['countryRestriction'] && this.autocomplete) {
       this.autocomplete.setComponentRestrictions({
         country: this.countryRestriction,
