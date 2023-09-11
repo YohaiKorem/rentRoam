@@ -63,29 +63,41 @@
         type="text"
         placeholder="Country (e.g., USA)"
         name="stay-country"
-        [(ngModel)]="stay.loc.country"
+        [(ngModel)]="selectedCountry"
         googlePlacesAutocomplete
         (onSelect)="handlePlaceSelection($event, 'stay-country')"
       />
-      <input
-        type="text"
-        placeholder="City (e.g., New York)"
-        name="stay-city"
-        [(ngModel)]="stay.loc.city"
-        [typeRestriction]="'(cities)'"
-        [countryRestriction]="selectedCountry"
-        googlePlacesAutocomplete
-        (onSelect)="handlePlaceSelection($event, 'stay-city')"
-      />
+      <div class="input-wrapper city" [class.disabled]="!selectedCountry">
+        <input
+          type="text"
+          placeholder="City (e.g., New York)"
+          name="stay-city"
+          [class.disabled]="!selectedCountry"
+          [(ngModel)]="selectedCity"
+          [typeRestriction]="'(cities)'"
+          [countryRestriction]="selectedCountry"
+          googlePlacesAutocomplete
+          (onSelect)="handlePlaceSelection($event, 'stay-city')"
+        />
+      </div>
 
-      <input
-        type="text"
-        placeholder="Street address (e.g., 123 Elm St)"
-        name="stay-address"
-        [(ngModel)]="stay.loc.address"
-        googlePlacesAutocomplete
-        (onSelect)="handlePlaceSelection($event, 'stay-address')"
-      />
+      <div
+        class="input-wrapper address"
+        [class.disabled]="!selectedCountry || !selectedCity"
+      >
+        <input
+          type="text"
+          placeholder="Street address (e.g., 123 Elm St)"
+          name="stay-address"
+          [(ngModel)]="stay.loc.address"
+          googlePlacesAutocomplete
+          [typeRestriction]="'address'"
+          [class.disabled]="!selectedCountry || !selectedCity"
+          [countryRestriction]="selectedCountry"
+          [cityRestriction]="selectedCity"
+          (onSelect)="handlePlaceSelection($event, 'stay-address')"
+        />
+      </div>
     </div>
     <div class="imgs-inputs-container">
       <ng-container *ngFor="let img of stay.imgUrls; let i = index">

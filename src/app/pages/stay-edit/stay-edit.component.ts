@@ -20,8 +20,8 @@ export class StayEditComponent implements OnInit {
   stayHost!: StayHost;
   labels = Labels;
   hasHost: boolean = true;
-  selectedCountry: any;
-  selectedCity: any;
+  selectedCountry: string = '';
+  selectedCity: string = '';
   constructor(
     private userService: UserService,
     private stayService: StayService

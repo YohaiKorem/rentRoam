@@ -14,19 +14,26 @@ declare var google: any;
 })
 export class GooglePlacesAutocompleteDirective {
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
-  @Input() typeRestriction: string = '';
+  @Input() typeRestriction: string = 'country';
   @Input() countryRestriction: string = '';
+  @Input() cityRestriction: string = '';
   private autocomplete: any;
 
   constructor(private elRef: ElementRef) {}
 
   ngAfterViewInit() {
     const options: any = {
-      types: ['(regions)'], // This is a default type; you can adjust as needed
+      types: [this.typeRestriction],
     };
 
-    if (this.countryRestriction && this.countryRestriction.trim() !== '') {
+    if (this.countryRestriction !== '') {
       options.componentRestrictions = { country: this.countryRestriction };
+    }
+    if (this.cityRestriction !== '') {
+      options.componentRestrictions = {
+        country: this.countryRestriction,
+        city: this.cityRestriction,
+      };
     }
 
     this.autocomplete = new google.maps.places.Autocomplete(
@@ -41,7 +48,14 @@ export class GooglePlacesAutocompleteDirective {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes[this.countryRestriction] && this.autocomplete) {
+    console.log(changes);
+
+    if (changes['countryRestriction'] && this.autocomplete) {
+      this.autocomplete.setComponentRestrictions({
+        country: this.countryRestriction,
+      });
+    }
+    if (changes['cityRestriction' && this.autocomplete]) {
       this.autocomplete.setComponentRestrictions({
         country: this.countryRestriction,
       });
