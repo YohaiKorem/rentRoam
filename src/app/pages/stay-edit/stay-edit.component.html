@@ -4,7 +4,9 @@
       <label for="host-loc">
         Enter your location
         <input
+          required="true"
           googlePlacesAutocomplete
+          [typeRestriction]="'(cities)'"
           (onSelect)="handlePlaceSelection($event, 'host')"
           type="text"
           [(ngModel)]="stayHost.location"
@@ -14,14 +16,27 @@
           placeholder="e.g., New York, USA"
         />
       </label>
-      <label for="host-img">
-        <span *ngIf="!stayHost.thumbnailUrl"
+      <label
+        [class.shadow]="stayHost.thumbnailUrl"
+        [ngStyle]="
+          stayHost.thumbnailUrl
+            ? {
+                'background-image': 'url(' + stayHost.thumbnailUrl + ')',
+                'background-repeat': 'no-repeat',
+                'background-size': 'cover'
+              }
+            : null
+        "
+        for="host-img"
+      >
+        <span class="text-center" *ngIf="!stayHost.thumbnailUrl"
           >Upload your photo (displayed to users)</span
         >
-        <div class="img-container">
+        <!-- <div class="img-container">
           <img [src]="stayHost.thumbnailUrl" />
-        </div>
+        </div> -->
         <input
+          required="true"
           (change)="onImgUpload($event)"
           type="file"
           name="host-img"
@@ -51,6 +66,7 @@
   >
     <div class="name-input-wrapper">
       <input
+        required="true"
         type="text"
         name="stay-name"
         placeholder="Stay name"
@@ -60,6 +76,7 @@
     </div>
     <div class="loc-inputs-wrapper flex align-center gap1">
       <input
+        required="true"
         type="text"
         placeholder="Country (e.g., USA)"
         name="stay-country"
@@ -70,6 +87,7 @@
       />
       <div class="input-wrapper city" [class.disabled]="!selectedCountry">
         <input
+          required="true"
           type="text"
           placeholder="City (e.g., New York)"
           name="stay-city"
@@ -88,6 +106,7 @@
         [class.disabled]="!selectedCountry || !selectedCity"
       >
         <input
+          required="true"
           type="text"
           placeholder="Street address (e.g., 123 Elm St)"
           name="stay-address"
@@ -107,38 +126,34 @@
       </div>
     </div>
     <div class="imgs-inputs-container">
-      <ng-container *ngFor="let img of stay!.imgUrls; let i = index">
-        <label
-          *ngIf="!img; else imgContainer"
-          [for]="'img-input-' + i"
-          class="input-container input-file-label"
-        >
-          <span>Upload image </span>
-          <input
-            type="file"
-            [id]="'img-input-' + i"
-            (change)="onImgUpload($event, i)"
-          />
-        </label>
-        <ng-template #imgContainer>
-          <label
-            [for]="'img-input-' + i"
-            class="input-container input-file-label"
-          >
-            <img [src]="img" />
-            <input
-              type="file"
-              [id]="'img-input-' + i"
-              (change)="onImgUpload($event, i)"
-            />
-          </label>
-        </ng-template>
-      </ng-container>
+      <label
+        *ngFor="let img of stay!.imgUrls; let i = index"
+        [for]="'img-input-' + i"
+        class="input-container input-file-label"
+        [ngStyle]="
+          img
+            ? {
+                'background-image': 'url(' + img + ')',
+                'background-repeat': 'no-repeat',
+                'background-size': 'cover'
+              }
+            : null
+        "
+      >
+        <span *ngIf="!img">Upload image </span>
+        <input
+          required="true"
+          type="file"
+          [id]="'img-input-' + i"
+          (change)="onImgUpload($event, i)"
+        />
+      </label>
     </div>
     <div class="equipment-inputs-wrapper flex align-center gap1 mb1">
       <div class="equipment-input-container">
         <label for="beds-num" class="equipment-input-label"
           ><input
+            required="true"
             type="number"
             name="beds-num"
             placeholder="Enter number of beds"
@@ -148,6 +163,7 @@
       <div class="equipment-input-container">
         <label for="bedroom-num" class="equipment-input-label"
           ><input
+            required="true"
             type="number"
             name="bedroom-num"
             [(ngModel)]="stay!.equipment.bedroomNum"
@@ -157,6 +173,7 @@
       <div class="equipment-input-container">
         <label for="bath-num" class="equipment-input-label"
           ><input
+            required="true"
             type="number"
             name="bath-num"
             [(ngModel)]="stay!.equipment.bathNum"
@@ -169,6 +186,7 @@
         <label for="stay-price" class="price-label">
           Price:
           <input
+            required="true"
             type="number"
             name="stay-price"
             [(ngModel)]="stay!.price"
@@ -202,6 +220,7 @@
         >
           <label [for]="amenity">
             <input
+              required="true"
               (change)="onToggleCheckboxEntity($event, amenity, 'amenities')"
               type="checkbox"
               [checked]="stay!.amenities.includes(amenity)"
@@ -219,6 +238,7 @@
         <div *ngFor="let label of labels" class="stay-label-input">
           <label [for]="label">
             <input
+              required="true"
               type="checkbox"
               [id]="label"
               [checked]="stay!.labels.includes(label)"

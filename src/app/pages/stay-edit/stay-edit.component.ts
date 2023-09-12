@@ -59,7 +59,24 @@ export class StayEditComponent implements OnInit {
   }
 
   handleStaySubmit() {
-    console.log(this.stay);
+    const stay = { ...this.stay };
+
+    if (
+      stay.name &&
+      stay.price &&
+      stay.summary &&
+      stay.roomType &&
+      stay.loc.address &&
+      stay.equipment.bedroomNum &&
+      stay.equipment.bathNum &&
+      stay.equipment.bedsNum &&
+      stay.amenities.length &&
+      stay.imgUrls.every((img) => img)
+    ) {
+      this.stayService.saveStay(stay);
+    }
+    let res = this.stayService.saveStay(stay);
+    console.log(res);
   }
 
   onImgUpload(ev: any, idx: number = -1) {
@@ -70,6 +87,8 @@ export class StayEditComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
+        console.log(idx);
+
         idx === -1
           ? (this.stayHost.thumbnailUrl = reader.result as string)
           : (this.stay.imgUrls[idx] = reader.result as string);
@@ -79,6 +98,7 @@ export class StayEditComponent implements OnInit {
         console.error('Error reading file:', error);
       };
     }
+    console.log(this.stay.imgUrls);
   }
 
   updateStayLoc(place: any) {
@@ -93,6 +113,7 @@ export class StayEditComponent implements OnInit {
     if (!place || !place.address_components) {
       return;
     }
+
     if (type === 'stay-country') {
       this.selectedCountry = place.address_components[0].short_name;
       this.stay.loc.countryCode = this.selectedCountry;
@@ -103,7 +124,6 @@ export class StayEditComponent implements OnInit {
       this.stay.loc.city = place.address_components[0].long_name;
     } else if (type === 'stay-address') {
       this.stay.loc.address = place.name;
-
       let strForCoords = '';
       strForCoords = strForCoords.concat(
         this.stay.loc.address,
@@ -118,9 +138,9 @@ export class StayEditComponent implements OnInit {
         this.stay.loc.lat = lat;
         this.stay.loc.lng = lng;
       });
-      console.log(this.stay.loc);
-    }
+    } else this.stayHost.location = place.formatted_address;
 
+    console.log(place);
     this.cdr.detectChanges();
   }
 

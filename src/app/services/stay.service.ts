@@ -78,6 +78,9 @@ export class StayService {
 
     if (!stays || stays.length === 0) {
       stays = this._createStays();
+      const someStays = [];
+      for (let i = 0; i < 50; i++) someStays.push(stays[i]);
+
       localStorage.setItem(ENTITY, JSON.stringify(stays));
       // .subscribe(
       //   (fetchedStays) => {
@@ -346,8 +349,10 @@ export class StayService {
   }
 
   private _addStay(stay: Stay) {
+    console.log(stay);
+
     const newStay = Stay.fromObject(stay);
-    if (typeof newStay.setId === 'function') newStay.setId(this._getRandomId());
+    // if (typeof newStay.setId === 'function') newStay.setId(this._getRandomId());
     return from(storageService.post(ENTITY, newStay)).pipe(
       tap((newStay) => {
         const stays = this._stays$.value;
