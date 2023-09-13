@@ -10,7 +10,8 @@ import { UserService } from '../services/user.service';
 import { StayService } from '../services/stay.service';
 import { Stay } from '../models/stay.model';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Cloudinary } from '@cloudinary/url-gen';
+import { environment } from 'src/environments/env.prod';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
