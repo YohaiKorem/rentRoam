@@ -42,6 +42,7 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
+import { CloudinaryModule } from '@cloudinary/ng';
 import { WishlistIndexComponent } from './app/pages/wishlistIndex/wishlist-Index.component';
 import { WishlistPreviewComponent } from './app/cmps/wishlist-preview/wishlist-preview.component';
 import { WishlistEditComponent } from './app/cmps/wishlist-edit/wishlist-edit.component';
@@ -102,6 +103,7 @@ import { GooglePlacesAutocompleteDirective } from './app/directives/google-place
     MatCardModule,
     SocialLoginModule,
     GoogleSigninButtonModule,
+    CloudinaryModule,
   ],
   providers: [
     {

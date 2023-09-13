@@ -25,6 +25,7 @@ import { GeocodingService } from './geocoding.service';
 import { getDistance } from 'geolib';
 import { environment } from 'src/environments/env';
 import { UserService } from './user.service';
+import { UtilService } from './util.service';
 const ENTITY = 'stays';
 
 @Injectable({
@@ -72,7 +73,8 @@ export class StayService {
   constructor(
     private http: HttpClient,
     private geocodingService: GeocodingService,
-    private userService: UserService
+    private userService: UserService,
+    private ustilService: UtilService
   ) {
     let stays = JSON.parse(localStorage.getItem(ENTITY) || 'null');
 
@@ -334,6 +336,20 @@ export class StayService {
     );
   }
 
+  public findHostById(id: string) {
+    let stay;
+    let host;
+    this.stays$.pipe(take(1)).subscribe((stays) => {
+      console.log(stays);
+
+      stay = stays.find((stay) => stay.host._id === id);
+      host = stay?.host;
+    });
+    console.log(host);
+
+    throw new Error('host not found');
+  }
+
   private _updateStay(stay: Stay) {
     return from(storageService.put(ENTITY, stay)).pipe(
       tap((updatedStay) => {
@@ -349,10 +365,9 @@ export class StayService {
   }
 
   private _addStay(stay: Stay) {
-    console.log(stay);
-
     const newStay = Stay.fromObject(stay);
-    // if (typeof newStay.setId === 'function') newStay.setId(this._getRandomId());
+    if (typeof newStay.setId === 'function')
+      newStay.setId(this.ustilService.getRandomId());
     return from(storageService.post(ENTITY, newStay)).pipe(
       tap((newStay) => {
         const stays = this._stays$.value;
@@ -447,17 +462,5 @@ export class StayService {
   private _handleError(err: HttpErrorResponse) {
     console.log('error in stay service:', err);
     return throwError(() => err);
-  }
-
-  private _getRandomId(length = 8): string {
-    let result = '';
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-    }
-    return result;
   }
 }

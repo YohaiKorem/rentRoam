@@ -18,6 +18,7 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import _users from '../../data/user.json';
 import { SignupInfo } from '../models/signup-info.model';
 import { Wishlist } from '../models/wishlist.model';
+import { UtilService } from './util.service';
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
 
@@ -38,7 +39,7 @@ export class UserService {
   }>({ lat: null, lng: null });
   public userCoords$ = this._userCoords$.asObservable();
   public locInterval: any;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private utilService: UtilService) {
     //   // this.getUsers().subscribe((users) => {
     let users = JSON.parse(localStorage.getItem(ENTITY) || 'null');
     if (!users || users.length === 0) {
@@ -176,7 +177,7 @@ export class UserService {
         '',
         info.password,
         info.username,
-        this._getRandomId(),
+        this.utilService.getRandomId(),
         []
       );
     }
@@ -200,13 +201,6 @@ export class UserService {
     return null;
   }
 
-  // public changeBalance(amount: number, user: User) {
-  //   if (!this.loggedInUser) throw new Error('Not logged in');
-
-  //   user.coins = user.coins - amount;
-  //   return this.addMove(amount, user);
-  // }
-
   public updateWishlistInUser(
     wishlist: Wishlist,
     user: User = this.sessionStorageUser
@@ -222,6 +216,9 @@ export class UserService {
 
     this._updateUser(user);
     return user;
+  }
+  public updateUser(user: User) {
+    return this._updateUser(user);
   }
 
   public removeWishlist(wishlistId: string, user: User) {
@@ -242,7 +239,7 @@ export class UserService {
 
   private _updateUser(user: User) {
     storageService.put(ENTITY, user);
-    this._saveLocalUser(user);
+    return this._saveLocalUser(user);
   }
 
   private _saveLocalUser(user: User) {
@@ -279,18 +276,6 @@ export class UserService {
     //   storageService.post(ENTITY, _users);
     //   this._users$.next(_users);
     return _users;
-  }
-
-  private _getRandomId(length = 8): string {
-    let result = '';
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-    }
-    return result;
   }
 
   private _handleError(err: HttpErrorResponse) {

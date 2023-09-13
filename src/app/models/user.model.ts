@@ -7,7 +7,8 @@ export class User {
     public password: string,
     public username: string,
     public _id: string,
-    public wishlists: Wishlist[]
+    public wishlists: Wishlist[],
+    public id?: string
   ) {}
 
   public static fromFacebook(social: SocialUser): User {

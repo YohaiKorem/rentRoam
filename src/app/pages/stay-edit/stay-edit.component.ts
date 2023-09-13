@@ -6,6 +6,8 @@ import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
 import { GeocodingService } from 'src/app/services/geocoding.service';
 import { take } from 'rxjs';
+import { imgService } from 'src/app/services/img-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'stay-edit',
@@ -22,25 +24,28 @@ export class StayEditComponent implements OnInit {
   stayHost!: StayHost;
   labels = Labels;
 
-  hasHost: boolean = true;
+  isUserHost: boolean = false;
   selectedCountry: string = '';
   selectedCity: string = '';
   constructor(
     private userService: UserService,
     private cdr: ChangeDetectorRef,
     private geocodingService: GeocodingService,
-    private stayService: StayService
+    private stayService: StayService,
+    private imgService: imgService,
+    private utilService: UtilService
   ) {}
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe((user) => (this.user = user!));
-    // if (!this.stay.host.fullname) {
-    //   this.stayHost = StayHost.newHostFromUser(this.user);
-    //   this.hasHost = false;
-    // } else {
-    //   this.hasHost = true;
-    // }
-    this.stayHost = StayHost.newHostFromUser(this.user);
+    if (!this.user.id) {
+      this.stayHost = StayHost.newHostFromUser(this.user, this.utilService);
+    } else {
+      this.stayService.findHostById(this.user._id);
+      this.isUserHost = true;
+    }
+    console.log('this.stayHost.id', this.stayHost.id);
+    console.log('this.user.id', this.user.id);
   }
 
   test(str: any) {
@@ -52,10 +57,14 @@ export class StayEditComponent implements OnInit {
       this.stayHost.fullname &&
       this.stayHost.description &&
       this.stayHost.location &&
-      this.stayHost.thumbnailUrl
-    )
-      this.hasHost = true;
-    console.log(this.hasHost);
+      this.stayHost.thumbnailUrl &&
+      this.stayHost.id
+    ) {
+      this.user.id = this.stayHost.id;
+      const newUser = this.userService.updateUser(this.user);
+      this.user = newUser;
+      this.isUserHost = true;
+    }
   }
 
   handleStaySubmit() {
@@ -71,32 +80,26 @@ export class StayEditComponent implements OnInit {
       stay.equipment.bathNum &&
       stay.equipment.bedsNum &&
       stay.amenities.length &&
+      stay.host.fullname &&
       stay.imgUrls.every((img) => img)
     ) {
-      this.stayService.saveStay(stay);
+      const newStay$ = this.stayService.saveStay(stay);
+      let newStay;
+      newStay$.pipe(take(1)).subscribe((stay) => (newStay = stay));
     }
-    let res = this.stayService.saveStay(stay);
-    console.log(res);
   }
 
-  onImgUpload(ev: any, idx: number = -1) {
+  async onImgUpload(ev: any, idx: number = -1) {
     if (ev.target.files && ev.target.files.length) {
       const file = ev.target.files[0];
-
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        console.log(idx);
-
+      try {
+        const url = await this.imgService.uploadImageToCloudinary(file);
         idx === -1
-          ? (this.stayHost.thumbnailUrl = reader.result as string)
-          : (this.stay.imgUrls[idx] = reader.result as string);
-      };
-
-      reader.onerror = (error) => {
-        console.error('Error reading file:', error);
-      };
+          ? (this.stayHost.thumbnailUrl = url)
+          : (this.stay.imgUrls[idx] = url);
+      } catch (error) {
+        console.log(error, 'could not upload file', file);
+      }
     }
     console.log(this.stay.imgUrls);
   }

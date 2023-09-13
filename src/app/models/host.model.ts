@@ -1,5 +1,5 @@
 import { User } from './user.model';
-
+import { UtilService } from '../services/util.service';
 export class StayHost {
   constructor(
     public _id: string,
@@ -12,7 +12,11 @@ export class StayHost {
     public id: string,
     public description: string
   ) {}
-  public static newHostFromUser(user: User): StayHost {
+  public static newHostFromUser(
+    user: User,
+    utilService: UtilService
+  ): StayHost {
+    const randId = utilService.getRandomId();
     return new StayHost(
       user._id,
       user.fullname,
@@ -21,7 +25,7 @@ export class StayHost {
       '',
       user.imgUrl,
       false,
-      '',
+      randId,
       ''
     );
   }
