@@ -73,7 +73,7 @@ export class UserService {
     }
   }
 
-  public clearInterval() {
+  private clearInterval() {
     this.locInterval.clearInterval();
   }
 

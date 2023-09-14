@@ -11,7 +11,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
 import { StayService } from 'src/app/services/stay.service';
 
-import { Stay, StayFilter, amenities } from 'src/app/models/stay.model';
+import { Stay, StayFilter, Amenities } from 'src/app/models/stay.model';
 import { Btn } from 'src/app/models/btn.model';
 import { ChartDataValue } from 'src/app/models/chartDataValue.model';
 @Component({
@@ -37,7 +37,7 @@ export class FilterModalComponent {
   value: number = 0;
   btnsArray = Btn.createArray(9, 'btn btn-form-filter', '');
   avgStayPricePerNight: number = 0;
-  amenities = amenities;
+  amenities = Amenities;
   isShowAllAmenities: boolean = false;
   ngOnInit() {
     this.stayService.stayFilter$

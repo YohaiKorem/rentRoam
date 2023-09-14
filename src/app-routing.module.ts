@@ -9,11 +9,17 @@ import { WishlistIndexComponent } from './app/pages/wishlistIndex/wishlist-Index
 import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-details.component';
 import { authGuard } from './app/guards/auth-guard';
 import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
+import { HostGuard } from './app/guards/host-guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'stay',
     component: StayIndexComponent,
+  },
+  {
+    path: 'stay/edit/:stayId',
+    component: StayEditComponent,
+    canActivate: [authGuard, HostGuard],
   },
   {
     path: 'stay/edit',

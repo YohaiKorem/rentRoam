@@ -1,5 +1,5 @@
 <section class="stay-edit-wrapper p1">
-  <form class="host-form p1" *ngIf="!isUserHost">
+  <form class="host-form p1" *ngIf="!isUserHost && stayHost">
     <div class="host-inputs-container flex column gap1-5 space-between">
       <label for="host-loc">
         Enter your location
@@ -17,11 +17,11 @@
         />
       </label>
       <label
-        [class.shadow]="stayHost.thumbnailUrl"
+        [class.shadow]="user.imgUrl"
         [ngStyle]="
-          stayHost.thumbnailUrl
+          user.imgUrl
             ? {
-                'background-image': 'url(' + stayHost.thumbnailUrl + ')',
+                'background-image': 'url(' + user.imgUrl + ')',
                 'background-repeat': 'no-repeat',
                 'background-size': 'cover'
               }
@@ -29,7 +29,7 @@
         "
         for="host-img"
       >
-        <span class="text-center" *ngIf="!stayHost.thumbnailUrl"
+        <span class="text-center" *ngIf="!user.imgUrl"
           >Upload your photo (displayed to users)</span
         >
         <!-- <div class="img-container">

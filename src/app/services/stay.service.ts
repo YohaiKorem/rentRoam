@@ -186,7 +186,9 @@ export class StayService {
     );
   }
 
-  public saveStay(stay: Stay) {
+  public saveStay(stay: Stay): Observable<Stay> {
+    console.log(stay);
+
     return stay._id ? this._updateStay(stay) : this._addStay(stay);
   }
 
@@ -340,17 +342,14 @@ export class StayService {
     let stay;
     let host;
     this.stays$.pipe(take(1)).subscribe((stays) => {
-      console.log(stays);
-
       stay = stays.find((stay) => stay.host._id === id);
       host = stay?.host;
     });
-    console.log(host);
-
-    throw new Error('host not found');
+    if (host) return host;
+    else throw new Error('host not found');
   }
 
-  private _updateStay(stay: Stay) {
+  private _updateStay(stay: Stay): Observable<Stay> {
     return from(storageService.put(ENTITY, stay)).pipe(
       tap((updatedStay) => {
         const stays = this._stays$.value;
@@ -364,7 +363,7 @@ export class StayService {
     );
   }
 
-  private _addStay(stay: Stay) {
+  private _addStay(stay: Stay): Observable<Stay> {
     const newStay = Stay.fromObject(stay);
     if (typeof newStay.setId === 'function')
       newStay.setId(this.ustilService.getRandomId());

@@ -167,7 +167,7 @@ export const Labels: string[] = [
   'Beach',
 ];
 
-export const amenities: { [key: string]: string[] } = {
+export const Amenities: { [key: string]: string[] } = {
   essentials: [
     'Wifi',
     'Kitchen',
@@ -222,9 +222,6 @@ export const amenities: { [key: string]: string[] } = {
     'Single level home',
     'Patio or balcony',
     'Long term stays allowed',
-    'Step-free access',
-    'Step-free access',
-    'Wide doorway',
     'Wide clearance to bed',
     'Step-free access',
     'Wide doorway',
