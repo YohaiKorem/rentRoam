@@ -8,7 +8,7 @@ import { GeocodingService } from 'src/app/services/geocoding.service';
 import { take } from 'rxjs';
 import { imgService } from 'src/app/services/img-service.service';
 import { UtilService } from 'src/app/services/util.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'stay-edit',
@@ -32,19 +32,25 @@ export class StayEditComponent implements OnInit, OnDestroy {
     private stayService: StayService,
     private imgService: imgService,
     private utilService: UtilService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.userService.loggedInUser$.subscribe((user) => (this.user = user!));
     console.log(this.user);
-
+    const fetchedStay: IStay | undefined =
+      this.route.snapshot.data['fetchedStay'];
+    if (fetchedStay) {
+      this.stay = fetchedStay;
+    }
     if (!this.user || !this.user.id) {
       this.stayHost = StayHost.newHostFromUser(this.user, this.utilService);
     } else {
       const host = this.stayService.findHostById(this.user._id);
       this.stay.host = host;
       this.stayHost = host;
+
       this.isUserHost = true;
     }
     console.log('this.stayHost.id', this.stayHost.id);

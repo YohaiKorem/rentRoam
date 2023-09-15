@@ -38,6 +38,7 @@ export class HostGuard implements CanActivate {
       take(1),
       map((stay) => {
         if (stay && stay.host._id === user._id) {
+          route.data = { ...route.data, fetchedStay: stay }; // Set the stay in the data
           return true;
         } else {
           return this.router.createUrlTree(['/']);
@@ -45,7 +46,6 @@ export class HostGuard implements CanActivate {
       }),
       catchError((err) => {
         console.log(err);
-
         this.router.createUrlTree(['/']);
         return of(false);
       })
