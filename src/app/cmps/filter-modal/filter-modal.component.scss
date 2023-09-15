@@ -18,15 +18,16 @@
   }
   .price-filter {
     .chart-item-container {
-      margin-block-start: 4em;
       width: 70%;
       transform: rotateX(180deg);
       gap: 1px;
       position: relative;
+      height: 100%;
       bottom: em(-39px);
       .slider-chart-item {
         background-color: $fontclr3;
         width: 20px;
+        transition: opacity 0.3s ease;
         &.opacity {
           opacity: 0.6;
         }
