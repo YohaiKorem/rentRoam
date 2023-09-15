@@ -52,6 +52,7 @@ import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-
 import { ImgErrorDirective } from './app/directives/img-error.directive';
 import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
 import { GooglePlacesAutocompleteDirective } from './app/directives/google-places-autocomplete.directive';
+import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +84,7 @@ import { GooglePlacesAutocompleteDirective } from './app/directives/google-place
     ImgErrorDirective,
     StayEditComponent,
     GooglePlacesAutocompleteDirective,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

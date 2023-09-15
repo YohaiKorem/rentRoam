@@ -1,0 +1,40 @@
+<section
+  class="dashboard-wrapper column flex align-center space-between gap1 shadow mbs1 p1"
+>
+  <nav class="dashboard-nav flex align-center space-between gap0-5 full-width">
+    <a
+      href=""
+      class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 orders"
+    >
+      <fa-icon class="svg-container" [icon]="faList"></fa-icon>
+      <span class="txt-container fs20 fw500">Orders</span></a
+    >
+    <a
+      href=""
+      class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 my-stays"
+      ><fa-icon class="svg-container" [icon]="faHouse"> </fa-icon
+      ><span class="txt-container fs20 fw500">My Stays</span></a
+    >
+    <a
+      href=""
+      class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 add-stay"
+      ><fa-icon class="svg-container" [icon]="faPlusCircle"> </fa-icon
+      ><span class="txt-container fs20 fw500">Add a Stay</span></a
+    >
+  </nav>
+  <stay-list
+    *ngIf="stays && stays.length; else becomeHost"
+    [stays]="stays"
+  ></stay-list>
+
+  <ng-template #becomeHost>
+    <div
+      class="call-to-action shadow flex align-center column space-around gap1 full-width p1"
+    >
+      <p class="stay-amount fs24 fw500">You have 0 stays</p>
+      <a routerLink="/stay/edit" class="btn btn-become-host fw500 pi2-5 pb1"
+        >Become a host now</a
+      >
+    </div>
+  </ng-template>
+</section>

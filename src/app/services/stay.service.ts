@@ -83,7 +83,7 @@ export class StayService {
       stays = this._createStays();
       for (let i = 0; i < 100; i++) someStays.push(stays[i]);
 
-      localStorage.setItem(ENTITY, JSON.stringify(someStays));
+      localStorage.setItem(ENTITY, JSON.stringify(stays));
       // .subscribe(
       //   (fetchedStays) => {
       //     localStorage.setItem(ENTITY, JSON.stringify(fetchedStays));
@@ -94,9 +94,9 @@ export class StayService {
       // }
       // );
     } else {
-      this._stays$.next(someStays);
+      this._stays$.next(stays);
     }
-    this.setAvgPrice(someStays);
+    this.setAvgPrice(stays);
   }
 
   public initMap() {

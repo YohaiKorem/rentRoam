@@ -1,0 +1,35 @@
+@import "../../app-root/app.component.scss";
+
+.dashboard-wrapper {
+  border-radius: 1em;
+
+  background-color: $secondaryClr2;
+  .btn-dashboard,
+  .call-to-action {
+    background-color: $secondaryClr1;
+  }
+  .dashboard-nav {
+    .btn-dashboard {
+      flex-basis: 30%;
+    }
+  }
+  .call-to-action {
+    border-radius: 1em;
+    .stay-amount {
+      color: $fontclr3;
+    }
+    .btn-become-host {
+      border: none;
+      color: $fontclr2;
+      background: radial-gradient(
+        circle at left,
+        #ff385c 0%,
+        #e61e4d 27.5%,
+        #e31c5f 40%,
+        #d70466 57.5%,
+        #bd1e59 75%,
+        #bd1e59 100%
+      );
+    }
+  }
+}

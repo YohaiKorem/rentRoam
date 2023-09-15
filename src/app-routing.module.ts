@@ -10,6 +10,7 @@ import { WishlistDetailsComponent } from './app/pages/wishlist-details/wishlist-
 import { authGuard } from './app/guards/auth-guard';
 import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
 import { HostGuard } from './app/guards/host-guard';
+import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -31,7 +32,11 @@ const routes: Routes = [
     component: StayDetailsComponent,
     resolve: { stay: StayResolver },
   },
-
+  {
+    path: 'host/dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+  },
   {
     path: 'wishlist/:userId',
     component: WishlistIndexComponent,

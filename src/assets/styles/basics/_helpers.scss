@@ -1,3 +1,57 @@
+// Buttons
+
+.btn {
+  font-size: rem(14px);
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 85ms;
+  transition-timing-function: ease;
+  cursor: pointer;
+  border-radius: 0.5em;
+  background-color: transparent;
+  border: 1px solid #333;
+  color: #333;
+
+  &:hover {
+    background-color: darken(#fff, 5%);
+  }
+}
+
+.simple-button {
+  background: transparent;
+  color: black;
+  font-size: inherit;
+  font-family: inherit;
+  border: 0;
+  opacity: 0.6;
+  transition: 0.3s all;
+  padding: 0;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: initial;
+    opacity: 0.2;
+  }
+
+  i {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+  }
+}
+
+.medium-button {
+  font-size: 1.5rem;
+}
+
 // Font Sizes
 .fs12 {
   font-size: rem(12px);
@@ -108,6 +162,9 @@
   &.justify-center {
     justify-content: center;
   }
+  &.justify-start {
+    justify-content: start;
+  }
   &.align-center {
     align-items: center;
   }
@@ -166,38 +223,6 @@
   @include aspect-ratio(4, 3);
 }
 
-// Buttons
-.simple-button {
-  background: transparent;
-  color: black;
-  font-size: inherit;
-  font-family: inherit;
-  border: 0;
-  opacity: 0.6;
-  transition: 0.3s all;
-  padding: 0;
-  cursor: pointer;
-
-  &:disabled {
-    cursor: initial;
-    opacity: 0.2;
-  }
-
-  i {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-  }
-
-  &:hover:not(:disabled) {
-    opacity: 1;
-  }
-}
-
-.medium-button {
-  font-size: 1.5rem;
-}
-
 // Transitions
 .fast-trans {
   transition: 0.25s all;
@@ -210,6 +235,9 @@
 }
 
 // Padding
+.p0-5 {
+  padding: 0.5em;
+}
 .p1 {
   padding: 1em;
 }
@@ -218,6 +246,9 @@
 }
 .p2 {
   padding: 2em;
+}
+.pb0-5 {
+  padding-block: 0.5em;
 }
 .pb1 {
   padding-block: 1em;
@@ -231,6 +262,9 @@
 .pb2-5 {
   padding-block: 2.5em;
 }
+.pbs0-5 {
+  padding-block-start: 0.5em;
+}
 .pbs1 {
   padding-block-start: 1em;
 }
@@ -242,6 +276,9 @@
 }
 .pbs2-5 {
   padding-block-start: 2.5em;
+}
+.pbe0-5 {
+  padding-block-end: 0.5em;
 }
 .pbe1 {
   padding-block-end: 1em;
@@ -255,6 +292,9 @@
 .pbe2-5 {
   padding-block-end: 2.5em;
 }
+.pi0-5 {
+  padding-inline: 0.5em;
+}
 .pi1 {
   padding-inline: 1em;
 }
@@ -267,6 +307,9 @@
 .pi2-5 {
   padding-inline: 2.5em;
 }
+.pis0-5 {
+  padding-inline-start: 0.5em;
+}
 .pis1 {
   padding-inline-start: 1em;
 }
@@ -278,6 +321,9 @@
 }
 .pis2-5 {
   padding-inline-start: 2.5em;
+}
+.pie0-5 {
+  padding-inline-end: 0.5em;
 }
 .pie1 {
   padding-inline-end: 1em;
@@ -292,6 +338,9 @@
   padding-inline-end: 2.5em;
 }
 // Margin
+.m0-5 {
+  margin: 0.5em;
+}
 .m1 {
   margin: 1em;
 }
@@ -300,6 +349,9 @@
 }
 .m2 {
   margin: 2em;
+}
+.mb0-5 {
+  margin-block: 0.5em;
 }
 .mb1 {
   margin-block: 1em;
@@ -313,6 +365,9 @@
 .mb2-5 {
   margin-block: 2.5em;
 }
+.mbs0-5 {
+  margin-block-start: 0.5em;
+}
 .mbs1 {
   margin-block-start: 1em;
 }
@@ -324,6 +379,9 @@
 }
 .mbs2-5 {
   margin-block-start: 2.5em;
+}
+.mbe0-5 {
+  margin-block-end: 0.5em;
 }
 .mbe1 {
   margin-block-end: 1em;
@@ -337,6 +395,9 @@
 .mbe2-5 {
   margin-block-end: 2.5em;
 }
+.mi0-5 {
+  margin-inline: 0.5em;
+}
 .mi1 {
   margin-inline: 1em;
 }
@@ -349,6 +410,9 @@
 .mi2-5 {
   margin-inline: 2.5em;
 }
+.mis0-5 {
+  margin-inline-start: 0.5em;
+}
 .mis1 {
   margin-inline-start: 1em;
 }
@@ -360,6 +424,9 @@
 }
 .mis2-5 {
   margin-inline-start: 2.5em;
+}
+.mie0-5 {
+  margin-inline-end: 0.5em;
 }
 .mie1 {
   margin-inline-end: 1em;
@@ -422,26 +489,6 @@
   }
 }
 
-.btn {
-  font-size: rem(14px);
-  font-weight: 400;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  transition-property: background-color, border-color, box-shadow;
-  transition-duration: 85ms;
-  transition-timing-function: ease;
-  cursor: pointer;
-  border-radius: 0.5em;
-  background-color: transparent;
-  border: 1px solid #333;
-  color: #333;
-
-  &:hover {
-    background-color: darken(#fff, 5%);
-  }
-}
 .icon {
   max-width: 30px;
 }
