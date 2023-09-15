@@ -32,6 +32,8 @@ export class FilterModalComponent {
   private destroySubject$ = new Subject<null>();
   lowestAvailablePrice: number = 1;
   highestAvailablePrice: number = 4000;
+  histogramData: ChartDataValue[] | null = null;
+  maxHeight: number = 180;
   minPrice: number = this.lowestAvailablePrice;
   maxPrice: number = this.highestAvailablePrice;
   value: number = 0;
@@ -69,12 +71,12 @@ export class FilterModalComponent {
         this.lowestAvailablePrice = lowestPrice;
         this.minPrice = lowestPrice;
       });
+    this.histogramData = this.generateHistogramData();
   }
 
   filterBeds(beds: any) {
     this.stayFilter.equipment.bedsNum = beds;
     this.stayService.setFilter(this.stayFilter);
-    console.log(this.priceCountMapForDisplay);
   }
 
   filterBathrooms(bathrooms: any) {
@@ -83,49 +85,57 @@ export class FilterModalComponent {
     this.stayService.setFilter(this.stayFilter);
   }
 
+  debug(normalizedHeight: any) {
+    console.log('normalizedHeight', normalizedHeight);
+  }
+
   get stayPrices(): number[] {
     return this.stays?.map((stay) => stay.price)?.sort((a, b) => a - b) || [];
   }
 
-  get priceCountMap(): any[] {
-    const priceCountMap: { [key: number]: number } = {};
-    this.stayPrices.forEach((price) => {
-      if (price in priceCountMap) {
-        priceCountMap[price]++;
-      } else {
-        priceCountMap[price] = 1;
-      }
-    });
-
-    return Object.entries(priceCountMap).map(([price, count]) => ({
-      price: Number(price),
-      count,
-    }));
+  get maxHistogramCount(): number {
+    return Math.max(...this.histogramData!.map((bucket) => bucket.count));
   }
 
-  get priceCountMapForDisplay(): ChartDataValue[] {
-    const maxDisplayPrices =
-      this.priceCountMap.length <= 50 ? this.priceCountMap.length : 50; // Maximum number of prices to display
-    const countMap = this.priceCountMap.sort((a, b) => a.price - b.price);
-    const groupSize = Math.floor(maxDisplayPrices / 3);
-    const midStartIndex = Math.floor((countMap.length - groupSize) / 2);
-    const lowPrices = countMap.slice(0, groupSize);
-    const midPrices = countMap.slice(midStartIndex, midStartIndex + groupSize);
-    const highPrices = countMap.slice(countMap.length - groupSize);
-    const groupedPrices = [...lowPrices, ...midPrices, ...highPrices];
-    return groupedPrices.sort((a, b) => a.price - b.price);
+  generateHistogramData(): ChartDataValue[] {
+    const priceRange = this.highestAvailablePrice - this.lowestAvailablePrice;
+    const priceInterval = priceRange / 50;
+
+    const histogramData: ChartDataValue[] = Array(50)
+      .fill(0)
+      .map((_, idx) => ({
+        price: this.lowestAvailablePrice + idx * priceInterval,
+        count: 0,
+      }));
+
+    this.stays?.forEach((stay) => {
+      const bucketIndex = Math.min(
+        49,
+        Math.floor((stay.price - this.lowestAvailablePrice) / priceInterval)
+      );
+      histogramData[bucketIndex].count++;
+    });
+
+    const maxCount = Math.max(...histogramData.map((data) => data.count));
+
+    histogramData.forEach((data) => {
+      data.normalizedHeight = Math.floor((data.count / maxCount) * 100);
+    });
+
+    console.log(histogramData);
+    return histogramData;
   }
 
   calculateSliderStep(): number {
     const range = this.highestAvailablePrice - this.lowestAvailablePrice;
-    const itemCount = this.priceCountMapForDisplay.length;
+    const itemCount = this.histogramData!.length;
     return Math.floor(range / itemCount);
   }
 
   getThumbLabelPosition(): number {
     const range = this.maxSlider - this.minSlider;
 
-    const itemPercentage = (30 / this.priceCountMapForDisplay.length) * 100;
+    const itemPercentage = (30 / this.histogramData!.length) * 100;
     return (itemPercentage * range) / 100;
   }
 

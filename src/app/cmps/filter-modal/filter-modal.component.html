@@ -16,16 +16,14 @@
       <div
         class="chart-item-container flex justify-center"
         [style]="{
-          'gap.px': priceCountMapForDisplay.length < 30 ? 3 : 1
+          'gap.px': histogramData!.length < 30 ? 3 : 1
         }"
       >
         <div
-          *ngFor="let stayPrice of priceCountMapForDisplay"
+          *ngFor="let data of histogramData"
           class="slider-chart-item"
-          [class.opacity]="
-            stayPrice.price < minPrice || stayPrice.price > maxPrice
-          "
-          [style]="{ height: stayPrice.count * 10 + 'px' }"
+          [class.opacity]="data.price < minPrice || data.price > maxPrice"
+          [style.height]="data.normalizedHeight + '%'"
         ></div>
       </div>
       <mat-slider

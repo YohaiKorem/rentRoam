@@ -122,6 +122,11 @@ input[type="password"] {
 }
 
 // PRICE RANGE SLIDER
+
+.mat-mdc-slider {
+  height: em(150px) !important;
+}
+
 .mat-mdc-slider .mdc-slider__thumb-knob {
   background-color: #fff !important;
   border-color: #fff !important;

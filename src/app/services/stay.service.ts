@@ -77,13 +77,13 @@ export class StayService {
     private ustilService: UtilService
   ) {
     let stays = JSON.parse(localStorage.getItem(ENTITY) || 'null');
+    const someStays: Stay[] = [];
 
     if (!stays || stays.length === 0) {
       stays = this._createStays();
-      const someStays = [];
-      for (let i = 0; i < 50; i++) someStays.push(stays[i]);
+      for (let i = 0; i < 100; i++) someStays.push(stays[i]);
 
-      localStorage.setItem(ENTITY, JSON.stringify(stays));
+      localStorage.setItem(ENTITY, JSON.stringify(someStays));
       // .subscribe(
       //   (fetchedStays) => {
       //     localStorage.setItem(ENTITY, JSON.stringify(fetchedStays));
@@ -94,9 +94,9 @@ export class StayService {
       // }
       // );
     } else {
-      this._stays$.next(stays);
+      this._stays$.next(someStays);
     }
-    this.setAvgPrice(stays);
+    this.setAvgPrice(someStays);
   }
 
   public initMap() {
