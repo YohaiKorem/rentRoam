@@ -1,1 +1,14 @@
-<p>order-preview works!</p>
+<article class="order-preview-wrapper">
+  <div class="buyer-container flex align-center">
+    <div class="img-container"><img [src]="order.buyer.imgUrl" /></div>
+    <p>{{ order.buyer.fullname }}</p>
+  </div>
+  <p>{{ order.stay.name }}</p>
+  <p>{{ order.checkin }}</p>
+  <p>{{ order.totalPrice }}$</p>
+  <p><span>icon</span> {{ order.status }}</p>
+  <select name="order-status">
+    <option value="Approve">Approve</option>
+    <option value="Decline">Decline</option>
+  </select>
+</article>

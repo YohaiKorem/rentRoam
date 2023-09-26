@@ -85,7 +85,10 @@
       </ng-template>
     </ng-container>
     <ng-container *ngSwitchCase="'orders'">
-      <order-list *ngIf="orders && orders.length"></order-list>
+      <order-list
+        [orders]="orders"
+        *ngIf="orders && orders.length"
+      ></order-list>
     </ng-container>
   </ng-container>
 </section>
