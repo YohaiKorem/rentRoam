@@ -7,10 +7,12 @@ import {
   faPencil,
   faEllipsisH,
 } from '@fortawesome/free-solid-svg-icons';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Observable, Subject, take, takeUntil } from 'rxjs';
+import { Order } from 'src/app/models/order.model';
 
 import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
+import { OrderService } from 'src/app/services/order.service';
 import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
 @Component({
@@ -27,11 +29,13 @@ export class DashboardComponent implements OnInit {
   faEllipsisH = faEllipsisH;
   stays: Stay[] = [];
   user!: User;
-  orders = [];
   currCmp: string = 'stays';
+  orders$!: Observable<Order[]>;
+  orders: Order[] = [];
   constructor(
     private userService: UserService,
     private stayService: StayService,
+    private orderService: OrderService,
     private router: Router
   ) {}
 
@@ -40,11 +44,19 @@ export class DashboardComponent implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((user) => {
         this.user = user!;
+        this.orders$ = this.orderService.getOrdersForHostById(this.user._id);
         this.stayService
           .getAllHostStaysById(this.user._id)
           .pipe(take(1))
           .subscribe((stays) => (this.stays = stays));
       });
+    this.orders$.pipe(take(1)).subscribe((orders: Order[]) => {
+      console.log(this.orders);
+      console.log(orders);
+      this.orders = orders;
+    });
+    console.log(this.orders);
+    console.log(this.orders$);
   }
 
   onUpdateClick(stayId: string) {
