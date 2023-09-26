@@ -45,3 +45,6 @@ Thumbs.db
 src/environments
 src/environments/env.ts
 src/environments/env.prod.ts
+
+# Data
+src/data

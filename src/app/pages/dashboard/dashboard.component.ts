@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   faPlusCircle,
   faHouse,
@@ -30,7 +31,8 @@ export class DashboardComponent implements OnInit {
   currCmp: string = 'stays';
   constructor(
     private userService: UserService,
-    private stayService: StayService
+    private stayService: StayService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -45,5 +47,7 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  onUpdateStay() {}
+  onUpdateClick(stayId: string) {
+    this.router.navigate([`/stay/edit/${stayId}`]);
+  }
 }

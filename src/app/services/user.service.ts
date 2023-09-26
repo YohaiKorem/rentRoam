@@ -178,7 +178,8 @@ export class UserService {
         info.password,
         info.username,
         this.utilService.getRandomId(),
-        []
+        [],
+        false
       );
     }
 

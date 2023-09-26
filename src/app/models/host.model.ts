@@ -9,7 +9,6 @@ export class StayHost {
     public thumbnailUrl: string,
     public pictureUrl: string,
     public isSuperhost: boolean,
-    public id: string,
     public description: string
   ) {}
   public static newHostFromUser(
@@ -25,7 +24,6 @@ export class StayHost {
       '',
       user.imgUrl,
       false,
-      randId,
       ''
     );
   }

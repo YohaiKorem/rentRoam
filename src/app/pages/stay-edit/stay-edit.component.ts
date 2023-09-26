@@ -17,13 +17,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class StayEditComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
-  user!: User;
+  user: User = {} as User;
   stay: IStay = Stay.getEmptyStay();
   allAmenities: string[] = ([] as string[]).concat(...Object.values(Amenities));
   stayHost!: StayHost;
   labels = Labels;
 
-  isUserHost: boolean = false;
   selectedCountry: string = '';
   selectedCity: string = '';
   constructor(
@@ -40,24 +39,26 @@ export class StayEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userService.loggedInUser$
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((user) => (this.user = user!));
-    console.log(this.user);
+      .subscribe((user) => {
+        if (!user) {
+          this.router.navigate(['/']);
+          return;
+        }
+        if (user && !user.isOwner) {
+          this.stayHost = StayHost.newHostFromUser(this.user, this.utilService);
+        } else {
+          const host = this.stayService.findHostById(this.user._id);
+          this.stay.host = host;
+          this.stayHost = host;
+        }
+        this.user = user!;
+      });
+
     const fetchedStay: IStay | undefined =
       this.route.snapshot.data['fetchedStay'];
     if (fetchedStay) {
       this.stay = fetchedStay;
     }
-    if (!this.user || !this.user.id) {
-      this.stayHost = StayHost.newHostFromUser(this.user, this.utilService);
-    } else {
-      const host = this.stayService.findHostById(this.user._id);
-      this.stay.host = host;
-      this.stayHost = host;
-
-      this.isUserHost = true;
-    }
-    console.log('this.stayHost.id', this.stayHost.id);
-    console.log('this.user.id', this.user.id);
   }
 
   test(str: any) {
@@ -69,14 +70,12 @@ export class StayEditComponent implements OnInit, OnDestroy {
       this.stayHost.fullname &&
       this.stayHost.description &&
       this.stayHost.location &&
-      this.stayHost.thumbnailUrl &&
-      this.stayHost.id
+      this.stayHost.thumbnailUrl
     ) {
-      this.user.id = this.stayHost.id;
+      this.user.isOwner = true;
       const newUser = this.userService.updateUser(this.user);
       this.user = newUser;
       this.stay.host = this.stayHost;
-      this.isUserHost = true;
     }
   }
 
@@ -103,9 +102,8 @@ export class StayEditComponent implements OnInit, OnDestroy {
         newStay = stay;
         if (newStay) this.stay = newStay;
       });
-      this.user.id = this.stayHost.id;
       this.userService.updateUser(this.user);
-      this.router.navigate([`/wishlist/${this.user._id}`]);
+      this.router.navigate([`/stay/${this.stay._id}`]);
     } else {
       console.log('not all inputs valid');
     }
@@ -194,11 +192,11 @@ export class StayEditComponent implements OnInit, OnDestroy {
       !stay.host.fullname ||
       !stay.imgUrls.every((img) => img)
     ) {
-      stay.host.id = '';
       const host = this.stayService.findHostById(this.user._id);
-      if (!host) this.user.id = '';
+      if (!host) this.user.isOwner = false;
       return;
     }
+    this.user.isOwner = true;
     this.userService.updateUser(this.user);
     this.stayService.saveStay(stay);
     this.ngUnsubscribe.next();

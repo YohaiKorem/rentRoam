@@ -25,7 +25,10 @@
   </nav>
   <ng-container [ngSwitch]="currCmp">
     <ng-container *ngSwitchCase="'stays'">
-      <section class="stay-list-table flex column gap1 pbs1 pi0-5">
+      <section
+        *ngIf="stays && stays.length; else becomeHost"
+        class="stay-list-table flex column gap1 pbs1 pi0-5"
+      >
         <header class="stay-list-table-header my-stays-grid">
           <h4 class="fw500 fs18 mb1">Stay name</h4>
           <h4 class="fw500 fs18 mb1">Location</h4>
@@ -50,6 +53,7 @@
             <p class="mb1">{{ stay.roomType }}</p>
             <div class="btns-container flex gap0-5 p0-5 full-width">
               <button
+                (click)="onUpdateClick(stay._id)"
                 class="btn btn-update flex align-center gap0-5 p1"
                 appPreventDefault
                 appStopPropagation

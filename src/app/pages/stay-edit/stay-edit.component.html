@@ -1,5 +1,5 @@
 <section class="stay-edit-wrapper p1">
-  <form class="host-form p1" *ngIf="!isUserHost && stayHost">
+  <form class="host-form p1" *ngIf="user?.isOwner === false && stayHost">
     <div class="host-inputs-container flex column gap1-5 space-between">
       <label for="host-loc">
         Enter your location
@@ -62,7 +62,7 @@
   <form
     class="stay-edit-form flex column gap1 p1"
     name="stay-edit-form"
-    *ngIf="isUserHost"
+    *ngIf="!user.isOwner"
   >
     <div class="name-input-wrapper">
       <input
