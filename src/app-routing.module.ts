@@ -11,6 +11,8 @@ import { authGuard } from './app/guards/auth-guard';
 import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
 import { HostGuard } from './app/guards/host-guard';
 import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
+import { StayListComponent } from './app/cmps/stay-list/stay-list.component';
+import { OrderListComponent } from './app/cmps/order-list/order-list.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {

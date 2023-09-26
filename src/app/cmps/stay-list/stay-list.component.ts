@@ -21,9 +21,12 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
   @Input() stays!: Stay[] | null;
   @Input() distances!: StayDistance[] | null;
   @Input() userLoc!: { lat: number | null; lng: number | null };
-  @Input() areMonthsDifferent!: boolean;
-  @Input() endMonth!: string;
-  @Input() currDate!: { start: Date; end: Date };
+  @Input() areMonthsDifferent: boolean = false;
+  @Input() endMonth: string = '';
+  @Input() currDate: { start: Date; end: Date } = {
+    start: new Date(),
+    end: new Date(),
+  };
   @Output() clearFilter = new EventEmitter();
   staysWithDistance: any;
 

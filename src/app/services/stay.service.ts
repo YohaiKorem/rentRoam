@@ -10,6 +10,7 @@ import {
   take,
   switchMap,
   of,
+  map,
   combineLatest,
 } from 'rxjs';
 import { storageService } from './async-storage.service';
@@ -335,6 +336,13 @@ export class StayService {
     return getDistance(
       { latitude: stay.loc.lat, longitude: stay.loc.lng },
       { latitude: coords.lat, longitude: coords.lng }
+    );
+  }
+
+  public getAllHostStaysById(hostId: string): Observable<Stay[]> {
+    return this.stays$.pipe(
+      take(1),
+      map((stays) => stays.filter((stay) => stay.host._id === hostId))
     );
   }
 

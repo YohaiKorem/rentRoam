@@ -30,6 +30,8 @@ export class HostGuard implements CanActivate {
     | boolean
     | UrlTree {
     const stayId = route.params['stayId'];
+    console.log(stayId);
+
     const user = this.userService.getLoggedInUser();
     if (!user) {
       return this.router.createUrlTree(['/']); // you can also just return false

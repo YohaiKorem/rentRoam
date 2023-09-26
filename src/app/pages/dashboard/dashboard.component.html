@@ -2,39 +2,86 @@
   class="dashboard-wrapper column flex align-center space-between gap1 shadow mbs1 p1"
 >
   <nav class="dashboard-nav flex align-center space-between gap0-5 full-width">
-    <a
-      href=""
+    <button
+      (click)="currCmp = 'orders'"
       class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 orders"
     >
       <fa-icon class="svg-container" [icon]="faList"></fa-icon>
-      <span class="txt-container fs20 fw500">Orders</span></a
-    >
-    <a
-      href=""
+      <span class="txt-container fs20 fw500">Orders</span>
+    </button>
+    <button
+      (click)="currCmp = 'stays'"
       class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 my-stays"
-      ><fa-icon class="svg-container" [icon]="faHouse"> </fa-icon
-      ><span class="txt-container fs20 fw500">My Stays</span></a
     >
+      <fa-icon class="svg-container" [icon]="faHouse"> </fa-icon
+      ><span class="txt-container fs20 fw500">My Stays</span>
+    </button>
     <a
-      href=""
+      routerLink="/stay/edit"
       class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 add-stay"
       ><fa-icon class="svg-container" [icon]="faPlusCircle"> </fa-icon
       ><span class="txt-container fs20 fw500">Add a Stay</span></a
     >
   </nav>
-  <stay-list
-    *ngIf="stays && stays.length; else becomeHost"
-    [stays]="stays"
-  ></stay-list>
+  <ng-container [ngSwitch]="currCmp">
+    <ng-container *ngSwitchCase="'stays'">
+      <section class="stay-list-table flex column gap1 pbs1 pi0-5">
+        <header class="stay-list-table-header my-stays-grid">
+          <h4 class="fw500 fs18 mb1">Stay name</h4>
+          <h4 class="fw500 fs18 mb1">Location</h4>
+          <h4 class="fw500 fs18 mb1">Price</h4>
+          <h4 class="fw500 fs18 mb1">Capacity</h4>
+          <h4 class="fw500 fs18 mb1">Property type</h4>
+        </header>
+        <section
+          *ngFor="let stay of stays; let i = index"
+          class="stay-item-container"
+        >
+          <a
+            routerLink="/stay/{{ stay._id }}"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="my-stays-grid"
+          >
+            <p class="mb1">{{ stay.name }}</p>
+            <p class="mb1">{{ stay.loc.address }}</p>
+            <p class="mb1">{{ stay.price }}</p>
+            <p class="mb1">{{ stay.equipment.bedsNum }}</p>
+            <p class="mb1">{{ stay.roomType }}</p>
+            <div class="btns-container flex gap0-5 p0-5 full-width">
+              <button
+                class="btn btn-update flex align-center gap0-5 p1"
+                appPreventDefault
+                appStopPropagation
+              >
+                <fa-icon class="svg-container" [icon]="faPencil"> </fa-icon
+                >Update
+              </button>
+              <button
+                class="btn btn-options"
+                appPreventDefault
+                appStopPropagation
+              >
+                <fa-icon class="svg-container" [icon]="faEllipsisH"> </fa-icon>
+              </button>
+            </div>
+          </a>
+        </section>
+      </section>
 
-  <ng-template #becomeHost>
-    <div
-      class="call-to-action shadow flex align-center column space-around gap1 full-width p1"
-    >
-      <p class="stay-amount fs24 fw500">You have 0 stays</p>
-      <a routerLink="/stay/edit" class="btn btn-become-host fw500 pi2-5 pb1"
-        >Become a host now</a
-      >
-    </div>
-  </ng-template>
+      <ng-template #becomeHost>
+        <div
+          class="call-to-action shadow flex align-center column space-around gap1 full-width p1"
+        >
+          <p class="stay-amount fs24 fw500">You have 0 stays</p>
+          <a routerLink="/stay/edit" class="btn btn-become-host fw500 pi2-5 pb1"
+            >Become a host now</a
+          >
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-container *ngSwitchCase="'orders'">
+      <order-list *ngIf="orders && orders.length"></order-list>
+    </ng-container>
+  </ng-container>
 </section>

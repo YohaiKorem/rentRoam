@@ -5,7 +5,7 @@ import { StayHost } from 'src/app/models/host.model';
 import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
 import { GeocodingService } from 'src/app/services/geocoding.service';
-import { take } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { imgService } from 'src/app/services/img-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./stay-edit.component.scss'],
 })
 export class StayEditComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject<void>();
   user!: User;
   stay: IStay = Stay.getEmptyStay();
   allAmenities: string[] = ([] as string[]).concat(...Object.values(Amenities));
@@ -37,7 +38,9 @@ export class StayEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.userService.loggedInUser$.subscribe((user) => (this.user = user!));
+    this.userService.loggedInUser$
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((user) => (this.user = user!));
     console.log(this.user);
     const fetchedStay: IStay | undefined =
       this.route.snapshot.data['fetchedStay'];
@@ -198,5 +201,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
     }
     this.userService.updateUser(this.user);
     this.stayService.saveStay(stay);
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

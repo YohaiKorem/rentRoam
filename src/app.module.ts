@@ -53,6 +53,10 @@ import { ImgErrorDirective } from './app/directives/img-error.directive';
 import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
 import { GooglePlacesAutocompleteDirective } from './app/directives/google-places-autocomplete.directive';
 import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
+import { OrderListComponent } from './app/cmps/order-list/order-list.component';
+import { OrderPreviewComponent } from './app/cmps/order-preview/order-preview.component';
+import { PreventDefaultDirective } from './app/directives/prevent-default.directive';
+import { StopPropagationDirective } from './app/directives/stop-propagation.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +89,10 @@ import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
     StayEditComponent,
     GooglePlacesAutocompleteDirective,
     DashboardComponent,
+    OrderListComponent,
+    OrderPreviewComponent,
+    PreventDefaultDirective,
+    StopPropagationDirective,
   ],
   imports: [
     BrowserModule,
