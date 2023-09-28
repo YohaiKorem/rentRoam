@@ -1,4 +1,4 @@
-<article class="order-preview-wrapper dashboard-table-layout gap0-5">
+<article class="order-preview-wrapper dashboard-table-layout gap0-5 pb0-5">
   <div class="buyer-container flex align-center gap0-5">
     <div class="img-container">
       <img
@@ -34,7 +34,16 @@
   <p [class]="'order-status ' + order.status">
     <fa-icon [icon]="getStatusIcon(order.status)"> </fa-icon> {{ order.status }}
   </p>
-  <select name="order-status" placeholder="select">
+  <select
+    class="pi0-5 pb1"
+    (change)="onStatusChanged($event)"
+    name="order-status"
+    placeholder="select"
+    [(ngModel)]="status"
+  >
+    <option value="" disabled selected hidden>
+      What would you like to do?
+    </option>
     <option value="approved">Approve</option>
     <option value="declined">Decline</option>
   </select>

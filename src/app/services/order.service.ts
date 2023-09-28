@@ -39,10 +39,62 @@ export class OrderService {
     return this.orders$.pipe(
       take(1),
       map((orders: Order[]) => {
-        console.log('inside service ', orders);
-
         return orders.filter((order: Order) => order.hostId === hostId);
       })
+    );
+  }
+
+  public saveOrder(order: Order): Observable<Order> {
+    return order._id ? this._updateOrder(order) : this._addOrder(order);
+  }
+
+  private _updateOrder(order: Order): Observable<Order> {
+    return from(storageService.put(ENTITY, order)).pipe(
+      tap((updatedOrder) => {
+        const orders = this._orders$.value;
+        const orderIdx = orders.findIndex((_order) => _order._id === order._id);
+        orders.splice(orderIdx, 1, updatedOrder);
+        this._orders$.next([...orders]);
+        return updatedOrder;
+      }),
+      retry(1),
+      catchError(this._handleError)
+    );
+  }
+  private _addOrder(order: Order): Observable<Order> {
+    let {
+      _id,
+      hostId,
+      buyer,
+      totalPrice,
+      checkin,
+      checkout,
+      guests,
+      stay,
+      msgs,
+      status,
+    } = order;
+    _id = storageService.makeId(24);
+    const newOrder = new Order(
+      _id,
+      hostId,
+      buyer,
+      totalPrice,
+      checkin,
+      checkout,
+      guests,
+      stay,
+      msgs,
+      status
+    );
+
+    return from(storageService.post(ENTITY, newOrder)).pipe(
+      tap((newOrder) => {
+        const orders = this._orders$.value;
+        this._orders$.next([...orders, newOrder]);
+      }),
+      retry(1),
+      catchError(this._handleError)
     );
   }
 

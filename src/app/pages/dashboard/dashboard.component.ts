@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faPlusCircle,
@@ -20,7 +20,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   faPlusCircle = faPlusCircle;
   faHouse = faHouse;
@@ -52,18 +52,16 @@ export class DashboardComponent implements OnInit {
           .subscribe((stays) => (this.stays = stays));
       });
     this.orders$.pipe(take(1)).subscribe((orders: Order[]) => {
-      console.log(this.orders);
-      console.log(orders);
       this.orders = orders;
     });
-    this.statsMap = this.getOrderStatsMap();
+    this.updateOrderStatsMap();
   }
 
   onUpdateClick(stayId: string) {
     this.router.navigate([`/stay/edit/${stayId}`]);
   }
 
-  getOrderStatsMap() {
+  updateOrderStatsMap() {
     const statsMap = this.orders.reduce(
       (acc: any, order: Order) => {
         if (!acc[order.status]) acc[order.status] = 0;
@@ -73,6 +71,19 @@ export class DashboardComponent implements OnInit {
       { pending: 0, approved: 0, declined: 0 }
     );
 
-    return statsMap;
+    this.statsMap = statsMap;
+  }
+  onOrderStatChanged(order: Order) {
+    const updatedOrder = this.orderService.saveOrder(order);
+    updatedOrder.pipe(take(1)).subscribe((updatedOrder: Order) => {
+      const idxToRemove = this.orders.findIndex(
+        (order: Order) => order._id === updatedOrder._id
+      );
+      this.orders.splice(idxToRemove, 1, updatedOrder);
+      this.updateOrderStatsMap();
+    });
+  }
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.unsubscribe();
   }
 }

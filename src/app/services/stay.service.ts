@@ -27,6 +27,7 @@ import { getDistance } from 'geolib';
 import { environment } from 'src/environments/env';
 import { UserService } from './user.service';
 import { UtilService } from './util.service';
+import { StayHost } from '../models/host.model';
 const ENTITY = 'stays';
 
 @Injectable({
@@ -188,8 +189,6 @@ export class StayService {
   }
 
   public saveStay(stay: Stay): Observable<Stay> {
-    console.log(stay);
-
     return stay._id ? this._updateStay(stay) : this._addStay(stay);
   }
 
@@ -346,15 +345,21 @@ export class StayService {
     );
   }
 
-  public findHostById(id: string) {
-    let stay;
-    let host;
-    this.stays$.pipe(take(1)).subscribe((stays) => {
-      stay = stays.find((stay) => stay.host._id === id);
-      host = stay?.host;
-    });
-    if (host) return host;
-    else throw new Error('host not found');
+  public findHostById(id: string): Observable<StayHost | null> {
+    console.log(id);
+
+    return this.stays$.pipe(
+      take(1),
+      map((stays) => {
+        const stay = stays.find((stay) => stay.host._id === id);
+        if (stay && stay.host) {
+          return stay.host;
+        } else {
+          // throw new Error('host not found');
+          return null;
+        }
+      })
+    );
   }
 
   private _updateStay(stay: Stay): Observable<Stay> {

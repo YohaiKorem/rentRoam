@@ -43,13 +43,27 @@ export class StayEditComponent implements OnInit, OnDestroy {
         if (!user) {
           this.router.navigate(['/']);
           return;
-        }
-        if (user && !user.isOwner) {
+        } else if (user && !user.isOwner) {
           this.stayHost = StayHost.newHostFromUser(this.user, this.utilService);
+          console.log(this.stayHost);
         } else {
-          const host = this.stayService.findHostById(this.user._id);
-          this.stay.host = host;
-          this.stayHost = host;
+          this.stayService
+            .findHostById(user._id)
+            .pipe(take(1))
+            .subscribe((host) => {
+              if (host) {
+                this.stay.host = host;
+                this.stayHost = host;
+              } else {
+                this.stayHost = StayHost.newHostFromUser(
+                  user,
+                  this.utilService
+                );
+                this.stay.host = this.stayHost;
+                console.log(this.stay.host);
+                console.log(this.stayHost);
+              }
+            });
         }
         this.user = user!;
       });
@@ -66,6 +80,10 @@ export class StayEditComponent implements OnInit, OnDestroy {
   }
 
   handleHostFormSubmit() {
+    console.log(this.user);
+    console.log(this.stayHost);
+    this.stayHost.fullname = this.user.fullname;
+    this.stayHost.thumbnailUrl = this.user.imgUrl;
     if (
       this.stayHost.fullname &&
       this.stayHost.description &&
@@ -81,6 +99,9 @@ export class StayEditComponent implements OnInit, OnDestroy {
 
   handleStaySubmit() {
     const stay = { ...this.stay };
+    stay.host = this.stayHost;
+
+    console.log(stay);
 
     if (
       stay.name &&
@@ -95,7 +116,6 @@ export class StayEditComponent implements OnInit, OnDestroy {
       stay.host.fullname &&
       stay.imgUrls.every((img) => img)
     ) {
-      stay.host = this.stayHost;
       const newStay$ = this.stayService.saveStay(stay);
       let newStay;
       newStay$.pipe(take(1)).subscribe((stay) => {
@@ -192,9 +212,13 @@ export class StayEditComponent implements OnInit, OnDestroy {
       !stay.host.fullname ||
       !stay.imgUrls.every((img) => img)
     ) {
-      const host = this.stayService.findHostById(this.user._id);
-      if (!host) this.user.isOwner = false;
-      return;
+      this.stayService
+        .findHostById(this.user._id)
+        .pipe(take(1))
+        .subscribe((host) => {
+          if (!host) this.user.isOwner = false;
+          return;
+        });
     }
     this.user.isOwner = true;
     this.userService.updateUser(this.user);

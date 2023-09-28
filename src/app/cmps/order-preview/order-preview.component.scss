@@ -19,4 +19,11 @@
       color: #4eb944;
     }
   }
+
+  select,
+  option {
+    outline: 0;
+    border: 1px solid $secondaryClr2;
+    border-radius: 1em;
+  }
 }

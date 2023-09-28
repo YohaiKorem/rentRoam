@@ -106,6 +106,7 @@
       <order-list
         [orders]="orders"
         *ngIf="orders && orders.length"
+        (orderStatChanged)="onOrderStatChanged($event)"
       ></order-list>
     </ng-container>
   </ng-container>

@@ -10,5 +10,6 @@
   <order-preview
     *ngFor="let order of orders; let i = index"
     [order]="order"
+    (orderStatChanged)="onOrderStatChanged($event)"
   ></order-preview>
 </ul>

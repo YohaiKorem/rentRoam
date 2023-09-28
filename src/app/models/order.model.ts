@@ -2,6 +2,7 @@ import { Buyer } from './buyer.model';
 
 export class Order {
   constructor(
+    public _id: string,
     public hostId: string,
     public buyer: Buyer,
     public totalPrice: number,

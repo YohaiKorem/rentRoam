@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 
@@ -9,4 +9,9 @@ import { User } from 'src/app/models/user.model';
 })
 export class OrderListComponent {
   @Input() orders: Order[] = [];
+  @Output() orderStatChanged = new EventEmitter();
+
+  onOrderStatChanged(order: Order) {
+    this.orderStatChanged.emit(order);
+  }
 }
