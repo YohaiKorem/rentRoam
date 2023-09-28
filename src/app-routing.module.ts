@@ -13,6 +13,7 @@ import { HostGuard } from './app/guards/host-guard';
 import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
 import { StayListComponent } from './app/cmps/stay-list/stay-list.component';
 import { OrderListComponent } from './app/cmps/order-list/order-list.component';
+import { TripIndexComponent } from './app/pages/trip-index/trip-index.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
   {
     path: 'host/dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'trip',
+    component: TripIndexComponent,
     canActivate: [authGuard],
   },
   {

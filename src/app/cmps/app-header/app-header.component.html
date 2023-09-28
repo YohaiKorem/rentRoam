@@ -532,7 +532,9 @@
       <a routerLink="host/dashboard"
         ><button mat-menu-item class="btn-dashboard">Dashboard</button></a
       >
-      <button mat-menu-item class="btn-my-trips">My trips</button>
+      <a routerLink="trip"
+        ><button mat-menu-item class="btn-my-trips">My trips</button></a
+      >
       <a routerLink="{{ 'wishlist/' + loggedInUser!._id }}">
         <button mat-menu-item class="btn-wishlist">Wishlists</button>
       </a>
