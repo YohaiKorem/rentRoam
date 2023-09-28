@@ -1,0 +1,22 @@
+@import "../../app-root/app.component.scss";
+.order-preview-wrapper {
+  .buyer-container {
+    .img-container {
+      width: 2em;
+      .user-img {
+        border-radius: 1em;
+      }
+    }
+  }
+  .order-status {
+    &.pending {
+      color: #ffba1e;
+    }
+    &.declined {
+      color: #e43838;
+    }
+    &.approved {
+      color: #4eb944;
+    }
+  }
+}

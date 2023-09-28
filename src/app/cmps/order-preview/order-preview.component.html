@@ -1,14 +1,41 @@
-<article class="order-preview-wrapper">
-  <div class="buyer-container flex align-center">
-    <div class="img-container"><img [src]="order.buyer.imgUrl" /></div>
+<article class="order-preview-wrapper dashboard-table-layout gap0-5">
+  <div class="buyer-container flex align-center gap0-5">
+    <div class="img-container">
+      <img
+        *ngIf="!isImgErr"
+        class="user-img full-width"
+        [class]="isImgLoaded ? '' : 'loading'"
+        [src]="order.buyer.imgUrl"
+        loading="lazy"
+        (error)="onImgErr()"
+        (load)="isImgLoaded = true"
+      />
+      <ng-container *ngIf="!isImgLoaded">
+        <svg
+          class="user-img"
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
+          style="display: block; height: 100%; width: 2em; fill: currentcolor"
+        >
+          <path
+            d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z"
+          ></path>
+        </svg>
+      </ng-container>
+    </div>
     <p>{{ order.buyer.fullname }}</p>
   </div>
   <p>{{ order.stay.name }}</p>
   <p>{{ order.checkin }}</p>
   <p>{{ order.totalPrice }}$</p>
-  <p><span>icon</span> {{ order.status }}</p>
-  <select name="order-status">
-    <option value="Approve">Approve</option>
-    <option value="Decline">Decline</option>
+  <p [class]="'order-status ' + order.status">
+    <fa-icon [icon]="getStatusIcon(order.status)"> </fa-icon> {{ order.status }}
+  </p>
+  <select name="order-status" placeholder="select">
+    <option value="approved">Approve</option>
+    <option value="declined">Decline</option>
   </select>
 </article>

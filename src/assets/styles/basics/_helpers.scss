@@ -192,6 +192,17 @@
   }
 }
 
+// GRID
+
+.dashboard-table-layout {
+  border-bottom: 1px solid $secondaryClr2;
+  display: grid;
+  grid-template-columns: 3fr repeat(4, 1fr) 2fr;
+  grid-template-rows: 1fr;
+  grid-auto-flow: column;
+  align-items: center;
+}
+
 // GAP
 
 .gap0-5 {

@@ -10,6 +10,7 @@
   }
   .dashboard-nav {
     .btn-dashboard {
+      border: 1px solid $secondaryClr2;
       flex-basis: 30%;
     }
   }
@@ -58,6 +59,26 @@
         #bd1e59 75%,
         #bd1e59 100%
       );
+    }
+  }
+  .order-list-header {
+    background-color: #fff;
+    border: 1px solid $secondaryClr2;
+    border-radius: 1em;
+    color: $fontclr3;
+    span.status-circle {
+      width: 5px;
+      height: 5px;
+      border-radius: 1em;
+      &.pending {
+        background-color: #ffba1e;
+      }
+      &.declined {
+        background-color: #e43838;
+      }
+      &.approved {
+        background-color: #4eb944;
+      }
     }
   }
 }

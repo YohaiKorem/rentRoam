@@ -29,9 +29,10 @@ export class DashboardComponent implements OnInit {
   faEllipsisH = faEllipsisH;
   stays: Stay[] = [];
   user!: User;
-  currCmp: string = 'stays';
+  currCmp: string = 'orders';
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
+  statsMap!: { pending: number; approved: number; declined: number };
   constructor(
     private userService: UserService,
     private stayService: StayService,
@@ -55,11 +56,23 @@ export class DashboardComponent implements OnInit {
       console.log(orders);
       this.orders = orders;
     });
-    console.log(this.orders);
-    console.log(this.orders$);
+    this.statsMap = this.getOrderStatsMap();
   }
 
   onUpdateClick(stayId: string) {
     this.router.navigate([`/stay/edit/${stayId}`]);
+  }
+
+  getOrderStatsMap() {
+    const statsMap = this.orders.reduce(
+      (acc: any, order: Order) => {
+        if (!acc[order.status]) acc[order.status] = 0;
+        acc[order.status]++;
+        return acc;
+      },
+      { pending: 0, approved: 0, declined: 0 }
+    );
+
+    return statsMap;
   }
 }

@@ -85,6 +85,24 @@
       </ng-template>
     </ng-container>
     <ng-container *ngSwitchCase="'orders'">
+      <header
+        class="order-list-header flex align-center space-between full-width p1 shadow"
+      >
+        <h1 class="text-left fw600 full-width">
+          Hello {{ user.fullname }}, you have {{ orders.length }} orders
+        </h1>
+
+        <div class="order-stats-map flex align-center gap1">
+          <div
+            class="flex align-center"
+            *ngFor="let stat of statsMap | keyvalue"
+          >
+            <span [class]="'status-circle ' + stat.key"></span>
+            <span class="mi0-5">{{ stat.value }}</span>
+            <span>{{ stat.key }}</span>
+          </div>
+        </div>
+      </header>
       <order-list
         [orders]="orders"
         *ngIf="orders && orders.length"
