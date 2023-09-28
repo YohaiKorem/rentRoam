@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((user) => {
         this.user = user!;
-        this.orders$ = this.orderService.getOrdersForHostById(this.user._id);
+        this.orders$ = this.orderService.getOrdersForEntityById(this.user._id);
         this.stayService
           .getAllHostStaysById(this.user._id)
           .pipe(take(1))

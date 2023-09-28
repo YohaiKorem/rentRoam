@@ -1,3 +1,8 @@
 <ul class="trip-list">
-  <trip-preview></trip-preview>
+  <button
+    *ngFor="let order of orders; let i = index"
+    class="btn trip-preview-wrapper"
+  >
+    <trip-preview [order]="order"></trip-preview>
+  </button>
 </ul>

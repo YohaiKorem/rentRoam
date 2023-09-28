@@ -19,6 +19,7 @@ export class Order {
       _id: string;
       name: string;
       price: number;
+      address: string;
     },
     public msgs: [],
     public status: string
@@ -28,7 +29,12 @@ export class Order {
     stay: Stay,
     searchParam: SearchParam
   ) {
-    const stayForOrder = { _id: stay._id, name: stay.name, price: stay.price };
+    const stayForOrder = {
+      _id: stay._id,
+      name: stay.name,
+      price: stay.price,
+      address: stay.loc.city,
+    };
     const buyer: Buyer = Buyer.createBuyerFromUser(user);
 
     const timeDifference =

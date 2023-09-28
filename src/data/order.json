@@ -18,7 +18,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aaaf8",
       "name": "Westin Kaanapali KORVN 2BR",
-      "price": 595
+      "price": 595,
+      "address": "Lahaina, HI, United States"
     },
     "msgs": [],
     "status": "pending"
@@ -42,7 +43,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aaaf9",
       "name": "Belle chambre à côté Metro Papineau",
-      "price": 30
+      "price": 30,
+      "address": "Montréal, QC, Canada"
     },
     "msgs": [],
     "status": "pending"
@@ -66,7 +68,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aaafb",
       "name": "Fresh and modern 1BR in Bed-Stuy",
-      "price": 79
+      "price": 79,
+      "address": "Brooklyn, NY, United States"
     },
     "msgs": [],
     "status": "pending"
@@ -90,7 +93,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aaafc",
       "name": "Habitación centro de Barcelona",
-      "price": 40
+      "price": 40,
+      "address": "Barcelona, Catalunya, Spain"
     },
     "msgs": [],
     "status": "pending"
@@ -114,7 +118,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aab01",
       "name": "Nice Cosy Room In Taksim",
-      "price": 105
+      "price": 105,
+      "address": "Taksim, Cihangir, Istanbul , Beyoğlu, Turkey"
     },
     "msgs": [],
     "status": "pending"
@@ -138,7 +143,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aab09",
       "name": "Spacious, Sunny Room in Park Slope",
-      "price": 85
+      "price": 85,
+      "address": "Brooklyn, NY, United States"
     },
     "msgs": [],
     "status": "pending"
@@ -162,7 +168,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aab08",
       "name": "302 Kanai A Nalu Ocean front/view",
-      "price": 400
+      "price": 400,
+      "address": "Wailuku, HI, United States"
     },
     "msgs": [],
     "status": "pending"
@@ -186,7 +193,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aab0b",
       "name": "Elegant Flat in the Center",
-      "price": 190
+      "price": 190,
+      "address": "Istanbul, Istanbul, Turkey"
     },
     "msgs": [],
     "status": "pending"
@@ -210,7 +218,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aab0c",
       "name": "Westin Kaanapali KORVS 2BR OCEAN VIEW",
-      "price": 799
+      "price": 799,
+      "address": "Lahaina, HI, United States"
     },
     "msgs": [],
     "status": "pending"
@@ -234,7 +243,8 @@
     "stay": {
       "_id": "622f337a75c7d36e498aab0d",
       "name": "Burgazada da çarşıya yakın daire",
-      "price": 348
+      "price": 348,
+      "address": "TR, Turkey"
     },
     "msgs": [],
     "status": "pending"

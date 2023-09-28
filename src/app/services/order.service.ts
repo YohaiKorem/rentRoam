@@ -35,11 +35,19 @@ export class OrderService {
     }
   }
 
-  getOrdersForHostById(hostId: string): Observable<Order[]> {
+  getOrdersForEntityById(
+    id: string,
+    entity: string = 'host'
+  ): Observable<Order[]> {
     return this.orders$.pipe(
       take(1),
       map((orders: Order[]) => {
-        return orders.filter((order: Order) => order.hostId === hostId);
+        let res;
+        res =
+          entity === 'host'
+            ? orders.filter((order: Order) => order.hostId === id)
+            : orders.filter((order: Order) => order.buyer._id === id);
+        return res;
       })
     );
   }

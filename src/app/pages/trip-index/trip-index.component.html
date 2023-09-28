@@ -1,8 +1,13 @@
-<section class="trip-index-wrapper">
-  <header class="trip-index-header">
-    <h1 class="fs20 fw600">My Trips</h1>
+<section class="trip-index-wrapper p1">
+  <header class="trip-index-header flex align-center space-between gap1">
+    <h1 class="fs20 fw600 full-width shadow p1">My Trips</h1>
+    <a
+      class="fs20 fw600 full-width shadow p1"
+      routerLink="{{ 'wishlist/' + user!._id }}"
+      >Wishlists</a
+    >
   </header>
 
-  <trip-list></trip-list>
+  <trip-list [orders]="orders"></trip-list>
   <trip-details></trip-details>
 </section>

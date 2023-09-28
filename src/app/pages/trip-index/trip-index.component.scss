@@ -1,0 +1,10 @@
+@import "../../app-root/app.component.scss";
+.trip-index-wrapper {
+  border-radius: 1em;
+
+  background-color: $secondaryClr2;
+  header > * {
+    background-color: #fff;
+    border-radius: 1em;
+  }
+}

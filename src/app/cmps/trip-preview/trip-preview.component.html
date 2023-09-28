@@ -1,1 +1,10 @@
-<p>trip-preview works!</p>
+<article class="trip-preview flex align-center space-between text-left gap1">
+  <div class="txt-container">
+    <h4 class="fw500 fs18">{{ order.stay.name }}</h4>
+    <p class="fw500 fs14">
+      {{ order.stay.address }}
+      <span class="fw400">{{ dateForDisplay }}</span>
+    </p>
+  </div>
+  <div class="stat-container">{{ order.status }}</div>
+</article>
