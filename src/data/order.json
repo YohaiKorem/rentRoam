@@ -8,16 +8,17 @@
       "imgUrl": "https://a0.muscache.com/im/pictures/d17abb7c-beb0-4dbe-976e-fc633de18b4b.jpg?aki_policy=profile_small"
     },
     "totalPrice": 1190,
-    "checkin": "2025/10/15",
-    "checkout": "2025/10/17",
+    "checkin": 1760475600000,
+    "checkout": 1760648400000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aaaf8",
       "name": "Westin Kaanapali KORVN 2BR",
-      "price": 595.0
+      "price": 595
     },
     "msgs": [],
     "status": "pending"
@@ -31,11 +32,12 @@
       "imgUrl": "https://a0.muscache.com/im/pictures/d17abb7c-beb0-4dbe-976e-fc633de18b4b.jpg?aki_policy=profile_small"
     },
     "totalPrice": 60,
-    "checkin": "2024/10/15",
-    "checkout": "2024/10/17",
+    "checkin": 1728939600000,
+    "checkout": 1729112400000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aaaf9",
@@ -54,11 +56,12 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/xwyu7igl3lcqumwzyjsj.jpg"
     },
     "totalPrice": 279,
-    "checkin": "2023/09/15",
-    "checkout": "2023/09/18",
+    "checkin": 1694725200000,
+    "checkout": 1694984400000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aaafb",
@@ -77,11 +80,12 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/verhjmfthx5w3ys4rm58.jpg"
     },
     "totalPrice": 160,
-    "checkin": "2023/06/21",
-    "checkout": "2023/06/25",
+    "checkin": 1687294800000,
+    "checkout": 1687640400000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aaafc",
@@ -100,16 +104,17 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/heo5y74swdy88awpyh0u.jpg"
     },
     "totalPrice": 840,
-    "checkin": "2023/07/11",
-    "checkout": "2023/07/19",
+    "checkin": 1689022800000,
+    "checkout": 1689714000000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aab01",
       "name": "Nice Cosy Room In Taksim",
-      "price": 105.0
+      "price": 105
     },
     "msgs": [],
     "status": "pending"
@@ -123,11 +128,12 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526538/eqpw1pmf6baokrlimodg.jpg"
     },
     "totalPrice": 255,
-    "checkin": "2023/12/25",
-    "checkout": "2023/12/28",
+    "checkin": 1703455200000,
+    "checkout": 1703714400000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aab09",
@@ -146,11 +152,12 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/satmtjrlnsmzcfe2d1pj.jpg"
     },
     "totalPrice": 1200,
-    "checkin": "2024/01/25",
-    "checkout": "2024/01/28",
+    "checkin": 1706133600000,
+    "checkout": 1706392800000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aab08",
@@ -169,11 +176,12 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/z0wj7tpkz2w2elj0uy5b.jpg"
     },
     "totalPrice": 1900,
-    "checkin": "2024/02/09",
-    "checkout": "2024/02/19",
+    "checkin": 1707429600000,
+    "checkout": 1708293600000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aab0b",
@@ -192,11 +200,12 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/vfqumjxvkpkxrg5nqe9s.jpg"
     },
     "totalPrice": 7990,
-    "checkin": "2023/06/02",
-    "checkout": "2023/06/12",
+    "checkin": 1685653200000,
+    "checkout": 1686517200000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aab0c",
@@ -215,11 +224,12 @@
       "imgUrl": "https://res.cloudinary.com/dvah7ijav/image/upload/v1680526536/eysvwy8vipsuep25hnww.jpg"
     },
     "totalPrice": 2088,
-    "checkin": "2023/07/13",
-    "checkout": "2023/07/19",
+    "checkin": 1689195600000,
+    "checkout": 1689714000000,
     "guests": {
       "adults": 2,
-      "kids": 1
+      "children": 1,
+      "infants": 0
     },
     "stay": {
       "_id": "622f337a75c7d36e498aab0d",

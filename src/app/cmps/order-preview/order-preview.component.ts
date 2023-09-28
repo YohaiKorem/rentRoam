@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
 import {
   faClockRotateLeft,
@@ -11,7 +11,7 @@ import {
   templateUrl: './order-preview.component.html',
   styleUrls: ['./order-preview.component.scss'],
 })
-export class OrderPreviewComponent {
+export class OrderPreviewComponent implements OnInit {
   @Input() order!: Order;
   @Output() orderStatChanged = new EventEmitter();
   isImgLoaded: boolean = false;
@@ -20,6 +20,12 @@ export class OrderPreviewComponent {
   faCheck = faCheck;
   faTimesCircle = faTimesCircle;
   status: string = '';
+  orderDateForDisplay!: string;
+
+  ngOnInit() {
+    this.orderDateForDisplay = this.getOrderDateForDisplay();
+  }
+
   onImgErr() {
     this.isImgLoaded = false;
     this.isImgErr = true;
@@ -35,5 +41,12 @@ export class OrderPreviewComponent {
     updatedOrder.status = this.status;
     this.order = updatedOrder;
     this.orderStatChanged.emit(updatedOrder);
+  }
+  getOrderDateForDisplay() {
+    return new Date(this.order.checkin).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
   }
 }

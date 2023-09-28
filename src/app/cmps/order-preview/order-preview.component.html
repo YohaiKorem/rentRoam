@@ -29,7 +29,7 @@
     <p>{{ order.buyer.fullname }}</p>
   </div>
   <p>{{ order.stay.name }}</p>
-  <p>{{ order.checkin }}</p>
+  <p>{{ orderDateForDisplay }}</p>
   <p>{{ order.totalPrice }}$</p>
   <p [class]="'order-status ' + order.status">
     <fa-icon [icon]="getStatusIcon(order.status)"> </fa-icon> {{ order.status }}

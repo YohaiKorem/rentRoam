@@ -1,7 +1,20 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, map, takeUntil, Subject } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  map,
+  takeUntil,
+  Subject,
+  BehaviorSubject,
+} from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { SwipeDirectiveDirective } from 'src/app/directives/swipe-directive.directive';
@@ -9,6 +22,8 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { Order } from 'src/app/models/order.model';
+import { OrderService } from 'src/app/services/order.service';
 @Component({
   selector: 'stay-details',
   templateUrl: './stay-details.component.html',
@@ -16,7 +31,9 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class StayDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('picker') picker!: MatDateRangePicker<any>;
-
+  private searchParamSubject = new BehaviorSubject<SearchParam>(
+    {} as SearchParam
+  );
   private destroySubject$ = new Subject<null>();
   private subscription: Subscription = new Subscription();
   constructor(
@@ -25,8 +42,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private route: ActivatedRoute,
     private sharedService: SharedService,
-
-    private wishlistService: WishlistService
+    private cdr: ChangeDetectorRef,
+    private wishlistService: WishlistService,
+    private orderService: OrderService
   ) {}
   elMainHeader: HTMLElement | null = null;
   currImgUrlIdx = 0;
@@ -37,15 +55,23 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   user$!: Observable<User>;
   res: any;
   searchParam = {} as SearchParam;
-  startDate: Date | null = null;
-  endDate: Date | null = null;
-  nightSum = 5;
+  currDate: Date = new Date();
+  minEndDate: Date | null = null;
+  // startDate: Date | null = null;
+  // endDate: Date | null = null;
+  nightSum: number = 5;
   guestsNumForDisplay: string = '1 guest';
   defaultDate = { start: new Date(), end: new Date() };
   isShowModal: boolean = false;
   selectedDate: any;
   hostDescShowMore: boolean = false;
   summaryShowMore: boolean = false;
+
+  datePickerFilter = (d: Date | null): boolean => {
+    const day = d || new Date();
+    return day > new Date();
+  };
+
   center!: google.maps.LatLngLiteral;
   display!: google.maps.LatLngLiteral;
   markerOptions: google.maps.MarkerOptions = {
@@ -87,12 +113,47 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       this.toggleModal('close');
     });
     this.setDefaultDates();
+    this.searchParamSubject.subscribe((newSearchParam) => {
+      this.calculateNightSum();
+    });
   }
 
   ngAfterViewInit() {
     this.elMainHeader = document.querySelector('app-header') as HTMLElement;
 
     if (this.elMainHeader) this.elMainHeader.classList.add('hidden-on-mobile');
+  }
+
+  onDateChange(): void {
+    this.setMinEndDate();
+    this.validateDates();
+    this.calculateNightSum();
+  }
+  validateDates(): void {
+    if (this.searchParam.startDate && this.searchParam.endDate) {
+      if (this.searchParam.endDate < this.minEndDate!) {
+        this.searchParam.endDate = this.defaultDate.end;
+      }
+    }
+  }
+  calculateNightSum() {
+    let startDate = this.searchParam.startDate;
+    let endDate = this.searchParam.endDate;
+    if (!startDate) startDate = this.defaultDate.start;
+    if (!endDate) endDate = this.defaultDate.end;
+
+    const timeDifference = endDate.getTime() - startDate.getTime();
+    this.nightSum = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    this.cdr.detectChanges();
+  }
+
+  setMinEndDate(): void {
+    if (this.searchParam.startDate) {
+      const startDate = new Date(this.searchParam.startDate);
+      startDate.setHours(0, 0, 0, 0);
+      startDate.setDate(startDate.getDate() + 1);
+      this.minEndDate = startDate;
+    }
   }
 
   getUserJoinDate(objectId: string) {
@@ -161,7 +222,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   setDefaultDates() {
     if (!this.searchParam.startDate && !this.searchParam.endDate) {
-      const currentDate = new Date();
+      const currentDate = this.currDate;
 
       const startDate = new Date(
         currentDate.getTime() + 7 * 24 * 60 * 60 * 1000
@@ -175,6 +236,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       };
       this.searchParam.startDate = startDate;
       this.searchParam.endDate = endDate;
+      this.searchParamSubject.next(this.searchParam);
     }
   }
 
@@ -188,6 +250,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     console.log(dateRange);
     this.searchParam.startDate = dateRange.start;
     this.searchParam.endDate = dateRange.end;
+    this.searchParamSubject.next(this.searchParam);
   }
 
   setDefaultLoc() {
@@ -230,6 +293,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     let strForDisplay = `${guestsStr}${infantStr}`;
 
     this.guestsNumForDisplay = strForDisplay;
+    this.searchParam.guests.adults = 1;
   }
 
   updateGuests(ev: any, num: number) {
@@ -243,6 +307,22 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     this.updateGuestsNumForDisplay(this.searchParam);
   }
 
+  onReserve() {
+    if (
+      !this.user ||
+      !this.stay ||
+      !this.searchParam.startDate ||
+      !this.searchParam.endDate
+    )
+      return;
+    const order = Order.createOrderFromInput(
+      this.user,
+      this.stay,
+      this.searchParam
+    );
+    this.orderService.saveOrder(order);
+  }
+
   moveMap(event: google.maps.MapMouseEvent) {
     this.center = event.latLng!.toJSON();
   }
@@ -253,8 +333,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.searchParam.startDate = null;
-    this.searchParam.endDate = null;
+
     if (this.elMainHeader)
       this.elMainHeader.classList.remove('hidden-on-mobile');
   }

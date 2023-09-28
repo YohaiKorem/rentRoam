@@ -57,6 +57,7 @@ import { OrderListComponent } from './app/cmps/order-list/order-list.component';
 import { OrderPreviewComponent } from './app/cmps/order-preview/order-preview.component';
 import { PreventDefaultDirective } from './app/directives/prevent-default.directive';
 import { StopPropagationDirective } from './app/directives/stop-propagation.directive';
+import { TripIndexComponent } from './app/pages/trip-index/trip-index.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,6 +94,7 @@ import { StopPropagationDirective } from './app/directives/stop-propagation.dire
     OrderPreviewComponent,
     PreventDefaultDirective,
     StopPropagationDirective,
+    TripIndexComponent,
   ],
   imports: [
     BrowserModule,

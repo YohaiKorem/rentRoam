@@ -88,9 +88,22 @@
       <header
         class="order-list-header flex align-center space-between full-width p1 shadow"
       >
-        <h1 class="text-left fw600 full-width">
-          Hello {{ user.fullname }}, you have {{ orders.length }} orders
+        <h1
+          *ngIf="orders.length; else noOrdersYet"
+          class="text-left fw600 full-width"
+        >
+          Hello {{ user.fullname }}, you have {{ orders.length }} order<span
+            *ngIf="orders.length > 1"
+            >s</span
+          >
         </h1>
+        <ng-template #noOrdersYet>
+          <h1 class="text-left fw600 full-width">
+            Hello {{ user.fullname }}, your bookings will be displayed here.
+            Make sure your listings are attractive and complete to attract more
+            guests.
+          </h1>
+        </ng-template>
 
         <div class="order-stats-map flex align-center gap1">
           <div
