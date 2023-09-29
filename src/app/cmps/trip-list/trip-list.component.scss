@@ -1,7 +1,7 @@
 @import "../../app-root/app.component.scss";
 
 .trip-preview-wrapper {
-  border: none;
+  border: 1px solid transparent;
   &:hover,
   &.active {
     border: 1px solid $secondaryClr2;

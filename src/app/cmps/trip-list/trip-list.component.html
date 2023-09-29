@@ -1,6 +1,8 @@
 <ul class="trip-list p0-5 full-width">
   <button
+    (click)="setCurrTrip(order)"
     *ngFor="let order of orders; let i = index"
+    [class.active]="this.currTripId === order._id"
     class="btn trip-preview-wrapper full-width"
   >
     <trip-preview [svg]="svg" class="full-width" [order]="order"></trip-preview>

@@ -61,6 +61,7 @@ import { TripIndexComponent } from './app/pages/trip-index/trip-index.component'
 import { TripListComponent } from './app/cmps/trip-list/trip-list.component';
 import { TripPreviewComponent } from './app/cmps/trip-preview/trip-preview.component';
 import { TripDetailsComponent } from './app/cmps/trip-details/trip-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,

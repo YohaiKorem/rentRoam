@@ -1,1 +1,27 @@
-<p>trip-details works!</p>
+<section class="trip-details-wrapper">
+  <div class="imgs-container">
+    <img src="" alt="" />
+  </div>
+  <div class="txt-container flex column space-between gap1">
+    <h4 class="fs22 fw500">{{ trip!.stay.name }}</h4>
+    <h5 class="fs20 fw500">{{ trip!.stay.address }}</h5>
+    <p>
+      <span class="fw500">Dates</span>:
+      <span>{{ formattedDates.start }}</span> -
+      <span>{{ formattedDates.end }}</span>
+    </p>
+    <p>
+      <span class="fw500">Guests</span>:
+      <span *ngFor="let guest of trip!.guests | keyvalue">
+        {{ guest.key }} : {{ guest.value }}
+      </span>
+    </p>
+    <p><span class="fw500">Total price</span>: {{ trip!.totalPrice }}</p>
+  </div>
+  <div class="confirmation">
+    <span class="fw500">Order Confirmation: </span>{{ trip!._id }}
+  </div>
+  <div class="status">
+    <span class="fw500">Order Status: </span>{{ trip!.status }}
+  </div>
+</section>

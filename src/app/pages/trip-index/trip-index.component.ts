@@ -18,6 +18,7 @@ export class TripIndexComponent implements OnInit {
   user!: User;
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
+  currTrip: Order | null = null;
   constructor(
     private userService: UserService,
     private stayService: StayService,
@@ -36,5 +37,8 @@ export class TripIndexComponent implements OnInit {
     this.orders$.pipe(take(1)).subscribe((orders: Order[]) => {
       this.orders = orders;
     });
+  }
+  onSelectTrip(order: Order) {
+    this.currTrip = order;
   }
 }
