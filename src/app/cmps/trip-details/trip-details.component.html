@@ -1,5 +1,5 @@
-<section class="trip-details-wrapper flex column gap0-5 p1">
-  <div *ngIf="stay" class="imgs-container">
+<section class="trip-details-wrapper flex column gap0-5 p1 shadow">
+  <div *ngIf="stay" class="imgs-container shadow">
     <div
       *ngFor="let img of stay.imgUrls | slice : 0 : 3; let i = index"
       class="img-container"
@@ -22,13 +22,13 @@
           {{ guest.key }} : {{ guest.value }}
         </span>
       </p>
-      <p><span class="fw500">Total price</span>: {{ trip!.totalPrice }}</p>
+      <p><span class="fw500">Total price</span>: ${{ trip!.totalPrice }}</p>
     </div>
     <div class="outlined-info-container flex column auto-center">
-      <div class="confirmation">
+      <div class="confirmation p0-5">
         <span class="fw500">Order Confirmation: </span>{{ trip!._id }}
       </div>
-      <div class="status">
+      <div class="status p0-5">
         <span class="fw500">Order Status: </span>{{ trip!.status }}
       </div>
     </div>

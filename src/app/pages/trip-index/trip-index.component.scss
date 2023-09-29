@@ -3,9 +3,12 @@
   border-radius: 1em;
 
   background-color: $secondaryClr2;
-  header > * {
-    background-color: #fff;
-    border-radius: 1em;
+  header {
+    color: $fontclr3;
+    & > * {
+      background-color: #fff;
+      border-radius: 1em;
+    }
   }
 
   .trip-cmps-container {
