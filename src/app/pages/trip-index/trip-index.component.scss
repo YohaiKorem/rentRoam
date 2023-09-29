@@ -7,4 +7,9 @@
     background-color: #fff;
     border-radius: 1em;
   }
+  .trip-cmps-container {
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }

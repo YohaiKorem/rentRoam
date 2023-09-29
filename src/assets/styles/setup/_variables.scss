@@ -11,8 +11,12 @@ $fontclr1: rgb(113, 113, 113);
 $fontclr2: rgb(238 232 244);
 $fontclr3: #222222;
 
-$navHeight: 65px;
+// STATUS COLORS
+$pending: #ffba1e;
+$declined: #e43838;
+$approved: #4eb944;
 
+$navHeight: 65px;
 // Breakpoints
 $mobile-breakpoint: 600px;
 $tablet-breakpoint: 768px;

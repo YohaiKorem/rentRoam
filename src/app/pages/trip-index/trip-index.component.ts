@@ -18,6 +18,7 @@ export class TripIndexComponent implements OnInit {
   user!: User;
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
+
   constructor(
     private userService: UserService,
     private stayService: StayService,

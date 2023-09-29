@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Order } from 'src/app/models/order.model';
 
 @Component({
@@ -8,6 +9,12 @@ import { Order } from 'src/app/models/order.model';
 })
 export class TripPreviewComponent implements OnInit {
   @Input() order!: Order;
+  // @Input() svg!: {
+  //   pending: IconDefinition;
+  //   approved: IconDefinition;
+  //   declined: IconDefinition;
+  //   [key: string]: any;
+  // };
   dateForDisplay: string = '';
 
   ngOnInit(): void {

@@ -469,6 +469,17 @@
   border-bottom: 1px solid lightgray;
 }
 
+// Order status
+&.pending {
+  color: $pending;
+}
+&.declined {
+  color: $declined;
+}
+&.approved {
+  color: $approved;
+}
+
 // Others
 .loading {
   opacity: 0;

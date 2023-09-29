@@ -8,17 +8,6 @@
       }
     }
   }
-  .order-status {
-    &.pending {
-      color: #ffba1e;
-    }
-    &.declined {
-      color: #e43838;
-    }
-    &.approved {
-      color: #4eb944;
-    }
-  }
 
   select,
   option {
