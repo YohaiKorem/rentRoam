@@ -1,4 +1,6 @@
-<article class="trip-preview flex align-center space-between text-left gap1">
+<article
+  class="trip-preview flex align-center space-between text-left gap1 full-width"
+>
   <div class="txt-container">
     <h4 class="fw500 fs18">{{ order.stay.name }}</h4>
     <p class="fw500 fs14">
@@ -6,5 +8,7 @@
       <span class="fw400">{{ dateForDisplay }}</span>
     </p>
   </div>
-  <div class="stat-container">{{ order.status }}</div>
+  <div [class]="order.status" class="stat-container">
+    <fa-icon [icon]="svg[order.status]"></fa-icon> {{ order.status }}
+  </div>
 </article>

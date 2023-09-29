@@ -21,8 +21,7 @@ export class TripIndexComponent implements OnInit {
   constructor(
     private userService: UserService,
     private stayService: StayService,
-    private orderService: OrderService,
-    private router: Router
+    private orderService: OrderService
   ) {}
   ngOnInit(): void {
     this.userService.loggedInUser$

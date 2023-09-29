@@ -31,8 +31,8 @@
   <p>{{ order.stay.name }}</p>
   <p>{{ orderDateForDisplay }}</p>
   <p>{{ order.totalPrice }}$</p>
-  <p [class]="'order-status ' + order.status">
-    <fa-icon [icon]="getStatusIcon(order.status)"> </fa-icon> {{ order.status }}
+  <p [class]="order.status">
+    <fa-icon [icon]="svg[order.status]"> </fa-icon> {{ order.status }}
   </p>
   <select
     class="pi0-5 pb1"
