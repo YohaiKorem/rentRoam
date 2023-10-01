@@ -1,16 +1,16 @@
-<section class="trip-details-wrapper flex column gap0-5 p1 shadow">
+<section class="trip-details-wrapper flex column 0 p1 shadow">
   <div *ngIf="stay" class="imgs-container shadow">
     <div
       *ngFor="let img of stay.imgUrls | slice : 0 : 3; let i = index"
-      class="img-container"
+      class="img-container square-3"
     >
       <img [src]="img" loading="lazy" />
     </div>
   </div>
-  <div class="trip-info-container flex column space-between gap0-5">
-    <div class="txt-container flex column space-between gap0-5">
-      <h4 class="fs22 fw500">{{ trip!.stay.name }}</h4>
-      <h5 class="fs20 fw500">{{ trip!.stay.address }}</h5>
+  <div class="trip-info-container flex column space-between 0">
+    <div class="txt-container flex column space-between 0">
+      <h4 class="fs18 fw500">{{ trip!.stay.name }}</h4>
+      <h5 class="fs16 fw500">{{ trip!.stay.address }}</h5>
       <p>
         <span class="fw500">Dates</span>:
         <span>{{ formattedDates.start }}</span> -
