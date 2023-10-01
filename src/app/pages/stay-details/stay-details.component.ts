@@ -11,6 +11,7 @@ import {
   Observable,
   Subscription,
   map,
+  take,
   takeUntil,
   Subject,
   BehaviorSubject,
@@ -320,7 +321,10 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       this.stay,
       this.searchParam
     );
-    this.orderService.saveOrder(order);
+    const newOrder = this.orderService.saveOrder(order);
+    newOrder.pipe(take(1)).subscribe((order: Order) => {
+      this.router.navigateByUrl(`/book/${order._id}`);
+    });
   }
 
   moveMap(event: google.maps.MapMouseEvent) {

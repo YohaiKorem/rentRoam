@@ -30,14 +30,27 @@
         margin-inline: 0;
         color: $fontclr3;
       }
-      .btn-update {
-        border: 1px solid $secondaryClr2;
-        width: 80%;
-      }
-      .btn-options {
-        background-color: $secondaryClr2;
-        width: 20%;
-        border: none;
+      .btns-container {
+        position: relative;
+        .btn-update {
+          border: 1px solid $secondaryClr2;
+          width: 80%;
+        }
+        .btn-options {
+          background-color: $secondaryClr2;
+          width: 20%;
+          border: none;
+        }
+        .btn-remove {
+          border: 1px solid $secondaryClr2;
+
+          position: absolute;
+          right: -2em;
+          bottom: -20px;
+          background-color: #fff;
+          color: red;
+          z-index: 200;
+        }
       }
     }
   }

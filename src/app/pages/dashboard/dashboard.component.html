@@ -65,8 +65,19 @@
                 class="btn btn-options"
                 appPreventDefault
                 appStopPropagation
+                (click)="showRemoveOption(stay._id)"
               >
                 <fa-icon class="svg-container" [icon]="faEllipsisH"> </fa-icon>
+              </button>
+              <button
+                *ngIf="stayIdToRmove === stay._id"
+                class="btn btn-remove flex align-center gap0-5"
+                appPreventDefault
+                appStopPropagation
+                (click)="onRemoveStay(stay._id)"
+              >
+                <fa-icon class="svg-container" [icon]="faTrash"> </fa-icon>
+                Remove {{ stay.name }}
               </button>
             </div>
           </a>
