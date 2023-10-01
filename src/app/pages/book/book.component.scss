@@ -1,14 +1,22 @@
 @import "../../app-root/app.component.scss";
-.separator {
-  position: relative;
-  margin-block: 1em;
-  &::after {
-    position: absolute;
-    content: "";
-    height: 1px;
-    width: 100%;
-    background-color: $secondaryClr2;
-    opacity: 0.7;
-    bottom: -1em;
+.book-wrapper {
+  .separator {
+    position: relative;
+    margin-block: 1em;
+    &::after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      width: 100%;
+      background-color: $secondaryClr2;
+      opacity: 0.7;
+      bottom: -1em;
+    }
+  }
+  .btn.main-btn {
+    align-self: start;
+  }
+  .order-details-container {
+    border-radius: 1em;
   }
 }

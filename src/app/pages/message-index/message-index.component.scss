@@ -1,0 +1,8 @@
+@import "../../app-root/app.component.scss";
+.messages-page-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  & > * {
+    border-inline: 1px solid $secondaryClr3;
+  }
+}

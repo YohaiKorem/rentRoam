@@ -20,6 +20,19 @@
   &:hover {
     background-color: darken(#fff, 5%);
   }
+
+  &.main-btn {
+    background: linear-gradient(
+      to right,
+      #e61e4d 0%,
+      #e31c5f 50%,
+      #d70466 100%
+    );
+    color: $fontclr2;
+    padding: 1em;
+    border-radius: em(8px);
+    font-weight: 600;
+  }
 }
 
 .simple-button {

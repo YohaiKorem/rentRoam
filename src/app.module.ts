@@ -62,6 +62,10 @@ import { TripListComponent } from './app/cmps/trip-list/trip-list.component';
 import { TripPreviewComponent } from './app/cmps/trip-preview/trip-preview.component';
 import { TripDetailsComponent } from './app/cmps/trip-details/trip-details.component';
 import { BookComponent } from './app/pages/book/book.component';
+import { MessageIndexComponent } from './app/pages/message-index/message-index.component';
+import { ChatListComponent } from './app/cmps/chat-list/chat-list.component';
+import { ChatPreviewComponent } from './app/cmps/chat-preview/chat-preview.component';
+import { ChatEditComponent } from './app/cmps/chat-edit/chat-edit.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +108,10 @@ import { BookComponent } from './app/pages/book/book.component';
     TripPreviewComponent,
     TripDetailsComponent,
     BookComponent,
+    MessageIndexComponent,
+    ChatListComponent,
+    ChatPreviewComponent,
+    ChatEditComponent,
   ],
   imports: [
     BrowserModule,

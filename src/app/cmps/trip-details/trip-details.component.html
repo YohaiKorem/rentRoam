@@ -19,7 +19,7 @@
       <p>
         <span class="fw500">Guests</span>:
         <span *ngFor="let guest of trip!.guests | keyvalue">
-          {{ guest.key }} : {{ guest.value }}
+          <span *ngIf="guest.value"> {{ guest.key }} : {{ guest.value }}</span>
         </span>
       </p>
       <p><span class="fw500">Total price</span>: ${{ trip!.totalPrice }}</p>

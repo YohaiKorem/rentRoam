@@ -1,0 +1,13 @@
+<section class="messages-page-wrapper">
+  <aside class="inbox">
+    <h3 class="dark-font fw500 p1">Order messages</h3>
+    <chat-list [user]="user" [orders]="orders"></chat-list>
+  </aside>
+  <section class="main-chat shadow">
+    <chat-edit></chat-edit>
+  </section>
+  <aside class="order-details-wrapper">
+    <h3 class="dark-font fw500 p1">Order details</h3>
+    <trip-details [trip]="orders[0]"></trip-details>
+  </aside>
+</section>
