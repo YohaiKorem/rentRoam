@@ -21,6 +21,7 @@ export class MessageIndexComponent implements OnInit {
   user!: User;
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
+  currChat!: Order;
   ngOnInit(): void {
     this.usererService.loggedInUser$.pipe(take(1)).subscribe((user) => {
       this.user = user!;
@@ -35,8 +36,16 @@ export class MessageIndexComponent implements OnInit {
       this.orders$ = forkJoin([userGuestOrders$, userHostOrders$]).pipe(
         map(([guestOrders, hostOrders]) => [...guestOrders, ...hostOrders])
       );
-      this.orders$.pipe(take(1)).subscribe((orders) => (this.orders = orders));
+      this.orders$.pipe(take(1)).subscribe((orders) => {
+        this.orders = orders;
+        this.setCurrChat(orders[0]._id);
+      });
       console.log(this.orders);
     });
+  }
+
+  setCurrChat(orderId: string) {
+    const currChat = this.orders.find((order) => orderId === order._id);
+    if (currChat) this.currChat = currChat;
   }
 }

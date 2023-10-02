@@ -1,13 +1,23 @@
 <section class="messages-page-wrapper">
   <aside class="inbox">
     <h3 class="dark-font fw500 p1">Order messages</h3>
-    <chat-list [user]="user" [orders]="orders"></chat-list>
+    <chat-list
+      (setCurrChat)="setCurrChat($event)"
+      [user]="user"
+      [orders]="orders"
+      [currChat]="currChat"
+    ></chat-list>
   </aside>
-  <section class="main-chat shadow">
-    <chat-edit></chat-edit>
+  <section class="main-chat flex column align-center space-between hadow">
+    <div class="msg-list-container">
+      <msg-list [msgs]="currChat.msgs"></msg-list>
+    </div>
+    <div class="chat-edit-container full-width">
+      <chat-edit [user]="user" [order]="currChat"></chat-edit>
+    </div>
   </section>
   <aside class="order-details-wrapper">
     <h3 class="dark-font fw500 p1">Order details</h3>
-    <trip-details [trip]="orders[0]"></trip-details>
+    <trip-details [trip]="currChat"></trip-details>
   </aside>
 </section>

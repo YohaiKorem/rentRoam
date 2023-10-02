@@ -66,6 +66,8 @@ import { MessageIndexComponent } from './app/pages/message-index/message-index.c
 import { ChatListComponent } from './app/cmps/chat-list/chat-list.component';
 import { ChatPreviewComponent } from './app/cmps/chat-preview/chat-preview.component';
 import { ChatEditComponent } from './app/cmps/chat-edit/chat-edit.component';
+import { MsgListComponent } from './app/cmps/msg-list/msg-list.component';
+import { MsgPreviewComponent } from './app/cmps/msg-preview/msg-preview.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +114,8 @@ import { ChatEditComponent } from './app/cmps/chat-edit/chat-edit.component';
     ChatListComponent,
     ChatPreviewComponent,
     ChatEditComponent,
+    MsgListComponent,
+    MsgPreviewComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,6 @@
 @import "../../app-root/app.component.scss";
 .chat-preview-wrapper {
-  border-block-start: 1px solid $secondaryClr3;
 
-  &:last-of-type {
-    border-block-end: 1px solid $secondaryClr3;
-  }
   .img-container {
     width: 2em;
     height: 100%;

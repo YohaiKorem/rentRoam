@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 
@@ -10,4 +10,9 @@ import { User } from 'src/app/models/user.model';
 export class ChatListComponent {
   @Input() orders: Order[] = [];
   @Input() user!: User;
+  @Input() currChat!: Order;
+  @Output() setCurrChat = new EventEmitter();
+  onSetCurrChat(orderId: string) {
+    this.setCurrChat.emit(orderId);
+  }
 }

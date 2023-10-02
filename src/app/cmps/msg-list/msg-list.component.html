@@ -1,0 +1,6 @@
+<ul class="msg-list-wrapper">
+  some text
+  <li *ngFor="let msg of msgs; let i = index" class="msg-preview-container">
+    <msg-preview [msg]="msg"></msg-preview>
+  </li>
+</ul>

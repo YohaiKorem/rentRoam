@@ -2,6 +2,8 @@
   <li
     *ngFor="let order of orders; let i = index"
     class="chat-preview-container"
+    [class.active]="order._id === currChat._id"
+    (click)="onSetCurrChat(order._id)"
   >
     <chat-preview [user]="user" [order]="order"></chat-preview>
   </li>
