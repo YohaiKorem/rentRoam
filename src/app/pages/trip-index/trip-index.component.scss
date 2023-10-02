@@ -6,7 +6,7 @@
   position: relative;
   background-color: $secondaryClr2;
   header {
-    color: $fontclr3;
+    color: $fontClr3;
     & > * {
       background-color: #fff;
       border-radius: 1em;
@@ -36,14 +36,14 @@
         #e31c5f 50%,
         #d70466 100%
       );
-      color: $fontclr2;
+      color: $fontClr2;
       padding: 1em;
       border-radius: em(8px);
       font-weight: 500;
       border: none;
     }
     p.fw500 {
-      color: $fontclr3;
+      color: $fontClr3;
     }
   }
 }

@@ -1,8 +1,8 @@
-<ul class="chat-list-wrapper">
+<ul class="chat-list-wrapper flex column">
   <li
     *ngFor="let order of orders; let i = index"
     class="chat-preview-container"
   >
-    <chat-preview [order]="order"></chat-preview>
+    <chat-preview [user]="user" [order]="order"></chat-preview>
   </li>
 </ul>

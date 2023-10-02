@@ -25,7 +25,7 @@
       height: 100%;
       bottom: em(-39px);
       .slider-chart-item {
-        background-color: $fontclr3;
+        background-color: $fontClr3;
         width: 20px;
         transition: opacity 0.3s ease;
         &.opacity {
@@ -50,7 +50,7 @@
   h3 {
     margin: 0;
     padding: 0;
-    color: $fontclr3;
+    color: $fontClr3;
   }
 
   .btn.active {
@@ -95,7 +95,7 @@
       }
       input {
         opacity: 1;
-        color: $fontclr3;
+        color: $fontClr3;
         grid-row: 2;
         grid-column: 2;
         width: 100%;
@@ -235,7 +235,7 @@
       padding-left: 10px;
       border-radius: 8px;
       text-decoration: underline;
-      color: $fontclr3;
+      color: $fontClr3;
       font-size: 1rem;
       font-weight: 600;
       &:hover {

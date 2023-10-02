@@ -28,7 +28,7 @@
       h4,
       p {
         margin-inline: 0;
-        color: $fontclr3;
+        color: $fontClr3;
       }
       .btns-container {
         position: relative;
@@ -58,11 +58,11 @@
   .call-to-action {
     border-radius: 1em;
     .stay-amount {
-      color: $fontclr3;
+      color: $fontClr3;
     }
     .btn-become-host {
       border: none;
-      color: $fontclr2;
+      color: $fontClr2;
       background: radial-gradient(
         circle at left,
         #ff385c 0%,
@@ -78,7 +78,7 @@
     background-color: #fff;
     border: 1px solid $secondaryClr2;
     border-radius: 1em;
-    color: $fontclr3;
+    color: $fontClr3;
     span.status-circle {
       width: 5px;
       height: 5px;

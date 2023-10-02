@@ -18,16 +18,45 @@ export class ChatPreviewComponent implements OnInit {
   ) {}
   @Input() order!: Order;
   @Input() user!: User;
-  messageSender$!: Observable<StayHost | Buyer>;
   messageSender!: StayHost | Buyer;
+  senderImg!: string;
+  formattedDate!: { start: string; end: string };
+  isImgLoaded: boolean = false;
+  isImgErr: boolean = false;
+
   ngOnInit(): void {
     if (this.order.buyer._id === this.user._id) {
       this.stayService
         .findHostById(this.order.hostId)
         .pipe(take(1))
-        .subscribe((host) => (this.messageSender = host!));
+        .subscribe((host) => {
+          this.messageSender = host!;
+          this.senderImg = this.messageSender.thumbnailUrl;
+        });
     } else {
-      this.messageSender$ = of(this.order.buyer);
+      this.messageSender = this.order.buyer;
+      this.senderImg = this.messageSender.imgUrl;
     }
+    this.formattedDate = this.formatDate(this.order);
+  }
+
+  formatDate(order: Order): { start: string; end: string } {
+    const { checkin, checkout } = order;
+    return {
+      start: new Date(checkin).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+      }),
+      end: new Date(checkout).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+      }),
+    };
+  }
+  onImgErr() {
+    console.log('error');
+
+    this.isImgLoaded = false;
+    this.isImgErr = true;
   }
 }
