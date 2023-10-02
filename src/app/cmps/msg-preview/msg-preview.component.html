@@ -1,1 +1,9 @@
-<p>msg-preview works!</p>
+<div class="msg-preview-wrapper flex align-center full-width p0-5 gap0-5">
+  <div class="img-container">
+    <img [src]="msgSender.imgUrl" />
+  </div>
+  <div class="txt-container">
+    <p class="name dark-font fw500">{{ msgSender.fullname }}</p>
+    <p class="txt">{{ msg.txt }}</p>
+  </div>
+</div>

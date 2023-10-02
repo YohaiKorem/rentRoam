@@ -9,8 +9,12 @@
     ></chat-list>
   </aside>
   <section class="main-chat flex column align-center space-between hadow">
-    <div class="msg-list-container">
-      <msg-list [msgs]="currChat.msgs"></msg-list>
+    <div class="msg-list-container full-width">
+      <msg-list
+        [order]="currChat"
+        [user]="user"
+        [msgs]="currChat.msgs"
+      ></msg-list>
     </div>
     <div class="chat-edit-container full-width">
       <chat-edit [user]="user" [order]="currChat"></chat-edit>

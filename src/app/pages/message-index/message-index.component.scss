@@ -3,6 +3,7 @@
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
   height: 100%;
+  overflow: hidden;
   & > * {
     border-inline: 1px solid $secondaryClr3;
   }

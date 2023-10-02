@@ -2,7 +2,12 @@
 .chat-edit-wrapper {
   position: relative;
   input {
-    outline: 0;
+    outline: none;
+    border: 1px solid $secondaryClr3;
+    background-color: #f2f2f2;
+    &:focus {
+      background-color: lighten(#f2f2f2, 10%);
+    }
   }
   .btn {
     position: absolute;
