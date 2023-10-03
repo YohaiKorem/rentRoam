@@ -197,8 +197,8 @@ input[type="password"] {
 }
 
 .cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
-  display: none !important;
-  pointer-events: none;
+  // display: none !important;
+  // pointer-events: none;
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
 }

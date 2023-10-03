@@ -38,8 +38,6 @@ export class StayService {
   public stays$ = this._stays$.asObservable();
   private _distances$ = new BehaviorSubject<StayDistance[]>([]);
   public distances$ = this._distances$.asObservable();
-  public googleMapsAPI = environment.googleMapsAPI;
-  public geocodeAPI = environment.geocodeAPI;
   private _stayFilter$ = new BehaviorSubject<StayFilter>({
     labels: [],
     minPrice: 0,
@@ -72,6 +70,8 @@ export class StayService {
   public lowestPrice$ = this._lowestPrice$.asObservable();
   private _highestPrice$ = new BehaviorSubject<number>(0);
   public highestPrice$ = this._highestPrice$.asObservable();
+  public googleMapsAPI = environment.googleMapsAPI;
+  public geocodeAPI = environment.geocodeAPI;
   constructor(
     private http: HttpClient,
     private geocodingService: GeocodingService,
@@ -96,9 +96,9 @@ export class StayService {
       // }
       // );
     } else {
-      this._stays$.next(stays);
+      this._stays$.next(someStays);
     }
-    this.setAvgPrice(stays);
+    this.setAvgPrice(someStays);
   }
 
   public initMap() {
@@ -167,7 +167,13 @@ export class StayService {
       });
   }
 
-  private getTargetCoords(userLoc: any, searchParams: any) {
+  private getTargetCoords(
+    userLoc: {
+      lat: number | null;
+      lng: number | null;
+    },
+    searchParams: SearchParam
+  ) {
     if (searchParams && searchParams.location && searchParams.location.coords) {
       return searchParams.location.coords;
     } else if (userLoc && userLoc.lat !== null && userLoc.lng !== null) {
@@ -402,7 +408,7 @@ export class StayService {
     });
   }
 
-  private _filter(stays: Stay[], filterBy: any): Stay[] {
+  private _filter(stays: Stay[], filterBy: StayFilter): Stay[] {
     let filteredStays = stays;
     if (filterBy.labels && filterBy.labels.length > 0)
       filteredStays = filteredStays.filter(
@@ -417,13 +423,13 @@ export class StayService {
     ) {
       if (filterBy.equipment.bathNum) {
         filteredStays = filteredStays.filter(
-          (stay) => stay.equipment.bathNum! >= filterBy.equipment.bathNum
+          (stay) => stay.equipment.bathNum! >= filterBy.equipment.bathNum!
         );
       }
 
       if (filterBy.equipment.bedsNum) {
         filteredStays = filteredStays.filter(
-          (stay) => stay.equipment.bedsNum! >= filterBy.equipment.bedsNum
+          (stay) => stay.equipment.bedsNum! >= filterBy.equipment.bedsNum!
         );
       }
     }
@@ -451,7 +457,7 @@ export class StayService {
     return filteredStays;
   }
 
-  private _countFilters(filterBy: any) {
+  private _countFilters(filterBy: StayFilter) {
     let count = 0;
     if (filterBy.labels && filterBy.labels.length > 0) count++;
     if (

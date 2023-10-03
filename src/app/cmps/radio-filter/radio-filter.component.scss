@@ -28,6 +28,14 @@
       transition: 0.25s;
       padding-block-end: 1em;
 
+      &.loading {
+        opacity: 0;
+        visibility: hidden;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+      }
+
       &::after {
         content: "";
         width: 100%;
