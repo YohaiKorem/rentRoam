@@ -1,4 +1,11 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Buyer } from 'src/app/models/buyer.model';
 import { StayHost } from 'src/app/models/host.model';
 import { Msg } from 'src/app/models/msg.model';
@@ -16,4 +23,14 @@ export class MsgListComponent {
   @Input() msgs: Msg[] = [];
   @Input() user!: User;
   @Input() order!: Order;
+  constructor(private cdr: ChangeDetectorRef) {}
+  ngOnInit() {
+    console.log(this.msgs);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // if (changes['msgs'] || changes['user'] || changes['order'])
+    //   this.cdr.detectChanges();
+    console.log(this.msgs);
+  }
 }

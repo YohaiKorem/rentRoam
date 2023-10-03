@@ -40,8 +40,17 @@ export class MessageIndexComponent implements OnInit {
         this.orders = orders;
         this.setCurrChat(orders[0]._id);
       });
-      console.log(this.orders);
     });
+  }
+
+  updateCurrChat(order: Order) {
+    this.currChat = order;
+    this.updateOrderInOrders(order);
+  }
+
+  updateOrderInOrders(order: Order) {
+    const idx = this.orders.findIndex((o) => o._id === order._id);
+    this.orders.splice(idx, 1, order);
   }
 
   setCurrChat(orderId: string) {

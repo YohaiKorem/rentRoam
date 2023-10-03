@@ -17,7 +17,11 @@
       ></msg-list>
     </div>
     <div class="chat-edit-container full-width">
-      <chat-edit [user]="user" [order]="currChat"></chat-edit>
+      <chat-edit
+        (orderUpdated)="updateCurrChat($event)"
+        [user]="user"
+        [order]="currChat"
+      ></chat-edit>
     </div>
   </section>
   <aside class="order-details-wrapper">

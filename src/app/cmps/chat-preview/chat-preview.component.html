@@ -28,6 +28,9 @@
   <div class="txt-container">
     <div class="chat-preview-name">{{ messageSender.fullname }}</div>
     <div *ngIf="order.msgs.length" class="chat-preview-msg">
+      <span *ngIf="order.msgs[order.msgs.length - 1].fromId === user._id"
+        >You:
+      </span>
       {{ order.msgs[order.msgs.length - 1].txt }}
     </div>
     <div class="order-info">

@@ -18,7 +18,7 @@ export class ChatPreviewComponent implements OnInit {
   ) {}
   @Input() order!: Order;
   @Input() user!: User;
-  messageSender!: StayHost | Buyer;
+  messageSender!: User | Buyer;
   senderImg!: string;
   formattedDate!: { start: string; end: string };
   isImgLoaded: boolean = false;
@@ -26,12 +26,12 @@ export class ChatPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.order.buyer._id === this.user._id) {
-      this.stayService
-        .findHostById(this.order.hostId)
+      this.userService
+        .getUserById(this.order.hostId)
         .pipe(take(1))
-        .subscribe((host) => {
-          this.messageSender = host!;
-          this.senderImg = this.messageSender.thumbnailUrl;
+        .subscribe((user) => {
+          this.messageSender = user!;
+          this.senderImg = user.imgUrl;
         });
     } else {
       this.messageSender = this.order.buyer;

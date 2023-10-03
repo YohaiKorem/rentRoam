@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Buyer } from 'src/app/models/buyer.model';
 import { StayHost } from 'src/app/models/host.model';
 import { Msg } from 'src/app/models/msg.model';
@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service';
 import { take, Observable, of } from 'rxjs';
 import { MsgService } from 'src/app/services/msg.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'chat-edit',
@@ -17,29 +18,31 @@ export class ChatEditComponent implements OnInit {
   @Input() msg: Msg | null = null;
   @Input() order!: Order;
   @Input() user!: User;
-
+  @Output() orderUpdated = new EventEmitter();
   constructor(
     private stayService: StayService,
-    private msgService: MsgService
+    private msgService: MsgService,
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
-    if (!this.msg) {
-      this.msg = new Msg('', '', this.user._id, '', Date.now());
+    this.initMsg();
+  }
 
-      if (this.order.buyer._id === this.user._id) {
-        this.stayService
-          .findHostById(this.order.hostId)
-          .pipe(take(1))
-          .subscribe((host) => {
-            if (host && host._id) {
-              this.msg!.toId = host._id;
-            }
-          });
-      } else {
-        this.msg.toId = this.order.buyer._id;
-      }
+  initMsg(msg: Msg = new Msg('', '', this.user._id, '', Date.now())) {
+    if (this.order.buyer._id === this.user._id) {
+      this.stayService
+        .findHostById(this.order.hostId)
+        .pipe(take(1))
+        .subscribe((host) => {
+          if (host && host._id) {
+            msg.toId = host._id;
+          }
+        });
+    } else {
+      msg.toId = this.order.buyer._id;
     }
+    this.msg = msg;
   }
 
   onSubmitMsg() {
@@ -54,7 +57,12 @@ export class ChatEditComponent implements OnInit {
       const msg = { ...this.msg };
       msg.sentTimeStamp = Date.now();
 
-      this.msgService.saveMsg(msg, this.order);
+      const order$ = this.msgService.saveMsg(msg, this.order);
+      order$.pipe(take(1)).subscribe((order: Order) => {
+        this.order = order;
+        this.orderUpdated.emit(order);
+        this.initMsg();
+      });
     }
   }
 }

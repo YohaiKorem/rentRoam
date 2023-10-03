@@ -19,6 +19,9 @@ export class MsgPreviewComponent implements OnInit {
   @Input() order!: Order;
   msgImg: string = '';
   msgSender!: User;
+  isImgLoaded: boolean = false;
+  isImgErr: boolean = false;
+  formattedDate!: string;
 
   constructor(
     private userService: UserService,
@@ -30,6 +33,37 @@ export class MsgPreviewComponent implements OnInit {
       ? (this.msgSender = this.user)
       : this.userService
           .getUserById(this.msg.fromId)
-          .pipe(tap((user) => (this.msgSender = user)));
+          .pipe(take(1))
+          .subscribe((user) => (this.msgSender = user));
+    this.formattedDate = this.formatDate(this.msg);
+  }
+  onImgErr() {
+    console.log('error');
+
+    this.isImgLoaded = false;
+    this.isImgErr = true;
+  }
+
+  formatDate(msg: Msg): string {
+    const now = new Date();
+    const msgDate = new Date(msg.sentTimeStamp);
+    const diffInSeconds = Math.floor(
+      (now.getTime() - msgDate.getTime()) / 1000
+    );
+
+    if (diffInSeconds < 60) {
+      return 'just now';
+    } else if (diffInSeconds < 120) {
+      return 'a minute ago';
+    } else if (diffInSeconds < 3600) {
+      return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    } else {
+      return msgDate.toLocaleString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    }
   }
 }
