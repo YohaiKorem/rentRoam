@@ -1,13 +1,16 @@
 @import "../../app-root/app.component.scss";
 .label-loader-wrapper {
+  display: grid;
+  place-items: center;
+  gap: 0.3em;
   .circle {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
   }
 
   .rectangle {
-    width: 30px;
+    width: 50px;
     height: 15px;
     border-radius: 1em;
   }

@@ -35,6 +35,7 @@ export class RadioFilterComponent {
   selectedLabel: string = '';
   filterCount: number = 0;
   labels!: Label[];
+  labelsForDisplay!: any;
   isImgLoaded: { [index: number]: boolean } = {};
   @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
   private scrollAmount = 500;
@@ -42,6 +43,9 @@ export class RadioFilterComponent {
   ngOnInit() {
     this.labelService.labels$.pipe(take(1)).subscribe((labels) => {
       this.labels = labels;
+      this.labelsForDisplay = labels.map((label) => {
+        return { txt: label.txt, src: label.src, isLoaded: false };
+      });
     });
 
     this.stayService.stayFilter$
@@ -115,38 +119,15 @@ export class RadioFilterComponent {
     this.isFirstElementInView = true;
   }
   handleScrollCompletelyToRight() {
+    console.log('hi');
+
     this.isLastElementInView = true;
   }
 
   filterStaysByLabel(ev: any) {
-    // this.applyLabelStyles(ev.target.labels[0]);
     this.selectedLabel = ev.target.labels[0].innerText;
     this.stayFilter.labels[0] = this.selectedLabel;
     this.stayService.setFilter(this.stayFilter);
-  }
-
-  applyLabelStyles(label: HTMLLabelElement) {
-    // this is a workaround because of copying 61 label elements, usuaslly i would rather use ngClass
-    let labelObjs = [];
-    let res: any = [];
-    const imgsNodeList = document.querySelectorAll('label img');
-    let imgs = Array.from(imgsNodeList).map(
-      (img) => (img as HTMLImageElement).currentSrc
-    );
-
-    // document
-    //   .querySelectorAll('label')
-    //   .forEach((label) => res.push(label.innerText));
-    // document
-    //   .querySelectorAll('label')
-    //   .forEach((label) => label.classList.remove('active'));
-    // label.classList.add('active');
-
-    for (let i = 0; i < res.length; i++) {
-      const labelObj = { txt: res[i], src: imgs[i] };
-
-      labelObjs.push(labelObj);
-    }
   }
 
   onImgLoad(labelTxt: string, idx: number) {
@@ -158,7 +139,6 @@ export class RadioFilterComponent {
   }
 
   openFilterModal() {
-    // this.sharedService.openFilterModal();
     this.sharedService.openModal('Filters');
   }
 
