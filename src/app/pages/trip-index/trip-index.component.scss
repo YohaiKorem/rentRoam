@@ -1,11 +1,50 @@
 @import "../../app-root/app.component.scss";
 .trip-index-wrapper {
   border-radius: 1em;
-
+  overflow: auto !important;
+  height: calc(100vh - 84px);
+  position: relative;
   background-color: $secondaryClr2;
-  header > * {
+  header {
+    color: $fontClr3;
+    & > * {
+      background-color: #fff;
+      border-radius: 1em;
+    }
+  }
+
+  .trip-cmps-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     background-color: #fff;
-    border-radius: 1em;
+  }
+  .no-trips-yet-container {
+    height: 300px;
+    background-color: #fff;
+    border-radius: 1rem;
+    .img-container,
+    img {
+      width: 100%;
+      height: 100%;
+      border-start-end-radius: 1rem;
+      border-end-end-radius: 1rem;
+    }
+    a {
+      background: linear-gradient(
+        to right,
+        #e61e4d 0%,
+        #e31c5f 50%,
+        #d70466 100%
+      );
+      color: $fontClr2;
+      padding: 1em;
+      border-radius: em(8px);
+      font-weight: 500;
+      border: none;
+    }
+    p.fw500 {
+      color: $fontClr3;
+    }
   }
   .trip-cmps-container {
     background-color: #fff;

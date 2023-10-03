@@ -61,6 +61,15 @@ import { TripIndexComponent } from './app/pages/trip-index/trip-index.component'
 import { TripListComponent } from './app/cmps/trip-list/trip-list.component';
 import { TripPreviewComponent } from './app/cmps/trip-preview/trip-preview.component';
 import { TripDetailsComponent } from './app/cmps/trip-details/trip-details.component';
+import { BookComponent } from './app/pages/book/book.component';
+import { MessageIndexComponent } from './app/pages/message-index/message-index.component';
+import { ChatListComponent } from './app/cmps/chat-list/chat-list.component';
+import { ChatPreviewComponent } from './app/cmps/chat-preview/chat-preview.component';
+import { ChatEditComponent } from './app/cmps/chat-edit/chat-edit.component';
+import { MsgListComponent } from './app/cmps/msg-list/msg-list.component';
+import { MsgPreviewComponent } from './app/cmps/msg-preview/msg-preview.component';
+import { LabelLoaderComponent } from './app/cmps/label-loader/label-loader.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -101,6 +110,14 @@ import { TripDetailsComponent } from './app/cmps/trip-details/trip-details.compo
     TripListComponent,
     TripPreviewComponent,
     TripDetailsComponent,
+    BookComponent,
+    MessageIndexComponent,
+    ChatListComponent,
+    ChatPreviewComponent,
+    ChatEditComponent,
+    MsgListComponent,
+    MsgPreviewComponent,
+    LabelLoaderComponent,
   ],
   imports: [
     BrowserModule,

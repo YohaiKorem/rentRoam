@@ -9,12 +9,12 @@ import { Order } from 'src/app/models/order.model';
 })
 export class TripPreviewComponent implements OnInit {
   @Input() order!: Order;
-  // @Input() svg!: {
-  //   pending: IconDefinition;
-  //   approved: IconDefinition;
-  //   declined: IconDefinition;
-  //   [key: string]: any;
-  // };
+  @Input() svg!: {
+    pending: IconDefinition;
+    approved: IconDefinition;
+    declined: IconDefinition;
+    [key: string]: any;
+  };
   dateForDisplay: string = '';
 
   ngOnInit(): void {

@@ -1,3 +1,4 @@
+@import "../setup/variables";
 // Buttons
 
 .btn {
@@ -18,6 +19,19 @@
 
   &:hover {
     background-color: darken(#fff, 5%);
+  }
+
+  &.main-btn {
+    background: linear-gradient(
+      to right,
+      #e61e4d 0%,
+      #e31c5f 50%,
+      #d70466 100%
+    );
+    color: $fontClr2;
+    padding: 1em;
+    border-radius: em(8px);
+    font-weight: 600;
   }
 }
 
@@ -96,6 +110,10 @@
 }
 .fs34 {
   font-size: rem(34px);
+}
+
+.dark-font {
+  color: $fontClr3;
 }
 
 .text-center {
@@ -469,17 +487,16 @@
   border-bottom: 1px solid lightgray;
 }
 
-// Order status
-&.pending {
+// status helpers
+.pending {
   color: $pending;
 }
-&.declined {
+.declined {
   color: $declined;
 }
-&.approved {
+.approved {
   color: $approved;
 }
-
 // Others
 .loading {
   opacity: 0;

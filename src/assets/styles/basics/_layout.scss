@@ -185,6 +185,9 @@
       grid-row: 1;
     }
   }
+  &:has(trip-index) {
+    overflow: hidden !important;
+  }
 }
 
 .modal-open {

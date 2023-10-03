@@ -1,0 +1,28 @@
+@import "../../app-root/app.component.scss";
+.label-loader-wrapper {
+  .circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  .rectangle {
+    width: 30px;
+    height: 15px;
+    border-radius: 1em;
+  }
+
+  .loader {
+    animation: bgcTransition 1s linear infinite alternate;
+  }
+
+  @keyframes bgcTransition {
+    0% {
+      background-color: #b8b8b8;
+    }
+
+    100% {
+      background-color: #ebebeb;
+    }
+  }
+}

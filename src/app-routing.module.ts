@@ -14,6 +14,9 @@ import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
 import { StayListComponent } from './app/cmps/stay-list/stay-list.component';
 import { OrderListComponent } from './app/cmps/order-list/order-list.component';
 import { TripIndexComponent } from './app/pages/trip-index/trip-index.component';
+import { BookComponent } from './app/pages/book/book.component';
+import { OrderResolver } from './app/services/order.resolver';
+import { MessageIndexComponent } from './app/pages/message-index/message-index.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -34,6 +37,19 @@ const routes: Routes = [
     path: 'stay/:id',
     component: StayDetailsComponent,
     resolve: { stay: StayResolver },
+  },
+  {
+    path: 'book/:orderId',
+    component: BookComponent,
+    canActivate: [authGuard],
+
+    resolve: { order: OrderResolver },
+  },
+  {
+    path: 'messages/:userId',
+    component: MessageIndexComponent,
+    canActivate: [authGuard],
+    resolve: { user: UserResolver },
   },
   {
     path: 'host/dashboard',

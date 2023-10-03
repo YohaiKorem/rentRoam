@@ -1,0 +1,14 @@
+@import "../../app-root/app.component.scss";
+.chat-list-wrapper {
+  li {
+    cursor: pointer;
+    border-block-start: 1px solid $secondaryClr2;
+    &:hover,
+    &.active {
+      background-color: darken(#fff, 10);
+    }
+    &:last-of-type {
+      border-block-end: 1px solid $secondaryClr2;
+    }
+  }
+}

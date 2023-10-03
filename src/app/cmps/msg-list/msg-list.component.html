@@ -1,0 +1,8 @@
+<ul class="msg-list-wrapper full-width">
+  <li
+    *ngFor="let msg of msgs; let i = index"
+    class="msg-preview-container full-width"
+  >
+    <msg-preview [order]="order" [user]="user" [msg]="msg"></msg-preview>
+  </li>
+</ul>

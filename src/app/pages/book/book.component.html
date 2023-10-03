@@ -1,0 +1,44 @@
+<section
+  *ngIf="order$ | async as order"
+  class="book-wrapper flex wrap align-center space-between"
+>
+  <h1 class="dark-font fs26 fw500 full-width mb0-5">
+    Your order has been sent to the host
+  </h1>
+  <section class="info-for-guest flex column gap0-5">
+    <h2 class="dark-font fs22 fw500">Attention!</h2>
+
+    <div class="confirmation-info">
+      <h3 class="dark-font fw500">
+        Your reservation won't be confirmed unti the host accepts your request
+        (within 24 hours).
+      </h3>
+      <p>You won't be charged until then.</p>
+    </div>
+    <div class="separator"></div>
+    <div class="cancellation-info">
+      <h3 class="dark-font fw500 0">Cancellation policy</h3>
+      <p>
+        Free cancellation before <span>{{ order.checkin }}</span
+        >. Cancel before <span>{{ order.checkin }}</span> for a partial refund.
+      </p>
+    </div>
+    <div class="separator"></div>
+    <div class="rules-info">
+      <h3 class="dark-font fw500 0">Ground rules</h3>
+      <p>
+        We ask every guest to remember a few simple things about what makes a
+        great guest.
+      </p>
+      <ul>
+        <li>Follow the house rules</li>
+        <li>Treat your Host's home like your own</li>
+      </ul>
+    </div>
+    <div class="separator"></div>
+    <a class="btn main-btn" routerLink="/trip"> Check your orders </a>
+  </section>
+  <section class="order-details-container shadow">
+    <trip-details [trip]="order"></trip-details>
+  </section>
+</section>

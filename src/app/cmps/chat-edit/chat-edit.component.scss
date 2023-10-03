@@ -1,0 +1,26 @@
+@import "../../app-root/app.component.scss";
+.chat-edit-wrapper {
+  position: relative;
+  input {
+    outline: none;
+    border: 1px solid $secondaryClr3;
+    background-color: #f2f2f2;
+    &:focus {
+      background-color: lighten(#f2f2f2, 10%);
+    }
+  }
+  .btn {
+    position: absolute;
+    color: $primaryClr1;
+    border: none;
+    transform: rotate(90deg);
+    right: 0;
+    bottom: 0;
+    &:hover {
+      background-color: inherit;
+    }
+    svg {
+      scale: 0.75;
+    }
+  }
+}

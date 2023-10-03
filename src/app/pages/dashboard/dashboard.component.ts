@@ -6,6 +6,7 @@ import {
   faList,
   faPencil,
   faEllipsisH,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
@@ -27,12 +28,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   faList = faList;
   faPencil = faPencil;
   faEllipsisH = faEllipsisH;
+  faTrash = faTrash;
   stays: Stay[] = [];
   user!: User;
   currCmp: string = 'orders';
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
   statsMap!: { pending: number; approved: number; declined: number };
+  stayIdToRmove: string = '';
   constructor(
     private userService: UserService,
     private stayService: StayService,
@@ -83,6 +86,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.updateOrderStatsMap();
     });
   }
+
+  showRemoveOption(stayId: string) {
+    this.stayIdToRmove = stayId;
+  }
+
+  onRemoveStay(stayId: string) {
+    this.stayService.removeStay(stayId);
+  }
+
   ngOnDestroy(): void {
     this.ngUnsubscribe.unsubscribe();
   }

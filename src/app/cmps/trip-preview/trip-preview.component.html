@@ -8,8 +8,10 @@
       <span class="fw400">{{ dateForDisplay }}</span>
     </p>
   </div>
-  <div class="stat-container" [class]="order.status">
-    <!-- <fa-icon [icon]="svg[order.status]"></fa-icon> -->
-    {{ order.status }}
+  <div [class]="order.status" class="stat-container flex gap0-5">
+    <p>
+      <fa-icon [icon]="svg[order.status]"></fa-icon>
+    </p>
+    <p>{{ order.status }}</p>
   </div>
 </article>

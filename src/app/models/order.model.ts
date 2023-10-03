@@ -1,4 +1,5 @@
 import { Buyer } from './buyer.model';
+import { Msg } from './msg.model';
 import { SearchParam, Stay } from './stay.model';
 import { User } from './user.model';
 
@@ -21,7 +22,7 @@ export class Order {
       price: number;
       address: string;
     },
-    public msgs: [],
+    public msgs: Msg[],
     public status: string
   ) {}
   static createOrderFromInput(

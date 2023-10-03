@@ -35,6 +35,18 @@ export class OrderService {
     }
   }
 
+  getOrderById(orderId: string): Observable<Order> {
+    return this.orders$.pipe(
+      take(1),
+      map((orders: Order[]) => {
+        const order = orders.find((order: Order) => order._id === orderId);
+
+        if (!order) throw new Error('Order not found');
+        return order;
+      })
+    );
+  }
+
   getOrdersForEntityById(
     id: string,
     entity: string = 'host'

@@ -7,9 +7,14 @@ $secondaryClr4: #f7f7f7;
 $secondaryClr5: #ebebeb;
 $secondaryClr6: #b0b0b0;
 // FONT COLORS
-$fontclr1: rgb(113, 113, 113);
-$fontclr2: rgb(238 232 244);
-$fontclr3: #222222;
+$fontClr1: rgb(113, 113, 113);
+$fontClr2: rgb(238 232 244);
+$fontClr3: #222222;
+
+// Status colors
+$pending: #ffba1e;
+$declined: #e43838;
+$approved: #4eb944;
 
 // STATUS COLORS
 $pending: #ffba1e;

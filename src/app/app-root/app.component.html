@@ -5,7 +5,10 @@
   [class.map-active]="isHomePage() && location.name"
   class="main-content"
 >
-  <google-map-cmp [stays]="stays$ | async" *ngIf="location.name">
+  <google-map-cmp
+    [stays]="stays$ | async"
+    *ngIf="location.name && isHomePage()"
+  >
   </google-map-cmp>
   <router-outlet></router-outlet>
 </main>

@@ -1,0 +1,15 @@
+@import "../../app-root/app.component.scss";
+.msg-preview-wrapper {
+  border-block-end: 1px solid $secondaryClr2;
+
+  .img-container {
+    width: 2em;
+    height: 100%;
+    img {
+      border-radius: 1em;
+
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

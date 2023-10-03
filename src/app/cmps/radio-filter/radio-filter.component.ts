@@ -119,6 +119,9 @@ export class RadioFilterComponent {
   applyLabelStyles(label: HTMLLabelElement) {
     // this is a workaround because of copying 61 label elements, usuaslly i would rather use ngClass
     let res: any = [];
+    const labels = document.querySelectorAll('label');
+    console.log(labels);
+
     document
       .querySelectorAll('label')
       .forEach((label) => res.push(label.innerText));
@@ -127,6 +130,10 @@ export class RadioFilterComponent {
       .forEach((label) => label.classList.remove('active'));
     label.classList.add('active');
     console.log(res);
+  }
+
+  removeLoader(ev: any) {
+    console.log(ev.target);
   }
 
   openFilterModal() {

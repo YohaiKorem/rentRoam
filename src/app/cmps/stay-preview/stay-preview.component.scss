@@ -108,19 +108,19 @@
     grid-template-rows: 25px;
     align-items: center;
     gap: 0.5em;
-    color: $fontclr3;
+    color: $fontClr3;
     .stay {
       &-rate {
         justify-self: start;
         grid-column: 2;
-        color: $fontclr3;
+        color: $fontClr3;
         width: 100%;
         gap: 0.3em;
       }
       &-name {
         grid-row: 1;
         grid-column: 1;
-        color: $fontclr3;
+        color: $fontClr3;
       }
       &-km-away {
         grid-row: 2;

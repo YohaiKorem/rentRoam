@@ -1,1 +1,36 @@
-<p>trip-details works!</p>
+<section class="trip-details-wrapper flex column 0 p1 shadow">
+  <div *ngIf="stay" class="imgs-container shadow">
+    <div
+      *ngFor="let img of stay.imgUrls | slice : 0 : 3; let i = index"
+      class="img-container square-3"
+    >
+      <img [src]="img" loading="lazy" />
+    </div>
+  </div>
+  <div class="trip-info-container flex column space-between 0">
+    <div class="txt-container flex column space-between 0">
+      <h4 class="fs18 fw500">{{ trip!.stay.name }}</h4>
+      <h5 class="fs16 fw500">{{ trip!.stay.address }}</h5>
+      <p>
+        <span class="fw500">Dates</span>:
+        <span>{{ formattedDates.start }}</span> -
+        <span>{{ formattedDates.end }}</span>
+      </p>
+      <p>
+        <span class="fw500">Guests</span>:
+        <span *ngFor="let guest of trip!.guests | keyvalue">
+          <span *ngIf="guest.value"> {{ guest.key }} : {{ guest.value }}</span>
+        </span>
+      </p>
+      <p><span class="fw500">Total price</span>: ${{ trip!.totalPrice }}</p>
+    </div>
+    <div class="outlined-info-container flex column auto-center">
+      <div class="confirmation p0-5">
+        <span class="fw500">Order Confirmation: </span>{{ trip!._id }}
+      </div>
+      <div class="status p0-5">
+        <span class="fw500">Order Status: </span>{{ trip!.status }}
+      </div>
+    </div>
+  </div>
+</section>
