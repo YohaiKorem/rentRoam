@@ -10,5 +10,7 @@
     *ngIf="location.name && isHomePage()"
   >
   </google-map-cmp>
+
   <router-outlet></router-outlet>
+  <mobile-footer *ngIf="isHomePage()"></mobile-footer>
 </main>

@@ -1,0 +1,10 @@
+@import "../../app-root/app.component.scss";
+.mobile-footer-wrapper {
+  top: 90vh;
+  position: fixed;
+  background-color: #fff;
+  height: $header-height;
+  .btn-login-menu {
+    border: none;
+  }
+}

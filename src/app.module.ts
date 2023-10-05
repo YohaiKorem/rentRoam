@@ -69,6 +69,7 @@ import { ChatEditComponent } from './app/cmps/chat-edit/chat-edit.component';
 import { MsgListComponent } from './app/cmps/msg-list/msg-list.component';
 import { MsgPreviewComponent } from './app/cmps/msg-preview/msg-preview.component';
 import { LabelLoaderComponent } from './app/cmps/label-loader/label-loader.component';
+import { MobileFooterComponent } from './app/pages/mobile-footer/mobile-footer.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { LabelLoaderComponent } from './app/cmps/label-loader/label-loader.compo
     MsgListComponent,
     MsgPreviewComponent,
     LabelLoaderComponent,
+    MobileFooterComponent,
   ],
   imports: [
     BrowserModule,
