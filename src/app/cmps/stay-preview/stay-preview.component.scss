@@ -19,6 +19,7 @@
       height: 0;
       width: 0;
       overflow: hidden;
+      position: absolute;
     }
 
     .btn-dir {
@@ -140,6 +141,7 @@
       height: 0;
       width: 0;
       overflow: hidden;
+      position: absolute;
     }
   }
 }
@@ -153,9 +155,16 @@
       gap: 0.5em;
       width: 100%;
       align-items: center;
+      display: grid;
+      grid-template-rows: 3fr 1fr;
+      // used is-loading because "loading" is a helper class
+      &.is-loading {
+        grid-template-rows: 1fr;
+      }
       // margin-inline: em(20px);
       .img-container {
-        max-width: 90%;
+        width: 100%;
+        height: 100%;
       }
       .txt-container {
         width: 100%;

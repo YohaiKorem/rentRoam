@@ -57,4 +57,10 @@
       }
     }
   }
+  @include for-mobile-layout {
+    width: 100%;
+    .img-loader {
+      min-height: 20em;
+    }
+  }
 }

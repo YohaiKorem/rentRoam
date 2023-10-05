@@ -1,4 +1,7 @@
-<article class="stay-preview-container flex column">
+<article
+  [class.is-loading]="isLoadingImg"
+  class="stay-preview-container flex column"
+>
   <stay-preview-loader *ngIf="isLoadingImg"></stay-preview-loader>
   <div class="img-container flex" [class.loading]="isLoadingImg">
     <img
@@ -172,6 +175,10 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
+
+
+
+
 
 
 
