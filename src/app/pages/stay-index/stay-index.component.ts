@@ -9,7 +9,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable, Subscription, map, Subject, takeUntil, take } from 'rxjs';
-import { SearchParam, Stay, StayDistance } from 'src/app/models/stay.model';
+import {
+  SearchParam,
+  Stay,
+  StayDistance,
+  StayFilter,
+} from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
@@ -42,7 +47,7 @@ export class StayIndexComponent implements OnInit, OnDestroy {
   searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
   distances!: Observable<StayDistance[]>;
-
+  stayFilter: StayFilter | null = null;
   userLoc: { lat: number | null; lng: number | null } = {
     lat: null,
     lng: null,
@@ -60,6 +65,12 @@ export class StayIndexComponent implements OnInit, OnDestroy {
     this.sharedService.openModal$.subscribe(({ str, data }) => {
       this.toggleModal(str, data);
     });
+
+    this.stayService.stayFilter$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((stayFilter) => {
+        this.stayFilter = stayFilter;
+      });
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => {

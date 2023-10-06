@@ -10,7 +10,12 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { Stay, StayDistance } from 'src/app/models/stay.model';
+import {
+  SearchParam,
+  Stay,
+  StayDistance,
+  StayFilter,
+} from 'src/app/models/stay.model';
 
 @Component({
   selector: 'stay-list',
@@ -27,6 +32,9 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
     start: new Date(),
     end: new Date(),
   };
+  @Input() stayFilter: StayFilter | null = null;
+
+  @Input() searchParam: SearchParam | null = null;
   @Output() clearFilter = new EventEmitter();
   staysWithDistance: any;
 

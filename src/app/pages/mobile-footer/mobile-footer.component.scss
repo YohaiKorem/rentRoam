@@ -1,6 +1,6 @@
 @import "../../app-root/app.component.scss";
 .mobile-footer-wrapper {
-  top: 90vh;
+  top: calc(100vh - 64px);
   position: fixed;
   background-color: #fff;
   height: $header-height;

@@ -1,6 +1,6 @@
 <p *ngIf="stays && stays.length" class="map-active-place-num fs20 fw500">
   Over
-  {{ stays.length < 1000 ? stays.length : "1000+" }}
+  {{ stays!.length < 1000 ? stays!.length : "1000+" }}
   places
 </p>
 
@@ -22,7 +22,12 @@
     ></stay-preview>
   </a>
 </ul>
-
+<div
+  *ngIf="!stays && !searchParam && !stayFilter"
+  class="no-stays-container flex column space-between align-start"
+>
+  <h3 class="fw700 fs24">Please wait while we look for Yout stays</h3>
+</div>
 <div
   *ngIf="stays && !stays!.length"
   class="no-stays-container flex column space-between align-start"

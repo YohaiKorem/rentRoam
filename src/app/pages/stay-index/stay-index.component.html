@@ -6,6 +6,8 @@
   [currDate]="currDate"
   [userLoc]="userLoc"
   [distances]="distances | async"
+  [searchParam]="searchParam"
+  [stayFilter]="stayFilter"
 ></stay-list>
 
 <div *ngIf="isModalOpen" (click)="toggleModal()" class="modal-wrapper">

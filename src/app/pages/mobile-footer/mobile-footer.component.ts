@@ -8,6 +8,7 @@ import {
   faMessage,
   faDashboard,
 } from '@fortawesome/free-solid-svg-icons';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'mobile-footer',
   templateUrl: './mobile-footer.component.html',
@@ -22,11 +23,18 @@ export class MobileFooterComponent implements OnInit, OnDestroy {
   faHeart = faHeart;
   faMessage = faMessage;
   faDashboard = faDashboard;
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private sharedService: SharedService
+  ) {}
   ngOnInit() {
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((user) => (this.user = user));
+  }
+
+  onLoginClicked() {
+    this.sharedService.toggleSignUpModal();
   }
 
   ngOnDestroy(): void {

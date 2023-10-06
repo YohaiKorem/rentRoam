@@ -44,7 +44,7 @@ export class AppHeaderComponent implements OnInit {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
-  isShowSignupModal: boolean = false;
+  isShowSignupModal: boolean = true;
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   isMobile = window.innerWidth <= 780;
@@ -67,6 +67,9 @@ export class AppHeaderComponent implements OnInit {
         this.loggedInUser = user;
         if (this.loggedInUser != null) this.isShowSignupModal = false;
       });
+    this.sharedService.toggleSignupModal$.subscribe(() => {
+      this.isShowSignupModal = !this.isShowSignupModal;
+    });
   }
   ngAfterViewInit() {
     this.autocompleteService = new google.maps.places.AutocompleteService();
