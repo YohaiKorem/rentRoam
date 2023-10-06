@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -70,6 +70,7 @@ import { MsgListComponent } from './app/cmps/msg-list/msg-list.component';
 import { MsgPreviewComponent } from './app/cmps/msg-preview/msg-preview.component';
 import { LabelLoaderComponent } from './app/cmps/label-loader/label-loader.component';
 import { MobileFooterComponent } from './app/pages/mobile-footer/mobile-footer.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -141,6 +142,12 @@ import { MobileFooterComponent } from './app/pages/mobile-footer/mobile-footer.c
     SocialLoginModule,
     GoogleSigninButtonModule,
     CloudinaryModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: true,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
     {
