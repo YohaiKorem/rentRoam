@@ -46,6 +46,10 @@ export class AppComponent {
 
   ngAfterViewInit() {
     this.userService.getUserLoc();
+    document.documentElement.style.setProperty(
+      '--full-height',
+      `${window.innerHeight}px`
+    );
   }
 
   onScroll(event: any) {

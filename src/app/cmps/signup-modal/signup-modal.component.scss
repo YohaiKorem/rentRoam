@@ -63,5 +63,6 @@
   @include for-mobile-layout {
     height: calc(100vh - 84px - 2em);
     width: 100vw;
+    background-color: #fff;
   }
 }

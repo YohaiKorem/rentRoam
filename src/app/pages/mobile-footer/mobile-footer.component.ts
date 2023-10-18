@@ -33,7 +33,7 @@ export class MobileFooterComponent implements OnInit, OnDestroy {
       .subscribe((user) => (this.user = user));
   }
 
-  onLoginClicked() {
+  onToggleSignUpModal() {
     this.sharedService.toggleSignUpModal();
   }
 

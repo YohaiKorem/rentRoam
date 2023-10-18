@@ -44,7 +44,7 @@ export class AppHeaderComponent implements OnInit {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
-  isShowSignupModal: boolean = true;
+  isShowSignupModal: boolean = false;
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   isMobile = window.innerWidth <= 780;

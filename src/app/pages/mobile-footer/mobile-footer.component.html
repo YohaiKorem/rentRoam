@@ -53,8 +53,8 @@
       <span class="icon-container"><fa-icon [icon]="faSearch"></fa-icon></span>
       <span class="txt-container">Explore</span></a
     >
-    <button
-      (click)="onLoginClicked()"
+    <a
+      routerLink="/login"
       class="btn btn-login-menu flex column align-center space-between gap0-5"
     >
       <span class="icon-container">
@@ -72,6 +72,6 @@
         </svg>
       </span>
       <span class="txt-container">Log In</span>
-    </button>
+    </a>
   </ng-template>
 </footer>

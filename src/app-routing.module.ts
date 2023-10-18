@@ -17,8 +17,9 @@ import { TripIndexComponent } from './app/pages/trip-index/trip-index.component'
 import { BookComponent } from './app/pages/book/book.component';
 import { OrderResolver } from './app/services/order.resolver';
 import { MessageIndexComponent } from './app/pages/message-index/message-index.component';
+import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.component';
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: SignupModalComponent },
   {
     path: 'stay',
     component: StayIndexComponent,
