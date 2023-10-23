@@ -48,6 +48,12 @@
   }
 }
 
+@mixin for-wider-than-mobile {
+  @media (min-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
 /* Media  Mixins */
 @mixin aspect-ratio($width, $height) {
   position: relative;

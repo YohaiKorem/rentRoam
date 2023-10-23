@@ -41,6 +41,7 @@ export class FilterModalComponent {
   avgStayPricePerNight: number = 0;
   amenities = Amenities;
   isShowAllAmenities: boolean = false;
+  elMobileCloseBtn = document.querySelector('.dynamic-modal .btn-close');
   ngOnInit() {
     this.stayService.stayFilter$
       .pipe(takeUntil(this.destroySubject$))
@@ -72,6 +73,11 @@ export class FilterModalComponent {
         this.minPrice = lowestPrice;
       });
     this.histogramData = this.generateHistogramData();
+  }
+
+  ngAfterViewInit() {
+    if (this.elMobileCloseBtn)
+      this.elMobileCloseBtn.classList.remove('hidden-on-mobile');
   }
 
   filterBeds(beds: any) {

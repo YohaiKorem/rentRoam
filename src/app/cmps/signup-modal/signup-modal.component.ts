@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription } from 'rxjs';
@@ -16,7 +22,8 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './signup-modal.component.html',
   styleUrls: ['./signup-modal.component.scss'],
 })
-export class SignupModalComponent implements OnInit {
+export class SignupModalComponent implements OnInit, OnDestroy {
+  @ViewChild('customGoogleBtn') customGoogleBtn!: ElementRef;
   constructor(
     private userService: UserService,
     private sharedService: SharedService,
@@ -29,6 +36,8 @@ export class SignupModalComponent implements OnInit {
   loggedInUser$!: Observable<User>;
   credentials: any = {};
   isLoginPage: boolean = this.determineIsLoginPage();
+  elHeader = document.querySelector('.main-header');
+
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.user = user;
@@ -42,24 +51,25 @@ export class SignupModalComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    const intervalId = setInterval(() => {
-      console.log('looked for iframe');
+    if (this.isLoginPage) this.elHeader?.classList.add('hidden-on-mobile');
+    // const intervalId = setInterval(() => {
+    //   console.log('looked for iframe');
 
-      const elIframe = document.querySelector('iframe');
-      if (elIframe) {
-        const elContainer = document.getElementById('container');
-        elContainer!.style.width = '100%';
-        const elProblematicIframeDiv = document.querySelector(
-          '#container > div'
-        ) as HTMLElement;
-        elProblematicIframeDiv!.style.width = '100%';
-        elProblematicIframeDiv!.style.maxWidth = '100%';
+    //   const elIframe = document.querySelector('iframe');
+    //   if (elIframe) {
+    //     const elContainer = document.getElementById('container');
+    //     elContainer!.style.width = '100%';
+    //     const elProblematicIframeDiv = document.querySelector(
+    //       '#container > div'
+    //     ) as HTMLElement;
+    //     elProblematicIframeDiv!.style.width = '100%';
+    //     elProblematicIframeDiv!.style.maxWidth = '100%';
 
-        elIframe.style.width = '100%';
-        console.log('found iframe');
-        clearInterval(intervalId);
-      }
-    }, 1000);
+    //     elIframe.style.width = '100%';
+    //     console.log('found iframe');
+    //     clearInterval(intervalId);
+    //   }
+    // }, 1000);
   }
 
   handleLogIn() {
@@ -83,5 +93,15 @@ export class SignupModalComponent implements OnInit {
 
   handleLogout() {
     this.loggedInUser = this.userService.logout();
+  }
+
+  triggerGoogleAction() {
+    this.customGoogleBtn.nativeElement
+      .querySelector('div[role="button"]')
+      .click();
+  }
+
+  ngOnDestroy() {
+    if (this.isLoginPage) this.elHeader?.classList.remove('hidden-on-mobile');
   }
 }

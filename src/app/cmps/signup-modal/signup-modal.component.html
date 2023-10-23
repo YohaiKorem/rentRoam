@@ -51,23 +51,54 @@
             d="M22.94 16H18.5v-3c0-1.27.62-2.5 2.6-2.5h2.02V6.56s-1.83-.31-3.58-.31c-3.65 0-6.04 2.21-6.04 6.22V16H9.44v4.63h4.06V32h5V20.62h3.73l.7-4.62z"
           ></path></svg
       ></span>
-      <span class="txt-container">continue with Facebook</span>
+      <span class="txt-container">Continue with Facebook</span>
     </button>
-    <asl-google-signin-button
-      class="btn-google"
+    <!-- <asl-google-signin-button
+      class="btn-google full-width"
       text="continue_with"
       shape="rectangular"
       type="standard"
-      width="400"
       size="large"
-      style="width: 100%"
+      width="100%"
     >
-    </asl-google-signin-button>
+    </asl-google-signin-button> -->
+    <asl-google-signin-button
+      style="display: none"
+      #customGoogleBtn
+    ></asl-google-signin-button>
     <button
       data-type="standard"
       data-text="continue_with Google"
-      class="g_id_signin"
+      class="btn btn-google full-width"
       data-shape="rectangular"
-    ></button>
+      (click)="triggerGoogleAction()"
+    >
+      <span class="icon-container"
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
+          style="display: block; height: 20px; width: 20px"
+        >
+          <path
+            fill="#4285f4"
+            d="M24.12 25c2.82-2.63 4.07-7 3.32-11.19H16.25v4.63h6.37A5.26 5.26 0 0 1 20.25 22z"
+          ></path>
+          <path
+            fill="#34a853"
+            d="M5.62 21.31A12 12 0 0 0 24.12 25l-3.87-3a7.16 7.16 0 0 1-10.69-3.75z"
+          ></path>
+          <path
+            fill="#fbbc02"
+            d="M9.56 18.25c-.5-1.56-.5-3 0-4.56l-3.94-3.07a12.08 12.08 0 0 0 0 10.7z"
+          ></path>
+          <path
+            fill="#ea4335"
+            d="M9.56 13.69c1.38-4.32 7.25-6.82 11.19-3.13l3.44-3.37a11.8 11.8 0 0 0-18.57 3.43l3.94 3.07z"
+          ></path></svg></span
+      ><span class="txt-container">Continue with Google</span>
+    </button>
   </div>
 </section>

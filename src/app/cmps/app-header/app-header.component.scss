@@ -28,10 +28,11 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr;
-  column-gap: 2em;
   place-items: center;
   padding-block-end: 1.5em;
-
+  @include for-wider-than-mobile {
+    column-gap: 2em;
+  }
   a {
     grid-column: 1;
     grid-row: 1;
