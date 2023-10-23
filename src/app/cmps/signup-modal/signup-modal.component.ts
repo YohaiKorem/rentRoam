@@ -8,6 +8,7 @@ import {
   GoogleSigninButtonDirective,
   GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { SharedService } from 'src/app/services/shared.service';
 @Component({
@@ -19,14 +20,15 @@ export class SignupModalComponent implements OnInit {
   constructor(
     private userService: UserService,
     private sharedService: SharedService,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private router: Router
   ) {}
   user!: SocialUser;
   isLoggedIn!: boolean;
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   credentials: any = {};
-
+  isLoginPage: boolean = this.determineIsLoginPage();
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.user = user;
@@ -37,6 +39,27 @@ export class SignupModalComponent implements OnInit {
         this.loggedInUser = user;
       });
     });
+  }
+
+  ngAfterViewInit() {
+    const intervalId = setInterval(() => {
+      console.log('looked for iframe');
+
+      const elIframe = document.querySelector('iframe');
+      if (elIframe) {
+        const elContainer = document.getElementById('container');
+        elContainer!.style.width = '100%';
+        const elProblematicIframeDiv = document.querySelector(
+          '#container > div'
+        ) as HTMLElement;
+        elProblematicIframeDiv!.style.width = '100%';
+        elProblematicIframeDiv!.style.maxWidth = '100%';
+
+        elIframe.style.width = '100%';
+        console.log('found iframe');
+        clearInterval(intervalId);
+      }
+    }, 1000);
   }
 
   handleLogIn() {
@@ -52,6 +75,10 @@ export class SignupModalComponent implements OnInit {
 
   signOut(): void {
     this.authService.signOut();
+  }
+
+  determineIsLoginPage(): boolean {
+    return this.router.url === '/login';
   }
 
   handleLogout() {

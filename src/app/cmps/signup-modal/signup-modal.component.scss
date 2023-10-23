@@ -1,68 +1,91 @@
 @import "../../app-root/app.component.scss";
-.signup-modal-wrapper {
-  width: 500px;
-  padding: 1em;
-  .signup-modal-header {
-    color: $fontClr3;
+:host {
+  &:has(.is-login-page) {
+    display: grid;
+    place-items: center;
   }
-  .simple-form {
-    button[type="submit"] {
-      background-size: 200% 200%;
-      background: linear-gradient(
-        to right,
-        #e61e4d 0%,
-        #e31c5f 50%,
-        #d70466 100%
-      );
-      transition: opacity 1.25s;
-      color: $secondaryClr1;
-      &:hover {
+
+  .signup-modal-wrapper {
+    width: 500px;
+    padding: 1em;
+
+    &.is-login-page {
+      border-radius: 1em;
+      border: 1px solid $secondaryClr2;
+      margin-block-start: 1em;
+    }
+    .signup-modal-header {
+      color: $fontClr3;
+    }
+    .simple-form {
+      button[type="submit"] {
+        background-size: 200% 200%;
         background: linear-gradient(
-          to left,
+          to right,
           #e61e4d 0%,
           #e31c5f 50%,
           #d70466 100%
         );
+        transition: opacity 1.25s;
+        color: $secondaryClr1;
+        &:hover {
+          background: linear-gradient(
+            to left,
+            #e61e4d 0%,
+            #e31c5f 50%,
+            #d70466 100%
+          );
+        }
       }
     }
-  }
 
-  .or {
-    display: flex;
-    align-items: center;
-    &::after {
-      content: "";
-      height: 1px;
-      width: 220px;
-      background-color: $secondaryClr2;
-      margin-inline-start: 1rem;
+    .or {
+      display: flex;
+      align-items: center;
+      &::after {
+        content: "";
+        height: 1px;
+        width: 220px;
+        background-color: $secondaryClr2;
+        margin-inline-start: 1rem;
+      }
+      &::before {
+        content: "";
+        height: 1px;
+        width: 220px;
+        background-color: $secondaryClr2;
+        margin-inline-end: 1rem;
+      }
     }
-    &::before {
-      content: "";
-      height: 1px;
-      width: 220px;
-      background-color: $secondaryClr2;
-      margin-inline-end: 1rem;
-    }
-  }
 
-  .sign-in-btns-container {
-    padding: 1em;
-    .btn {
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: 2fr 3fr;
-      .icon-container {
-        justify-self: start;
-      }
-      .txt-container {
-        justify-self: start;
+    .sign-in-btns-container {
+      padding: 1em;
+      .btn {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 2fr 3fr;
+        .icon-container {
+          justify-self: start;
+        }
+        .txt-container {
+          justify-self: start;
+        }
       }
     }
-  }
-  @include for-mobile-layout {
-    height: calc(100vh - 84px - 2em);
-    width: 100vw;
-    background-color: #fff;
+    @include for-mobile-layout {
+      &.is-login-page {
+        position: fixed;
+        top: 0;
+        height: calc(100vh - 84px - 2em);
+        width: calc(100vw - 3em);
+        background-color: #fff;
+        z-index: 100;
+        border: none;
+        gap: 2em;
+        & > *.flex {
+          gap: 2em;
+        }
+      }
+    }
   }
 }
