@@ -42,6 +42,7 @@ export class AppComponent {
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.location = searchParam.location));
     this.stays$ = this.stayService.stays$;
+    // this.loadGoogleMapsScript();
   }
 
   ngAfterViewInit() {
@@ -66,6 +67,14 @@ export class AppComponent {
     }
 
     // elStayIndex.style.height = `${206 + scrollPosition}px`;
+  }
+
+  loadGoogleMapsScript() {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}&libraries=places,marker`;
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
   }
 
   isHomePage() {

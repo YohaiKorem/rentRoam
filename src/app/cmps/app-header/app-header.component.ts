@@ -14,6 +14,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { environment } from 'src/environments/env.prod';
+
 declare var google: any;
 @Component({
   selector: 'app-header',
@@ -56,11 +58,18 @@ export class AppHeaderComponent implements OnInit {
     private authService: SocialAuthService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.searchParam = searchParam));
-
+    if (!this.isMobile) {
+      try {
+        await this.loadGoogleMaps();
+        this.autocompleteService = new google.maps.places.AutocompleteService();
+      } catch (error) {
+        console.log(error, 'failed to load googlemaps');
+      }
+    }
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((user) => {
@@ -71,8 +80,19 @@ export class AppHeaderComponent implements OnInit {
       this.isShowSignupModal = !this.isShowSignupModal;
     });
   }
-  ngAfterViewInit() {
-    this.autocompleteService = new google.maps.places.AutocompleteService();
+  // ngAfterViewInit() {
+  //   this.autocompleteService = new google.maps.places.AutocompleteService();
+  // }
+
+  loadGoogleMaps() {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}&libraries=places,marker&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      script.onload = resolve;
+      document.body.appendChild(script);
+    });
   }
 
   getSuggestions(event: any) {

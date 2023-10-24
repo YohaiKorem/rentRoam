@@ -16,9 +16,9 @@
     .mobile-search-menu-footer {
       background-color: #fff;
       position: fixed;
-      bottom: 0;
+      bottom: calc(64px - 2em);
       left: 0;
-      padding: 1em;
+      height: 64px;
       .btn-clear {
         border: none;
       }

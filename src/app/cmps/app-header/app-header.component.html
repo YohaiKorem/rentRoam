@@ -5,7 +5,11 @@
       <span class="logo-txt">RentRoam</span>
     </div>
   </a>
-  <div [class.inactive]="isSearchOpen" class="search-bar shadow">
+  <div
+    *ngIf="searchParam"
+    [class.inactive]="isSearchOpen"
+    class="search-bar shadow"
+  >
     <button class="btn-search anywhere fw500" (click)="openSearch('loc')">
       {{ searchParam.location.name ? searchParam.location.name : "Anywhere" }}
     </button>

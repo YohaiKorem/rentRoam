@@ -101,9 +101,9 @@ export class StayService {
     this.setAvgPrice(someStays);
   }
 
-  public initMap() {
-    console.log('map init');
-  }
+  // public initMap() {
+  //   console.log('map init');
+  // }
 
   public loadStays(): Observable<Stay[]> {
     return from(storageService.query(ENTITY)).pipe(
