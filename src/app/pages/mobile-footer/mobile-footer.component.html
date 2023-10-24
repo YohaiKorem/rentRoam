@@ -5,7 +5,9 @@
 >
   <ng-container *ngIf="user; else userNotLoggedIn">
     <a class="flex column align-center space-between gap0-5" routerLink="/">
-      <span class="icon-container"><fa-icon [icon]="faSearch"></fa-icon></span>
+      <span [class.active]="router.url === '/stay'" class="icon-container"
+        ><fa-icon [icon]="faSearch"></fa-icon
+      ></span>
       <span class="txt-container">Explore</span></a
     >
     <a
@@ -49,13 +51,18 @@
   </ng-container>
 
   <ng-template #userNotLoggedIn>
-    <a class="flex column align-center space-between gap0-5" routerLink="/">
+    <a
+      [class.active]="router.url === '/stay'"
+      class="flex column align-center space-between gap0-5"
+      routerLink="/"
+    >
       <span class="icon-container"><fa-icon [icon]="faSearch"></fa-icon></span>
       <span class="txt-container">Explore</span></a
     >
     <a
       routerLink="/login"
-      class="btn btn-login-menu flex column align-center space-between gap0-5"
+      [class.active]="router.url === '/login'"
+      class="flex column align-center space-between gap0-5"
     >
       <span class="icon-container">
         <svg

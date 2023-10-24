@@ -1,8 +1,16 @@
 <div class="wishlist-page-wrapper">
-  <header class="wishlist-header">
+  <header class="wishlist-header flex align-center space-between mb1 pi1">
     <h1 class="fs24 fw500">Wishlists</h1>
+    <button
+      (click)="toggleEditMode()"
+      class="btn btn-edit fw500 deco-underline"
+    >
+      {{ isEditMode ? "Done" : "Edit" }}
+    </button>
   </header>
-  <wishlist-list [isModal]="false" [user]="loggedInUser!"></wishlist-list>
-
-  <!-- <wishlist-preview [wishlist]="loggedInUser!.wishlists"></wishlist-preview> -->
+  <wishlist-list
+    [isEditMode]="isEditMode"
+    [isModal]="false"
+    [user]="loggedInUser!"
+  ></wishlist-list>
 </div>

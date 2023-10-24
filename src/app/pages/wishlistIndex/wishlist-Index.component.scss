@@ -1,9 +1,14 @@
 @import "../../app-root/app.component.scss";
 .wishlist-page-wrapper {
   .wishlist-header {
-    margin-block: 1em;
     h1 {
       color: #333;
+    }
+    .btn {
+      border: none;
+      &:hover {
+        background-color: transparent;
+      }
     }
   }
 }

@@ -5,6 +5,9 @@
   background-color: #fff;
   height: $header-height;
   border-block-start: 1px solid $secondaryClr2;
+  .active {
+    color: $primaryClr1;
+  }
   .btn-login-menu {
     border: none;
   }

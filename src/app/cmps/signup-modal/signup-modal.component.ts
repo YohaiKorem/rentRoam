@@ -52,24 +52,6 @@ export class SignupModalComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.isLoginPage) this.elHeader?.classList.add('hidden-on-mobile');
-    // const intervalId = setInterval(() => {
-    //   console.log('looked for iframe');
-
-    //   const elIframe = document.querySelector('iframe');
-    //   if (elIframe) {
-    //     const elContainer = document.getElementById('container');
-    //     elContainer!.style.width = '100%';
-    //     const elProblematicIframeDiv = document.querySelector(
-    //       '#container > div'
-    //     ) as HTMLElement;
-    //     elProblematicIframeDiv!.style.width = '100%';
-    //     elProblematicIframeDiv!.style.maxWidth = '100%';
-
-    //     elIframe.style.width = '100%';
-    //     console.log('found iframe');
-    //     clearInterval(intervalId);
-    //   }
-    // }, 1000);
   }
 
   handleLogIn() {
@@ -77,10 +59,12 @@ export class SignupModalComponent implements OnInit, OnDestroy {
       this.loggedInUser = user;
     });
     this.sharedService.toggleSignUpModal();
+    if (this.isLoginPage) this.router.navigateByUrl('/');
   }
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    if (this.isLoginPage) this.router.navigateByUrl('/');
   }
 
   signOut(): void {

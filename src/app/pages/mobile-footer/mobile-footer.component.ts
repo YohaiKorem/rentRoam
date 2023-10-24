@@ -9,6 +9,7 @@ import {
   faDashboard,
 } from '@fortawesome/free-solid-svg-icons';
 import { SharedService } from 'src/app/services/shared.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'mobile-footer',
   templateUrl: './mobile-footer.component.html',
@@ -25,7 +26,8 @@ export class MobileFooterComponent implements OnInit, OnDestroy {
   faDashboard = faDashboard;
   constructor(
     private userService: UserService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    public router: Router
   ) {}
   ngOnInit() {
     this.userService.loggedInUser$

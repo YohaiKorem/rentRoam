@@ -16,7 +16,7 @@ export class WishlistListComponent implements OnInit {
   @Input() user!: User;
   @Input() isModal: boolean = true;
   @Input() stay!: Stay;
-
+  @Input() isEditMode: boolean = false;
   private destroySubject$ = new Subject<null>();
 
   constructor(

@@ -6,6 +6,20 @@
     routerLink="{{ wishlist.id }}"
     *ngFor="let wishlist of user.wishlists; let i = index"
   >
+    <button *ngIf="isEditMode" class="btn btn-remove">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+        style="display: block; height: 8px; width: 8px; fill: currentcolor"
+      >
+        <path
+          d="m14.3.3 1.4 1.4L9.43 8l6.29 6.3-1.42 1.4L8 9.43 1.7 15.7.3 14.29 6.57 8 .3 1.7 1.71.3 8 6.57z"
+        ></path>
+      </svg>
+    </button>
     <wishlist-preview
       [isModal]="isModal"
       [wishlist]="wishlist"
