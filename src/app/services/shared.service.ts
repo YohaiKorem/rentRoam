@@ -15,6 +15,7 @@ export class SharedService {
   openSearchMenu$ = this.openSearchMenuSource.asObservable();
   private openSearchMenuMobileSource = new Subject<void>();
   openSearchMenuMobile$ = this.openSearchMenuMobileSource.asObservable();
+  elHeader = document.querySelector('.main-header');
 
   openModal(str = '', data: Stay | null = null) {
     this.openModalSource.next({ str, data });
@@ -30,5 +31,13 @@ export class SharedService {
 
   toggleSignUpModal() {
     this.toggleSignupModalSource.next();
+  }
+
+  showHeaderOnMobile() {
+    this.elHeader?.classList.remove('hidden-on-mobile');
+  }
+
+  hideHeaderOnMobile() {
+    this.elHeader?.classList.add('hidden-on-mobile');
   }
 }

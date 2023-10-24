@@ -30,6 +30,12 @@
   grid-template-rows: 1fr;
   place-items: center;
   padding-block-end: 1.5em;
+  @include for-tablet-layout {
+    grid-template-rows: 1fr 1fr;
+  }
+  @include for-normal-layout {
+    grid-template-rows: 1fr 1fr;
+  }
   @include for-wider-than-mobile {
     column-gap: 2em;
   }
@@ -67,6 +73,12 @@
     line-height: em(20px);
     gap: 0.6em;
     white-space: nowrap;
+    @include for-tablet-layout {
+      grid-row: 2;
+    }
+    @include for-normal-layout {
+      grid-row: 2;
+    }
     span {
       height: 24px;
       width: 1px;
@@ -258,6 +270,7 @@
         "search-icon anywhere anywhere btn-filter"
         "search-icon anyweek guests btn-filter";
       place-items: center;
+
       .btn-search {
         justify-self: start;
         padding-block: 0;

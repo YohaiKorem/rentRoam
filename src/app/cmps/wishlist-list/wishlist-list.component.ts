@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
@@ -17,6 +17,7 @@ export class WishlistListComponent implements OnInit {
   @Input() isModal: boolean = true;
   @Input() stay!: Stay;
   @Input() isEditMode: boolean = false;
+  @Output() removeWishlist = new EventEmitter();
   private destroySubject$ = new Subject<null>();
 
   constructor(
@@ -37,5 +38,9 @@ export class WishlistListComponent implements OnInit {
     );
     this.user = updatedUser;
     this.sharedService.openModal();
+  }
+
+  onRemoveWishlist(wishlistId: string) {
+    this.removeWishlist.emit(wishlistId);
   }
 }

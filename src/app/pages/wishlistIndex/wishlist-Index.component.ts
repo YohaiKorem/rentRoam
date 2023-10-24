@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.model';
+import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 @Component({
   selector: 'wishlist-index',
   templateUrl: './wishlist-Index.component.html',
@@ -15,6 +17,10 @@ export class WishlistIndexComponent implements OnInit {
   loggedInUser$!: Observable<User>;
   constructor(
     private userService: UserService,
+    private wishlistService: WishlistService,
+    private userSerivce: UserService,
+    private sharedService: SharedService,
+
     private cdr: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
@@ -23,15 +29,20 @@ export class WishlistIndexComponent implements OnInit {
       .subscribe((user) => {
         this.loggedInUser = user;
       });
-    this.elHeader?.classList.add('hidden-on-mobile');
+    this.sharedService.hideHeaderOnMobile();
   }
 
   toggleEditMode() {
     this.isEditMode = !this.isEditMode;
     this.cdr.detectChanges();
   }
-
+  removeWishlist(wishlistId: string) {
+    this.loggedInUser = this.userSerivce.removeWishlist(
+      wishlistId,
+      this.loggedInUser!
+    );
+  }
   ngOnDestroy() {
-    this.elHeader?.classList.remove('hidden-on-mobile');
+    this.sharedService.showHeaderOnMobile();
   }
 }

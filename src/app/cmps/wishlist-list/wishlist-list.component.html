@@ -1,12 +1,18 @@
 <ul
   *ngIf="!isModal; else modalWishlist"
-  class="wishlist-list-wrapper flex gap1-5"
+  class="wishlist-list-wrapper flex gap1-5 p1"
 >
   <a
     routerLink="{{ wishlist.id }}"
     *ngFor="let wishlist of user.wishlists; let i = index"
   >
-    <button *ngIf="isEditMode" class="btn btn-remove">
+    <button
+      appStopPropagation
+      appPreventDefault
+      (click)="onRemoveWishlist(wishlist.id!)"
+      *ngIf="isEditMode"
+      class="btn btn-remove p0-5"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
@@ -24,6 +30,7 @@
       [isModal]="isModal"
       [wishlist]="wishlist"
     ></wishlist-preview>
+    <span>{{ wishlist.stays.length }} saved</span>
   </a>
 </ul>
 <ng-template #modalWishlist>

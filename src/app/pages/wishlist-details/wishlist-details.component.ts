@@ -8,6 +8,7 @@ import { first, map, takeWhile } from 'rxjs/operators';
 import { Wishlist } from 'src/app/models/wishlist.model';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { Stay } from 'src/app/models/stay.model';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'wishlist-details',
@@ -24,10 +25,12 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   stays$!: Observable<Stay[]>;
   currDate = { start: new Date(), end: new Date() };
   isModalOpen: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private wishlistService: WishlistService,
     private location: Location,
+    private sharedService: SharedService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -47,7 +50,7 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
         this.wishlistId
       );
     }
-    console.log(this.wishlist);
+    this.sharedService.hideHeaderOnMobile();
 
     this.getStaysArrFromWishlist();
   }
@@ -78,7 +81,7 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
+    this.sharedService.showHeaderOnMobile();
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }

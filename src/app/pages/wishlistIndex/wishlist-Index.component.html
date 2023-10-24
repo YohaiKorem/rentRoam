@@ -9,6 +9,7 @@
     </button>
   </header>
   <wishlist-list
+    (removeWishlist)="removeWishlist($event)"
     [isEditMode]="isEditMode"
     [isModal]="false"
     [user]="loggedInUser!"
