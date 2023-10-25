@@ -4,6 +4,7 @@ import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { Wishlist } from 'src/app/models/wishlist.model';
 import { SharedService } from 'src/app/services/shared.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 @Component({
@@ -23,7 +24,8 @@ export class WishlistListComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     private userService: UserService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    public trackByService: TrackByService
   ) {}
   ngOnInit(): void {}
 

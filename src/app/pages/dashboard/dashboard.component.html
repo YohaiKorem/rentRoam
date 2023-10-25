@@ -37,7 +37,11 @@
           <h4 class="fw500 fs18 mb1">Property type</h4>
         </header>
         <section
-          *ngFor="let stay of stays; let i = index"
+          *ngFor="
+            let stay of stays;
+            let i = index;
+            trackBy: trackByService.byId
+          "
           class="stay-item-container"
         >
           <a
@@ -119,7 +123,10 @@
         <div class="order-stats-map flex align-center gap1">
           <div
             class="flex align-center"
-            *ngFor="let stat of statsMap | keyvalue"
+            *ngFor="
+              let stat of statsMap | keyvalue;
+              trackBy: trackByService.byIdx
+            "
           >
             <span [class]="'status-circle ' + stat.key"></span>
             <span class="mi0-5">{{ stat.value }}</span>

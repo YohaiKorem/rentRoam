@@ -1,6 +1,11 @@
 <ul class="amenities-list flex column space-between gap1">
   <li
-    *ngFor="let amenity of amenities; let last = last"
+    *ngFor="
+      let amenity of amenities;
+      let i = index;
+      let last = last;
+      trackBy: trackByService.byIdx
+    "
     class="amenity"
     [ngClass]="{ separator: !last }"
   >

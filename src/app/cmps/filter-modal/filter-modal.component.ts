@@ -14,13 +14,17 @@ import { StayService } from 'src/app/services/stay.service';
 import { Stay, StayFilter, Amenities } from 'src/app/models/stay.model';
 import { Btn } from 'src/app/models/btn.model';
 import { ChartDataValue } from 'src/app/models/chartDataValue.model';
+import { TrackByService } from 'src/app/services/track-by.service';
 @Component({
   selector: 'filter-modal',
   templateUrl: './filter-modal.component.html',
   styleUrls: ['./filter-modal.component.scss'],
 })
 export class FilterModalComponent {
-  constructor(private stayService: StayService) {}
+  constructor(
+    private stayService: StayService,
+    public trackByService: TrackByService
+  ) {}
   @Input() stays!: Stay[] | null;
   @Input() nights!: number | null;
   @Output() closeModal = new EventEmitter();

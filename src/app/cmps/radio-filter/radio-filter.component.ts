@@ -14,6 +14,7 @@ import { Btn } from 'src/app/models/btn.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { LabelService } from 'src/app/services/label.service';
 import { Label } from 'src/app/models/label.model';
+import { TrackByService } from 'src/app/services/track-by.service';
 @Component({
   selector: 'radio-filter',
   templateUrl: './radio-filter.component.html',
@@ -23,7 +24,8 @@ export class RadioFilterComponent {
   constructor(
     private stayService: StayService,
     private sharedService: SharedService,
-    private labelService: LabelService
+    private labelService: LabelService,
+    public trackByService: TrackByService
   ) {}
   @Output() toggleFilterModal = new EventEmitter();
 

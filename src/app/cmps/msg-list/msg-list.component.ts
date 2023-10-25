@@ -12,6 +12,7 @@ import { Msg } from 'src/app/models/msg.model';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -23,7 +24,10 @@ export class MsgListComponent {
   @Input() msgs: Msg[] = [];
   @Input() user!: User;
   @Input() order!: Order;
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    public trackByService: TrackByService
+  ) {}
   ngOnInit() {
     console.log(this.msgs);
   }

@@ -16,6 +16,8 @@ import {
   StayDistance,
   StayFilter,
 } from 'src/app/models/stay.model';
+import { SharedService } from 'src/app/services/shared.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({
   selector: 'stay-list',
@@ -40,7 +42,11 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
 
   private ro: ResizeObserver;
 
-  constructor(private cdr: ChangeDetectorRef, private el: ElementRef) {
+  constructor(
+    public trackByService: TrackByService,
+    private cdr: ChangeDetectorRef,
+    private el: ElementRef
+  ) {
     this.ro = new ResizeObserver((entries) => {
       for (let entry of entries) {
         this.updateGridColumns(entry.target as HTMLElement);

@@ -9,6 +9,7 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { imgService } from 'src/app/services/img-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({
   selector: 'stay-edit',
@@ -33,7 +34,8 @@ export class StayEditComponent implements OnInit, OnDestroy {
     private imgService: imgService,
     private utilService: UtilService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public trackByService: TrackByService
   ) {}
 
   ngOnInit(): void {

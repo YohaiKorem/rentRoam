@@ -7,7 +7,7 @@
 <ul class="stay-list clean-list">
   <a
     class="stay-link"
-    *ngFor="let stay of stays"
+    *ngFor="let stay of stays; trackBy: trackByService.byId"
     routerLink="/stay/{{ stay._id }}"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"

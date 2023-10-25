@@ -1,7 +1,7 @@
 <ul class="trip-list p0-5 full-width">
   <button
     (click)="setCurrTrip(order)"
-    *ngFor="let order of orders; let i = index"
+    *ngFor="let order of orders; let i = index; trackBy: trackByService.byId"
     [class.active]="this.currTripId === order._id"
     class="btn trip-preview-wrapper full-width"
   >

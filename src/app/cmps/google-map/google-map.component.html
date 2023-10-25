@@ -7,7 +7,7 @@
   (mapMousemove)="move($event)"
 >
   <map-marker
-    *ngFor="let _marker of markers; index as i"
+    *ngFor="let _marker of markers; index as i; trackBy: trackByService.byIdx"
     [position]="_marker.position"
     #marker="mapMarker"
     [icon]="_marker.pillIcon"

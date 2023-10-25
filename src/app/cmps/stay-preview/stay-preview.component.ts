@@ -11,6 +11,7 @@ import { SearchParam, Stay, StayDistance } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 
@@ -41,7 +42,8 @@ export class StayPreviewComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private userService: UserService,
     private sharedService: SharedService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    public trackByService: TrackByService
   ) {}
 
   ngOnInit() {

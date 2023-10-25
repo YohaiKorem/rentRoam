@@ -164,7 +164,11 @@
       />
       <div class="loc-suggestions-container flex column space-between">
         <button
-          *ngFor="let place of suggestions"
+          *ngFor="
+            let place of suggestions;
+            let i = index;
+            trackBy: trackByService.byIdx
+          "
           class="btn-suggestion flex align-center space-between"
           (click)="locSelected(place)"
         >

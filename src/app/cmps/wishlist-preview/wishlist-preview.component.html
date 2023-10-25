@@ -19,7 +19,11 @@
       <ng-container *ngIf="isShortList; else longList">
         <div
           class="img-container"
-          *ngFor="let img of extraImgs | slice : 0 : 3; let i = index"
+          *ngFor="
+            let img of extraImgs | slice : 0 : 3;
+            let i = index;
+            trackBy: trackByService.byIdx
+          "
         >
           <img [src]="img" loading="lazy" />
         </div>
@@ -28,7 +32,11 @@
       <ng-template #longList>
         <div
           class="img-container"
-          *ngFor="let stay of wishlist.stays | slice : 0 : 3; let i = index"
+          *ngFor="
+            let stay of wishlist.stays | slice : 0 : 3;
+            let i = index;
+            trackBy: trackByService.byId
+          "
         >
           <img [src]="stay.thumbnail" loading="lazy" />
         </div>

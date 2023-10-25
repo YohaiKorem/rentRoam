@@ -8,7 +8,7 @@
   </header>
 
   <order-preview
-    *ngFor="let order of orders; let i = index"
+    *ngFor="let order of orders; let i = index; trackBy: trackByService.byId"
     [order]="order"
     (orderStatChanged)="onOrderStatChanged($event)"
     [svg]="svg"

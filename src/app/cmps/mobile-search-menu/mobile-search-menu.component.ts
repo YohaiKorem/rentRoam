@@ -12,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 import { environment } from 'src/environments/env.prod';
 
 @Component({
@@ -26,7 +27,8 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   @Output() toggleSearchClosed = new EventEmitter();
   constructor(
     private sharedService: SharedService,
-    private stayService: StayService
+    private stayService: StayService,
+    public trackByService: TrackByService
   ) {}
   isOpen: boolean = false;
   searchParam = {} as SearchParam;
@@ -51,27 +53,11 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
         this.searchParam = searchParam;
         this.updateGuestsNumForDisplay(this.searchParam);
       });
-    try {
-      await this.loadGoogleMaps();
-      this.autocompleteService = new google.maps.places.AutocompleteService();
-    } catch (error) {
-      console.log(error, 'failed to load googlemaps');
-    }
   }
   // ngAfterViewInit() {
   //   this.autocompleteService = new google.maps.places.AutocompleteService();
   // }
 
-  loadGoogleMaps() {
-    return new Promise((resolve) => {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}&libraries=places,marker&callback=initMap`;
-      script.async = true;
-      script.defer = true;
-      script.onload = resolve;
-      document.body.appendChild(script);
-    });
-  }
   updateGuestsNumForDisplay(searchParam: SearchParam) {
     let sum = 0;
     if (searchParam.guests.adults + searchParam.guests.children)

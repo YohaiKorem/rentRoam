@@ -4,7 +4,11 @@
 >
   <a
     routerLink="{{ wishlist.id }}"
-    *ngFor="let wishlist of user.wishlists; let i = index"
+    *ngFor="
+      let wishlist of user.wishlists;
+      let i = index;
+      trackBy: trackByService.byId
+    "
   >
     <button
       appStopPropagation
@@ -35,7 +39,13 @@
 </ul>
 <ng-template #modalWishlist>
   <ul class="wishlist-list-wrapper in-modal flex column gap0-5">
-    <li *ngFor="let wishlist of user.wishlists; let i = index">
+    <li
+      *ngFor="
+        let wishlist of user.wishlists;
+        let i = index;
+        trackBy: trackByService.byId
+      "
+    >
       <button class="btn-wishlist" (click)="addStayToWishlist(wishlist)">
         <wishlist-preview
           [isModal]="isModal"

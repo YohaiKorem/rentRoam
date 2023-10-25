@@ -9,6 +9,7 @@ import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { Subject, takeUntil } from 'rxjs';
 import { StayService } from 'src/app/services/stay.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { TrackByService } from 'src/app/services/track-by.service';
 @Component({
   selector: 'google-map-cmp',
   templateUrl: './google-map.component.html',
@@ -18,7 +19,10 @@ export class GoogleMapCmpComponent implements OnInit {
   @Input() stays!: Stay[] | null;
   @Input() zoom: number = 15;
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
-  constructor(private stayService: StayService) {}
+  constructor(
+    private stayService: StayService,
+    public trackByService: TrackByService
+  ) {}
   searchParam = {} as SearchParam;
   private destroySubject$ = new Subject<null>();
   center: google.maps.LatLngLiteral = { lat: 24, lng: 12 };

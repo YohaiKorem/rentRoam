@@ -315,7 +315,14 @@
     </div>
   </header>
   <div class="imgs-container hidden-on-mobile">
-    <div class="img-container" *ngFor="let img of stay.imgUrls; let i = index">
+    <div
+      class="img-container"
+      *ngFor="
+        let img of stay.imgUrls;
+        let i = index;
+        trackBy: trackByService.byIdx
+      "
+    >
       <img
         class="stay-img"
         [src]="img"
@@ -526,7 +533,10 @@
         <h4 class="fw600 fs24">What this place offers</h4>
         <ul class="amenities-list gap1">
           <li
-            *ngFor="let amenity of stay.amenities | slice : 0 : 8"
+            *ngFor="
+              let amenity of stay.amenities | slice : 0 : 8;
+              trackBy: trackByService.byId
+            "
             class="amenity"
           >
             <span class="amenity-txt">{{ amenity }}</span>
@@ -900,7 +910,10 @@
     </header>
     <ul class="reviews-list gap1">
       <review-preview
-        *ngFor="let review of stay.reviews | slice : 0 : 10"
+        *ngFor="
+          let review of stay.reviews | slice : 0 : 10;
+          trackBy: trackByService.byIdx
+        "
         class="review-item"
         [review]="review"
         [independentToggling]="!isMobile"

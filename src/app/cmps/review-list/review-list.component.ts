@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Review } from 'src/app/models/review.model';
+import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({
   selector: 'review-list',
@@ -10,6 +11,7 @@ export class ReviewListComponent {
   @Input() reviews!: Review[];
   @Input() isToggleEnabled: boolean = true;
   @Input() independentToggling: boolean = true;
+  constructor(public trackByService: TrackByService) {}
   filterReviewsBy: string = '';
   filteredReviews: Review[] = this.reviews;
 

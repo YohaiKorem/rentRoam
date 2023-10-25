@@ -20,7 +20,11 @@
         }"
       >
         <div
-          *ngFor="let data of histogramData"
+          *ngFor="
+            let data of histogramData;
+            let i = index;
+            trackBy: trackByService.byIdx
+          "
           class="slider-chart-item"
           [class.opacity]="data.price < minPrice || data.price > maxPrice"
           [style.height]="data.normalizedHeight + '%'"
@@ -79,7 +83,12 @@
       <h3 class="fw600 fs16">Beds</h3>
       <div class="beds-bath-btns-container full-width flex space-between">
         <button
-          *ngFor="let btn of btnsArray; index as i; last as isLast"
+          *ngFor="
+            let btn of btnsArray;
+            index as i;
+            last as isLast;
+            trackBy: trackByService.byIdx
+          "
           class="{{ btn.className }}"
           [class.hidden-on-mobile]="i >= 5"
           [class.active]="stayFilter.equipment.bedsNum === i"
@@ -91,7 +100,12 @@
       <h3 class="fw600 fs16">Bathrooms</h3>
       <div class="beds-bath-btns-container full-width flex space-between">
         <button
-          *ngFor="let btn of btnsArray; index as i; last as isLast"
+          *ngFor="
+            let btn of btnsArray;
+            index as i;
+            last as isLast;
+            trackBy: trackByService.byIdx
+          "
           class="{{ btn.className }}"
           [class.hidden-on-mobile]="i >= 5"
           [class.active]="stayFilter.equipment.bathNum === i"
@@ -138,7 +152,11 @@
       <h3 class="fw600 fs16">Essentials</h3>
       <div class="amenities-container">
         <div
-          *ngFor="let amenity of amenities['essentials']"
+          *ngFor="
+            let amenity of amenities['essentials'];
+            let i = index;
+            trackBy: trackByService.byIdx
+          "
           class="amenity-filter-item flex"
           (click)="filterAmenities(amenity)"
         >
@@ -172,7 +190,11 @@
         </div>
         <ng-container *ngIf="isShowAllAmenities">
           <div
-            *ngFor="let amenity of amenities['all']"
+            *ngFor="
+              let amenity of amenities['all'];
+              let i = index;
+              trackBy: trackByService.byIdx
+            "
             class="amenity-filter-item flex"
             (click)="filterAmenities(amenity)"
           >

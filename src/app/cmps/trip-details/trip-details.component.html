@@ -1,7 +1,11 @@
 <section class="trip-details-wrapper flex column 0 p1 shadow">
   <div *ngIf="stay" class="imgs-container shadow">
     <div
-      *ngFor="let img of stay.imgUrls | slice : 0 : 3; let i = index"
+      *ngFor="
+        let img of stay.imgUrls | slice : 0 : 3;
+        let i = index;
+        trackBy: trackByService.byIdx
+      "
       class="img-container square-3"
     >
       <img [src]="img" loading="lazy" />
@@ -18,7 +22,12 @@
       </p>
       <p>
         <span class="fw500">Guests</span>:
-        <span *ngFor="let guest of trip!.guests | keyvalue">
+        <span
+          *ngFor="
+            let guest of trip!.guests | keyvalue;
+            trackBy: trackByService.byId
+          "
+        >
           <span *ngIf="guest.value"> {{ guest.key }} : {{ guest.value }}</span>
         </span>
       </p>

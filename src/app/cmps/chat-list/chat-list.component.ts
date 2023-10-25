@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
+import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({
   selector: 'chat-list',
@@ -12,6 +13,8 @@ export class ChatListComponent {
   @Input() user!: User;
   @Input() currChat!: Order;
   @Output() setCurrChat = new EventEmitter();
+
+  constructor(public trackByService: TrackByService) {}
   onSetCurrChat(orderId: string) {
     this.setCurrChat.emit(orderId);
   }

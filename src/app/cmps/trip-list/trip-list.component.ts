@@ -5,6 +5,7 @@ import {
   faCheck,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { TrackByService } from 'src/app/services/track-by.service';
 @Component({
   selector: 'trip-list',
   templateUrl: './trip-list.component.html',
@@ -13,6 +14,7 @@ import {
 export class TripListComponent implements OnInit {
   @Input() orders: Order[] = [];
   @Output() onSelectTrip = new EventEmitter();
+  constructor(public trackByService: TrackByService) {}
   currTripId!: string | null;
   svg = {
     pending: faClockRotateLeft,

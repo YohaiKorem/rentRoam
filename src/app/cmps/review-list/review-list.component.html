@@ -11,7 +11,10 @@
   </div>
   <ul class="reviews-list flex column space-between gap1">
     <review-preview
-      *ngFor="let review of filteredReviews ? filteredReviews : reviews"
+      *ngFor="
+        let review of filteredReviews ? filteredReviews : reviews;
+        trackBy: trackByService.byIdx
+      "
       class="review-item"
       [review]="review"
       [independentToggling]="false"

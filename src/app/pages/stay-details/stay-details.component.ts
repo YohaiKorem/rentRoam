@@ -25,6 +25,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 @Component({
   selector: 'stay-details',
   templateUrl: './stay-details.component.html',
@@ -45,7 +46,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     private sharedService: SharedService,
     private cdr: ChangeDetectorRef,
     private wishlistService: WishlistService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    public trackByService: TrackByService
   ) {}
   elMainHeader: HTMLElement | null = null;
   currImgUrlIdx = 0;

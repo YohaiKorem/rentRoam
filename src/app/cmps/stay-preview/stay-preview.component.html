@@ -16,7 +16,11 @@
     />
     <div class="img-idx-container flex">
       <div
-        *ngFor="let img of stay.imgUrls; let i = index"
+        *ngFor="
+          let img of stay.imgUrls;
+          let i = index;
+          trackBy: trackByService.byIdx
+        "
         class="img-idx"
         [ngClass]="{
           active: i === currImgUrlIdx,
@@ -175,6 +179,9 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
+
+
+
 
 
 

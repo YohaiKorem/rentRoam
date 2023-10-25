@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Wishlist } from 'src/app/models/wishlist.model';
 import { StayService } from 'src/app/services/stay.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({
   selector: 'wishlist-preview',
@@ -8,7 +9,10 @@ import { StayService } from 'src/app/services/stay.service';
   styleUrls: ['./wishlist-preview.component.scss'],
 })
 export class WishlistPreviewComponent implements OnInit {
-  constructor(private stayService: StayService) {}
+  constructor(
+    private stayService: StayService,
+    public trackByService: TrackByService
+  ) {}
   @Input() wishlist!: Wishlist;
   @Input() isModal: boolean = true;
   stayImgsForDisplay!: string[];

@@ -1,6 +1,6 @@
 <ul class="chat-list-wrapper flex column">
   <li
-    *ngFor="let order of orders; let i = index"
+    *ngFor="let order of orders; let i = index; trackBy: trackByService.byId"
     class="chat-preview-container"
     [class.active]="order._id === currChat._id"
     (click)="onSetCurrChat(order._id)"

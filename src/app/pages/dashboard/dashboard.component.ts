@@ -15,6 +15,7 @@ import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { StayService } from 'src/app/services/stay.service';
+import { TrackByService } from 'src/app/services/track-by.service';
 import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'dashboard',
@@ -40,6 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private stayService: StayService,
     private orderService: OrderService,
+    public trackByService: TrackByService,
     private router: Router
   ) {}
 

@@ -9,6 +9,7 @@ import { Order } from 'src/app/models/order.model';
 import { StayService } from 'src/app/services/stay.service';
 import { take } from 'rxjs';
 import { Stay } from 'src/app/models/stay.model';
+import { TrackByService } from 'src/app/services/track-by.service';
 @Component({
   selector: 'trip-details',
   templateUrl: './trip-details.component.html',
@@ -18,7 +19,10 @@ export class TripDetailsComponent implements OnInit {
   @Input() trip: Order | null = null;
   formattedDates!: { start: string; end: string };
   stay!: Stay;
-  constructor(private stayService: StayService) {}
+  constructor(
+    private stayService: StayService,
+    public trackByService: TrackByService
+  ) {}
   ngOnInit() {
     this.getStay();
     this.formattedDates = this.getFormattedDateForDisplay();

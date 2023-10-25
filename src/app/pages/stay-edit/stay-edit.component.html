@@ -127,7 +127,11 @@
     </div>
     <div class="imgs-inputs-container">
       <label
-        *ngFor="let img of stay!.imgUrls; let i = index"
+        *ngFor="
+          let img of stay!.imgUrls;
+          let i = index;
+          trackBy: trackByService.byIdx
+        "
         [for]="'img-input-' + i"
         class="input-container input-file-label"
         [ngStyle]="
@@ -215,7 +219,11 @@
       <h3 class="fs24 fw500 mbs1-5">Amenities</h3>
       <div class="amenities-container">
         <div
-          *ngFor="let amenity of allAmenities; let i = index"
+          *ngFor="
+            let amenity of allAmenities;
+            let i = index;
+            trackBy: trackByService.byId
+          "
           [class]="'amenity-input-container' + ' ' + amenity"
         >
           <label [for]="amenity">
@@ -235,7 +243,14 @@
     <div class="labels-wrapper flex column gap1 space-between">
       <h3 class="fs24 fw500 mbs1-5">Labels</h3>
       <div class="labels-container">
-        <div *ngFor="let label of labels" class="stay-label-input">
+        <div
+          *ngFor="
+            let label of labels;
+            let i = index;
+            trackBy: trackByService.byId
+          "
+          class="stay-label-input"
+        >
           <label [for]="label">
             <input
               required="true"
