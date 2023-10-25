@@ -12,6 +12,7 @@ import { Stay } from '../models/stay.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { environment } from 'src/environments/env.prod';
+import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,7 +25,8 @@ export class AppComponent {
   constructor(
     private stayService: StayService,
     public router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private sharedService: SharedService
   ) {}
   subscription!: Subscription;
   private destroySubject$ = new Subject<null>();
@@ -42,7 +44,6 @@ export class AppComponent {
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.location = searchParam.location));
     this.stays$ = this.stayService.stays$;
-    this.loadGoogleMaps();
   }
 
   ngAfterViewInit() {
@@ -70,14 +71,7 @@ export class AppComponent {
   }
 
   loadGoogleMaps() {
-    return new Promise((resolve) => {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}&libraries=places,marker&callback=initMap`;
-      script.async = true;
-      script.defer = true;
-      script.onload = resolve;
-      document.body.appendChild(script);
-    });
+    this.sharedService.loadGoogleMaps();
   }
 
   isHomePage() {

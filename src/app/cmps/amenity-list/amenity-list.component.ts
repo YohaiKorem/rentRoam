@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { SharedService } from 'src/app/services/shared.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({
@@ -8,5 +9,13 @@ import { TrackByService } from 'src/app/services/track-by.service';
 })
 export class AmenityListComponent {
   @Input() amenities!: string[];
-  constructor(public trackByService: TrackByService) {}
+  modalHeader = document.querySelector('.dynamic-modal btn-close');
+  constructor(
+    public trackByService: TrackByService,
+    private sharedService: SharedService
+  ) {}
+
+  ngOnInit() {
+    this.modalHeader?.classList.remove('hidden-on-mobile');
+  }
 }

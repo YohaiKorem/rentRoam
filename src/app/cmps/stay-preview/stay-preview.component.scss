@@ -156,7 +156,7 @@
       width: 100%;
       align-items: center;
       display: grid;
-      grid-template-rows: 3fr 1fr;
+      grid-template-rows: 2.3fr 1fr;
       // used is-loading because "loading" is a helper class
       &.is-loading {
         grid-template-rows: 1fr;

@@ -26,8 +26,8 @@
           style="
             display: block;
             fill: none;
-            height: 16px;
-            width: 16px;
+            height: 24px;
+            width: 24px;
             stroke: currentcolor;
             stroke-width: 5.33333;
             overflow: visible;
@@ -47,8 +47,8 @@
           style="
             display: block;
             fill: none;
-            height: 16px;
-            width: 16px;
+            height: 24px;
+            width: 24px;
             stroke: currentcolor;
             stroke-width: 2px;
             overflow: visible;
@@ -859,7 +859,7 @@
           </div>
         </div>
       </mat-menu>
-      <button class="btn btn-reserve" (click)="onReserve()">Reserve</button>
+      <button class="btn btn-reserve p1" (click)="onReserve()">Reserve</button>
       <span class="text-center">You won't be charged yet</span>
       <div class="price-info-container flex align-center space-between column">
         <div
@@ -927,7 +927,7 @@
       Show all {{ stay.reviews.length }} reviews
     </button>
   </div>
-  <section class="loc-container separator gap1">
+  <section *ngIf="homeIcon !== null" class="loc-container separator gap1">
     <h4 class="fw600 fs20">Where you'll be</h4>
     <google-map
       height="100%"
@@ -1081,4 +1081,40 @@
       </ng-container>
     </dynamic-modal>
   </div>
+
+  <footer
+    class="mobile-reservation-footer show-on-mobile flex align-center space-between shadow p0-5"
+  >
+    <div class="txt-container flex column align-center space-between">
+      <p>
+        <span class="fw500">${{ stay.price }}</span> night
+      </p>
+      <p class="deco-underline fw500">
+        <span>{{
+          searchParam.startDate
+            ? searchParam.startDate.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              })
+            : defaultDate.start.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              })
+        }}</span>
+        -
+        <span>{{
+          searchParam.endDate
+            ? searchParam.endDate.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              })
+            : defaultDate.end.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short"
+              })
+        }}</span>
+      </p>
+    </div>
+    <button (click)="onReserve()" class="btn btn-reserve p1">Reserve</button>
+  </footer>
 </section>

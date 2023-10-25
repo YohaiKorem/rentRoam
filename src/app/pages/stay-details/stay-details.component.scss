@@ -132,7 +132,6 @@
           #d70466 100%
         );
         color: $fontClr2;
-        padding: 1em;
         border-radius: em(8px);
         font-weight: 600;
       }
@@ -338,6 +337,28 @@
       padding-inline: 1em;
       .btn-contact {
         width: 100%;
+      }
+    }
+    .mobile-reservation-footer {
+      position: fixed;
+      top: calc(var(--full-height) - $footer-height - 1em);
+      left: 0;
+      width: 100%;
+      min-height: $footer-height;
+      background-color: #fff;
+      background-color: #fff;
+      border-block-start: 1px solid $secondaryClr2;
+      z-index: 100;
+      .btn-reserve {
+        background: linear-gradient(
+          to right,
+          #e61e4d 0%,
+          #e31c5f 50%,
+          #d70466 100%
+        );
+        color: $fontClr2;
+        border-radius: em(8px);
+        font-weight: 600;
       }
     }
   }
