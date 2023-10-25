@@ -29,7 +29,7 @@ export class WishlistIndexComponent implements OnInit {
       .subscribe((user) => {
         this.loggedInUser = user;
       });
-    this.sharedService.hideHeaderOnMobile();
+    this.sharedService.hideElementOnMobile('.main-header');
   }
 
   toggleEditMode() {
@@ -43,6 +43,6 @@ export class WishlistIndexComponent implements OnInit {
     );
   }
   ngOnDestroy() {
-    this.sharedService.showHeaderOnMobile();
+    this.sharedService.showElementOnMobile('.main-header');
   }
 }

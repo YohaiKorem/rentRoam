@@ -12,8 +12,7 @@ export class SharedService {
   toggleSignupModal$ = this.toggleSignupModalSource.asObservable();
   private openModalSource = new Subject<{ str: string; data: Stay | null }>();
   openModal$ = this.openModalSource.asObservable();
-  private googleMapScriptSource = new Subject<HTMLElement | undefined>();
-  googleMapScript$ = this.googleMapScriptSource.asObservable();
+
   private openSearchMenuSource = new Subject<void>();
   openSearchMenu$ = this.openSearchMenuSource.asObservable();
   private openSearchMenuMobileSource = new Subject<void>();
@@ -36,12 +35,14 @@ export class SharedService {
     this.toggleSignupModalSource.next();
   }
 
-  showHeaderOnMobile() {
-    this.elHeader?.classList.remove('hidden-on-mobile');
+  showElementOnMobile(selector: string) {
+    const el = document.querySelector(selector);
+    el?.classList.remove('hidden-on-mobile');
   }
 
-  hideHeaderOnMobile() {
-    this.elHeader?.classList.add('hidden-on-mobile');
+  hideElementOnMobile(selector: string) {
+    const el = document.querySelector(selector);
+    el?.classList.add('hidden-on-mobile');
   }
   loadGoogleMaps(): Promise<void> {
     return new Promise<void>((resolve, reject) => {

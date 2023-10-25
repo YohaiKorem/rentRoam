@@ -9,13 +9,15 @@ import { TrackByService } from 'src/app/services/track-by.service';
 })
 export class AmenityListComponent {
   @Input() amenities!: string[];
-  modalHeader = document.querySelector('.dynamic-modal btn-close');
+
   constructor(
     public trackByService: TrackByService,
     private sharedService: SharedService
   ) {}
 
   ngOnInit() {
-    this.modalHeader?.classList.remove('hidden-on-mobile');
+    this.sharedService.showElementOnMobile(
+      'button.btn.btn-close.hidden-on-mobile'
+    );
   }
 }

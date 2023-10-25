@@ -50,8 +50,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     public trackByService: TrackByService
   ) {}
-  elMainHeader: HTMLElement | null = null;
-  elMobileFooter: HTMLElement | null = null;
+
   currImgUrlIdx = 0;
   isMobile = window.innerWidth <= 780;
   stay: Stay | null = null;
@@ -126,13 +125,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
         scaledSize: new google.maps.Size(42, 42),
       };
     });
-    this.elMainHeader = document.querySelector('app-header') as HTMLElement;
-    this.elMobileFooter = document.querySelector(
-      'mobile-footer'
-    ) as HTMLElement;
-    if (this.elMainHeader) this.elMainHeader.classList.add('hidden-on-mobile');
-    if (this.elMobileFooter)
-      this.elMobileFooter.classList.add('hidden-on-mobile');
+
+    this.sharedService.hideElementOnMobile('app-header');
+    this.sharedService.hideElementOnMobile('mobile-footer');
   }
 
   onDateChange(): void {
@@ -346,11 +341,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.sharedService.showElementOnMobile('app-header');
+    this.sharedService.showElementOnMobile('mobile-footer');
     this.subscription.unsubscribe();
-
-    if (this.elMainHeader)
-      this.elMainHeader.classList.remove('hidden-on-mobile');
-    if (this.elMobileFooter)
-      this.elMobileFooter.classList.remove('hidden-on-mobile');
   }
 }

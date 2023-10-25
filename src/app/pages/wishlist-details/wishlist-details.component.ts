@@ -50,7 +50,7 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
         this.wishlistId
       );
     }
-    this.sharedService.hideHeaderOnMobile();
+    this.sharedService.hideElementOnMobile('.main-header');
 
     this.getStaysArrFromWishlist();
   }
@@ -81,7 +81,7 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sharedService.showHeaderOnMobile();
+    this.sharedService.showElementOnMobile('.main-header');
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }

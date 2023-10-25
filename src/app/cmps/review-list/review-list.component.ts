@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Review } from 'src/app/models/review.model';
+import { SharedService } from 'src/app/services/shared.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({
@@ -11,9 +12,18 @@ export class ReviewListComponent {
   @Input() reviews!: Review[];
   @Input() isToggleEnabled: boolean = true;
   @Input() independentToggling: boolean = true;
-  constructor(public trackByService: TrackByService) {}
+  constructor(
+    public trackByService: TrackByService,
+    private sharedService: SharedService
+  ) {}
   filterReviewsBy: string = '';
   filteredReviews: Review[] = this.reviews;
+
+  ngOnInit() {
+    this.sharedService.showElementOnMobile(
+      'button.btn.btn-close.hidden-on-mobile'
+    );
+  }
 
   onFilterReviews(ev: any) {
     const regex = new RegExp(this.filterReviewsBy, 'i');
