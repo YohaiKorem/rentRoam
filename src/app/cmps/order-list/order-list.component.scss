@@ -1,14 +1,19 @@
 @import "../../app-root/app.component.scss";
-.order-list {
-  background-color: #fff;
-  border-start-start-radius: 10px;
-  border-start-end-radius: 10px;
-  header {
-    border-bottom: 1px solid $secondaryClr2;
-    display: grid;
-    grid-template-columns: 3fr repeat(4, 1fr) 2fr;
-    grid-template-rows: 1fr;
-    grid-auto-flow: column;
-    align-items: center;
+:host {
+  .order-list {
+    background-color: #fff;
+    border-start-start-radius: 10px;
+    border-start-end-radius: 10px;
+    header {
+      border-bottom: 1px solid $secondaryClr2;
+      display: grid;
+      grid-template-columns: 3fr repeat(4, 1fr) 2fr;
+      grid-template-rows: 1fr;
+      grid-auto-flow: column;
+      align-items: center;
+    }
+  }
+  @include for-mobile-layout {
+    width: 100%;
   }
 }

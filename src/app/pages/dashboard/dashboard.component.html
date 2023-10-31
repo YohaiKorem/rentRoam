@@ -4,23 +4,27 @@
   <nav class="dashboard-nav flex align-center space-between gap0-5 full-width">
     <button
       (click)="currCmp = 'orders'"
+      [class.active]="currCmp === 'orders'"
       class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 orders"
     >
       <fa-icon class="svg-container" [icon]="faList"></fa-icon>
-      <span class="txt-container fs20 fw500">Orders</span>
+      <span class="txt-container fs20 fw500 hidden-on-mobile">Orders</span>
     </button>
     <button
       (click)="currCmp = 'stays'"
+      [class.active]="currCmp === 'stays'"
       class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 my-stays"
     >
       <fa-icon class="svg-container" [icon]="faHouse"> </fa-icon
-      ><span class="txt-container fs20 fw500">My Stays</span>
+      ><span class="txt-container fs20 fw500 hidden-on-mobile">My Stays</span>
     </button>
     <a
       routerLink="/stay/edit"
       class="btn btn-dashboard pb0-5 justify-start shadow flex align-center gap1 add-stay"
       ><fa-icon class="svg-container" [icon]="faPlusCircle"> </fa-icon
-      ><span class="txt-container fs20 fw500">Add a Stay</span></a
+      ><span class="txt-container fs20 fw500 hidden-on-mobile"
+        >Add a Stay</span
+      ></a
     >
   </nav>
   <ng-container [ngSwitch]="currCmp">
@@ -29,7 +33,7 @@
         *ngIf="stays && stays.length; else becomeHost"
         class="stay-list-table flex column gap1 pbs1 pi0-5"
       >
-        <header class="stay-list-table-header my-stays-grid">
+        <header class="stay-list-table-header my-stays-grid hidden-on-mobile">
           <h4 class="fw500 fs18 mb1">Stay name</h4>
           <h4 class="fw500 fs18 mb1">Location</h4>
           <h4 class="fw500 fs18 mb1">Price</h4>
@@ -50,11 +54,24 @@
             [routerLinkActiveOptions]="{ exact: true }"
             class="my-stays-grid"
           >
-            <p class="mb1">{{ stay.name }}</p>
-            <p class="mb1">{{ stay.loc.address }}</p>
-            <p class="mb1">{{ stay.price }}</p>
-            <p class="mb1">{{ stay.equipment.bedsNum }}</p>
-            <p class="mb1">{{ stay.roomType }}</p>
+            <p class="mb1">
+              <span class="show-on-mobile">Name:</span>{{ stay.name }}
+            </p>
+            <p class="mb1">
+              <span class="show-on-mobile">Location:</span
+              ><span>{{ stay.loc.address }}</span>
+            </p>
+            <p class="mb1">
+              <span class="show-on-mobile">Price:</span>{{ stay.price }}
+            </p>
+            <p class="mb1">
+              <span class="show-on-mobile">Beds:</span
+              >{{ stay.equipment.bedsNum }}
+            </p>
+            <p class="mb1">
+              <span class="show-on-mobile">Property type:</span
+              >{{ stay.roomType }}
+            </p>
             <div class="btns-container flex gap0-5 p0-5 full-width">
               <button
                 (click)="onUpdateClick(stay._id)"

@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
 import { Observable, map, take, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.scss'],
 })
-export class BookComponent implements OnInit {
+export class BookComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
-    private stayService: StayService
+    private stayService: StayService,
+    private sharedService: SharedService
   ) {}
 
   order$!: Observable<Order>;
@@ -37,5 +39,10 @@ export class BookComponent implements OnInit {
         return order;
       })
     );
+    this.sharedService.hideElementOnMobile('.main-header');
+  }
+
+  ngOnDestroy(): void {
+    this.sharedService.showElementOnMobile('.main-header');
   }
 }

@@ -15,4 +15,10 @@
     border: 1px solid $secondaryClr2;
     border-radius: 1em;
   }
+
+  @include for-mobile-layout {
+    grid-template-rows: 3fr repeat(4, 1fr) 2fr;
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+  }
 }

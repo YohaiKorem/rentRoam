@@ -8,12 +8,20 @@ import {
   faEllipsisH,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subject, take, takeUntil } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  take,
+  takeUntil,
+  switchMap,
+  forkJoin,
+} from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 
 import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
+import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { UserService } from 'src/app/services/user.service';
@@ -42,24 +50,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private stayService: StayService,
     private orderService: OrderService,
     public trackByService: TrackByService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
     this.userService.loggedInUser$
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((user) => {
-        this.user = user!;
-        this.orders$ = this.orderService.getOrdersForEntityById(this.user._id);
-        this.stayService
-          .getAllHostStaysById(this.user._id)
-          .pipe(take(1))
-          .subscribe((stays) => (this.stays = stays));
+      .pipe(
+        takeUntil(this.ngUnsubscribe),
+        switchMap((user) => {
+          this.user = user!;
+          return forkJoin({
+            orders: this.orderService.getOrdersForEntityById(this.user._id),
+            stays: this.stayService.getAllHostStaysById(this.user._id),
+          });
+        }),
+        take(1)
+      )
+      .subscribe(({ orders, stays }) => {
+        this.orders = orders;
+        this.stays = stays;
+        this.updateOrderStatsMap();
       });
-    this.orders$.pipe(take(1)).subscribe((orders: Order[]) => {
-      this.orders = orders;
-    });
-    this.updateOrderStatsMap();
+
+    this.sharedService.hideElementOnMobile('.main-header');
   }
 
   onUpdateClick(stayId: string) {
@@ -99,5 +113,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.unsubscribe();
+    this.sharedService.showElementOnMobile('.main-header');
   }
 }
