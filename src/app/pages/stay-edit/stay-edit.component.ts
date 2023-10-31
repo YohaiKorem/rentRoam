@@ -10,6 +10,7 @@ import { imgService } from 'src/app/services/img-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'stay-edit',
@@ -31,6 +32,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private geocodingService: GeocodingService,
     private stayService: StayService,
+    private sharedService: SharedService,
     private imgService: imgService,
     private utilService: UtilService,
     private router: Router,
@@ -75,6 +77,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
     if (fetchedStay) {
       this.stay = fetchedStay;
     }
+    this.sharedService.hideElementOnMobile('.main-header');
   }
 
   test(str: any) {
@@ -227,5 +230,6 @@ export class StayEditComponent implements OnInit, OnDestroy {
     this.stayService.saveStay(stay);
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.sharedService.showElementOnMobile('.main-header');
   }
 }

@@ -22,7 +22,7 @@
   @include for-mobile-layout {
     padding: 1em;
     padding-block-end: 6em;
-    .main-btn {
+    .btn.main-btn {
       align-self: center;
     }
     .order-details-container {
