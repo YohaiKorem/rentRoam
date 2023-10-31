@@ -52,7 +52,7 @@
       [currDate]="currDate"
     ></stay-list>
   </section>
-  <section class="map-container hidden-on-mobile">
+  <section *ngIf="!isMobile" class="map-container hidden-on-mobile">
     <google-map-cmp [zoom]="2" [stays]="stays$ | async"></google-map-cmp>
   </section>
 </section>

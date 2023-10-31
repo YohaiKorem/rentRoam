@@ -39,7 +39,7 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
   @Input() searchParam: SearchParam | null = null;
   @Output() clearFilter = new EventEmitter();
   staysWithDistance: any;
-
+  isInsideWishlistDetails: boolean = false;
   private ro: ResizeObserver;
 
   constructor(
@@ -55,6 +55,10 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    const hostElement = this.el.nativeElement;
+    const classes = hostElement.classList;
+    if (classes.contains('inside-wishlist-details'))
+      this.isInsideWishlistDetails = true;
     this.updateGridColumns(this.el.nativeElement as HTMLElement);
     if (this.el.nativeElement.parentElement) {
       this.ro.observe(this.el.nativeElement.parentElement);

@@ -13,6 +13,7 @@
     [routerLinkActiveOptions]="{ exact: true }"
   >
     <stay-preview
+      [class.inside-wishlist-details]="isInsideWishlistDetails"
       [areMonthsDifferent]="areMonthsDifferent"
       [endMonth]="endMonth"
       [currDate]="currDate"

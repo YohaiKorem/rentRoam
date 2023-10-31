@@ -25,7 +25,7 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
   stays$!: Observable<Stay[]>;
   currDate = { start: new Date(), end: new Date() };
   isModalOpen: boolean = false;
-
+  isMobile: boolean = window.innerWidth < 780;
   constructor(
     private route: ActivatedRoute,
     private wishlistService: WishlistService,
@@ -51,16 +51,13 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
       );
     }
     this.sharedService.hideElementOnMobile('.main-header');
+    this.sharedService.hideElementOnMobile('mobile-footer');
 
     this.getStaysArrFromWishlist();
   }
 
   ngAfterViewInit() {
     this.sharedService.loadGoogleMaps();
-
-    document
-      .querySelector('.stay-preview-container')
-      ?.classList.add('inside-wishlist-details');
   }
 
   onBack() {
@@ -81,6 +78,12 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
 
   toggleModal() {
     this.isModalOpen = !this.isModalOpen;
+    setTimeout(
+      this.sharedService.showElementOnMobile,
+
+      50,
+      '.dynamic-modal header .btn-close'
+    );
   }
 
   getStaysArrFromWishlist() {
@@ -90,11 +93,9 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sharedService.showElementOnMobile('.main-header');
+    this.sharedService.showElementOnMobile('mobile-footer');
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }
-    document
-      .querySelector('.stay-preview-container')
-      ?.classList.remove('inside-wishlist-details');
   }
 }

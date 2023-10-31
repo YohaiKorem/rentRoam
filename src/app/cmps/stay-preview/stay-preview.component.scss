@@ -151,6 +151,11 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
+    &.inside-wishlist-details {
+      .stay-preview-container {
+        grid-template-rows: 4fr 1fr;
+      }
+    }
     .stay-preview-container {
       gap: 0.5em;
       width: 100%;
