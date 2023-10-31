@@ -4,7 +4,6 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import {
   faSearch,
-  faHeart,
   faMessage,
   faDashboard,
 } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +20,6 @@ export class MobileFooterComponent implements OnInit, OnDestroy {
   user: User | null = null;
   user$!: Observable<User>;
   faSearch = faSearch;
-  faHeart = faHeart;
   faMessage = faMessage;
   faDashboard = faDashboard;
   constructor(

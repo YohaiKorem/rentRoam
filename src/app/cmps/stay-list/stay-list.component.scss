@@ -6,6 +6,12 @@
       var(--breakpoint-grid-columns),
       var(--stay-preview-width)
     );
+    @include for-mobile-layout {
+      width: 100%;
+      padding-inline: 1em;
+      margin-block-start: 1em;
+      grid-template-columns: repeat(var(--breakpoint-grid-columns), 20em);
+    }
   }
 }
 .map-active-place-num {

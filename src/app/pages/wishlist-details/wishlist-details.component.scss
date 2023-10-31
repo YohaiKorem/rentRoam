@@ -26,4 +26,12 @@
       }
     }
   }
+  @include for-mobile-layout {
+    grid-template-columns: 1fr;
+    place-items: center;
+    .stay-list-container {
+      width: 100%;
+      padding-inline: 1em;
+    }
+  }
 }

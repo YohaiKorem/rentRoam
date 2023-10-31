@@ -1,5 +1,6 @@
 @import "../../app-root/app.component.scss";
 .wishlist-list-wrapper {
+  padding-block-end: 6em;
   .btn.btn-remove {
     position: absolute;
     right: 25%;

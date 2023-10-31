@@ -55,6 +55,14 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
     this.getStaysArrFromWishlist();
   }
 
+  ngAfterViewInit() {
+    this.sharedService.loadGoogleMaps();
+
+    document
+      .querySelector('.stay-preview-container')
+      ?.classList.add('inside-wishlist-details');
+  }
+
   onBack() {
     this.location.back();
   }
@@ -85,5 +93,8 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }
+    document
+      .querySelector('.stay-preview-container')
+      ?.classList.remove('inside-wishlist-details');
   }
 }
