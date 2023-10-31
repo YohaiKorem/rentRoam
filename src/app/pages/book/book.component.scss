@@ -19,4 +19,14 @@
   .order-details-container {
     border-radius: 1em;
   }
+  @include for-mobile-layout {
+    padding: 1em;
+    padding-block-end: 6em;
+    .main-btn {
+      align-self: center;
+    }
+    .order-details-container {
+      margin-block-start: 1em;
+    }
+  }
 }
