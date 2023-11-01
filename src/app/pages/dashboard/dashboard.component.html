@@ -29,10 +29,7 @@
   </nav>
   <ng-container [ngSwitch]="currCmp">
     <ng-container *ngSwitchCase="'stays'">
-      <section
-        *ngIf="stays && stays.length; else becomeHost"
-        class="stay-list-table flex column gap1 pbs1 pi0-5"
-      >
+      <section class="stay-list-table flex column gap1 pbs1 pi0-5">
         <header class="stay-list-table-header my-stays-grid hidden-on-mobile">
           <h4 class="fw500 fs18 mb1">Stay name</h4>
           <h4 class="fw500 fs18 mb1">Location</h4>
@@ -105,7 +102,7 @@
         </section>
       </section>
 
-      <ng-template #becomeHost>
+      <ng-template *ngIf="stays && !stays.length">
         <div
           class="call-to-action shadow flex align-center column space-around gap1 full-width p1"
         >

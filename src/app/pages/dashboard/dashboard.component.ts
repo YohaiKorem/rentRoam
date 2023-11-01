@@ -55,23 +55,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.userService.loggedInUser$
-      .pipe(
-        takeUntil(this.ngUnsubscribe),
-        switchMap((user) => {
-          this.user = user!;
-          return forkJoin({
-            orders: this.orderService.getOrdersForEntityById(this.user._id),
-            stays: this.stayService.getAllHostStaysById(this.user._id),
-          });
-        }),
-        take(1)
-      )
-      .subscribe(({ orders, stays }) => {
-        this.orders = orders;
-        this.stays = stays;
-        this.updateOrderStatsMap();
-      });
+    const res = this.userService.loggedInUser$.pipe(
+      takeUntil(this.ngUnsubscribe),
+      switchMap((user) => {
+        this.user = user!;
+        return forkJoin({
+          orders: this.orderService.getOrdersForEntityById(this.user._id),
+          stays: this.stayService.getAllHostStaysById(this.user._id),
+        });
+      }),
+      take(1)
+    );
+    res.pipe(take(1)).subscribe(({ orders, stays }) => {
+      this.orders = orders;
+      this.stays = stays;
+      console.log(stays);
+
+      this.updateOrderStatsMap();
+    });
 
     this.sharedService.hideElementOnMobile('.main-header');
   }
@@ -108,7 +109,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onRemoveStay(stayId: string) {
-    this.stayService.removeStay(stayId);
+    this.stayService
+      .removeStay(stayId)
+      .pipe(take(1))
+      .subscribe((stays) => {
+        console.log(stays);
+      });
   }
 
   ngOnDestroy(): void {
