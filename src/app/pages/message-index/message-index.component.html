@@ -31,34 +31,14 @@
     </aside>
   </section>
   <section class="narrow-layout show-on-mobile">
-    <ng-container *ngIf="isInbox; else msgs">
-      <section class="inbox">
-        <h3 class="dark-font fw500 p1">Inbox</h3>
-        <chat-list
-          (setCurrChat)="setCurrChat($event, true)"
-          [user]="user"
-          [orders]="orders"
-          [currChat]="currChat"
-        ></chat-list>
-      </section>
-    </ng-container>
-    <ng-template #msgs>
-      <section class="main-chat flex column align-center space-between shadow">
-        <div class="msg-list-container full-width">
-          <msg-list
-            [order]="currChat"
-            [user]="user"
-            [msgs]="currChat.msgs"
-          ></msg-list>
-        </div>
-        <div class="chat-edit-container full-width">
-          <chat-edit
-            (orderUpdated)="updateCurrChat($event)"
-            [user]="user"
-            [order]="currChat"
-          ></chat-edit>
-        </div>
-      </section>
-    </ng-template>
+    <section class="inbox">
+      <h3 class="dark-font fw500 p1">Inbox</h3>
+      <chat-list
+        (setCurrChat)="navToChat($event)"
+        [user]="user"
+        [orders]="orders"
+        [currChat]="currChat"
+      ></chat-list>
+    </section>
   </section>
 </section>

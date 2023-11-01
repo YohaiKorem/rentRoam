@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap, map, forkJoin, take } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
@@ -15,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 export class MessageIndexComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private orderService: OrderService,
     private usererService: UserService,
     private sharedService: SharedService
@@ -24,7 +25,6 @@ export class MessageIndexComponent implements OnInit {
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
   currChat!: Order;
-  isInbox: boolean = true;
   ngOnInit(): void {
     this.usererService.loggedInUser$.pipe(take(1)).subscribe((user) => {
       this.user = user!;
@@ -57,12 +57,15 @@ export class MessageIndexComponent implements OnInit {
     this.orders.splice(idx, 1, order);
   }
 
-  setCurrChat(orderId: string, isSetOnMobile = false) {
+  setCurrChat(orderId: string) {
     const currChat = this.orders.find((order) => orderId === order._id);
     if (currChat) this.currChat = currChat;
-    if (!isSetOnMobile) return;
-    this.isInbox = false;
   }
+
+  navToChat(orderId: string) {
+    this.router.navigateByUrl(`/messages/${this.user._id}/${orderId}`);
+  }
+
   ngOnDestroy() {
     this.sharedService.showElementOnMobile('.main-header');
   }

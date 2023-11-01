@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 import { delay } from 'rxjs';
 
 export function OrderResolver(route: ActivatedRouteSnapshot) {
-  const id = route.params['orderId'];
+  const orderId = route.params['orderId'];
 
-  return inject(OrderService).getOrderById(id).pipe(delay(10));
+  return inject(OrderService).getOrderById(orderId).pipe(delay(10));
 }

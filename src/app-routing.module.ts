@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './app/pages/login/login.component';
 import { StayIndexComponent } from './app/pages/stay-index/stay-index.component';
 import { StayDetailsComponent } from './app/pages/stay-details/stay-details.component';
 import { StayResolver } from './app/services/stay-resolver';
@@ -11,14 +10,12 @@ import { authGuard } from './app/guards/auth-guard';
 import { StayEditComponent } from './app/pages/stay-edit/stay-edit.component';
 import { HostGuard } from './app/guards/host-guard';
 import { DashboardComponent } from './app/pages/dashboard/dashboard.component';
-import { StayListComponent } from './app/cmps/stay-list/stay-list.component';
-import { OrderListComponent } from './app/cmps/order-list/order-list.component';
 import { TripIndexComponent } from './app/pages/trip-index/trip-index.component';
 import { BookComponent } from './app/pages/book/book.component';
 import { OrderResolver } from './app/services/order.resolver';
 import { MessageIndexComponent } from './app/pages/message-index/message-index.component';
 import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.component';
-import { MsgListComponent } from './app/cmps/msg-list/msg-list.component';
+import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component';
 const routes: Routes = [
   { path: 'login', component: SignupModalComponent },
   {
@@ -55,9 +52,9 @@ const routes: Routes = [
   },
   {
     path: 'messages/:userId/:orderId',
-    component: MsgListComponent,
+    component: ChatIndexComponent,
     canActivate: [authGuard],
-    resolve: { user: UserResolver },
+    resolve: { user: UserResolver, order: OrderResolver },
   },
   {
     path: 'host/dashboard',

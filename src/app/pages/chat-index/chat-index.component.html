@@ -1,1 +1,18 @@
-<p>chat-index works!</p>
+<section
+  *ngIf="user && order"
+  class="main-chat flex column align-center space-between shadow"
+>
+  <header class="chat-header">
+    <h1>{{ messageSender.fullname }}</h1>
+  </header>
+  <div class="msg-list-container full-width">
+    <msg-list [order]="order" [user]="user" [msgs]="order.msgs"></msg-list>
+  </div>
+  <div class="chat-edit-container full-width">
+    <chat-edit
+      (orderUpdated)="updateCurrChat($event)"
+      [user]="user"
+      [order]="order"
+    ></chat-edit>
+  </div>
+</section>
