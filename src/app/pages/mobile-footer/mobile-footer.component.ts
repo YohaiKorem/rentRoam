@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './mobile-footer.component.html',
   styleUrls: ['./mobile-footer.component.scss'],
 })
-export class MobileFooterComponent implements OnInit, OnDestroy {
+export class MobileFooterComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroySubject$ = new Subject<null>();
   private subscription: Subscription = new Subscription();
   user: User | null = null;
@@ -33,6 +33,15 @@ export class MobileFooterComponent implements OnInit, OnDestroy {
       .subscribe((user) => (this.user = user));
   }
 
+  ngAfterViewInit(): void {
+    const svgs = document.querySelectorAll(
+      'mobile-footer svg'
+    ) as NodeListOf<HTMLElement>;
+    svgs.forEach((svg) => {
+      svg.style.width = '24px';
+      svg.style.height = '24px';
+    });
+  }
   onToggleSignUpModal() {
     this.sharedService.toggleSignUpModal();
   }

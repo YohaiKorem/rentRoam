@@ -1,8 +1,22 @@
 @import "../../app-root/app.component.scss";
 .main-chat {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 84px 1fr 84px;
   .chat-header {
+    justify-self: start;
+    border-bottom: 1px solid $secondaryClr3;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    justify-content: start;
+    align-items: center;
     h1 {
-      color: $secondaryClr2;
+      color: $fontClr3;
     }
+  }
+  .msg-list-container {
+    height: 100%;
+    overflow-y: auto;
   }
 }

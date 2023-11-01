@@ -6,6 +6,9 @@
     &:hover,
     &.active {
       background-color: darken(#fff, 10);
+      @include for-mobile-layout {
+        background-color: transparent;
+      }
     }
     &:last-of-type {
       border-block-end: 1px solid $secondaryClr2;

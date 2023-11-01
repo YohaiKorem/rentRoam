@@ -46,11 +46,14 @@ export class ChatIndexComponent implements OnInit, OnDestroy {
       }
     });
     this.sharedService.hideElementOnMobile('.main-header');
+    this.sharedService.hideElementOnMobile('mobile-footer');
   }
 
-  updateCurrChat(order: Order) {}
+  updateCurrChat(order: Order) {
+    this.order = order;
+  }
 
   ngOnDestroy(): void {
-    this.sharedService.showElementOnMobile('.main-header');
+    this.sharedService.showElementOnMobile('mobile-footer');
   }
 }
