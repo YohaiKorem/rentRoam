@@ -71,6 +71,7 @@ import { MsgPreviewComponent } from './app/cmps/msg-preview/msg-preview.componen
 import { LabelLoaderComponent } from './app/cmps/label-loader/label-loader.component';
 import { MobileFooterComponent } from './app/pages/mobile-footer/mobile-footer.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MsgPreviewComponent,
     LabelLoaderComponent,
     MobileFooterComponent,
+    ChatIndexComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@ import { BookComponent } from './app/pages/book/book.component';
 import { OrderResolver } from './app/services/order.resolver';
 import { MessageIndexComponent } from './app/pages/message-index/message-index.component';
 import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.component';
+import { MsgListComponent } from './app/cmps/msg-list/msg-list.component';
 const routes: Routes = [
   { path: 'login', component: SignupModalComponent },
   {
@@ -47,8 +48,14 @@ const routes: Routes = [
     resolve: { order: OrderResolver },
   },
   {
-    path: 'messages/:userId',
+    path: 'inbox/:userId',
     component: MessageIndexComponent,
+    canActivate: [authGuard],
+    resolve: { user: UserResolver },
+  },
+  {
+    path: 'messages/:userId/:orderId',
+    component: MsgListComponent,
     canActivate: [authGuard],
     resolve: { user: UserResolver },
   },

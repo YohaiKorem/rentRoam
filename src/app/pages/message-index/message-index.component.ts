@@ -24,6 +24,7 @@ export class MessageIndexComponent implements OnInit {
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
   currChat!: Order;
+  isInbox: boolean = true;
   ngOnInit(): void {
     this.usererService.loggedInUser$.pipe(take(1)).subscribe((user) => {
       this.user = user!;
@@ -56,9 +57,11 @@ export class MessageIndexComponent implements OnInit {
     this.orders.splice(idx, 1, order);
   }
 
-  setCurrChat(orderId: string) {
+  setCurrChat(orderId: string, isSetOnMobile = false) {
     const currChat = this.orders.find((order) => orderId === order._id);
     if (currChat) this.currChat = currChat;
+    if (!isSetOnMobile) return;
+    this.isInbox = false;
   }
   ngOnDestroy() {
     this.sharedService.showElementOnMobile('.main-header');

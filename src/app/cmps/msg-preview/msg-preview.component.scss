@@ -12,4 +12,20 @@
       height: 100%;
     }
   }
+  @include for-mobile-layout {
+    .txt-container {
+      .name-and-txt-wrapper {
+        flex-basis: 70%;
+        p.txt {
+          text-wrap: wrap;
+          max-width: 100%;
+          word-break: break-word;
+          padding: 1em;
+        }
+      }
+      .timestamp {
+        flex-basis: 30%;
+      }
+    }
+  }
 }

@@ -13,4 +13,11 @@
       border-block-start: 1px solid $secondaryClr3;
     }
   }
+  @include for-mobile-layout {
+    grid-template-columns: 1fr;
+    .main-chat {
+      height: 100%;
+      padding-block-end: 6em;
+    }
+  }
 }

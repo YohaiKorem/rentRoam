@@ -31,7 +31,12 @@
       <span *ngIf="order.msgs[order.msgs.length - 1].fromId === user._id"
         >You:
       </span>
-      {{ order.msgs[order.msgs.length - 1].txt }}
+      {{ order.msgs[order.msgs.length - 1].txt | slice : 0 : 25 }}
+      <span
+        *ngIf="order.msgs[order.msgs.length - 1].txt.length >= 25"
+        class="three-dots"
+        >...</span
+      >
     </div>
     <div class="order-info">
       <span class="order-status">{{ order.status }} • </span>

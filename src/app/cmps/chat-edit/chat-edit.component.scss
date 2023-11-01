@@ -23,4 +23,12 @@
       scale: 0.75;
     }
   }
+  @include for-mobile-layout {
+    input {
+      padding: 0.75em;
+    }
+    .btn {
+      bottom: 0.2em;
+    }
+  }
 }
