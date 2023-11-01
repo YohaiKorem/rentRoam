@@ -2,7 +2,7 @@
   <header class="trip-index-header flex align-center space-between gap1">
     <h1 class="fs16 fw600 full-width shadow p1">My Trips</h1>
     <a
-      class="fs16 fw600 full-width shadow p1"
+      class="fs16 fw600 full-width shadow p1 hidden-on-mobile"
       routerLink="/{{ 'wishlist/' + user!._id }}"
       >Wishlists</a
     >
@@ -11,11 +11,16 @@
     *ngIf="orders.length; else noTripsYet"
     class="trip-cmps-container gap1 pb0-5 mbs1 pi1"
   >
-    <trip-list
-      (onSelectTrip)="onSelectTrip($event)"
-      [orders]="orders"
-    ></trip-list>
-    <trip-details [trip]="currTrip"></trip-details>
+    <ng-container *ngIf="!isMobile; else mobileLayout">
+      <trip-list
+        (onSelectTrip)="onSelectTrip($event)"
+        [orders]="orders"
+      ></trip-list>
+      <trip-details [trip]="currTrip"></trip-details>
+    </ng-container>
+    <ng-template #mobileLayout>
+      <trip-details *ngFor="let trip of orders" [trip]="trip"></trip-details>
+    </ng-template>
   </section>
   <ng-template #noTripsYet>
     <section

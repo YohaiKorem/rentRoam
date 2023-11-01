@@ -136,6 +136,7 @@
 
   @include for-mobile-layout {
     padding: 0;
+    padding-block-end: 6em;
     .stay-edit-form {
       .loc-inputs-wrapper {
         flex-direction: column;
@@ -143,6 +144,14 @@
       }
       .input-container {
         text-align: center;
+      }
+      .equipment-inputs-wrapper {
+        flex-direction: column;
+        align-items: start;
+      }
+      .amenities-container,
+      .labels-container {
+        gap: 1em;
       }
     }
   }

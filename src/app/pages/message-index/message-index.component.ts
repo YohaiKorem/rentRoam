@@ -4,6 +4,7 @@ import { Observable, tap, map, forkJoin, take } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
+import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class MessageIndexComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
-    private usererService: UserService
+    private usererService: UserService,
+    private sharedService: SharedService
   ) {}
   user$!: Observable<User>;
   user!: User;
@@ -41,6 +43,7 @@ export class MessageIndexComponent implements OnInit {
         this.setCurrChat(orders[0]._id);
       });
     });
+    this.sharedService.hideElementOnMobile('.main-header');
   }
 
   updateCurrChat(order: Order) {
@@ -56,5 +59,8 @@ export class MessageIndexComponent implements OnInit {
   setCurrChat(orderId: string) {
     const currChat = this.orders.find((order) => orderId === order._id);
     if (currChat) this.currChat = currChat;
+  }
+  ngOnDestroy() {
+    this.sharedService.showElementOnMobile('.main-header');
   }
 }

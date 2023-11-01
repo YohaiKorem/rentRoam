@@ -46,9 +46,13 @@
       color: $fontClr3;
     }
   }
-  .trip-cmps-container {
-    background-color: #fff;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+
+  @include for-mobile-layout {
+    h1 {
+      text-align: center;
+    }
+    .trip-cmps-container {
+      grid-template-columns: 1fr;
+    }
   }
 }

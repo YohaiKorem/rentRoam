@@ -56,9 +56,7 @@ export class WishlistDetailsComponent implements OnInit, OnDestroy {
     this.getStaysArrFromWishlist();
   }
 
-  ngAfterViewInit() {
-    this.sharedService.loadGoogleMaps();
-  }
+  ngAfterViewInit() {}
 
   onBack() {
     this.location.back();

@@ -51,7 +51,7 @@ export class AppHeaderComponent implements OnInit {
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   isMobile = window.innerWidth <= 780;
-
+  google: any;
   constructor(
     private sharedService: SharedService,
     private stayService: StayService,
@@ -60,7 +60,7 @@ export class AppHeaderComponent implements OnInit {
     public trackByService: TrackByService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.searchParam = searchParam));
@@ -75,9 +75,9 @@ export class AppHeaderComponent implements OnInit {
       this.isShowSignupModal = !this.isShowSignupModal;
     });
   }
-  // ngAfterViewInit() {
-  //   this.autocompleteService = new google.maps.places.AutocompleteService();
-  // }
+  ngAfterViewInit() {
+    this.autocompleteService = new google.maps.places.AutocompleteService();
+  }
 
   getSuggestions(event: any) {
     if (!event.target.value) {

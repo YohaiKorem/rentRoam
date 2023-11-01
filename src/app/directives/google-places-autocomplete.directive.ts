@@ -6,6 +6,7 @@ import {
   Input,
   SimpleChanges,
 } from '@angular/core';
+import { SharedService } from '../services/shared.service';
 
 declare var google: any;
 
@@ -19,7 +20,10 @@ export class GooglePlacesAutocompleteDirective {
   @Input() cityRestriction: string = '';
   private autocomplete: any;
 
-  constructor(private elRef: ElementRef) {}
+  constructor(
+    private elRef: ElementRef,
+    private sharedService: SharedService
+  ) {}
 
   ngAfterViewInit() {
     const options: any = {

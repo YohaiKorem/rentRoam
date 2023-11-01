@@ -5,7 +5,15 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { Observable, Subscription, map, Subject, takeUntil } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  map,
+  Subject,
+  takeUntil,
+  of,
+  catchError,
+} from 'rxjs';
 import { UserService } from '../services/user.service';
 import { StayService } from '../services/stay.service';
 import { Stay } from '../models/stay.model';
@@ -13,6 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { environment } from 'src/environments/env.prod';
 import { SharedService } from '../services/shared.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,8 +35,19 @@ export class AppComponent {
     private stayService: StayService,
     public router: Router,
     private userService: UserService,
-    private sharedService: SharedService
-  ) {}
+    private sharedService: SharedService,
+    private httpClient: HttpClient
+  ) {
+    // this.apiLoaded = httpClient
+    //   .jsonp(
+    //     `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}`,
+    //     'callback'
+    //   )
+    //   .pipe(
+    //     map(() => true),
+    //     catchError(() => of(false))
+    //   );
+  }
   subscription!: Subscription;
   private destroySubject$ = new Subject<null>();
   location: any | null = null;
@@ -68,10 +88,6 @@ export class AppComponent {
     }
 
     // elStayIndex.style.height = `${206 + scrollPosition}px`;
-  }
-
-  loadGoogleMaps() {
-    this.sharedService.loadGoogleMaps();
   }
 
   isHomePage() {

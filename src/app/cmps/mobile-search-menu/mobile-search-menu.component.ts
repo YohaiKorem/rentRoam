@@ -14,7 +14,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { environment } from 'src/environments/env.prod';
-
+declare var google: any;
 @Component({
   selector: 'mobile-search-menu',
   templateUrl: './mobile-search-menu.component.html',
@@ -40,10 +40,9 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
-
   private destroySubject$ = new Subject<null>();
 
-  async ngOnInit() {
+  ngOnInit() {
     this.sharedService.openSearchMenuMobile$.subscribe(() => {
       this.toggleMenu();
     });
@@ -54,9 +53,9 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
         this.updateGuestsNumForDisplay(this.searchParam);
       });
   }
-  // ngAfterViewInit() {
-  //   this.autocompleteService = new google.maps.places.AutocompleteService();
-  // }
+  ngAfterViewInit() {
+    this.autocompleteService = new google.maps.places.AutocompleteService();
+  }
 
   updateGuestsNumForDisplay(searchParam: SearchParam) {
     let sum = 0;
