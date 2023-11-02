@@ -87,6 +87,7 @@ export class StayIndexComponent implements OnInit, OnDestroy {
         if (this.userLoc.lat !== null && this.userLoc.lng !== null)
           this.setDistance();
       });
+    document.querySelector('radio-filter')?.classList.remove('hidden');
   }
 
   clearFilter() {
@@ -198,5 +199,6 @@ export class StayIndexComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroySubject$.next(null);
     this.destroySubject$.complete();
+    document.querySelector('radio-filter')?.classList.add('hidden');
   }
 }

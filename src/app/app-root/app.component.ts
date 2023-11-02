@@ -4,6 +4,7 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   Observable,
@@ -37,6 +38,7 @@ export class AppComponent {
     private stayService: StayService,
     public router: Router,
     private userService: UserService,
+    private cdr: ChangeDetectorRef,
     private sharedService: SharedService,
     private httpClient: HttpClient
   ) {
@@ -72,7 +74,6 @@ export class AppComponent {
       if (search) {
         this.stayService.setSearchParams(JSON.parse(search));
       }
-      this.isHomePage = this.determineIsHomePage();
     });
 
     this.stayService.searchParams$
@@ -102,17 +103,5 @@ export class AppComponent {
     }
 
     // elStayIndex.style.height = `${206 + scrollPosition}px`;
-  }
-
-  determineIsHomePage() {
-    const urlTree = this.router.parseUrl(this.router.url);
-    const rootSegmentGroup = urlTree.root.children['primary'];
-    if (rootSegmentGroup) {
-      const rootSegment = rootSegmentGroup.segments[0];
-      console.log(rootSegment);
-      console.log(rootSegment.path);
-      return rootSegment && rootSegment.path === 'stay';
-    }
-    return false;
   }
 }

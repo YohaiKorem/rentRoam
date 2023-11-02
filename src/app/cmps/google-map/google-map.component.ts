@@ -57,7 +57,7 @@ export class GoogleMapCmpComponent implements OnInit {
 
   openInfoWindow(marker: MapMarker, stay: Stay) {
     this.selectedStay = stay;
-    this.infoWindow.open(marker);
+    if (this.infoWindow) this.infoWindow.open(marker);
   }
 
   private updateStaysCoords() {

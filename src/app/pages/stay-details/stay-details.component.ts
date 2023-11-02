@@ -100,16 +100,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
         return data['stay'];
       })
     );
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
-      const filter = queryParams['filter'];
-      const search = queryParams['search'];
-      if (filter) {
-        this.stayService.setFilter(JSON.parse(filter));
-      }
-      if (search) {
-        this.stayService.setSearchParams(JSON.parse(search));
-      }
-    });
+
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((user) => (this.user = user));
@@ -128,6 +119,17 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     this.searchParamSubject.subscribe((newSearchParam) => {
       this.calculateNightSum();
     });
+    this.activatedRoute.queryParams.subscribe((queryParams) => {
+      const filter = queryParams['filter'];
+      const search = queryParams['search'];
+      if (filter) {
+        this.stayService.setFilter(JSON.parse(filter));
+      }
+      if (search) {
+        this.stayService.setSearchParams(JSON.parse(search));
+      }
+      this.cdr.detectChanges();
+    });
   }
 
   ngAfterViewInit() {
@@ -135,6 +137,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" role="presentation" focusable="false" style="display: block; height: 52px; width: 52px;"><circle cx="26" cy="26" r="26" fill="%23DA0A64"/><path transform="translate(10,8.5)" d="m16.8 3.78 1.6 1.34 14.3 13.82-1.4 1.44L28 15.5v13.5a1 1 0 0 1-.82 1H20V19a1 1 0 0 0-.82-1H13a1 1 0 0 0-1 .82V30H5a1 1 0 0 1-1-.82V15.5L1.7 16.38l-1.4-1.44L15.2 3.7a2 2 0 0 1 1.6-.92z" fill="%23ffffff"/></svg>',
       scaledSize: new google.maps.Size(42, 42),
     };
+    this.cdr.detectChanges();
 
     this.sharedService.hideElementOnMobile('app-header');
     this.sharedService.hideElementOnMobile('mobile-footer');
