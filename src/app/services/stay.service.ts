@@ -28,6 +28,8 @@ import { environment } from 'src/environments/env';
 import { UserService } from './user.service';
 import { UtilService } from './util.service';
 import { StayHost } from '../models/host.model';
+import { Router, ActivatedRoute } from '@angular/router';
+
 const ENTITY = 'stays';
 
 @Injectable({
@@ -73,6 +75,8 @@ export class StayService {
   public googleMapsAPI = environment.googleMapsAPI;
   public geocodeAPI = environment.geocodeAPI;
   constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private http: HttpClient,
     private geocodingService: GeocodingService,
     private userService: UserService,
@@ -256,6 +260,7 @@ export class StayService {
             }
             this._searchParams$.next({ ...searchParam });
             this.loadStays().pipe(take(1)).subscribe();
+            this.updateQueryParams({ search: JSON.stringify(searchParam) });
           }),
           catchError(this._handleError)
         )
@@ -263,12 +268,22 @@ export class StayService {
     } else {
       this._searchParams$.next({ ...searchParam });
       this.loadStays().pipe(take(1)).subscribe();
+      this.updateQueryParams({ search: JSON.stringify(searchParam) });
     }
   }
 
   public setFilter(stayFilter: StayFilter) {
     this._stayFilter$.next({ ...stayFilter });
     this.loadStays().pipe(take(1)).subscribe();
+    this.updateQueryParams({ filter: JSON.stringify(stayFilter) });
+  }
+
+  private updateQueryParams(params: { [key: string]: string }) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: params,
+      queryParamsHandling: 'merge',
+    });
   }
 
   public setFilterCount(filterCount: number) {

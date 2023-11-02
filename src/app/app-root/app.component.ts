@@ -32,6 +32,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent {
   constructor(
+    private activatedRoute: ActivatedRoute,
+
     private stayService: StayService,
     public router: Router,
     private userService: UserService,
@@ -55,11 +57,24 @@ export class AppComponent {
   stays$!: Observable<Stay[]>;
   currentUrl!: string;
   userLoc: any = { lat: null, lng: null };
-
+  isHomePage!: boolean;
   ngOnInit(): void {
     this.stayService.loadStays().subscribe({
       error: (err) => console.log('err', err),
     });
+
+    this.activatedRoute.queryParams.subscribe((queryParams) => {
+      const filter = queryParams['filter'];
+      const search = queryParams['search'];
+      if (filter) {
+        this.stayService.setFilter(JSON.parse(filter));
+      }
+      if (search) {
+        this.stayService.setSearchParams(JSON.parse(search));
+      }
+      this.isHomePage = this.determineIsHomePage();
+    });
+
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.location = searchParam.location));
@@ -84,13 +99,20 @@ export class AppComponent {
     ) as HTMLElement;
     if (elStayIndex && scrollPosition <= 200) {
       elStayIndex!.style.transform = `translateY(${-scrollPosition}px)`;
-      console.log('hi');
     }
 
     // elStayIndex.style.height = `${206 + scrollPosition}px`;
   }
 
-  isHomePage() {
-    return this.router.url === '/stay';
+  determineIsHomePage() {
+    const urlTree = this.router.parseUrl(this.router.url);
+    const rootSegmentGroup = urlTree.root.children['primary'];
+    if (rootSegmentGroup) {
+      const rootSegment = rootSegmentGroup.segments[0];
+      console.log(rootSegment);
+      console.log(rootSegment.path);
+      return rootSegment && rootSegment.path === 'stay';
+    }
+    return false;
   }
 }

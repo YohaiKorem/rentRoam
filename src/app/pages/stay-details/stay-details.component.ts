@@ -43,7 +43,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     private stayService: StayService,
     public router: Router,
     private userService: UserService,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
     private cdr: ChangeDetectorRef,
     private wishlistService: WishlistService,
@@ -88,8 +88,10 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   homeIcon: google.maps.Icon | null = null;
   ngOnInit(): void {
-    this.stay$ = this.route.data.pipe(
+    this.stay$ = this.activatedRoute.data.pipe(
       map((data) => {
+        console.log(data);
+
         this.stay = data['stay'];
         this.center = {
           lat: this.stay?.loc.lat!,
@@ -98,6 +100,16 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
         return data['stay'];
       })
     );
+    this.activatedRoute.queryParams.subscribe((queryParams) => {
+      const filter = queryParams['filter'];
+      const search = queryParams['search'];
+      if (filter) {
+        this.stayService.setFilter(JSON.parse(filter));
+      }
+      if (search) {
+        this.stayService.setSearchParams(JSON.parse(search));
+      }
+    });
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((user) => (this.user = user));

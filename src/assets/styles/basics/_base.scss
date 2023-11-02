@@ -191,6 +191,7 @@ input[type="password"] {
 // APPHEADER
 
 .cdk-overlay-container {
+  pointer-events: none !important;
   @include for-mobile-layout {
     display: none !important;
   }

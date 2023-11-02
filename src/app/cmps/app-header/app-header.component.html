@@ -10,7 +10,10 @@
     [class.inactive]="isSearchOpen"
     class="search-bar shadow"
   >
-    <button class="btn-search anywhere fw500" (click)="openSearch('loc')">
+    <button
+      class="btn-search anywhere fw500"
+      (click)="openSearch('loc'); inputField.focus()"
+    >
       {{ searchParam.location.name ? searchParam.location.name : "Anywhere" }}
     </button>
 
@@ -101,6 +104,8 @@
     <div class="search-overlay" (click)="closeSearch()"></div>
     <div class="search-bar-active flex align-center space-between">
       <button
+        clickOutside
+        (clickOutside)="handleClickOutside($event)"
         (click)="setCurrSearch('loc'); inputField.focus()"
         [ngClass]="{
           'active-btn': currSearch === 'loc',
@@ -109,6 +114,7 @@
       >
         <span>Where</span>
         <input
+          [autofocus]="currSearch === 'loc'"
           class="fw200 search-loc-input"
           placeholder="Search destinations"
           [(ngModel)]="locSearch"
@@ -287,7 +293,7 @@
           let i = index;
           trackBy: trackByService.byIdx
         "
-        class="btn-suggestion flex align-center space-between"
+        class="btn-suggestion flex align-center space-between gap0-5"
         (click)="locSearch = place.description"
       >
         <div class="img-container">

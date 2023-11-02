@@ -1,14 +1,11 @@
 <app-header> </app-header>
-<radio-filter *ngIf="isHomePage()"></radio-filter>
+<radio-filter *ngIf="isHomePage"></radio-filter>
 <main
   (scroll)="onScroll($event)"
-  [class.map-active]="isHomePage() && location.name"
+  [class.map-active]="isHomePage && location.name"
   class="main-content"
 >
-  <google-map-cmp
-    [stays]="stays$ | async"
-    *ngIf="location.name && isHomePage()"
-  >
+  <google-map-cmp [stays]="stays$ | async" *ngIf="location.name && isHomePage">
   </google-map-cmp>
 
   <router-outlet></router-outlet>

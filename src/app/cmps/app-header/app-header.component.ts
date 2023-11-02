@@ -126,6 +126,10 @@ export class AppHeaderComponent implements OnInit {
     this.currSearch = str;
   }
 
+  handleClickOutside(ev: any) {
+    // this.inputField.nativeElement.focus();
+  }
+
   autoComplete() {
     if (!this.locSearch) return;
 
