@@ -112,8 +112,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.stayService
       .removeStay(stayId)
       .pipe(take(1))
-      .subscribe((stays) => {
-        console.log(stays);
+      .subscribe((removedStayId) => {
+        this.stays = this.stays.filter((stay) => stay._id !== removedStayId);
       });
   }
 

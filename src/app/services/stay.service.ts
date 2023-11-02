@@ -345,27 +345,13 @@ export class StayService {
   }
 
   public getAllHostStaysById(hostId: string): Observable<Stay[]> {
-    const res = this.stays$.pipe(
+    return this.stays$.pipe(
       take(1),
-      map((stays: Stay[]) => {
-        console.log(stays);
-
-        return stays.filter((stay) => {
-          console.log(stay.host._id);
-          return stay.host._id === hostId;
-        });
-      })
+      map((stays: Stay[]) => stays.filter((stay) => stay.host._id === hostId))
     );
-
-    res.pipe(take(1)).subscribe((stays) => {
-      console.log(stays);
-    });
-    return res;
   }
 
   public findHostById(id: string): Observable<StayHost | null> {
-    console.log(id);
-
     return this.stays$.pipe(
       take(1),
       map((stays: Stay[]) => {
@@ -373,7 +359,6 @@ export class StayService {
         if (stay && stay.host) {
           return stay.host;
         } else {
-          // throw new Error('host not found');
           return null;
         }
       })
