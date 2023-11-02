@@ -16,6 +16,7 @@ import { OrderResolver } from './app/services/order.resolver';
 import { MessageIndexComponent } from './app/pages/message-index/message-index.component';
 import { SignupModalComponent } from './app/cmps/signup-modal/signup-modal.component';
 import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component';
+import { staysGuard } from './app/guards/stays.guard';
 const routes: Routes = [
   { path: 'login', component: SignupModalComponent },
   {
@@ -59,7 +60,7 @@ const routes: Routes = [
   {
     path: 'host/dashboard',
     component: DashboardComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, staysGuard],
   },
   {
     path: 'trip',
