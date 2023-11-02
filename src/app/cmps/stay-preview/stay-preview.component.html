@@ -3,7 +3,13 @@
   class="stay-preview-container flex column"
 >
   <stay-preview-loader *ngIf="isLoadingImg"></stay-preview-loader>
-  <div class="img-container flex" [class.loading]="isLoadingImg">
+  <div
+    class="img-container flex"
+    [class.loading]="isLoadingImg"
+    appSwipe
+    (swipeLeft)="onSwipe(1)"
+    (swipeRight)="onSwipe(-1)"
+  >
     <img
       [src]="
         stay.imgUrls[currImgUrlIdx]
@@ -179,6 +185,7 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
+
 
 
 

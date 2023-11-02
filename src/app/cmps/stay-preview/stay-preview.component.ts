@@ -92,6 +92,14 @@ export class StayPreviewComponent implements OnInit {
     this.checkInView();
   }
 
+  onSwipe(moveBy: number) {
+    this.currImgUrlIdx += moveBy;
+    if (this.currImgUrlIdx >= this.stay?.imgUrls.length! - 1)
+      this.currImgUrlIdx = 0;
+    else if (this.currImgUrlIdx <= 0)
+      this.currImgUrlIdx = this.stay?.imgUrls.length! - 1;
+  }
+
   onHostImgErr(ev: any) {
     ev.target.style.opacity = '0';
   }

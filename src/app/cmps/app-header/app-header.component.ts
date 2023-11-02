@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { SharedService } from 'src/app/services/shared.service';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,6 +16,7 @@ import { StayService } from 'src/app/services/stay.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/env.prod';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare var google: any;
 @Component({
@@ -57,7 +58,9 @@ export class AppHeaderComponent implements OnInit {
     private stayService: StayService,
     private userService: UserService,
     private authService: SocialAuthService,
-    public trackByService: TrackByService
+    public trackByService: TrackByService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -200,8 +203,17 @@ export class AppHeaderComponent implements OnInit {
   setSearchParams(ev: any) {
     ev.stopPropagation();
     this.setLoc();
-
     this.stayService.setSearchParams(this.searchParam);
+    this.stayService.stayFilter$.pipe(take(1)).subscribe((stayFilter) => {
+      this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          filter: JSON.stringify(stayFilter),
+          searchParam: JSON.stringify(this.searchParam),
+        },
+        queryParamsHandling: 'merge',
+      });
+    });
   }
   ngOnDestroy(): void {
     this.destroySubject$.next(null);

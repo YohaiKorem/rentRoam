@@ -120,7 +120,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       this.calculateNightSum();
     });
     this.activatedRoute.queryParams.subscribe((queryParams) => {
-      const filter = queryParams['filter'];
+      const filter = queryParams['stayFilter'];
       const search = queryParams['search'];
       if (filter) {
         this.stayService.setFilter(JSON.parse(filter));

@@ -1,20 +1,5 @@
-import {
-  Component,
-  HostBinding,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
-import {
-  Observable,
-  Subscription,
-  map,
-  Subject,
-  takeUntil,
-  of,
-  catchError,
-} from 'rxjs';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { Observable, Subscription, Subject, takeUntil } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { StayService } from '../services/stay.service';
 import { Stay } from '../models/stay.model';
@@ -41,17 +26,7 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
     private sharedService: SharedService,
     private httpClient: HttpClient
-  ) {
-    // this.apiLoaded = httpClient
-    //   .jsonp(
-    //     `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}`,
-    //     'callback'
-    //   )
-    //   .pipe(
-    //     map(() => true),
-    //     catchError(() => of(false))
-    //   );
-  }
+  ) {}
   subscription!: Subscription;
   private destroySubject$ = new Subject<null>();
   location: any | null = null;
@@ -59,17 +34,16 @@ export class AppComponent {
   stays$!: Observable<Stay[]>;
   currentUrl!: string;
   userLoc: any = { lat: null, lng: null };
-  isHomePage!: boolean;
   ngOnInit(): void {
     this.stayService.loadStays().subscribe({
       error: (err) => console.log('err', err),
     });
 
     this.activatedRoute.queryParams.subscribe((queryParams) => {
-      const filter = queryParams['filter'];
+      const stayFilter = queryParams['stayFilter'];
       const search = queryParams['search'];
-      if (filter) {
-        this.stayService.setFilter(JSON.parse(filter));
+      if (stayFilter) {
+        this.stayService.setFilter(JSON.parse(stayFilter));
       }
       if (search) {
         this.stayService.setSearchParams(JSON.parse(search));
@@ -101,7 +75,5 @@ export class AppComponent {
     if (elStayIndex && scrollPosition <= 200) {
       elStayIndex!.style.transform = `translateY(${-scrollPosition}px)`;
     }
-
-    // elStayIndex.style.height = `${206 + scrollPosition}px`;
   }
 }

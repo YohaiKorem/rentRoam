@@ -275,7 +275,7 @@ export class StayService {
   public setFilter(stayFilter: StayFilter) {
     this._stayFilter$.next({ ...stayFilter });
     this.loadStays().pipe(take(1)).subscribe();
-    this.updateQueryParams({ filter: JSON.stringify(stayFilter) });
+    this.updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
   }
 
   private updateQueryParams(params: { [key: string]: string }) {

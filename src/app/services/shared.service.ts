@@ -46,35 +46,11 @@ export class SharedService {
     const el = document.querySelector(selector);
     el?.classList.add('hidden-on-mobile');
   }
-  // loadGoogleMaps(): Promise<void> {
-  //   return new Promise<void>((resolve, reject) => {
-  //     // Check if script is already loaded
-  //     if (window.google && window.google.maps) {
-  //       resolve();
-  //       return;
-  //     }
-
-  //     const script = document.createElement('script');
-  //     script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}&libraries=places,marker&callback=initMap`;
-  //     script.async = true;
-  //     script.defer = true;
-  //     script.onload = (event: Event) => resolve();
-  //     script.onerror = (message, source, lineno, colno, error) => reject(error);
-
-  //     document.body.appendChild(script);
-  //     document.body.removeChild(script);
-  //   });
-  // }
-
-  // loadGoogleMaps() {
-  //   this.apiLoaded = this.httpClient
-  //     .jsonp(
-  //       `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsAPI}`,
-  //       'callback'
-  //     )
-  //     .pipe(
-  //       map(() => true),
-  //       catchError(() => of(false))
-  //     );
-  // }
+  toggleClassOnElement(
+    selector: string,
+    classToBind: string,
+    action: 'add' | 'remove' | 'toggle'
+  ) {
+    document.querySelector(selector)?.classList[action](classToBind);
+  }
 }
