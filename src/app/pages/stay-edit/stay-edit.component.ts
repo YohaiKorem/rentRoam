@@ -222,8 +222,8 @@ export class StayEditComponent implements OnInit, OnDestroy {
         .pipe(take(1))
         .subscribe((host) => {
           if (!host) this.user.isOwner = false;
-          return;
         });
+      return;
     }
     this.user.isOwner = true;
     this.userService.updateUser(this.user);
