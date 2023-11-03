@@ -21,7 +21,17 @@
     z-index: 30;
     background-color: #fff;
     padding-block-end: 6em;
-    width: 100vw;
+    width: calc(100% - $scrollbar-width - 1em);
+    &::after {
+      content: "";
+      background-color: #fff;
+      width: calc($scrollbar-width + 1em);
+      height: $header-height;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      opacity: 1;
+    }
   }
 }
 .wrapper {

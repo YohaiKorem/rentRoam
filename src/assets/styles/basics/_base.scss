@@ -1,3 +1,4 @@
+@import "../setup/mixins";
 * {
   box-sizing: border-box;
 }
@@ -8,6 +9,10 @@ html {
   scroll-behavior: smooth;
   color: $fontClr1;
   height: 100%;
+  @include for-mobile-layout {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
 }
 
 body {
@@ -20,6 +25,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   overflow: hidden;
+  @include for-mobile-layout {
+    overflow-x: hidden;
+    position: relative;
+  }
   & > * {
     height: 100%;
   }
@@ -95,7 +104,7 @@ input[type="password"] {
 
 // MAC like scrollbar
 ::-webkit-scrollbar {
-  width: 8px;
+  width: $scrollbar-width;
   background-color: rgba(0, 0, 0, 0);
   -webkit-border-radius: 100px;
 }
