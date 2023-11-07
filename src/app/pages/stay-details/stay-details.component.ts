@@ -88,6 +88,11 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   homeIcon: google.maps.Icon | null = null;
   ngOnInit(): void {
+    this.sharedService.toggleClassOnElement(
+      '.main-content',
+      'map-active',
+      'remove'
+    );
     this.stay$ = this.activatedRoute.data.pipe(
       map((data) => {
         console.log(data);
@@ -283,7 +288,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
   onSwipe(moveBy: number) {
     this.currImgUrlIdx += moveBy;
-    if (this.currImgUrlIdx >= this.stay?.imgUrls.length! - 1)
+    if (this.currImgUrlIdx >= this.stay?.imgUrls.length!)
       this.currImgUrlIdx = 0;
     else if (this.currImgUrlIdx <= 0)
       this.currImgUrlIdx = this.stay?.imgUrls.length! - 1;

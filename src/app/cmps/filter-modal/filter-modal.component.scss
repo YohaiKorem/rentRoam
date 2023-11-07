@@ -4,7 +4,7 @@
   width: 100%;
   margin-block-start: 2em;
   @include for-mobile-layout {
-    padding-block-end: em(74px);
+    padding-block-end: rem(74px);
   }
   .modal-content-wrapper {
     margin-block-end: 1em;
@@ -267,8 +267,7 @@
       gap: 1em;
     }
     &-footer {
-      padding-block: 0;
-      padding-block-start: 1em;
+      padding-block: 1em;
     }
   }
 }

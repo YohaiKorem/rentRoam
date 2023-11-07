@@ -94,7 +94,7 @@ export class StayPreviewComponent implements OnInit {
 
   onSwipe(moveBy: number) {
     this.currImgUrlIdx += moveBy;
-    if (this.currImgUrlIdx >= this.stay?.imgUrls.length! - 1)
+    if (this.currImgUrlIdx >= this.stay?.imgUrls.length!)
       this.currImgUrlIdx = 0;
     else if (this.currImgUrlIdx <= 0)
       this.currImgUrlIdx = this.stay?.imgUrls.length! - 1;

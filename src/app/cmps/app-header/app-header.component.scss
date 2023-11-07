@@ -17,16 +17,20 @@
   @include for-mobile-layout {
     position: fixed;
     top: 0;
-    left: 0em;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 30;
     background-color: #fff;
     padding-block-end: 6em;
     width: calc(100% - $scrollbar-width - 1em);
+    &:has(.mobile-search-menu-wrapper.active) {
+      position: relative;
+    }
     &::after {
       content: "";
       background-color: #fff;
       width: calc($scrollbar-width + 1em);
-      height: $header-height;
+      height: calc($header-height + 8px);
       position: absolute;
       top: 0;
       left: 100%;
@@ -264,7 +268,7 @@
   @include for-mobile-layout {
     padding-block: 15px;
     display: flex;
-    padding-inline: 1em;
+    padding-inline: 0;
     &::after {
       opacity: 0;
     }

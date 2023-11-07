@@ -7,7 +7,7 @@
     <a
       [class.active]="router.url === '/stay'"
       class="icon-container"
-      class="flex column align-center space-between gap0-5"
+      class="flex column auto-center gap0-5"
       routerLink="/"
     >
       <span class="icon-container"><fa-icon [icon]="faSearch"></fa-icon></span>
@@ -15,7 +15,7 @@
     >
     <a
       [class.active]="router.url === '/host/dashboard'"
-      class="flex column align-center space-between gap0-5"
+      class="flex column auto-center gap0-5"
       routerLink="host/dashboard"
     >
       <span class="icon-container"
@@ -25,7 +25,7 @@
     >
     <a
       [class.active]="router.url === '/trip'"
-      class="flex column align-center space-between gap0-5"
+      class="flex column auto-center gap0-5"
       routerLink="trip"
       ><span class="icon-container"
         ><svg
@@ -43,7 +43,7 @@
     >
     <a
       [class.active]="router.url === '/inbox/' + user!._id"
-      class="flex column align-center space-between gap0-5"
+      class="flex column auto-center gap0-5"
       routerLink="{{ 'inbox/' + user!._id }}"
     >
       <span class="icon-container"><fa-icon [icon]="faMessage"></fa-icon></span>
@@ -51,7 +51,7 @@
     >
     <a
       [class.active]="router.url === '/wishlist/' + user!._id"
-      class="flex column align-center space-between gap0-5"
+      class="flex column auto-center gap0-5"
       routerLink="{{ 'wishlist/' + user!._id }}"
     >
       <span class="icon-container"
@@ -82,7 +82,7 @@
   <ng-template #userNotLoggedIn>
     <a
       [class.active]="router.url === '/stay'"
-      class="flex column align-center space-between gap0-5"
+      class="flex column auto-center gap0-5"
       routerLink="/"
     >
       <span class="icon-container"><fa-icon [icon]="faSearch"></fa-icon></span>
@@ -91,7 +91,7 @@
     <a
       routerLink="/login"
       [class.active]="router.url === '/login'"
-      class="flex column align-center space-between gap0-5"
+      class="flex column auto-center gap0-5"
     >
       <span class="icon-container">
         <svg

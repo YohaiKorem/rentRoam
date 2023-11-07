@@ -1,10 +1,14 @@
 @import "../../app-root/app.component.scss";
 .mobile-footer-wrapper {
   position: fixed;
-  top: calc(100vh - 84px - 3em);
+  top: calc(100vh - 84px);
+  line-height: 15px;
   background-color: #fff;
   height: $header-height;
   border-block-start: 1px solid $secondaryClr2;
+  a {
+    height: 100%;
+  }
   .active {
     color: $primaryClr1;
   }
