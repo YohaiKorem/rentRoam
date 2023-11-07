@@ -318,3 +318,23 @@ map-info-window.ng-star-inserted {
     }
   }
 }
+
+// SHARE BUTTONS
+
+share-buttons {
+  .sb-group {
+    width: 100% !important;
+    share-button.sb-button.sb-default {
+      flex-basis: 50% !important;
+      display: flex !important;
+      button.sb-wrapper.sb-show-icon.sb-show-text {
+        flex-basis: 100% !important;
+        .sb-text.ng-star-inserted {
+          justify-content: start !important;
+          width: 100%;
+          flex: auto !important;
+        }
+      }
+    }
+  }
+}

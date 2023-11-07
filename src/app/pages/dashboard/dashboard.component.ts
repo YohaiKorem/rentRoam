@@ -1,3 +1,4 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -39,7 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   faEllipsisH = faEllipsisH;
   faTrash = faTrash;
   stays: Stay[] = [];
-  user!: User;
+  user!: User | null;
   currCmp: string = 'orders';
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
@@ -51,7 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     public trackByService: TrackByService,
     private router: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +104,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.orders.splice(idxToRemove, 1, updatedOrder);
       this.updateOrderStatsMap();
     });
+  }
+
+  onLogout() {
+    this.user = this.userService.logout();
+    this.authService.signOut();
+
+    this.router.navigate(['/stay']);
   }
 
   showRemoveOption(stayId: string) {

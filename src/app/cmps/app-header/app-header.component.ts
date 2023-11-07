@@ -190,6 +190,7 @@ export class AppHeaderComponent implements OnInit {
   onLogout() {
     this.loggedInUser = this.userService.logout();
     this.socialSignOut();
+    this.router.navigate(['/stay']);
   }
 
   socialSignOut(): void {

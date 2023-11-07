@@ -121,14 +121,14 @@
           *ngIf="orders.length; else noOrdersYet"
           class="text-left fw600 full-width"
         >
-          Hello {{ user.fullname }}, you have {{ orders.length }} order<span
+          Hello {{ user!.fullname }}, you have {{ orders.length }} order<span
             *ngIf="orders.length > 1"
             >s</span
           >
         </h1>
         <ng-template #noOrdersYet>
           <h1 class="text-left fw600 full-width">
-            Hello {{ user.fullname }}, your bookings will be displayed here.
+            Hello {{ user!.fullname }}, your bookings will be displayed here.
             Make sure your listings are attractive and complete to attract more
             guests.
           </h1>
@@ -155,4 +155,8 @@
       ></order-list>
     </ng-container>
   </ng-container>
+
+  <button class="btn btn-logout show-on-mobile" (click)="onLogout()">
+    Logout
+  </button>
 </section>

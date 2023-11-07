@@ -6,6 +6,7 @@ import {
   OnDestroy,
   AfterViewInit,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { SearchParam, Stay, StayDistance } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
@@ -43,6 +44,9 @@ export class StayPreviewComponent implements OnInit {
   constructor(
     private stayService: StayService,
     private cdr: ChangeDetectorRef,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+
     private userService: UserService,
     private sharedService: SharedService,
     private wishlistService: WishlistService,
@@ -67,6 +71,13 @@ export class StayPreviewComponent implements OnInit {
   onAddToWishlist(ev: any, id: string) {
     ev.stopPropagation();
     ev.preventDefault();
+    if (!this.loggedInUser) {
+      this.router.navigate(['/login'], {
+        relativeTo: this.activatedRoute,
+        queryParamsHandling: 'preserve',
+      });
+      return;
+    }
     this.isInWishlist()
       ? this.onRemoveFromWishlist()
       : this.sharedService.openModal('wishlist', this.stay);

@@ -28,7 +28,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private sharedService: SharedService,
     private authService: SocialAuthService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
   user!: SocialUser;
   isLoggedIn!: boolean;
@@ -51,7 +52,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.isLoginPage) this.elHeader?.classList.add('hidden-on-mobile');
+    this.elHeader?.classList.add('hidden-on-mobile');
   }
 
   handleLogIn() {
@@ -72,7 +73,12 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   }
 
   determineIsLoginPage(): boolean {
-    return this.router.url === '/login';
+    let currentRoute = this.activatedRoute.snapshot;
+    while (currentRoute.firstChild) {
+      currentRoute = currentRoute.firstChild;
+    }
+    const routePath = currentRoute.routeConfig?.path || '';
+    return routePath === 'login';
   }
 
   handleLogout() {
@@ -86,6 +92,6 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.isLoginPage) this.elHeader?.classList.remove('hidden-on-mobile');
+    this.elHeader?.classList.remove('hidden-on-mobile');
   }
 }

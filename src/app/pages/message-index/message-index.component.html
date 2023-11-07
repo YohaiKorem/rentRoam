@@ -1,5 +1,5 @@
 <section class="messages-page-wrapper">
-  <section class="wide-layout hidden-on-mobile">
+  <ng-container class="wide-layout hidden-on-mobile">
     <aside class="inbox">
       <h3 class="dark-font fw500 p1">Inbox</h3>
       <chat-list
@@ -17,7 +17,7 @@
           [msgs]="currChat.msgs"
         ></msg-list>
       </div>
-      <div class="chat-edit-container full-width">
+      <div class="chat-edit-container full-width p1">
         <chat-edit
           (orderUpdated)="updateCurrChat($event)"
           [user]="user"
@@ -29,7 +29,7 @@
       <h3 class="dark-font fw500 p1">Order details</h3>
       <trip-details [trip]="currChat"></trip-details>
     </aside>
-  </section>
+  </ng-container>
   <section class="narrow-layout show-on-mobile">
     <section class="inbox">
       <h3 class="dark-font fw500 p1">Inbox</h3>

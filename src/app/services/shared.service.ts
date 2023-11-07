@@ -53,4 +53,19 @@ export class SharedService {
   ) {
     document.querySelector(selector)?.classList[action](classToBind);
   }
+
+  addStyleToElement(
+    selector: string,
+    styleToBind: Partial<keyof CSSStyleDeclaration>,
+    styleValue: string
+  ) {
+    const el = document.querySelector(selector) as HTMLElement;
+    if (el && el.style) {
+      if (styleToBind in el.style) {
+        el.style[styleToBind as any] = styleValue;
+      } else {
+        console.error('Invalid style property:', styleToBind);
+      }
+    }
+  }
 }

@@ -66,7 +66,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   nightSum: number = 5;
   guestsNumForDisplay: string = '1 guest';
   defaultDate = { start: new Date(), end: new Date() };
-  isShowModal: boolean = true;
+  isShowModal: boolean = false;
   selectedDate: any;
   hostDescShowMore: boolean = false;
   summaryShowMore: boolean = false;
@@ -82,8 +82,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     draggable: false,
   };
   currModalContent = {
-    title: 'Share this place',
-    cmp: 'share-modal',
+    title: '',
+    cmp: '',
   };
   urlToShare: string = '';
   homeIcon: google.maps.Icon | null = null;
@@ -117,22 +117,40 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       this.calculateNightSum();
     });
     this.activatedRoute.queryParams.subscribe((queryParams) => {
-      const filter = queryParams['stayFilter'];
-      const search = queryParams['search'];
+      let filter;
+      let search;
+      try {
+        filter = queryParams['stayFilter']
+          ? JSON.parse(queryParams['stayFilter'])
+          : null;
+        search = queryParams['search']
+          ? JSON.parse(queryParams['search'])
+          : null;
+      } catch (e) {
+        console.error('Error parsing queryParams', e);
+        return;
+      }
+
       if (filter) {
-        this.stayService.setFilter(JSON.parse(filter));
+        this.stayService.setFilter(filter);
       }
       if (search) {
-        this.stayService.setSearchParams(JSON.parse(search));
+        this.stayService.setSearchParams(search);
       }
+
       const urlTree = this.router.createUrlTree([], {
         relativeTo: this.activatedRoute,
+        queryParams: queryParams,
       });
+
       const fullUrl = this.router.serializeUrl(urlTree);
-      this.urlToShare = `http://localhost:4200/#${fullUrl}?${filter}&${search}`;
+
+      this.urlToShare = `http://localhost:4200/#${fullUrl}`;
       console.log('Full URL:', this.urlToShare);
+
       this.cdr.detectChanges();
     });
+
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => {
@@ -271,6 +289,13 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   onAddToWishlist() {
+    if (!this.user) {
+      this.router.navigate(['/login'], {
+        relativeTo: this.activatedRoute,
+        queryParamsHandling: 'preserve',
+      });
+      return;
+    }
     this.isInWishlist()
       ? this.onRemoveFromWishlist()
       : this.toggleModal('save');

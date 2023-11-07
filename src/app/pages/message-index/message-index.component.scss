@@ -18,6 +18,9 @@
     .main-chat {
       height: 100%;
       padding-block-end: 6em;
+      .chat-edit-container {
+        padding: 0;
+      }
     }
   }
 }

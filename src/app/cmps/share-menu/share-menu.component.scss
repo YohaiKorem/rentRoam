@@ -1,0 +1,15 @@
+@import "../../app-root/app.component.scss";
+@import "../../../../node_modules/ngx-sharebuttons/themes/default.scss";
+
+share-buttons {
+  .sb-group {
+    width: 100% !important;
+    share-button.sb-button.sb-default.ng-star-inserted {
+      flex-basis: 50% !important;
+      button.sb-wrapper.sb-show-icon.sb-show-text {
+        width: 100% !important;
+        margin-inline: 5rem !important;
+      }
+    }
+  }
+}
