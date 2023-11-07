@@ -250,7 +250,7 @@ export class StayService {
       searchParam.startDate = new Date(searchParam.startDate);
     if (searchParam.endDate)
       searchParam.endDate = new Date(searchParam.endDate);
-    if (searchParam.location.name) {
+    if (searchParam.location && searchParam.location.name) {
       this.geocodingService
         .getLatLng(searchParam.location.name)
         .pipe(
@@ -279,6 +279,7 @@ export class StayService {
   public setFilter(stayFilter: StayFilter) {
     this._stayFilter$.next({ ...stayFilter });
     this.loadStays().pipe(take(1)).subscribe();
+
     this.updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
   }
 
@@ -310,7 +311,7 @@ export class StayService {
   private search(stays: Stay[], searchParams: SearchParam): Observable<Stay[]> {
     let searchedStays = stays;
 
-    if (searchParams.guests.adults) {
+    if (searchParams.guests && searchParams.guests.adults) {
       searchedStays = stays.filter(
         (stay) =>
           stay.capacity >=
@@ -319,6 +320,7 @@ export class StayService {
     }
 
     if (
+      searchParams.location &&
       searchParams.location.coords?.lat &&
       searchParams.location.coords?.lng
     ) {

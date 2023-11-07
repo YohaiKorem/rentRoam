@@ -3,6 +3,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AppComponent } from './app/app-root/app.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -72,6 +74,7 @@ import { LabelLoaderComponent } from './app/cmps/label-loader/label-loader.compo
 import { MobileFooterComponent } from './app/pages/mobile-footer/mobile-footer.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component';
+import { ShareMenuComponent } from './app/cmps/share-menu/share-menu.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +126,7 @@ import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component'
     LabelLoaderComponent,
     MobileFooterComponent,
     ChatIndexComponent,
+    ShareMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -144,6 +148,10 @@ import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component'
     SocialLoginModule,
     GoogleSigninButtonModule,
     CloudinaryModule,
+    ShareButtonsModule.withConfig({
+      debug: true,
+    }),
+    ShareIconsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: true,
       // Register the ServiceWorker as soon as the application is stable

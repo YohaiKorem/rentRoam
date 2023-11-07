@@ -64,8 +64,6 @@ export class AppHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.searchParam.startDate);
-
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.searchParam = searchParam));

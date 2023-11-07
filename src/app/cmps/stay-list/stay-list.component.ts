@@ -7,6 +7,7 @@ import {
   ElementRef,
   ViewChild,
   HostListener,
+  OnInit,
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
@@ -34,9 +35,9 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
     start: new Date(),
     end: new Date(),
   };
-  @Input() stayFilter: StayFilter | null = null;
+  @Input() stayFilter: StayFilter | string | null = null;
 
-  @Input() searchParam: SearchParam | null = null;
+  @Input() searchParam: SearchParam | string | null = null;
   @Output() clearFilter = new EventEmitter();
   staysWithDistance: any;
   isInsideWishlistDetails: boolean = false;
@@ -52,6 +53,11 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
         this.updateGridColumns(entry.target as HTMLElement);
       }
     });
+  }
+
+  ngOnInit() {
+    this.stayFilter = JSON.stringify(this.stayFilter);
+    this.searchParam = JSON.stringify(this.searchParam);
   }
 
   ngAfterViewInit(): void {

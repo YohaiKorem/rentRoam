@@ -58,6 +58,7 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   }
 
   updateGuestsNumForDisplay(searchParam: SearchParam) {
+    if (!searchParam || !searchParam.guests) return;
     let sum = 0;
     if (searchParam.guests.adults + searchParam.guests.children)
       sum = searchParam.guests.adults + searchParam.guests.children;

@@ -689,6 +689,7 @@
               class="plus-minus-btns-container flex align-center space-between gap0-5"
             >
               <button
+                *ngIf="searchParam && searchParam.guests"
                 class="btn btn-subtract adults"
                 (click)="updateGuests($event, -1)"
                 [disabled]="searchParam.guests.adults <= 0"
@@ -713,7 +714,9 @@
                   <path d="m2 16h28"></path>
                 </svg>
               </button>
-              <span>{{ searchParam.guests.adults }}</span>
+              <span *ngIf="searchParam && searchParam.guests">{{
+                searchParam.guests.adults
+              }}</span>
               <button
                 class="btn btn-add adults"
                 (click)="updateGuests($event, 1)"
@@ -748,6 +751,7 @@
               class="plus-minus-btns-container flex align-center space-between gap0-5"
             >
               <button
+                *ngIf="searchParam && searchParam.guests"
                 class="btn btn-subtract children"
                 (click)="updateGuests($event, -1)"
                 [disabled]="searchParam.guests.children <= 0"
@@ -772,7 +776,9 @@
                   <path d="m2 16h28"></path>
                 </svg>
               </button>
-              <span>{{ searchParam.guests.children }}</span>
+              <span *ngIf="searchParam && searchParam.guests">{{
+                searchParam.guests.children
+              }}</span>
               <button
                 class="btn btn-add children"
                 (click)="updateGuests($event, 1)"
@@ -807,6 +813,7 @@
               class="plus-minus-btns-container flex align-center space-between gap0-5"
             >
               <button
+                *ngIf="searchParam && searchParam.guests"
                 class="btn btn-subtract infants"
                 (click)="updateGuests($event, -1)"
                 [disabled]="searchParam.guests.infants <= 0"
@@ -831,7 +838,9 @@
                   <path d="m2 16h28"></path>
                 </svg>
               </button>
-              <span>{{ searchParam.guests.infants }}</span>
+              <span *ngIf="searchParam && searchParam.guests">{{
+                searchParam.guests.infants
+              }}</span>
               <button
                 class="btn btn-add infants"
                 (click)="updateGuests($event, 1)"
@@ -1044,6 +1053,10 @@
       (closeModal)="isShowModal = false"
     >
       <ng-container [ngSwitch]="currModalContent.cmp">
+        <share-menu
+          [url]="urlToShare"
+          *ngSwitchCase="'share-modal'"
+        ></share-menu>
         <review-list
           [reviews]="stay.reviews"
           [independentToggling]="false"

@@ -66,7 +66,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   nightSum: number = 5;
   guestsNumForDisplay: string = '1 guest';
   defaultDate = { start: new Date(), end: new Date() };
-  isShowModal: boolean = false;
+  isShowModal: boolean = true;
   selectedDate: any;
   hostDescShowMore: boolean = false;
   summaryShowMore: boolean = false;
@@ -82,10 +82,10 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     draggable: false,
   };
   currModalContent = {
-    title: '',
-    cmp: '',
+    title: 'Share this place',
+    cmp: 'share-modal',
   };
-
+  urlToShare: string = '';
   homeIcon: google.maps.Icon | null = null;
   ngOnInit(): void {
     this.sharedService.toggleClassOnElement(
@@ -93,10 +93,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       'map-active',
       'remove'
     );
+    this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
     this.stay$ = this.activatedRoute.data.pipe(
       map((data) => {
-        console.log(data);
-
         this.stay = data['stay'];
         this.center = {
           lat: this.stay?.loc.lat!,
@@ -109,14 +108,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     this.userService.loggedInUser$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((user) => (this.user = user));
-    this.stayService.searchParams$
-      .pipe(takeUntil(this.destroySubject$))
-      .subscribe((searchParam) => {
-        this.searchParam = searchParam;
-        this.updateGuestsNumForDisplay(this.searchParam);
 
-        this.setDefaultLoc();
-      });
     this.sharedService.openModal$.subscribe(() => {
       this.toggleModal('close');
     });
@@ -133,8 +125,22 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       if (search) {
         this.stayService.setSearchParams(JSON.parse(search));
       }
+      const urlTree = this.router.createUrlTree([], {
+        relativeTo: this.activatedRoute,
+      });
+      const fullUrl = this.router.serializeUrl(urlTree);
+      this.urlToShare = `http://localhost:4200/#${fullUrl}?${filter}&${search}`;
+      console.log('Full URL:', this.urlToShare);
       this.cdr.detectChanges();
     });
+    this.stayService.searchParams$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((searchParam) => {
+        this.searchParam = searchParam;
+        this.updateGuestsNumForDisplay(this.searchParam);
+
+        this.setDefaultLoc();
+      });
   }
 
   ngAfterViewInit() {
@@ -278,6 +284,7 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   setDefaultLoc() {
+    if (!this.searchParam || !this.searchParam.location) return;
     if (!this.searchParam.location.name)
       this.searchParam.location.coords = this.center;
   }
@@ -302,6 +309,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   updateGuestsNumForDisplay(searchParam: SearchParam) {
+    if (!searchParam || !searchParam.guests) return;
+
     let sum = 1;
     if (searchParam.guests.adults + searchParam.guests.children)
       sum = searchParam.guests.adults + searchParam.guests.children;
