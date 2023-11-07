@@ -22,10 +22,13 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 })
 export class StayPreviewComponent implements OnInit {
   @Input() stay!: Stay;
-  @Input() areMonthsDifferent!: boolean;
-  @Input() endMonth!: string;
+  @Input() areMonthsDifferent: boolean = false;
+  @Input() endMonth: string = '';
   @Input() distances!: StayDistance[] | null;
-  @Input() currDate!: { start: Date; end: Date };
+  @Input() currDate: { start: Date; end: Date } = {
+    start: new Date(),
+    end: new Date(),
+  };
   @Input() userLoc!: { lat: number | null; lng: number | null };
 
   private destroySubject$ = new Subject<null>();

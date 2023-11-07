@@ -246,6 +246,10 @@ export class StayService {
   }
 
   public setSearchParams(searchParam: SearchParam) {
+    if (searchParam.startDate)
+      searchParam.startDate = new Date(searchParam.startDate);
+    if (searchParam.endDate)
+      searchParam.endDate = new Date(searchParam.endDate);
     if (searchParam.location.name) {
       this.geocodingService
         .getLatLng(searchParam.location.name)
