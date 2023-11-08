@@ -25,13 +25,13 @@
   </a>
 </ul>
 <div
-  *ngIf="!stays && !searchParam && !stayFilter"
+  *ngIf="!stays!.length && hasNoFilter"
   class="no-stays-container flex column space-between align-start"
 >
-  <h3 class="fw700 fs24">Please wait while we look for Yout stays</h3>
+  <h3 class="fw700 fs24">Please wait while we look for your stays</h3>
 </div>
 <div
-  *ngIf="stays && !stays!.length"
+  *ngIf="stays && !stays!.length && !hasNoFilter"
   class="no-stays-container flex column space-between align-start"
 >
   <h3 class="fw700 fs24">No exact matches</h3>

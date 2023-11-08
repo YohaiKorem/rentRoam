@@ -12,6 +12,8 @@ export class User {
   ) {}
 
   public static fromFacebook(social: SocialUser): User {
+    console.log(social);
+
     return new User(
       social.name,
       social.response.picture.data.url,

@@ -10,6 +10,8 @@ import {
   OnInit,
   AfterViewInit,
   OnDestroy,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import {
   SearchParam,
@@ -25,7 +27,9 @@ import { TrackByService } from 'src/app/services/track-by.service';
   templateUrl: './stay-list.component.html',
   styleUrls: ['./stay-list.component.scss'],
 })
-export class StayListComponent implements AfterViewInit, OnDestroy {
+export class StayListComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   @Input() stays!: Stay[] | null;
   @Input() distances!: StayDistance[] | null;
   @Input() userLoc!: { lat: number | null; lng: number | null };
@@ -41,6 +45,7 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
   @Output() clearFilter = new EventEmitter();
   staysWithDistance: any;
   isInsideWishlistDetails: boolean = false;
+  hasNoFilter: boolean = false;
   private ro: ResizeObserver;
 
   constructor(
@@ -56,6 +61,9 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.hasNoFilter = this.isFilterEmpty();
+    console.log(this.hasNoFilter);
+
     this.stayFilter = JSON.stringify(this.stayFilter);
     this.searchParam = JSON.stringify(this.searchParam);
   }
@@ -69,6 +77,39 @@ export class StayListComponent implements AfterViewInit, OnDestroy {
     if (this.el.nativeElement.parentElement) {
       this.ro.observe(this.el.nativeElement.parentElement);
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['stayFilter']) this.hasNoFilter = this.isFilterEmpty();
+  }
+
+  isFilterEmpty(): boolean {
+    const {
+      amenities,
+      capacity,
+      equipment,
+      labels,
+      maxPrice,
+      minPrice,
+      roomType,
+      superhost,
+    } = this.stayFilter as StayFilter;
+    const { bedsNum, bathNum, bedroomNum } = equipment;
+    if (
+      !amenities.length &&
+      !capacity &&
+      !bedroomNum &&
+      !bathNum &&
+      !bedsNum &&
+      !labels.length &&
+      !maxPrice &&
+      !minPrice &&
+      !roomType &&
+      !superhost
+    )
+      return true;
+
+    return false;
   }
 
   ngOnDestroy(): void {
