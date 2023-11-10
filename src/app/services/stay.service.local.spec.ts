@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StayService } from './stay.service';
+import { StayService } from './stay.service.local';
 
-describe('StayService', () => {
+describe('StayServiceService', () => {
   let service: StayService;
 
   beforeEach(() => {

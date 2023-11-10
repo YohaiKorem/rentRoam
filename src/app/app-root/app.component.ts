@@ -1,9 +1,10 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { Observable, Subscription, Subject, takeUntil } from 'rxjs';
+import { Observable, Subscription, Subject, takeUntil, take, pipe } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { StayService } from '../services/stay.service.local';
 import { Stay } from '../models/stay.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StayServiceRemote } from '../services/stay.service';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { environment } from 'src/environments/env.prod';
 import { SharedService } from '../services/shared.service';
@@ -21,6 +22,7 @@ export class AppComponent {
     private activatedRoute: ActivatedRoute,
 
     private stayService: StayService,
+    private stayServiceRemote: StayServiceRemote,
     public router: Router,
     private userService: UserService,
     private cdr: ChangeDetectorRef,
@@ -38,7 +40,12 @@ export class AppComponent {
     this.stayService.loadStays().subscribe({
       error: (err) => console.log('err', err),
     });
-
+    this.stayServiceRemote
+      .query()
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((stays) => {
+        console.log(stays);
+      });
     this.activatedRoute.queryParams.subscribe((queryParams) => {
       const stayFilter = queryParams['stayFilter'];
       const search = queryParams['search'];

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StayService } from './stay.service';
+import { HttpService } from './http.service';
 
-describe('StayService', () => {
-  let service: StayService;
+describe('HttpService', () => {
+  let service: HttpService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(StayService);
+    service = TestBed.inject(HttpService);
   });
 
   it('should be created', () => {
