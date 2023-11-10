@@ -11,7 +11,7 @@ import { Observable, Subject, first, takeUntil } from 'rxjs';
 import { SearchParam, Stay, StayDistance } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { SharedService } from 'src/app/services/shared.service';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';

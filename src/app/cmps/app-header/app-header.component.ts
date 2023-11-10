@@ -12,7 +12,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/env.prod';
 import { TrackByService } from 'src/app/services/track-by.service';

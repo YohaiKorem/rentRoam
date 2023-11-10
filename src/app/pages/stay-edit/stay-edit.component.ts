@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { IStay, Labels, Stay, Amenities } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { StayHost } from 'src/app/models/host.model';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 import { UserService } from 'src/app/services/user.service';
 import { GeocodingService } from 'src/app/services/geocoding.service';
 import { Subject, take, takeUntil } from 'rxjs';

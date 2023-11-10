@@ -17,7 +17,7 @@ import {
   BehaviorSubject,
 } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 import { SwipeDirectiveDirective } from 'src/app/directives/swipe-directive.directive';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';

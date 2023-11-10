@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Wishlist } from 'src/app/models/wishlist.model';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 import { TrackByService } from 'src/app/services/track-by.service';
 
 @Component({

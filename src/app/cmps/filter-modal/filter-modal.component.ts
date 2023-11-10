@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 
 import { Stay, StayFilter, Amenities } from 'src/app/models/stay.model';
 import { Btn } from 'src/app/models/btn.model';

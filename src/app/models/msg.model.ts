@@ -1,5 +1,3 @@
-import { User } from './user.model';
-
 export class Msg {
   constructor(
     public id: string,

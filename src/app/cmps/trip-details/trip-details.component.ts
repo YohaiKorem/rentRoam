@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 import { take } from 'rxjs';
 import { Stay } from 'src/app/models/stay.model';
 import { TrackByService } from 'src/app/services/track-by.service';

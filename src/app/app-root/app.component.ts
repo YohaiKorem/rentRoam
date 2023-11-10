@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subscription, Subject, takeUntil } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { StayService } from '../services/stay.service';
+import { StayService } from '../services/stay.service.local';
 import { Stay } from '../models/stay.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cloudinary } from '@cloudinary/url-gen';

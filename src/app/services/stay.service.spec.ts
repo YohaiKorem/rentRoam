@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StayServiceService } from './stay.service';
+import { StayServiceService } from './stay.service.local';
 
 describe('StayServiceService', () => {
   let service: StayServiceService;

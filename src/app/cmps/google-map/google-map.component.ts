@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { Subject, takeUntil } from 'rxjs';
-import { StayService } from 'src/app/services/stay.service';
+import { StayService } from 'src/app/services/stay.service.local';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { TrackByService } from 'src/app/services/track-by.service';
 @Component({

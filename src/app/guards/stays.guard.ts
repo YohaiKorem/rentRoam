@@ -1,6 +1,6 @@
 import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
-import { StayService } from '../services/stay.service';
+import { StayService } from '../services/stay.service.local';
 import { catchError, first, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 
