@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Observable, Subscription, map, Subject, takeUntil, take } from 'rxjs';
+import { Observable, Subscription, of, Subject, takeUntil, take } from 'rxjs';
 import {
   SearchParam,
   Stay,
@@ -60,6 +60,12 @@ export class StayIndexComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
+    console.log(this.stays$);
+    this.stayService.stays$
+      .pipe(takeUntil(this.destroySubject$))
+      .subscribe((stays) => {
+        this.stays = stays;
+      });
     this.distances = this.stayService.distances$;
     this.setDefaultDates();
     this.sharedService.openModal$.subscribe(({ str, data }) => {
@@ -96,10 +102,7 @@ export class StayIndexComponent implements OnInit, OnDestroy {
   }
 
   setDistance() {
-    let stays: Stay[];
-    this.stays$.pipe(take(1)).subscribe((s) => (stays = s));
-
-    if (!stays! || !stays.length) {
+    if (!this.stays! || !this.stays.length) {
       console.log('Stays not available');
       return;
     }
@@ -121,13 +124,14 @@ export class StayIndexComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const distances = stays.map((stay) => {
+    const distances = this.stays.map((stay) => {
       const distance = Math.ceil(
         this.stayService.getDistance(stay, targetCoords) / 1000
       );
       const _id = stay._id;
       return { _id, distance };
     });
+    this.distances = of(distances);
   }
 
   toggleFilterModal() {

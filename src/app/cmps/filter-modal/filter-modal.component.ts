@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
-import { StayService } from 'src/app/services/stay.service.local';
+import { StayService } from 'src/app/services/stay.service';
 
 import { Stay, StayFilter, Amenities } from 'src/app/models/stay.model';
 import { Btn } from 'src/app/models/btn.model';
@@ -117,14 +117,18 @@ export class FilterModalComponent {
         price: this.lowestAvailablePrice + idx * priceInterval,
         count: 0,
       }));
+    const stays = this.stays;
+    if (stays)
+      stays.forEach((stay) => {
+        const bucketIndex = Math.min(
+          49,
+          Math.floor((stay.price - this.lowestAvailablePrice) / priceInterval)
+        );
+        console.log('bucketIndex', bucketIndex);
+        console.log('histogramData', histogramData);
 
-    this.stays?.forEach((stay) => {
-      const bucketIndex = Math.min(
-        49,
-        Math.floor((stay.price - this.lowestAvailablePrice) / priceInterval)
-      );
-      histogramData[bucketIndex].count++;
-    });
+        histogramData[bucketIndex].count++;
+      });
 
     const maxCount = Math.max(...histogramData.map((data) => data.count));
 

@@ -81,18 +81,25 @@ export class StayService {
       .pipe(take(1))
       .subscribe((stays) => {
         this._stays$.next(stays);
-        this.setAvgPrice(stays);
       });
   }
 
   query(): Observable<Stay[]> {
     const filterBy = this._stayFilter$.value;
     const searchParams = this._searchParams$.value;
-    const data = { filter: { ...filterBy }, search: { ...searchParams } };
-    return this.httpService
-      .get(BASE_URL, data)
-      .pipe(map((data: any) => data as Stay[]));
+    const data = { ...filterBy, ...searchParams };
+    return this.httpService.get(BASE_URL, data).pipe(
+      map((data: any) => data as Stay[]),
+      tap((stays: Stay[]) => {
+        this.setAvgPrice(stays);
+        this.setHigheststPrice(stays);
+        this.setLowestPrice(stays);
+        this._stays$.next(stays);
+        this.setStaysWithDistances();
+      })
+    );
   }
+
   public setStaysWithDistances() {
     combineLatest([
       this.userService.userCoords$,
@@ -207,16 +214,16 @@ export class StayService {
         .subscribe();
     } else {
       this._searchParams$.next({ ...searchParam });
-      this.query().pipe(take(1)).subscribe();
       this.updateQueryParams({ search: JSON.stringify(searchParam) });
+      this.query();
     }
   }
 
   public setFilter(stayFilter: StayFilter) {
     this._stayFilter$.next({ ...stayFilter });
-    this.query().pipe(take(1)).subscribe();
 
     this.updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
+    this.query();
   }
 
   private updateQueryParams(params: { [key: string]: string }) {

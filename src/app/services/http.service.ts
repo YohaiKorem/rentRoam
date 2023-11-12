@@ -14,8 +14,6 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   get(endpoint: string, data?: any) {
-    console.log(data);
-
     return this.ajax(endpoint, 'GET', data);
   }
 
