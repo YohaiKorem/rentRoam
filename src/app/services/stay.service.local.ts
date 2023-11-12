@@ -24,7 +24,7 @@ import {
 import _stays from '../../data/stay.json';
 import { GeocodingService } from './geocoding.service';
 import { getDistance } from 'geolib';
-import { environment } from 'src/environments/env';
+import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 import { UtilService } from './util.service';
 import { StayHost } from '../models/host.model';

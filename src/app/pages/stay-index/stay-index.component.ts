@@ -15,7 +15,7 @@ import {
   StayDistance,
   StayFilter,
 } from 'src/app/models/stay.model';
-import { StayService } from 'src/app/services/stay.service.local';
+import { StayService } from 'src/app/services/stay.service';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { User } from 'src/app/models/user.model';

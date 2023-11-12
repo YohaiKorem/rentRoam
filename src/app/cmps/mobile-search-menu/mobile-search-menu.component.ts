@@ -13,7 +13,7 @@ import { SearchParam } from 'src/app/models/stay.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service.local';
 import { TrackByService } from 'src/app/services/track-by.service';
-import { environment } from 'src/environments/env.prod';
+import { environment } from 'src/environments/environment';
 declare var google: any;
 @Component({
   selector: 'mobile-search-menu',

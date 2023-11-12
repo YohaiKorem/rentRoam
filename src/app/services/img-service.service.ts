@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cloudinary } from '@cloudinary/url-gen';
-import { environment } from 'src/environments/env.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

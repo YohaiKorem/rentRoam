@@ -22,8 +22,8 @@
             "main": "src/main.ts",
             "fileReplacements": [
               {
-                "replace": "src/environments/env.ts",
-                "with": "src/environments/env.prod.ts"
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
               }
             ],
             "polyfills": ["zone.js"],
@@ -63,7 +63,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.prod.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

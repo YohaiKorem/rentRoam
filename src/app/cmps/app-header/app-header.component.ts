@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service.local';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { environment } from 'src/environments/env.prod';
+import { environment } from 'src/environments/environment';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
