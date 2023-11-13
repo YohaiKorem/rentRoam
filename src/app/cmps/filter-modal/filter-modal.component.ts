@@ -15,6 +15,7 @@ import { Stay, StayFilter, Amenities } from 'src/app/models/stay.model';
 import { Btn } from 'src/app/models/btn.model';
 import { ChartDataValue } from 'src/app/models/chartDataValue.model';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'filter-modal',
   templateUrl: './filter-modal.component.html',
@@ -23,7 +24,8 @@ import { TrackByService } from 'src/app/services/track-by.service';
 export class FilterModalComponent {
   constructor(
     private stayService: StayService,
-    public trackByService: TrackByService
+    public trackByService: TrackByService,
+    public sharedService: SharedService
   ) {}
   @Input() stays!: Stay[] | null;
   @Input() nights!: number | null;
@@ -45,7 +47,6 @@ export class FilterModalComponent {
   avgStayPricePerNight: number = 0;
   amenities = Amenities;
   isShowAllAmenities: boolean = false;
-  elMobileCloseBtn = document.querySelector('.dynamic-modal .btn-close');
   ngOnInit() {
     this.stayService.stayFilter$
       .pipe(takeUntil(this.destroySubject$))
@@ -67,12 +68,15 @@ export class FilterModalComponent {
     this.stayService.highestPrice$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((highestPrice) => {
+        if (highestPrice === -Infinity) return;
         this.highestAvailablePrice = highestPrice;
         this.maxPrice = highestPrice;
       });
     this.stayService.lowestPrice$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((lowestPrice) => {
+        if (lowestPrice === Infinity) return;
+
         this.lowestAvailablePrice = lowestPrice;
         this.minPrice = lowestPrice;
       });
@@ -80,8 +84,7 @@ export class FilterModalComponent {
   }
 
   ngAfterViewInit() {
-    if (this.elMobileCloseBtn)
-      this.elMobileCloseBtn.classList.remove('hidden-on-mobile');
+    this.sharedService.showElementOnMobile('.dynamic-modal .btn-close');
   }
 
   filterBeds(beds: any) {
@@ -124,8 +127,6 @@ export class FilterModalComponent {
           49,
           Math.floor((stay.price - this.lowestAvailablePrice) / priceInterval)
         );
-        console.log('bucketIndex', bucketIndex);
-        console.log('histogramData', histogramData);
 
         histogramData[bucketIndex].count++;
       });
@@ -136,7 +137,6 @@ export class FilterModalComponent {
       data.normalizedHeight = Math.floor((data.count / maxCount) * 100);
     });
 
-    console.log(histogramData);
     return histogramData;
   }
 
@@ -199,5 +199,6 @@ export class FilterModalComponent {
   ngOnDestroy(): void {
     this.destroySubject$.next(null);
     this.destroySubject$.unsubscribe();
+    this.sharedService.hideElementOnMobile('.dynamic-modal .btn-close');
   }
 }

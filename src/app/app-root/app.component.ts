@@ -35,10 +35,7 @@ export class AppComponent {
   currentUrl!: string;
   userLoc: any = { lat: null, lng: null };
   ngOnInit(): void {
-    this.stayService.query().subscribe({
-      error: (err) => console.log('err', err),
-    });
-
+    this.stays$ = this.stayService.stays$;
     this.activatedRoute.queryParams.subscribe((queryParams) => {
       const stayFilter = queryParams['stayFilter'];
       const search = queryParams['search'];
@@ -49,12 +46,14 @@ export class AppComponent {
       if (search) {
         this.stayService.setSearchParams(JSON.parse(search));
       }
+      this.stayService.query().subscribe({
+        error: (err) => console.log('err', err),
+      });
     });
 
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((searchParam) => (this.location = searchParam.location));
-    this.stays$ = this.stayService.stays$;
   }
 
   ngAfterViewInit() {

@@ -10,7 +10,9 @@ import {
   switchMap,
   of,
   tap,
+  retry,
   catchError,
+  debounceTime,
 } from 'rxjs';
 import { GeocodingService } from './geocoding.service';
 import { getDistance } from 'geolib';
@@ -85,10 +87,13 @@ export class StayService {
   }
 
   query(): Observable<Stay[]> {
-    const filterBy = this._stayFilter$.value;
-    const searchParams = this._searchParams$.value;
+    const filterBy = { ...this._stayFilter$.value };
+    const searchParams = { ...this._searchParams$.value };
     const data = { ...filterBy, ...searchParams };
+    console.log(data);
+
     return this.httpService.get(BASE_URL, data).pipe(
+      debounceTime(500),
       map((data: any) => data as Stay[]),
       tap((stays: Stay[]) => {
         this.setAvgPrice(stays);
@@ -96,7 +101,9 @@ export class StayService {
         this.setLowestPrice(stays);
         this._stays$.next(stays);
         this.setStaysWithDistances();
-      })
+      }),
+      retry(1),
+      catchError(this._handleError)
     );
   }
 
@@ -206,8 +213,8 @@ export class StayService {
               };
             }
             this._searchParams$.next({ ...searchParam });
-            this.query().pipe(take(1)).subscribe();
             this.updateQueryParams({ search: JSON.stringify(searchParam) });
+            this.query();
           }),
           catchError(this._handleError)
         )
@@ -223,7 +230,7 @@ export class StayService {
     this._stayFilter$.next({ ...stayFilter });
 
     this.updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
-    this.query();
+    this.query().pipe(take(1)).subscribe();
   }
 
   private updateQueryParams(params: { [key: string]: string }) {

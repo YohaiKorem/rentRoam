@@ -62,7 +62,6 @@ export class StayListComponent
 
   ngOnInit() {
     this.hasNoFilter = this.isFilterEmpty();
-    console.log(this.hasNoFilter);
 
     this.stayFilter = JSON.stringify(this.stayFilter);
     this.searchParam = JSON.stringify(this.searchParam);

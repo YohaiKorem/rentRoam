@@ -34,7 +34,8 @@ export class HttpService {
     let body = null;
 
     if (method === 'GET') {
-      params = new HttpParams({ fromObject: data });
+      params = new HttpParams({ fromObject: this.serializeData(data) });
+      console.log(params);
     } else {
       body = data;
     }
@@ -45,6 +46,20 @@ export class HttpService {
         params,
       })
       .pipe(catchError(this.handleError));
+  }
+
+  private serializeData(data: any): { [param: string]: string } {
+    const serialized: { [param: string]: string } = {};
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (typeof data[key] === 'object') {
+          serialized[key] = JSON.stringify(data[key]);
+        } else {
+          serialized[key] = data[key].toString();
+        }
+      }
+    }
+    return serialized;
   }
 
   private handleError(error: any) {
