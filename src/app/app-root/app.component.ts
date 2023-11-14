@@ -39,16 +39,16 @@ export class AppComponent {
     this.activatedRoute.queryParams.subscribe((queryParams) => {
       const stayFilter = queryParams['stayFilter'];
       const search = queryParams['search'];
+      console.log(search);
 
       if (stayFilter) {
         this.stayService.setFilter(JSON.parse(stayFilter));
-      }
-      if (search) {
-        this.stayService.setSearchParams(JSON.parse(search));
-      }
-      this.stayService.query().subscribe({
-        error: (err) => console.log('err', err),
-      });
+      } else if (search) {
+        this.stayService.setSearchParams(JSON.parse(search), 'great');
+      } else
+        this.stayService.query(search).subscribe({
+          error: (err) => console.log('err', err),
+        });
     });
 
     this.stayService.searchParams$

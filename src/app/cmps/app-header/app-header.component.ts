@@ -204,7 +204,6 @@ export class AppHeaderComponent implements OnInit {
   setSearchParams(ev: any) {
     ev.stopPropagation();
     this.setLoc();
-    this.stayService.setSearchParams(this.searchParam);
     this.stayService.stayFilter$.pipe(take(1)).subscribe((stayFilter) => {
       this.router.navigate([], {
         relativeTo: this.activatedRoute,
@@ -215,6 +214,7 @@ export class AppHeaderComponent implements OnInit {
         queryParamsHandling: 'merge',
       });
     });
+    this.stayService.setSearchParams(this.searchParam);
   }
   ngOnDestroy(): void {
     this.destroySubject$.next(null);

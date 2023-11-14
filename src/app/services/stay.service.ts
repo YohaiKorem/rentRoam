@@ -86,16 +86,16 @@ export class StayService {
       });
   }
 
-  query(): Observable<Stay[]> {
+  query(debug: any = 'debug query'): Observable<Stay[]> {
     const filterBy = { ...this._stayFilter$.value };
     const searchParams = { ...this._searchParams$.value };
     const data = { ...filterBy, ...searchParams };
-    console.log(data);
 
     return this.httpService.get(BASE_URL, data).pipe(
       debounceTime(500),
       map((data: any) => data as Stay[]),
       tap((stays: Stay[]) => {
+        console.log(stays);
         this.setAvgPrice(stays);
         this.setHigheststPrice(stays);
         this.setLowestPrice(stays);
@@ -106,7 +106,12 @@ export class StayService {
       catchError(this._handleError)
     );
   }
-
+  public getStayById(id: string): Observable<Stay> {
+    return this.httpService.get(`${BASE_URL}/${id}`).pipe(
+      debounceTime(500),
+      map((data: any) => data as Stay)
+    );
+  }
   public setStaysWithDistances() {
     combineLatest([
       this.userService.userCoords$,
@@ -195,7 +200,10 @@ export class StayService {
     this._avgPrice$.next(avg);
   }
 
-  public setSearchParams(searchParam: SearchParam) {
+  public setSearchParams(
+    searchParam: SearchParam,
+    debug: any = 'denug searchParam'
+  ) {
     if (searchParam.startDate)
       searchParam.startDate = new Date(searchParam.startDate);
     if (searchParam.endDate)
@@ -214,15 +222,17 @@ export class StayService {
             }
             this._searchParams$.next({ ...searchParam });
             this.updateQueryParams({ search: JSON.stringify(searchParam) });
-            this.query();
+            this.query(debug);
           }),
+          debounceTime(500),
+
           catchError(this._handleError)
         )
         .subscribe();
     } else {
       this._searchParams$.next({ ...searchParam });
       this.updateQueryParams({ search: JSON.stringify(searchParam) });
-      this.query();
+      this.query(`${debug} else inisde setSearchParams`);
     }
   }
 
@@ -230,7 +240,7 @@ export class StayService {
     this._stayFilter$.next({ ...stayFilter });
 
     this.updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
-    this.query().pipe(take(1)).subscribe();
+    this.query().pipe(take(1), debounceTime(500)).subscribe();
   }
 
   private updateQueryParams(params: { [key: string]: string }) {

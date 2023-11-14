@@ -60,7 +60,6 @@ export class StayIndexComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
-    console.log(this.stays$);
     this.stayService.stays$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe((stays) => {
@@ -142,8 +141,6 @@ export class StayIndexComponent implements OnInit, OnDestroy {
 
   toggleModal(title = '', data: Stay | null = null) {
     this.selectedStay = data;
-
-    console.log(title);
 
     if (title) {
       this.modalTitle = title;

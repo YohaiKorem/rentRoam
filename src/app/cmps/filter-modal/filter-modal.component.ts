@@ -58,6 +58,7 @@ export class FilterModalComponent {
       .pipe(takeUntil(this.destroySubject$), debounceTime(500))
       .subscribe(() => {
         this.stayService.setFilter(this.stayFilter);
+        this.histogramData = this.generateHistogramData();
       });
 
     this.stayService.avgPrice$
@@ -150,6 +151,7 @@ export class FilterModalComponent {
     const range = this.maxSlider - this.minSlider;
 
     const itemPercentage = (30 / this.histogramData!.length) * 100;
+    this.setFilter(false);
     return (itemPercentage * range) / 100;
   }
 
@@ -159,11 +161,11 @@ export class FilterModalComponent {
       : ev.target.labels[0].classList.add('focus');
   }
 
-  setFilter() {
+  setFilter(shouldCloseModal: boolean = true) {
     this.stayFilter.minPrice = this.minPrice;
     this.stayFilter.maxPrice = this.maxPrice;
     this.stayService.setFilter(this.stayFilter);
-    this.onCloseModal();
+    if (shouldCloseModal) this.onCloseModal();
   }
 
   toggleSuperHost() {

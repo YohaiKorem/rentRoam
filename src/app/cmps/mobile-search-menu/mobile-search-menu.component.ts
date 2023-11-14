@@ -11,7 +11,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
 import { SharedService } from 'src/app/services/shared.service';
-import { StayService } from 'src/app/services/stay.service.local';
+import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { environment } from 'src/environments/environment';
 declare var google: any;

@@ -32,10 +32,10 @@ export class HttpService {
   private ajax(endpoint: string, method: string, data: any = null) {
     let params = new HttpParams();
     let body = null;
+    console.log(data);
 
     if (method === 'GET') {
       params = new HttpParams({ fromObject: this.serializeData(data) });
-      console.log(params);
     } else {
       body = data;
     }
