@@ -7,18 +7,9 @@ import {
 } from '@angular/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Observable,
-  Subscription,
-  map,
-  take,
-  takeUntil,
-  Subject,
-  BehaviorSubject,
-} from 'rxjs';
+import { Observable, map, take, takeUntil, debounceTime, tap } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service.local';
-import { SwipeDirectiveDirective } from 'src/app/directives/swipe-directive.directive';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
@@ -26,19 +17,16 @@ import { SharedService } from 'src/app/services/shared.service';
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { Unsub } from 'src/app/services/unsub.class';
 declare var google: any;
 @Component({
   selector: 'stay-details',
   templateUrl: './stay-details.component.html',
   styleUrls: ['./stay-details.component.scss'],
 })
-export class StayDetailsComponent implements OnInit, OnDestroy {
+export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
   @ViewChild('picker') picker!: MatDateRangePicker<any>;
-  private searchParamSubject = new BehaviorSubject<SearchParam>(
-    {} as SearchParam
-  );
-  private destroySubject$ = new Subject<null>();
-  private subscription: Subscription = new Subscription();
+
   constructor(
     private stayService: StayService,
     public router: Router,
@@ -49,7 +37,10 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     private wishlistService: WishlistService,
     private orderService: OrderService,
     public trackByService: TrackByService
-  ) {}
+  ) {
+    super();
+  }
+  searchParam!: SearchParam;
 
   currImgUrlIdx = 0;
   isMobile = window.innerWidth <= 780;
@@ -57,12 +48,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   stay$!: Observable<Stay>;
   user: User | null = null;
   user$!: Observable<User>;
-  res: any;
-  searchParam = {} as SearchParam;
   currDate: Date = new Date();
   minEndDate: Date | null = null;
-  // startDate: Date | null = null;
-  // endDate: Date | null = null;
   nightSum: number = 5;
   guestsNumForDisplay: string = '1 guest';
   defaultDate = { start: new Date(), end: new Date() };
@@ -106,58 +93,73 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     );
 
     this.userService.loggedInUser$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => (this.user = user));
 
-    this.sharedService.openModal$.subscribe(() => {
-      this.toggleModal('close');
-    });
-    this.setDefaultDates();
-    this.searchParamSubject.subscribe((newSearchParam) => {
-      this.calculateNightSum();
-    });
-    // this.activatedRoute.queryParams.subscribe((queryParams) => {
-    //   let filter;
-    //   let search;
-    //   try {
-    //     filter = queryParams['stayFilter']
-    //       ? JSON.parse(queryParams['stayFilter'])
-    //       : null;
-    //     search = queryParams['search']
-    //       ? JSON.parse(queryParams['search'])
-    //       : null;
-    //   } catch (e) {
-    //     console.error('Error parsing queryParams', e);
-    //     return;
-    //   }
+    this.sharedService.openModal$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.toggleModal('close');
+      });
+    // this.activatedRoute.queryParams.pipe(
+    //   tap((queryParams) => {
+    //     let filter;
+    //     let search;
+    //     try {
+    //       filter = queryParams['stayFilter']
+    //         ? JSON.parse(queryParams['stayFilter'])
+    //         : null;
+    //       search = queryParams['search']
+    //         ? JSON.parse(queryParams['search'])
+    //         : null;
+    //     } catch (e) {
+    //       console.error('Error parsing queryParams', e);
+    //       return;
+    //     }
 
-    //   if (filter) {
-    //     this.stayService.setFilter(filter);
-    //   }
-    //   if (search) {
-    //     this.stayService.setSearchParams(search);
-    //   }
+    //     if (filter) {
+    //       this.stayService.setFilter(filter);
+    //     }
+    //     if (search) {
+    //       this.stayService.setSearchParams(search);
+    //     }
 
-    //   const urlTree = this.router.createUrlTree([], {
-    //     relativeTo: this.activatedRoute,
-    //     queryParams: queryParams,
-    //   });
+    //     const urlTree = this.router.createUrlTree([], {
+    //       relativeTo: this.activatedRoute,
+    //       queryParams: queryParams,
+    //     });
 
-    //   const fullUrl = this.router.serializeUrl(urlTree);
+    //     const fullUrl = this.router.serializeUrl(urlTree);
 
-    //   this.urlToShare = `http://localhost:4200/#${fullUrl}`;
-    //   console.log('Full URL:', this.urlToShare);
+    //     this.urlToShare = `http://localhost:4200/#${fullUrl}`;
 
-    //   this.cdr.detectChanges();
-    // });
+    //     this.cdr.detectChanges();
+    //   })
+    // );
 
     this.stayService.searchParams$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((searchParam) => {
         this.searchParam = searchParam;
-        this.updateGuestsNumForDisplay(this.searchParam);
+        this.updateGuestsNumForDisplay(searchParam);
+        // this.setDefaultLoc();
+        this.setDefaultDates();
+        console.log(searchParam);
+      });
 
-        this.setDefaultLoc();
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((queryParams) => {
+        const stayFilter = queryParams['stayFilter'];
+        const searchParam = queryParams['search'];
+        console.log(searchParam);
+
+        if (stayFilter) {
+          this.stayService.setFilter(JSON.parse(stayFilter));
+        }
+        if (searchParam) {
+          this.stayService.setSearchParams(JSON.parse(searchParam));
+        }
       });
   }
 
@@ -170,6 +172,10 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
 
     this.sharedService.hideElementOnMobile('app-header');
     this.sharedService.hideElementOnMobile('mobile-footer');
+  }
+
+  setSearchParams() {
+    this.stayService.setSearchParams(this.searchParam);
   }
 
   onDateChange(): void {
@@ -233,8 +239,6 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   toggleModal(cmp: string) {
-    console.log(cmp);
-
     switch (cmp) {
       case 'review-preview':
         this.currModalContent = { title: 'Review', cmp: 'review-preview' };
@@ -269,7 +273,13 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   setDefaultDates() {
-    if (!this.searchParam.startDate && !this.searchParam.endDate) {
+    console.log(this.searchParam);
+
+    if (
+      this.searchParam &&
+      !this.searchParam.startDate &&
+      !this.searchParam.endDate
+    ) {
       const currentDate = this.currDate;
 
       const startDate = new Date(
@@ -284,7 +294,8 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
       };
       this.searchParam.startDate = startDate;
       this.searchParam.endDate = endDate;
-      this.searchParamSubject.next(this.searchParam);
+      console.log(this.searchParam);
+      // this._searchParamSubject$.next(this.searchParam);
     }
   }
 
@@ -302,20 +313,16 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
   }
 
   setDateRange(dateRange: any) {
-    console.log(dateRange);
     this.searchParam.startDate = dateRange.start;
     this.searchParam.endDate = dateRange.end;
-    this.searchParamSubject.next(this.searchParam);
+    this.setSearchParams();
+    // this._searchParamSubject$.next(this.searchParam);
   }
 
   setDefaultLoc() {
     if (!this.searchParam || !this.searchParam.location) return;
     if (!this.searchParam.location.name)
       this.searchParam.location.coords = this.center;
-  }
-
-  txtToggled() {
-    console.log('hi');
   }
 
   onSwipe(moveBy: number) {
@@ -392,9 +399,9 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     this.display = event.latLng!.toJSON();
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this.sharedService.showElementOnMobile('app-header');
     this.sharedService.showElementOnMobile('mobile-footer');
-    this.subscription.unsubscribe();
+    super.ngOnDestroy();
   }
 }

@@ -4,7 +4,15 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { Observable, Subscription, Subject, takeUntil, take, pipe } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  Subject,
+  takeUntil,
+  take,
+  pipe,
+  debounceTime,
+} from 'rxjs';
 import { UserService } from '../services/user.service';
 import { Stay } from '../models/stay.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -47,17 +55,18 @@ export class AppComponent extends Unsub {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((searchParam) => (this.location = searchParam.location));
     this.activatedRoute.queryParams
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(takeUntil(this.unsubscribe$), debounceTime(500))
       .subscribe((queryParams) => {
         const stayFilter = queryParams['stayFilter'];
-        const search = queryParams['search'];
-        console.log(search);
+        const searchParam = queryParams['search'];
+        console.log(searchParam);
+        console.log(queryParams);
 
         if (stayFilter) {
           this.stayService.setFilter(JSON.parse(stayFilter));
         }
-        if (search) {
-          this.stayService.setSearchParams(JSON.parse(search), 'great');
+        if (searchParam) {
+          this.stayService.setSearchParams(JSON.parse(searchParam));
         }
       });
   }

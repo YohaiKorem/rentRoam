@@ -94,7 +94,7 @@ export class StayListComponent
       superhost,
     } = this.stayFilter as StayFilter;
     const { bedsNum, bathNum, bedroomNum } = equipment;
-    if (
+    return (
       !amenities.length &&
       !capacity &&
       !bedroomNum &&
@@ -105,10 +105,7 @@ export class StayListComponent
       !minPrice &&
       !roomType &&
       !superhost
-    )
-      return true;
-
-    return false;
+    );
   }
 
   ngOnDestroy(): void {

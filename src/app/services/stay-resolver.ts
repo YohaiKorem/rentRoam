@@ -5,6 +5,6 @@ import { StayService } from './stay.service';
 
 export function StayResolver(route: ActivatedRouteSnapshot) {
   const id = route.params['id'];
-
+  console.log(id);
   return inject(StayService).getStayById(id).pipe(delay(10));
 }

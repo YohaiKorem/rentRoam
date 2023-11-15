@@ -20,13 +20,14 @@ import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { Unsub } from 'src/app/services/unsub.class';
 
 @Component({
   selector: 'stay-index',
   templateUrl: './stay-index.component.html',
   styleUrls: ['./stay-index.component.scss'],
 })
-export class StayIndexComponent implements OnInit, OnDestroy {
+export class StayIndexComponent extends Unsub implements OnInit {
   @Output() toggleScrolling = new EventEmitter<boolean>();
 
   constructor(
@@ -35,7 +36,9 @@ export class StayIndexComponent implements OnInit, OnDestroy {
     private sharedService: SharedService,
     private userService: UserService,
     private elementRef: ElementRef
-  ) {}
+  ) {
+    super();
+  }
 
   subscription!: Subscription;
   stays: Stay[] | null = null;
@@ -56,12 +59,11 @@ export class StayIndexComponent implements OnInit, OnDestroy {
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   selectedStay: Stay | null = null;
-  private destroySubject$ = new Subject<null>();
 
   ngOnInit() {
     this.stays$ = this.stayService.stays$;
     this.stayService.stays$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((stays) => {
         this.stays = stays;
       });
@@ -72,21 +74,21 @@ export class StayIndexComponent implements OnInit, OnDestroy {
     });
 
     this.stayService.stayFilter$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((stayFilter) => {
         this.stayFilter = stayFilter;
       });
     this.stayService.searchParams$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((searchParam) => {
         this.searchedLocation = searchParam.location;
         if (this.searchedLocation.name) this.setDistance();
       });
     this.userService.loggedInUser$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => (this.loggedInUser = user));
     this.userService.userCoords$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((coords) => {
         this.userLoc = coords;
         if (this.userLoc.lat !== null && this.userLoc.lng !== null)
@@ -198,9 +200,8 @@ export class StayIndexComponent implements OnInit, OnDestroy {
     return this.currDate.end.toLocaleDateString('en-GB', { month: 'short' });
   }
 
-  ngOnDestroy() {
-    this.destroySubject$.next(null);
-    this.destroySubject$.complete();
+  override ngOnDestroy() {
     this.sharedService.toggleClassOnElement('radio-filter', 'hidden', 'add');
+    super.ngOnDestroy();
   }
 }

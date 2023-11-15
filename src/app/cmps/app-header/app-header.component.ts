@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
-import { Observable, Subscription, take } from 'rxjs';
+import { Observable, Subscription, debounceTime, take } from 'rxjs';
 import { SharedService } from 'src/app/services/shared.service';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
@@ -17,6 +17,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Unsub } from 'src/app/services/unsub.class';
 
 declare var google: any;
 @Component({
@@ -27,7 +28,7 @@ declare var google: any;
     class: 'main-header ',
   },
 })
-export class AppHeaderComponent implements OnInit {
+export class AppHeaderComponent extends Unsub implements OnInit {
   @ViewChild('locMenuTrigger') locMenuTrigger!: MatMenuTrigger;
   @ViewChild('dateMenuTrigger') dateMenuTrigger!: MatMenuTrigger;
   @ViewChild('guestsMenuTrigger') guestsMenuTrigger!: MatMenuTrigger;
@@ -35,8 +36,7 @@ export class AppHeaderComponent implements OnInit {
   @ViewChild('picker') picker!: MatDateRangePicker<any>;
   @ViewChild('inputField') inputField!: ElementRef;
   searchParam = {} as SearchParam;
-  private searchSubject$ = new Subject<any>();
-  private destroySubject$ = new Subject<null>();
+  private searchSubject$ = new Subject<void>();
   faAirbnb = faAirbnb;
   faSearch = faSearch;
   faGlobe = faGlobe;
@@ -61,15 +61,23 @@ export class AppHeaderComponent implements OnInit {
     public trackByService: TrackByService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.stayService.searchParams$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((searchParam) => (this.searchParam = searchParam));
 
+    this.searchSubject$
+      .pipe(takeUntil(this.unsubscribe$), debounceTime(500))
+      .subscribe(() => {
+        this.stayService.setSearchParams(this.searchParam);
+      });
+
     this.userService.loggedInUser$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         this.loggedInUser = user;
         if (this.loggedInUser != null) this.isShowSignupModal = false;
@@ -204,20 +212,7 @@ export class AppHeaderComponent implements OnInit {
   setSearchParams(ev: any) {
     ev.stopPropagation();
     this.setLoc();
-    this.stayService.stayFilter$.pipe(take(1)).subscribe((stayFilter) => {
-      this.router.navigate([], {
-        relativeTo: this.activatedRoute,
-        queryParams: {
-          filter: JSON.stringify(stayFilter),
-          searchParam: JSON.stringify(this.searchParam),
-        },
-        queryParamsHandling: 'merge',
-      });
-    });
-    this.stayService.setSearchParams(this.searchParam);
-  }
-  ngOnDestroy(): void {
-    this.destroySubject$.next(null);
-    this.destroySubject$.unsubscribe();
+
+    this.searchSubject$.next();
   }
 }
