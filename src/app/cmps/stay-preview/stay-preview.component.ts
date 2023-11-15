@@ -13,6 +13,7 @@ import { User } from 'src/app/models/user.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { Unsub } from 'src/app/services/unsub.class';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 
@@ -21,7 +22,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
   templateUrl: './stay-preview.component.html',
   styleUrls: ['./stay-preview.component.scss'],
 })
-export class StayPreviewComponent implements OnInit {
+export class StayPreviewComponent extends Unsub implements OnInit {
   @Input() stay!: Stay;
   @Input() areMonthsDifferent: boolean = false;
   @Input() endMonth: string = '';
@@ -32,7 +33,6 @@ export class StayPreviewComponent implements OnInit {
   };
   @Input() userLoc!: { lat: number | null; lng: number | null };
 
-  private destroySubject$ = new Subject<null>();
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User>;
   isLoadingImg: boolean = true;
@@ -51,12 +51,14 @@ export class StayPreviewComponent implements OnInit {
     private sharedService: SharedService,
     private wishlistService: WishlistService,
     public trackByService: TrackByService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.checkInView();
     this.userService.loggedInUser$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         this.loggedInUser = user;
       });

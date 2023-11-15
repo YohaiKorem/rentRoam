@@ -1,4 +1,9 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { Observable, Subscription, Subject, takeUntil, take, pipe } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { Stay } from '../models/stay.model';
@@ -8,6 +13,7 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { environment } from 'src/environments/environment';
 import { SharedService } from '../services/shared.service';
 import { HttpClient } from '@angular/common/http';
+import { Unsub } from '../services/unsub.class';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,7 +22,7 @@ import { HttpClient } from '@angular/common/http';
     class: 'main-container',
   },
 })
-export class AppComponent {
+export class AppComponent extends Unsub {
   constructor(
     private activatedRoute: ActivatedRoute,
 
@@ -26,9 +32,10 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
     private sharedService: SharedService,
     private httpClient: HttpClient
-  ) {}
+  ) {
+    super();
+  }
   subscription!: Subscription;
-  private destroySubject$ = new Subject<null>();
   location: any | null = null;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
@@ -36,24 +43,23 @@ export class AppComponent {
   userLoc: any = { lat: null, lng: null };
   ngOnInit(): void {
     this.stays$ = this.stayService.stays$;
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
-      const stayFilter = queryParams['stayFilter'];
-      const search = queryParams['search'];
-      console.log(search);
-
-      if (stayFilter) {
-        this.stayService.setFilter(JSON.parse(stayFilter));
-      } else if (search) {
-        this.stayService.setSearchParams(JSON.parse(search), 'great');
-      } else
-        this.stayService.query(search).subscribe({
-          error: (err) => console.log('err', err),
-        });
-    });
-
     this.stayService.searchParams$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((searchParam) => (this.location = searchParam.location));
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((queryParams) => {
+        const stayFilter = queryParams['stayFilter'];
+        const search = queryParams['search'];
+        console.log(search);
+
+        if (stayFilter) {
+          this.stayService.setFilter(JSON.parse(stayFilter));
+        }
+        if (search) {
+          this.stayService.setSearchParams(JSON.parse(search), 'great');
+        }
+      });
   }
 
   ngAfterViewInit() {

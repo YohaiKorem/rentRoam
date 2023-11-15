@@ -75,7 +75,6 @@ import { MobileFooterComponent } from './app/pages/mobile-footer/mobile-footer.c
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component';
 import { ShareMenuComponent } from './app/cmps/share-menu/share-menu.component';
-
 @NgModule({
   declarations: [
     AppComponent,

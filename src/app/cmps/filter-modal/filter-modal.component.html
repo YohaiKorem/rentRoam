@@ -262,7 +262,7 @@
     <button (click)="setFilter()" class="btn btn-submit active">
       Show
       {{ stays!.length < 1000 ? stays!.length : "1000+" }}
-      places
+      place<span *ngIf="stays && stays.length > 1">s</span>
     </button>
   </footer>
 </section>

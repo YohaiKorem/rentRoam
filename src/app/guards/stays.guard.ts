@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 
 export const staysGuard: CanActivateFn = (route, state) => {
   const stayService = inject(StayService);
-  return stayService.query().pipe(
+  return stayService.loadStays().pipe(
     first(),
     map(() => true),
     catchError(() => {

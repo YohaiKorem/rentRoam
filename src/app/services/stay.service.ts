@@ -13,6 +13,7 @@ import {
   retry,
   catchError,
   debounceTime,
+  delay,
 } from 'rxjs';
 import { GeocodingService } from './geocoding.service';
 import { getDistance } from 'geolib';
@@ -79,23 +80,24 @@ export class StayService {
     private geocodingService: GeocodingService,
     private userService: UserService
   ) {
-    this.query()
-      .pipe(take(1))
-      .subscribe((stays) => {
-        this._stays$.next(stays);
-      });
+    this.loadStays().subscribe((stays: Stay[]) => {
+      this._stays$.next(stays);
+    });
+  }
+  loadStays(): Observable<Stay[]> {
+    return combineLatest([this.stayFilter$, this.searchParams$]).pipe(
+      tap(([filter, search]) => {}),
+      switchMap(([filter, search]) => this.query(filter, search))
+    );
   }
 
-  query(debug: any = 'debug query'): Observable<Stay[]> {
-    const filterBy = { ...this._stayFilter$.value };
-    const searchParams = { ...this._searchParams$.value };
+  private query(filter: StayFilter, search: SearchParam): Observable<Stay[]> {
+    const filterBy = { ...filter };
+    const searchParams = { ...search };
     const data = { ...filterBy, ...searchParams };
-
     return this.httpService.get(BASE_URL, data).pipe(
-      debounceTime(500),
       map((data: any) => data as Stay[]),
       tap((stays: Stay[]) => {
-        console.log(stays);
         this.setAvgPrice(stays);
         this.setHigheststPrice(stays);
         this.setLowestPrice(stays);
@@ -222,9 +224,8 @@ export class StayService {
             }
             this._searchParams$.next({ ...searchParam });
             this.updateQueryParams({ search: JSON.stringify(searchParam) });
-            this.query(debug);
+            this.loadStays().pipe(take(1)).subscribe();
           }),
-          debounceTime(500),
 
           catchError(this._handleError)
         )
@@ -232,7 +233,7 @@ export class StayService {
     } else {
       this._searchParams$.next({ ...searchParam });
       this.updateQueryParams({ search: JSON.stringify(searchParam) });
-      this.query(`${debug} else inisde setSearchParams`);
+      this.loadStays().pipe(take(1)).subscribe();
     }
   }
 
@@ -240,7 +241,7 @@ export class StayService {
     this._stayFilter$.next({ ...stayFilter });
 
     this.updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
-    this.query().pipe(take(1), debounceTime(500)).subscribe();
+    this.loadStays().pipe(take(1)).subscribe();
   }
 
   private updateQueryParams(params: { [key: string]: string }) {

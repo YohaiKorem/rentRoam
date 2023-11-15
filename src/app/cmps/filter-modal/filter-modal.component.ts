@@ -6,6 +6,7 @@ import {
   Output,
   EventEmitter,
   Input,
+  OnInit,
 } from '@angular/core';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
@@ -16,17 +17,20 @@ import { Btn } from 'src/app/models/btn.model';
 import { ChartDataValue } from 'src/app/models/chartDataValue.model';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { Unsub } from 'src/app/services/unsub.class';
 @Component({
   selector: 'filter-modal',
   templateUrl: './filter-modal.component.html',
   styleUrls: ['./filter-modal.component.scss'],
 })
-export class FilterModalComponent {
+export class FilterModalComponent extends Unsub implements OnInit {
   constructor(
     private stayService: StayService,
     public trackByService: TrackByService,
     public sharedService: SharedService
-  ) {}
+  ) {
+    super();
+  }
   @Input() stays!: Stay[] | null;
   @Input() nights!: number | null;
   @Output() closeModal = new EventEmitter();
@@ -34,8 +38,7 @@ export class FilterModalComponent {
   @ViewChild('maxSlider') maxSlider: any;
   @ViewChild('minSlider') minSlider: any;
   stayFilter = {} as StayFilter;
-  private filterSubject$ = new Subject<string>();
-  private destroySubject$ = new Subject<null>();
+  private filterSubject$ = new Subject<void>();
   lowestAvailablePrice: number = 1;
   highestAvailablePrice: number = 4000;
   histogramData: ChartDataValue[] | null = null;
@@ -49,32 +52,32 @@ export class FilterModalComponent {
   isShowAllAmenities: boolean = false;
   ngOnInit() {
     this.stayService.stayFilter$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((stayFilter) => {
         this.stayFilter = stayFilter;
       });
 
     this.filterSubject$
-      .pipe(takeUntil(this.destroySubject$), debounceTime(500))
+      .pipe(takeUntil(this.unsubscribe$), debounceTime(500))
       .subscribe(() => {
         this.stayService.setFilter(this.stayFilter);
         this.histogramData = this.generateHistogramData();
       });
 
     this.stayService.avgPrice$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((avgPrice) => {
         this.avgStayPricePerNight = avgPrice;
       });
     this.stayService.highestPrice$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((highestPrice) => {
         if (highestPrice === -Infinity) return;
         this.highestAvailablePrice = highestPrice;
         this.maxPrice = highestPrice;
       });
     this.stayService.lowestPrice$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((lowestPrice) => {
         if (lowestPrice === Infinity) return;
 
@@ -90,13 +93,15 @@ export class FilterModalComponent {
 
   filterBeds(beds: any) {
     this.stayFilter.equipment.bedsNum = beds;
-    this.stayService.setFilter(this.stayFilter);
+    // this.stayService.setFilter(this.stayFilter);
+    this.filterSubject$.next();
   }
 
   filterBathrooms(bathrooms: any) {
     this.stayFilter.equipment.bathNum = bathrooms;
 
-    this.stayService.setFilter(this.stayFilter);
+    // this.stayService.setFilter(this.stayFilter);
+    this.filterSubject$.next();
   }
 
   debug(normalizedHeight: any) {
@@ -112,25 +117,37 @@ export class FilterModalComponent {
   }
 
   generateHistogramData(): ChartDataValue[] {
-    const priceRange = this.highestAvailablePrice - this.lowestAvailablePrice;
-    const priceInterval = priceRange / 50;
+    if (!this.stays || !this.stays.length) return [];
+    const stays = this.stays;
 
-    const histogramData: ChartDataValue[] = Array(50)
+    const priceRange = this.highestAvailablePrice - this.lowestAvailablePrice;
+    const bucketCount =
+      this.stays.length > 1 ? Math.min(50, Math.max(10, this.stays.length)) : 1;
+    const priceInterval = priceRange / bucketCount;
+
+    const histogramData: ChartDataValue[] = Array(bucketCount)
       .fill(0)
       .map((_, idx) => ({
         price: this.lowestAvailablePrice + idx * priceInterval,
         count: 0,
       }));
-    const stays = this.stays;
-    if (stays)
-      stays.forEach((stay) => {
-        const bucketIndex = Math.min(
-          49,
-          Math.floor((stay.price - this.lowestAvailablePrice) / priceInterval)
-        );
 
-        histogramData[bucketIndex].count++;
-      });
+    stays.forEach((stay) => {
+      const bucketIndex =
+        stays.length > 1
+          ? Math.min(
+              bucketCount - 1,
+              Math.floor(
+                (stay.price - this.lowestAvailablePrice) / priceInterval
+              )
+            )
+          : 0;
+      console.log('stay', stay);
+      console.log('histogramData', histogramData);
+      console.log('bucketIndex', bucketIndex);
+
+      histogramData[bucketIndex].count++;
+    });
 
     const maxCount = Math.max(...histogramData.map((data) => data.count));
 
@@ -164,13 +181,15 @@ export class FilterModalComponent {
   setFilter(shouldCloseModal: boolean = true) {
     this.stayFilter.minPrice = this.minPrice;
     this.stayFilter.maxPrice = this.maxPrice;
-    this.stayService.setFilter(this.stayFilter);
+    // this.stayService.setFilter(this.stayFilter);
+    this.filterSubject$.next();
     if (shouldCloseModal) this.onCloseModal();
   }
 
   toggleSuperHost() {
     this.stayFilter.superhost = !this.stayFilter.superhost;
-    this.stayService.setFilter(this.stayFilter);
+    // this.stayService.setFilter(this.stayFilter);
+    this.filterSubject$.next();
   }
 
   filterAmenities(amenity: string) {
@@ -181,7 +200,8 @@ export class FilterModalComponent {
     } else {
       this.stayFilter.amenities.push(amenity);
     }
-    this.stayService.setFilter(this.stayFilter);
+    // this.stayService.setFilter(this.stayFilter);
+    this.filterSubject$.next();
   }
 
   toggleCheckbox(amenity: any) {
@@ -198,9 +218,8 @@ export class FilterModalComponent {
     this.closeModal.emit();
   }
 
-  ngOnDestroy(): void {
-    this.destroySubject$.next(null);
-    this.destroySubject$.unsubscribe();
+  override ngOnDestroy(): void {
     this.sharedService.hideElementOnMobile('.dynamic-modal .btn-close');
+    super.ngOnDestroy();
   }
 }

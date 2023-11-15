@@ -116,40 +116,40 @@ export class StayDetailsComponent implements OnInit, OnDestroy {
     this.searchParamSubject.subscribe((newSearchParam) => {
       this.calculateNightSum();
     });
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
-      let filter;
-      let search;
-      try {
-        filter = queryParams['stayFilter']
-          ? JSON.parse(queryParams['stayFilter'])
-          : null;
-        search = queryParams['search']
-          ? JSON.parse(queryParams['search'])
-          : null;
-      } catch (e) {
-        console.error('Error parsing queryParams', e);
-        return;
-      }
+    // this.activatedRoute.queryParams.subscribe((queryParams) => {
+    //   let filter;
+    //   let search;
+    //   try {
+    //     filter = queryParams['stayFilter']
+    //       ? JSON.parse(queryParams['stayFilter'])
+    //       : null;
+    //     search = queryParams['search']
+    //       ? JSON.parse(queryParams['search'])
+    //       : null;
+    //   } catch (e) {
+    //     console.error('Error parsing queryParams', e);
+    //     return;
+    //   }
 
-      if (filter) {
-        this.stayService.setFilter(filter);
-      }
-      if (search) {
-        this.stayService.setSearchParams(search);
-      }
+    //   if (filter) {
+    //     this.stayService.setFilter(filter);
+    //   }
+    //   if (search) {
+    //     this.stayService.setSearchParams(search);
+    //   }
 
-      const urlTree = this.router.createUrlTree([], {
-        relativeTo: this.activatedRoute,
-        queryParams: queryParams,
-      });
+    //   const urlTree = this.router.createUrlTree([], {
+    //     relativeTo: this.activatedRoute,
+    //     queryParams: queryParams,
+    //   });
 
-      const fullUrl = this.router.serializeUrl(urlTree);
+    //   const fullUrl = this.router.serializeUrl(urlTree);
 
-      this.urlToShare = `http://localhost:4200/#${fullUrl}`;
-      console.log('Full URL:', this.urlToShare);
+    //   this.urlToShare = `http://localhost:4200/#${fullUrl}`;
+    //   console.log('Full URL:', this.urlToShare);
 
-      this.cdr.detectChanges();
-    });
+    //   this.cdr.detectChanges();
+    // });
 
     this.stayService.searchParams$
       .pipe(takeUntil(this.destroySubject$))
