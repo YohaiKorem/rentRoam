@@ -127,7 +127,6 @@ export class StayService {
           console.log('Stays not available');
           return;
         }
-        // console.log(searchParams, 'searchParams right b4 get target coords');
 
         const targetCoords = this.getTargetCoords(userLoc, searchParams);
         if (!targetCoords) {
@@ -258,9 +257,6 @@ export class StayService {
   }
 
   private updateQueryParams(params: { [key: string]: string }, debug: string) {
-    console.log(params, 'params inisde updatequeryparams');
-    console.log(debug);
-
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: params,

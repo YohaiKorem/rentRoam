@@ -58,7 +58,7 @@ export class AppComponent extends Unsub {
       .pipe(takeUntil(this.unsubscribe$), debounceTime(500))
       .subscribe((queryParams) => {
         const stayFilter = queryParams['stayFilter'];
-        const searchParam = queryParams['search'];
+        const searchParam = queryParams['searchParam'];
         console.log(searchParam);
         console.log(queryParams);
 
@@ -68,6 +68,7 @@ export class AppComponent extends Unsub {
         if (searchParam) {
           this.stayService.setSearchParams(JSON.parse(searchParam));
         }
+        this.cdr.detectChanges();
       });
   }
 

@@ -9,7 +9,7 @@
     class="stay-link"
     *ngFor="let stay of stays; trackBy: trackByService.byId"
     routerLink="/stay/{{ stay._id }}"
-    [queryParams]="{ stayFilter: stayFilter, search: searchParam }"
+    queryParamsHandling="preserve"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
   >

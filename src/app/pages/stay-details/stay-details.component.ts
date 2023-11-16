@@ -9,7 +9,7 @@ import { MatDateRangePicker } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map, take, takeUntil, debounceTime, tap } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
-import { StayService } from 'src/app/services/stay.service.local';
+import { StayService } from 'src/app/services/stay.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
@@ -83,6 +83,8 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
     this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
     this.stay$ = this.activatedRoute.data.pipe(
       map((data) => {
+        console.log(data);
+
         this.stay = data['stay'];
         this.center = {
           lat: this.stay?.loc.lat!,
@@ -142,25 +144,25 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
       .subscribe((searchParam) => {
         this.searchParam = searchParam;
         this.updateGuestsNumForDisplay(searchParam);
-        // this.setDefaultLoc();
+        this.setDefaultLoc();
         this.setDefaultDates();
-        console.log(searchParam);
       });
 
-    this.activatedRoute.queryParams
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((queryParams) => {
-        const stayFilter = queryParams['stayFilter'];
-        const searchParam = queryParams['search'];
-        console.log(searchParam);
+    // this.activatedRoute.queryParams
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((queryParams) => {
+    //     const stayFilter = queryParams['stayFilter'];
+    //     const searchParam = queryParams['searchParam'];
+    //     console.log(searchParam);
+    //     console.log(stayFilter);
 
-        if (stayFilter) {
-          this.stayService.setFilter(JSON.parse(stayFilter));
-        }
-        if (searchParam) {
-          this.stayService.setSearchParams(JSON.parse(searchParam));
-        }
-      });
+    //     if (stayFilter) {
+    //       this.stayService.setFilter(JSON.parse(stayFilter));
+    //     }
+    //     if (searchParam) {
+    //       this.stayService.setSearchParams(JSON.parse(searchParam));
+    //     }
+    //   });
   }
 
   ngAfterViewInit() {
@@ -273,8 +275,6 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
   }
 
   setDefaultDates() {
-    console.log(this.searchParam);
-
     if (
       this.searchParam &&
       !this.searchParam.startDate &&

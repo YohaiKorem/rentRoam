@@ -51,6 +51,8 @@ export class SharedService {
     classToBind: string,
     action: 'add' | 'remove' | 'toggle'
   ) {
+    console.log(document.querySelector(selector));
+
     document.querySelector(selector)?.classList[action](classToBind);
   }
 
