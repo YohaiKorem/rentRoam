@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { faAirbnb } from '@fortawesome/free-brands-svg-icons';
 import { faSearch, faGlobe, faBars } from '@fortawesome/free-solid-svg-icons';
 
@@ -60,6 +66,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
     private authService: SocialAuthService,
     public trackByService: TrackByService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute
   ) {
     super();
@@ -177,6 +184,14 @@ export class AppHeaderComponent extends Unsub implements OnInit {
     this.searchParam.endDate = null;
     this.searchParam.location.name = null;
     this.searchParam.guests.adults = 0;
+    this.searchParam.guests.children = 0;
+    this.searchParam.guests.infants = 0;
+    this.stayService.setSearchParams(this.searchParam);
+    this.router.navigate(['/stay'], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'preserve',
+    });
+    this.cdr.detectChanges();
   }
 
   setLoc() {

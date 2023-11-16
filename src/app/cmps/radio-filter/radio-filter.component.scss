@@ -146,6 +146,7 @@
     overflow: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding-inline-end: 5em;
   }
 
   .category-scroller::-webkit-scrollbar {

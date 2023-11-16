@@ -32,8 +32,14 @@
     [class.hidden]="isFirstElementInView"
   ></div>
 
-  <div class="radio-filter category-scroller fs12" #scrollContainer>
-    <ng-container *ngFor="let label of labels; let i = index; trackBy: trackByService.byIdx">
+  <div
+    class="radio-filter category-scroller fs12"
+    #scrollContainer
+    (scroll)="onScroll($event)"
+  >
+    <ng-container
+      *ngFor="let label of labels; let i = index; trackBy: trackByService.byIdx"
+    >
       <label-loader *ngIf="!isImgLoaded[i]"></label-loader>
 
       <label

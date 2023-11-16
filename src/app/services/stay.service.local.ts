@@ -117,7 +117,7 @@ export class StayService {
 
         let filteredStays = this._filter(stays, filterBy);
 
-        return this.search(filteredStays, searchParams).pipe(
+        return this._search(filteredStays, searchParams).pipe(
           tap((searchedStays: Stay[]) => {
             this.setAvgPrice(searchedStays);
             this.setHigheststPrice(searchedStays);
@@ -134,11 +134,9 @@ export class StayService {
   }
 
   public getStayById(id: string): Observable<Stay> {
-    let res = from(storageService.get(ENTITY, id)).pipe(
+    return from(storageService.get(ENTITY, id)).pipe(
       catchError(this._handleError)
     );
-
-    return res;
   }
 
   public setStaysWithDistances() {
@@ -308,7 +306,38 @@ export class StayService {
     });
   }
 
-  private search(stays: Stay[], searchParams: SearchParam): Observable<Stay[]> {
+  public getDistance(stay: Stay, coords: any) {
+    return getDistance(
+      { latitude: stay.loc.lat, longitude: stay.loc.lng },
+      { latitude: coords.lat, longitude: coords.lng }
+    );
+  }
+
+  public getAllHostStaysById(hostId: string): Observable<Stay[]> {
+    return this.stays$.pipe(
+      take(1),
+      map((stays: Stay[]) => stays.filter((stay) => stay.host._id === hostId))
+    );
+  }
+
+  public findHostById(id: string): Observable<StayHost | null> {
+    return this.stays$.pipe(
+      take(1),
+      map((stays: Stay[]) => {
+        const stay = stays.find((stay: Stay) => stay.host._id === id);
+        if (stay && stay.host) {
+          return stay.host;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
+  private _search(
+    stays: Stay[],
+    searchParams: SearchParam
+  ): Observable<Stay[]> {
     let searchedStays = stays;
 
     if (searchParams.guests && searchParams.guests.adults) {
@@ -356,34 +385,6 @@ export class StayService {
     }
 
     return of(searchedStays);
-  }
-
-  public getDistance(stay: Stay, coords: any) {
-    return getDistance(
-      { latitude: stay.loc.lat, longitude: stay.loc.lng },
-      { latitude: coords.lat, longitude: coords.lng }
-    );
-  }
-
-  public getAllHostStaysById(hostId: string): Observable<Stay[]> {
-    return this.stays$.pipe(
-      take(1),
-      map((stays: Stay[]) => stays.filter((stay) => stay.host._id === hostId))
-    );
-  }
-
-  public findHostById(id: string): Observable<StayHost | null> {
-    return this.stays$.pipe(
-      take(1),
-      map((stays: Stay[]) => {
-        const stay = stays.find((stay: Stay) => stay.host._id === id);
-        if (stay && stay.host) {
-          return stay.host;
-        } else {
-          return null;
-        }
-      })
-    );
   }
 
   private _updateStay(stay: Stay): Observable<Stay> {
