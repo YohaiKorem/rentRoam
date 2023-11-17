@@ -25,6 +25,7 @@ import {
   Stay,
   StayDistance,
   StayFilter,
+  Pagination,
 } from '../models/stay.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StayHost } from '../models/host.model';
@@ -38,10 +39,10 @@ const ENTITY = 'stays';
   providedIn: 'root',
 })
 export class StayService {
-  private _cachedStays$ = new BehaviorSubject<Stay[]>([]);
-  public cachedStays$ = this._cachedStays$.asObservable();
   private _stays$ = new BehaviorSubject<Stay[]>([]);
   public stays$ = this._stays$.asObservable();
+  private _cachedStays$ = new BehaviorSubject<Stay[]>([]);
+  public cachedStays$ = this._cachedStays$.asObservable();
   private _distances$ = new BehaviorSubject<StayDistance[]>([]);
   public distances$ = this._distances$.asObservable();
   private _stayFilter$ = new BehaviorSubject<StayFilter>({
@@ -64,6 +65,11 @@ export class StayService {
     guests: { adults: 0, children: 0, infants: 0 },
   });
   public searchParams$ = this._searchParams$.asObservable();
+  private _pagination$ = new BehaviorSubject<Pagination>({
+    pageIdx: 0,
+    pageSize: 20,
+  });
+  public pagination$ = this._pagination$.asObservable();
   private _avgPrice$ = new BehaviorSubject<number>(0);
   public avgPrice$ = this._avgPrice$.asObservable();
   private _lowestPrice$ = new BehaviorSubject<number>(1);
@@ -90,10 +96,14 @@ export class StayService {
       switchMap((cachedStays) => {
         if (!shouldQueryServer && cachedStays && cachedStays.length)
           return of(cachedStays);
-        return combineLatest([this.stayFilter$, this.searchParams$]).pipe(
-          tap(([stayFilter, searchParam]) => {}),
-          switchMap(([stayFilter, searchParam]) =>
-            this.query(stayFilter, searchParam)
+        return combineLatest([
+          this.stayFilter$,
+          this.searchParams$,
+          this.pagination$,
+        ]).pipe(
+          tap(([stayFilter, searchParam, pagination]) => {}),
+          switchMap(([stayFilter, searchParam, pagination]) =>
+            this.query(stayFilter, searchParam, pagination)
           )
         );
       })
@@ -130,11 +140,13 @@ export class StayService {
 
   private query(
     stayFilter: StayFilter,
-    search: SearchParam
+    search: SearchParam,
+    pagination: Pagination
   ): Observable<Stay[]> {
-    const filterBy = { ...stayFilter };
-    const searchParam = { ...search };
-    const data = { ...filterBy, ...searchParam };
+    stayFilter = { ...stayFilter };
+    search = { ...search };
+    pagination = { ...pagination };
+    const data = { ...stayFilter, ...search, ...pagination };
     return this.httpService.get(BASE_URL, data).pipe(
       map((data: any) => data as Stay[]),
       debounceTime(500),

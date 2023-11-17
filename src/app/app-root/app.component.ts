@@ -83,6 +83,20 @@ export class AppComponent extends Unsub {
   onScroll(event: any) {
     event.stopPropagation();
 
+    this.shouldLoadMoreStays(event);
+    this.onScrollWithMap(event);
+  }
+
+  shouldLoadMoreStays(event: any) {
+    const elLastChild = event.target.lastElementChild;
+    const elStayIndex = document.querySelector('stay-index');
+    if (elLastChild === elStayIndex) {
+      console.log('event.target.clientHeight', event.target.clientHeight);
+      console.log('event.target.scrollTop', event.target.scrollTop);
+    }
+  }
+
+  onScrollWithMap(event: any) {
     const scrollPosition = event.target.scrollTop;
 
     const elStayIndex = document.querySelector(

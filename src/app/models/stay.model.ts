@@ -126,6 +126,11 @@ export interface StayFilter {
   superhost: boolean;
 }
 
+export interface Pagination {
+  pageIdx: number;
+  pageSize: number;
+}
+
 export interface Equipment {
   bedsNum: number | null;
   bathNum: number | null;

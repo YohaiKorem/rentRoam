@@ -5,11 +5,27 @@
   }
 }
 .radio-filter-container {
-  margin: 0;
-  margin-block: 2em;
+  margin-inline: 0;
   position: relative;
-  padding-block-end: 1em;
+  width: 100vw;
+  @include for-tablet-layout {
+    left: -2px;
+    padding-inline: 2px;
+  }
 
+  @include for-normal-layout {
+    left: em(-100px);
+    padding-inline: em(100px);
+  }
+
+  @include for-wide-layout {
+    left: em(-100px);
+    padding-inline: em(100px);
+  }
+  @include for-extra-wide-layout {
+    left: em(-60px);
+    padding-inline: em(60px);
+  }
   button.btn.btn-right.shadow {
     margin: 1em;
   }
@@ -98,18 +114,18 @@
 
   .btn-scroll-overlay {
     z-index: 1;
-    height: em(80px);
-    width: em(50px);
+    height: 4em;
+    width: 3.3em;
     position: absolute;
     background-color: $secondaryClr1;
     @include for-tablet-layout {
       display: none;
     }
     &.left {
-      left: em(-5px);
+      left: 3em;
     }
     &.right {
-      right: em(110px);
+      right: 11em;
     }
   }
   .btn-filter {

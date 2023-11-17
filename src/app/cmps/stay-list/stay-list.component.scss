@@ -28,6 +28,8 @@
   column-gap: em(24px);
   row-gap: em(40px);
   grid-auto-rows: minmax(min-content, max-content);
+  padding-block-start: 1em;
+  padding-block-end: 6em;
   a {
     width: fit-content;
   }

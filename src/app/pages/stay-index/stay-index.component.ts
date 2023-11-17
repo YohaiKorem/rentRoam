@@ -98,6 +98,10 @@ export class StayIndexComponent extends Unsub implements OnInit {
     this.sharedService.toggleClassOnElement('radio-filter', 'hidden', 'remove');
   }
 
+  onScroll() {
+    console.log('scrollledddd');
+  }
+
   clearFilter() {
     this.stayService.clearFilter();
   }
