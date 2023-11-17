@@ -91,7 +91,7 @@ export class StayService {
     });
   }
 
-  loadStays(shouldQueryServer: boolean = false): Observable<Stay[]> {
+  public loadStays(shouldQueryServer: boolean = false): Observable<Stay[]> {
     return this.loadCachedStays().pipe(
       switchMap((cachedStays) => {
         if (!shouldQueryServer && cachedStays && cachedStays.length)
@@ -151,12 +151,14 @@ export class StayService {
       map((data: any) => data as Stay[]),
       debounceTime(500),
       tap((stays: Stay[]) => {
-        this.setAvgPrice(stays);
-        this.setHigheststPrice(stays);
-        this.setLowestPrice(stays);
-        this._stays$.next(stays);
+        const allStays = this.concatAndRemoveDuplicateStays(stays);
+        console.log(allStays);
+        this._stays$.next(allStays);
+        this.setAvgPrice(allStays);
+        this.setHigheststPrice(allStays);
+        this.setLowestPrice(allStays);
         this.setStaysWithDistances();
-        this.cacheStays(stays);
+        this.cacheStays(allStays);
       }),
       retry(1),
       catchError(this._handleError)
@@ -193,7 +195,7 @@ export class StayService {
               };
             }
             this._searchParams$.next({ ...searchParam });
-            this.updateQueryParams({
+            this._updateQueryParams({
               searchParam: JSON.stringify(searchParam),
             });
             this.loadStays(true).pipe(take(1)).subscribe();
@@ -204,7 +206,7 @@ export class StayService {
         .subscribe();
     } else {
       this._searchParams$.next({ ...searchParam });
-      this.updateQueryParams({ searchParam: JSON.stringify(searchParam) });
+      this._updateQueryParams({ searchParam: JSON.stringify(searchParam) });
       this.loadStays(true).pipe(take(1)).subscribe();
     }
   }
@@ -212,17 +214,21 @@ export class StayService {
   public setFilter(stayFilter: StayFilter) {
     this._stayFilter$.next({ ...stayFilter });
 
-    this.updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
+    this._updateQueryParams({ stayFilter: JSON.stringify(stayFilter) });
     this._countFilters(stayFilter);
     this.loadStays(true).pipe(take(1)).subscribe();
   }
 
-  private updateQueryParams(params: { [key: string]: string }) {
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: params,
-      queryParamsHandling: 'merge',
-    });
+  private concatAndRemoveDuplicateStays(newStays: Stay[]): Stay[] {
+    const combinedStays = [...this._cachedStays$.value, ...newStays];
+    const uniqueStays = new Map(combinedStays.map((stay) => [stay._id, stay]));
+    return Array.from(uniqueStays.values());
+  }
+
+  public setPagination(pagination: Pagination) {
+    pagination = { ...pagination };
+    this._pagination$.next(pagination);
+    this.loadStays(true).pipe(take(1)).subscribe();
   }
 
   public setStaysWithDistances() {
@@ -238,7 +244,7 @@ export class StayService {
           return;
         }
 
-        const targetCoords = this.getTargetCoords(userLoc, searchParams);
+        const targetCoords = this._getTargetCoords(userLoc, searchParams);
         if (!targetCoords) {
           console.log('No location or userLoc available');
           return;
@@ -253,24 +259,6 @@ export class StayService {
         });
         this._distances$.next(distances);
       });
-  }
-
-  private getTargetCoords(
-    userLoc: {
-      lat: number | null;
-      lng: number | null;
-    },
-    searchParams: SearchParam
-  ) {
-    // console.log('userLoc', userLoc);
-    // console.log('searchParams', searchParams);
-
-    if (searchParams && searchParams.location && searchParams.location.coords) {
-      return searchParams.location.coords;
-    } else if (userLoc && userLoc.lat !== null && userLoc.lng !== null) {
-      return userLoc;
-    }
-    return null;
   }
 
   public getEmptyStay() {
@@ -359,6 +347,14 @@ export class StayService {
         }
       })
     );
+  }
+
+  private _updateQueryParams(params: { [key: string]: string }) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: params,
+      queryParamsHandling: 'merge',
+    });
   }
 
   private _search(
@@ -477,6 +473,24 @@ export class StayService {
 
     if (filterBy.maxPrice || filterBy.minPrice) count++;
     this.setFilterCount(count);
+  }
+
+  private _getTargetCoords(
+    userLoc: {
+      lat: number | null;
+      lng: number | null;
+    },
+    searchParams: SearchParam
+  ) {
+    // console.log('userLoc', userLoc);
+    // console.log('searchParams', searchParams);
+
+    if (searchParams && searchParams.location && searchParams.location.coords) {
+      return searchParams.location.coords;
+    } else if (userLoc && userLoc.lat !== null && userLoc.lng !== null) {
+      return userLoc;
+    }
+    return null;
   }
 
   private _handleError(err: HttpErrorResponse) {

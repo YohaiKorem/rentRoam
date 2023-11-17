@@ -97,41 +97,6 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
       .subscribe(() => {
         this.toggleModal('close');
       });
-    // this.activatedRoute.queryParams.pipe(
-    //   tap((queryParams) => {
-    //     let filter;
-    //     let search;
-    //     try {
-    //       filter = queryParams['stayFilter']
-    //         ? JSON.parse(queryParams['stayFilter'])
-    //         : null;
-    //       search = queryParams['search']
-    //         ? JSON.parse(queryParams['search'])
-    //         : null;
-    //     } catch (e) {
-    //       console.error('Error parsing queryParams', e);
-    //       return;
-    //     }
-
-    //     if (filter) {
-    //       this.stayService.setFilter(filter);
-    //     }
-    //     if (search) {
-    //       this.stayService.setSearchParams(search);
-    //     }
-
-    //     const urlTree = this.router.createUrlTree([], {
-    //       relativeTo: this.activatedRoute,
-    //       queryParams: queryParams,
-    //     });
-
-    //     const fullUrl = this.router.serializeUrl(urlTree);
-
-    //     this.urlToShare = `http://localhost:4200/#${fullUrl}`;
-
-    //     this.cdr.detectChanges();
-    //   })
-    // );
 
     this.stayService.searchParams$
       .pipe(takeUntil(this.unsubscribe$))
@@ -141,22 +106,6 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
         this.setDefaultLoc();
         this.setDefaultDates();
       });
-
-    // this.activatedRoute.queryParams
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe((queryParams) => {
-    //     const stayFilter = queryParams['stayFilter'];
-    //     const searchParam = queryParams['searchParam'];
-    //     console.log(searchParam);
-    //     console.log(stayFilter);
-
-    //     if (stayFilter) {
-    //       this.stayService.setFilter(JSON.parse(stayFilter));
-    //     }
-    //     if (searchParam) {
-    //       this.stayService.setSearchParams(JSON.parse(searchParam));
-    //     }
-    //   });
   }
 
   ngAfterViewInit() {

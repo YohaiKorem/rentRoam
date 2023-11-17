@@ -2,7 +2,9 @@ import {
   Component,
   ChangeDetectorRef,
   AfterViewInit,
+  ViewChild,
   OnDestroy,
+  ElementRef,
 } from '@angular/core';
 import {
   Observable,
@@ -11,10 +13,12 @@ import {
   takeUntil,
   take,
   pipe,
+  map,
+  fromEvent,
   debounceTime,
 } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { Stay } from '../models/stay.model';
+import { Pagination, Stay } from '../models/stay.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StayService } from '../services/stay.service';
 import { Cloudinary } from '@cloudinary/url-gen';
@@ -31,6 +35,7 @@ import { Unsub } from '../services/unsub.class';
   },
 })
 export class AppComponent extends Unsub {
+  @ViewChild('mainContent') mainContent!: ElementRef;
   constructor(
     private activatedRoute: ActivatedRoute,
 
@@ -43,10 +48,11 @@ export class AppComponent extends Unsub {
   ) {
     super();
   }
-  subscription!: Subscription;
+  private scrollSubscription!: Subscription;
   location: any | null = null;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
+  pagination!: Pagination;
   currentUrl!: string;
   userLoc: any = { lat: null, lng: null };
   ngOnInit(): void {
@@ -70,6 +76,11 @@ export class AppComponent extends Unsub {
         }
         this.cdr.detectChanges();
       });
+    this.stayService.pagination$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((pagination: Pagination) => {
+        this.pagination = pagination;
+      });
   }
 
   ngAfterViewInit() {
@@ -78,21 +89,33 @@ export class AppComponent extends Unsub {
       '--full-height',
       `${window.innerHeight}px`
     );
+    const scrollObservable = fromEvent(
+      this.mainContent.nativeElement,
+      'scroll'
+    );
+    this.scrollSubscription = scrollObservable
+      .pipe(takeUntil(this.unsubscribe$), debounceTime(300))
+      .subscribe((event) => {
+        this.onScroll(event);
+      });
   }
 
   onScroll(event: any) {
     event.stopPropagation();
 
-    this.shouldLoadMoreStays(event);
+    this.loadMoreStays(event);
     this.onScrollWithMap(event);
   }
 
-  shouldLoadMoreStays(event: any) {
+  loadMoreStays(event: any) {
     const elLastChild = event.target.lastElementChild;
     const elStayIndex = document.querySelector('stay-index');
     if (elLastChild === elStayIndex) {
-      console.log('event.target.clientHeight', event.target.clientHeight);
-      console.log('event.target.scrollTop', event.target.scrollTop);
+      const { scrollTop, scrollHeight } = event.target;
+      if (scrollTop * 1.5 >= scrollHeight) {
+        this.pagination.pageIdx++;
+        this.stayService.setPagination(this.pagination);
+      }
     }
   }
 

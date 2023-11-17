@@ -105,10 +105,6 @@ export class RadioFilterComponent {
 
   onScroll(event: Event) {
     const target = event.target as HTMLElement;
-    console.log(
-      target.clientWidth,
-      Math.floor(target.scrollWidth - target.scrollLeft)
-    );
 
     if (target.scrollLeft === 0) {
       this.handleScrollCompletelyToLeft();
@@ -126,8 +122,6 @@ export class RadioFilterComponent {
     this.isFirstElementInView = true;
   }
   handleScrollCompletelyToRight() {
-    console.log('hi');
-
     this.isLastElementInView = true;
   }
 
