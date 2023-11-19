@@ -549,10 +549,18 @@
   </div>
   <mat-menu #loginSignup="matMenu" yPosition="below">
     <ng-container *ngIf="!loggedInUser; else userMenuOptions">
-      <button mat-menu-item (click)="doLogin()" class="btn-login">
+      <button
+        mat-menu-item
+        (click)="changeModalType('Login')"
+        class="btn-login"
+      >
         Log in
       </button>
-      <button mat-menu-item (click)="doSignup()" class="btn-signup">
+      <button
+        mat-menu-item
+        (click)="changeModalType('Sign up')"
+        class="btn-signup"
+      >
         Sign up
       </button>
     </ng-container>
@@ -575,17 +583,16 @@
     </ng-template>
   </mat-menu>
   <mobile-search-menu (toggleSearchClosed)="closeSearch()"></mobile-search-menu>
-  <div
-    *ngIf="isShowSignupModal"
-    class="modal-wrapper"
-    (click)="isShowSignupModal = false"
-  >
+  <div *ngIf="modalType" class="modal-wrapper" (click)="modalType = ''">
     <dynamic-modal
-      [title]="'Log in or sign up'"
+      [title]="modalType"
       class="dynamic-modal modal-content"
-      (closeModal)="isShowSignupModal = false"
+      (closeModal)="modalType = ''"
     >
-      <signup-modal></signup-modal>
+      <signup-modal
+        (typeChanged)="changeModalType($event)"
+        [modalType]="modalType"
+      ></signup-modal>
     </dynamic-modal>
   </div>
 </div>

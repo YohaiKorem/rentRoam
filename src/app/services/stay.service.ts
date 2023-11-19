@@ -184,6 +184,10 @@ export class StayService {
     );
   }
 
+  public removeStay(stayId: string): Observable<string> {
+    return of(stayId);
+  }
+
   public setSearchParams(searchParam: SearchParam) {
     if (searchParam.startDate)
       searchParam.startDate = new Date(searchParam.startDate);

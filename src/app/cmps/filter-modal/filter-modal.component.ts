@@ -104,10 +104,6 @@ export class FilterModalComponent extends Unsub implements OnInit {
     this.filterSubject$.next();
   }
 
-  debug(normalizedHeight: any) {
-    console.log('normalizedHeight', normalizedHeight);
-  }
-
   get stayPrices(): number[] {
     return this.stays?.map((stay) => stay.price)?.sort((a, b) => a - b) || [];
   }
@@ -142,9 +138,6 @@ export class FilterModalComponent extends Unsub implements OnInit {
               )
             )
           : 0;
-      console.log('stay', stay);
-      console.log('histogramData', histogramData);
-      console.log('bucketIndex', bucketIndex);
 
       histogramData[bucketIndex].count++;
     });

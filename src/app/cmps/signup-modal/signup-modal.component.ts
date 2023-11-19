@@ -1,13 +1,16 @@
 import {
   Component,
+  Input,
   OnInit,
   OnDestroy,
   ViewChild,
   ElementRef,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import {
   FacebookLoginProvider,
@@ -25,6 +28,8 @@ import { Credentials } from 'src/app/models/credentials.model';
 })
 export class SignupModalComponent implements OnInit, OnDestroy {
   @ViewChild('customGoogleBtn') customGoogleBtn!: ElementRef;
+  @Input() modalType: string = 'Login';
+  @Output() typeChanged = new EventEmitter();
   constructor(
     private userService: UserService,
     private sharedService: SharedService,
@@ -56,11 +61,20 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     this.elHeader?.classList.add('hidden-on-mobile');
   }
 
-  handleLogIn() {
-    this.userService.login(this.credentials).subscribe((user) => {
-      this.loggedInUser = user;
-      console.log(user);
-    });
+  handleSubmit() {
+    this.modalType === 'Login'
+      ? this.userService
+          .login(this.credentials)
+          .pipe(take(1))
+          .subscribe((user) => {
+            this.loggedInUser = user;
+          })
+      : this.userService
+          .signup(this.credentials)
+          .pipe(take(1))
+          .subscribe((user: User) => {
+            this.loggedInUser = user;
+          });
     // this.sharedService.toggleSignUpModal();
     // if (this.isLoginPage) this.router.navigateByUrl('/');
   }
@@ -81,6 +95,11 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     }
     const routePath = currentRoute.routeConfig?.path || '';
     return routePath === 'login';
+  }
+
+  changeModalType() {
+    this.modalType = this.modalType === 'Login' ? 'Sign up' : 'Login';
+    this.typeChanged.emit(this.modalType);
   }
 
   handleLogout() {

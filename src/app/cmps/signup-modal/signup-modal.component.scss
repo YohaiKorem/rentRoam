@@ -16,6 +16,13 @@
     }
     .signup-modal-header {
       color: $fontClr3;
+      .btn {
+        border: none;
+        text-underline-offset: em(3px);
+        &:hover {
+          background-color: transparent;
+        }
+      }
     }
     .simple-form {
       button[type="submit"] {

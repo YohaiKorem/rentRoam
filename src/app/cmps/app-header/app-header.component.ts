@@ -54,7 +54,8 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
-  isShowSignupModal: boolean = false;
+
+  modalType: string = '';
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User | null>;
   isMobile = window.innerWidth <= 780;
@@ -87,10 +88,10 @@ export class AppHeaderComponent extends Unsub implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         this.loggedInUser = user;
-        if (this.loggedInUser != null) this.isShowSignupModal = false;
+        if (this.loggedInUser != null) this.modalType = '';
       });
     this.sharedService.toggleSignupModal$.subscribe(() => {
-      this.isShowSignupModal = !this.isShowSignupModal;
+      this.modalType = '';
     });
   }
   ngAfterViewInit() {
@@ -198,16 +199,10 @@ export class AppHeaderComponent extends Unsub implements OnInit {
     this.searchParam.location.name = this.locSearch;
   }
 
-  openLoginSignup() {
-    console.log('menu open');
-  }
+  openLoginSignup() {}
 
-  doLogin() {
-    this.isShowSignupModal = true;
-  }
-
-  doSignup() {
-    this.isShowSignupModal = true;
+  changeModalType(type: string) {
+    this.modalType = type;
   }
 
   onLogout() {

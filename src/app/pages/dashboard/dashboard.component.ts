@@ -23,9 +23,9 @@ import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
-import { StayService } from 'src/app/services/stay.service.local';
+import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
-import { UserService } from 'src/app/services/user.service.local';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
@@ -71,7 +71,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     res.pipe(take(1)).subscribe(({ orders, stays }) => {
       this.orders = orders;
       this.stays = stays;
-      console.log(stays);
 
       this.updateOrderStatsMap();
     });
@@ -107,7 +106,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.user = this.userService.logout();
+    this.userService
+      .logout()
+      .pipe(take(1))
+      .subscribe((user) => (this.user = user));
     this.authService.signOut();
 
     this.router.navigate(['/stay']);

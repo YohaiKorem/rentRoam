@@ -2,16 +2,35 @@
   [class.is-login-page]="isLoginPage"
   class="signup-modal-wrapper flex column modal-content-wrapper flex column"
 >
-  <header class="signup-modal-header">
+  <header class="signup-modal-header flex align-center space-between">
     <h2 class="fs22 fw500">Welcome to RentRoam</h2>
+
+    <div class="btn-container flex column align-center space-between">
+      <span class="fw300">{{
+        modalType === "Login" ? "Not a Roamer yet?" : "Already a Roamer?"
+      }}</span>
+      <button
+        class="btn btn-change-modal-type deco-underline fw600"
+        (click)="changeModalType()"
+      >
+        {{ modalType }}
+      </button>
+    </div>
   </header>
 
   <form class="simple-form full-width">
     <input
+      *ngIf="modalType !== 'Login'"
+      type="text"
+      [(ngModel)]="credentials.fullname"
+      name="name"
+      placeholder="Enter your full name"
+    />
+    <input
       type="text"
       [(ngModel)]="credentials.username"
       name="name"
-      placeholder="Enter name"
+      placeholder="Enter username"
     />
     <input
       type="password"
@@ -22,7 +41,7 @@
     <button
       class="btn btn-continue fw600"
       type="submit"
-      (click)="handleLogIn()"
+      (click)="handleSubmit()"
     >
       Continue
     </button>
