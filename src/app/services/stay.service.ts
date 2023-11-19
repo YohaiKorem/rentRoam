@@ -67,7 +67,7 @@ export class StayService {
   public searchParams$ = this._searchParams$.asObservable();
   private _pagination$ = new BehaviorSubject<Pagination>({
     pageIdx: 0,
-    pageSize: 20,
+    pageSize: 50,
   });
   public pagination$ = this._pagination$.asObservable();
   private _avgPrice$ = new BehaviorSubject<number>(0);
@@ -164,16 +164,23 @@ export class StayService {
       catchError(this._handleError)
     );
   }
+
   public getStayById(id: string): Observable<Stay> {
     return from(storageService.get(ENTITY, id)).pipe(
       switchMap((cachedStay: Stay) => {
-        if (cachedStay) return of(cachedStay);
-        return this.httpService.get(`${BASE_URL}/${id}`).pipe(
-          debounceTime(500),
-          map((data: any) => data as Stay)
-        );
+        return of(cachedStay);
       }),
-      catchError(this._handleError)
+      catchError((error) => {
+        if (
+          error.message.includes(`Item ${id} of type: ${ENTITY} does not exist`)
+        )
+          return this.httpService.get(`${BASE_URL}/${id}`).pipe(
+            debounceTime(500),
+            map((data: any) => data as Stay),
+            catchError(this._handleError)
+          );
+        else return throwError(() => new Error(error.message));
+      })
     );
   }
 
