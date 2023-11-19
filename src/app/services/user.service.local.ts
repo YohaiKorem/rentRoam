@@ -16,7 +16,7 @@ import { storageService } from './async-storage.service';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import _users from '../../data/user.json';
-import { SignupInfo } from '../models/signup-info.model';
+import { Credentials } from '../models/credentials.model';
 import { Wishlist } from '../models/wishlist.model';
 import { UtilService } from './util.service';
 

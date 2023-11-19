@@ -10,12 +10,17 @@ import {
   map,
   of,
   switchMap,
+  take,
+  debounceTime,
 } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { User } from '../models/user.model';
 import { Wishlist } from '../models/wishlist.model';
 import { HttpService } from './http.service';
+import { Credentials } from '../models/credentials.model';
+const BASE_URL = 'user';
+
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
 
 @Injectable({
@@ -36,12 +41,31 @@ export class UserService {
   public locInterval: any;
   constructor(private httpService: HttpService) {}
 
-  public login(info: any): Observable<User> {
+  public login(info: Credentials | SocialUser): Observable<User> {
     return this.httpService.post('auth/login', info).pipe(
       map((data) => data as User),
       tap((user: User) => {
         return this.saveLocalUser(user);
       }),
+      catchError(this._handleError)
+    );
+  }
+
+  public logout(user: User): Observable<null> {
+    return this.httpService.post('auth/logout', user).pipe(
+      tap(() => {
+        sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
+        this._loggedInUser$.next(null);
+      }),
+      map(() => null),
+      catchError(this._handleError)
+    );
+  }
+
+  public getUserById(userId: string): Observable<User> {
+    return this.httpService.get(`${BASE_URL}/${userId}`).pipe(
+      debounceTime(500),
+      map((data: any) => data as User),
       catchError(this._handleError)
     );
   }

@@ -11,7 +11,7 @@ import { faSearch, faGlobe, faBars } from '@fortawesome/free-solid-svg-icons';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { UserService } from 'src/app/services/user.service.local';
+import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription, debounceTime, take } from 'rxjs';
 import { SharedService } from 'src/app/services/shared.service';
@@ -56,7 +56,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   autocompleteService: any;
   isShowSignupModal: boolean = false;
   loggedInUser: User | null = null;
-  loggedInUser$!: Observable<User>;
+  loggedInUser$!: Observable<User | null>;
   isMobile = window.innerWidth <= 780;
   google: any;
   constructor(
@@ -211,7 +211,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   }
 
   onLogout() {
-    this.loggedInUser = this.userService.logout();
+    this.loggedInUser$ = this.userService.logout(this.loggedInUser!);
     this.socialSignOut();
     this.router.navigate(['/stay']);
   }

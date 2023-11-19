@@ -5,7 +5,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { UserService } from 'src/app/services/user.service.local';
+import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription } from 'rxjs';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
@@ -17,6 +17,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SharedService } from 'src/app/services/shared.service';
+import { Credentials } from 'src/app/models/credentials.model';
 @Component({
   selector: 'signup-modal',
   templateUrl: './signup-modal.component.html',
@@ -34,13 +35,13 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   user!: SocialUser;
   isLoggedIn!: boolean;
   loggedInUser: User | null = null;
-  loggedInUser$!: Observable<User>;
-  credentials: any = {};
+  loggedInUser$!: Observable<User | null>;
+  credentials: Credentials = { username: '', password: '' };
   isLoginPage: boolean = this.determineIsLoginPage();
   elHeader = document.querySelector('.main-header');
 
   ngOnInit() {
-    this.authService.authState.subscribe((user) => {
+    this.authService.authState.subscribe((user: SocialUser) => {
       this.user = user;
       this.isLoggedIn = user != null;
       console.log(user);
@@ -58,9 +59,10 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   handleLogIn() {
     this.userService.login(this.credentials).subscribe((user) => {
       this.loggedInUser = user;
+      console.log(user);
     });
-    this.sharedService.toggleSignUpModal();
-    if (this.isLoginPage) this.router.navigateByUrl('/');
+    // this.sharedService.toggleSignUpModal();
+    // if (this.isLoginPage) this.router.navigateByUrl('/');
   }
 
   signInWithFB(): void {
@@ -82,7 +84,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   }
 
   handleLogout() {
-    this.loggedInUser = this.userService.logout();
+    this.loggedInUser$ = this.userService.logout(this.loggedInUser!);
   }
 
   triggerGoogleAction() {

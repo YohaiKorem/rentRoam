@@ -18,6 +18,8 @@ export class HttpService {
   }
 
   post(endpoint: string, data: any) {
+    console.log(data);
+
     return this.ajax(endpoint, 'POST', data);
   }
 

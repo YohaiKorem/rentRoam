@@ -65,8 +65,6 @@ export class AppComponent extends Unsub {
       .subscribe((queryParams) => {
         const stayFilter = queryParams['stayFilter'];
         const searchParam = queryParams['searchParam'];
-        console.log(searchParam);
-        console.log(queryParams);
 
         if (stayFilter) {
           this.stayService.setFilter(JSON.parse(stayFilter));
