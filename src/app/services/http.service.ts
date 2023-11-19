@@ -17,10 +17,10 @@ export class HttpService {
     return this.ajax(endpoint, 'GET', data);
   }
 
-  post(endpoint: string, data: any) {
-    console.log(data);
-
-    return this.ajax(endpoint, 'POST', data);
+  post(endpoint: string, data: any = null) {
+    return data === null
+      ? this.ajax(endpoint, 'POST')
+      : this.ajax(endpoint, 'POST', data);
   }
 
   put(endpoint: string, data: any) {
@@ -40,6 +40,7 @@ export class HttpService {
     } else {
       body = data;
     }
+    console.log(method, `${this.BASE_URL}${endpoint}`);
 
     return this.http
       .request(method, `${this.BASE_URL}${endpoint}`, {

@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { UserService } from '../services/user.service.local';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 
 export function authGuard() {

@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
-import { Observable, Subscription, debounceTime, take } from 'rxjs';
+import { Observable, Subscription, debounceTime, take, tap } from 'rxjs';
 import { SharedService } from 'src/app/services/shared.service';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { Subject, takeUntil } from 'rxjs';
@@ -211,8 +211,11 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   }
 
   onLogout() {
-    this.loggedInUser$ = this.userService.logout(this.loggedInUser!);
-    this.socialSignOut();
+    this.userService
+      .logout()
+      .pipe(take(1))
+      .subscribe((user) => (this.loggedInUser = user));
+    // this.socialSignOut();
     this.router.navigate(['/stay']);
   }
 

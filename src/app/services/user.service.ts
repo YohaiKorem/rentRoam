@@ -44,15 +44,21 @@ export class UserService {
   public login(info: Credentials | SocialUser): Observable<User> {
     return this.httpService.post('auth/login', info).pipe(
       map((data) => data as User),
-      tap((user: User) => {
-        return this.saveLocalUser(user);
-      }),
+      tap((user: User) => this.saveLocalUser(user)),
       catchError(this._handleError)
     );
   }
 
-  public logout(user: User): Observable<null> {
-    return this.httpService.post('auth/logout', user).pipe(
+  public signup(credentials: Credentials): Observable<User> {
+    return this.httpService.post('auth/signup', credentials).pipe(
+      map((data) => data as User),
+      tap((user: User) => this.saveLocalUser(user)),
+      catchError(this._handleError)
+    );
+  }
+
+  public logout(): Observable<null> {
+    return this.httpService.post('auth/logout').pipe(
       tap(() => {
         sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
         this._loggedInUser$.next(null);
@@ -105,6 +111,10 @@ export class UserService {
     this._loggedInUser$.next(userToSave);
 
     return of(userToSave);
+  }
+
+  public getLoggedInUser() {
+    return this._loggedInUser$.value;
   }
 
   public get sessionStorageUser(): User {

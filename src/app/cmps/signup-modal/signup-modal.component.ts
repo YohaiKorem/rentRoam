@@ -84,7 +84,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   }
 
   handleLogout() {
-    this.loggedInUser$ = this.userService.logout(this.loggedInUser!);
+    this.loggedInUser$ = this.userService.logout();
   }
 
   triggerGoogleAction() {
