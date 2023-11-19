@@ -19,7 +19,7 @@ import { StayService } from 'src/app/services/stay.service';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { Unsub } from 'src/app/services/unsub.class';
 
 @Component({

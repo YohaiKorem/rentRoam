@@ -30,7 +30,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { StayHost } from '../models/host.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from './user.service';
+import { UserService } from './user.service.local';
 import { storageService } from './async-storage.service';
 const BASE_URL = 'stay';
 const ENTITY = 'stays';

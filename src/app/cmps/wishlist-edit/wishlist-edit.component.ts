@@ -3,7 +3,7 @@ import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { Wishlist } from 'src/app/models/wishlist.model';
 import { SharedService } from 'src/app/services/shared.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { Router } from '@angular/router';
 

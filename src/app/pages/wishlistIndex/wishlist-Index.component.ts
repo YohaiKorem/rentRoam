@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { SharedService } from 'src/app/services/shared.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { WishlistService } from 'src/app/services/wishlist.service';
 @Component({
   selector: 'wishlist-index',

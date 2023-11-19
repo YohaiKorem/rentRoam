@@ -6,7 +6,7 @@ import { Msg } from 'src/app/models/msg.model';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service.local';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 
 @Component({
   selector: 'msg-preview',

@@ -11,7 +11,7 @@ import { Observable, map, take, takeUntil, debounceTime, tap } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Order } from 'src/app/models/order.model';

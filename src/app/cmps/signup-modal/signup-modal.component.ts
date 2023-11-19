@@ -5,7 +5,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription } from 'rxjs';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';

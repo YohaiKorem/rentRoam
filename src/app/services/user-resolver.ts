@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { delay } from 'rxjs';
-import { UserService } from './user.service';
+import { UserService } from './user.service.local';
 
 export function UserResolver(route: ActivatedRouteSnapshot) {
   const userId = route.params['userId'];

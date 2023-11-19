@@ -3,7 +3,7 @@ import { Buyer } from 'src/app/models/buyer.model';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service.local';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { take, Observable, of } from 'rxjs';
 import { StayHost } from 'src/app/models/host.model';
 @Component({

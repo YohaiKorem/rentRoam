@@ -5,7 +5,7 @@ import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 
 @Component({
   selector: 'message-index',

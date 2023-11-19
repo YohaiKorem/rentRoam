@@ -14,7 +14,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { Unsub } from 'src/app/services/unsub.class';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({

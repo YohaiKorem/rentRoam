@@ -11,7 +11,7 @@ import { faSearch, faGlobe, faBars } from '@fortawesome/free-solid-svg-icons';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service.local';
 import { User } from 'src/app/models/user.model';
 import { Observable, Subscription, debounceTime, take } from 'rxjs';
 import { SharedService } from 'src/app/services/shared.service';

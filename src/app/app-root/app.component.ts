@@ -17,7 +17,7 @@ import {
   fromEvent,
   debounceTime,
 } from 'rxjs';
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/user.service.local';
 import { Pagination, Stay } from '../models/stay.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StayService } from '../services/stay.service';

@@ -25,7 +25,7 @@ import _stays from '../../data/stay.json';
 import { GeocodingService } from './geocoding.service';
 import { getDistance } from 'geolib';
 import { environment } from 'src/environments/environment';
-import { UserService } from './user.service';
+import { UserService } from './user.service.local';
 import { UtilService } from './util.service';
 import { StayHost } from '../models/host.model';
 import { Router, ActivatedRoute } from '@angular/router';
