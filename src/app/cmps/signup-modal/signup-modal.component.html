@@ -13,7 +13,7 @@
         class="btn btn-change-modal-type deco-underline fw600"
         (click)="changeModalType()"
       >
-        {{ modalType }}
+        {{ modalType === "Login" ? "Sign up" : "Login" }}
       </button>
     </div>
   </header>

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
-import { Observable, Subscription, take } from 'rxjs';
+import { Observable, tap, take, catchError } from 'rxjs';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import {
   FacebookLoginProvider,
@@ -21,6 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { SharedService } from 'src/app/services/shared.service';
 import { Credentials } from 'src/app/models/credentials.model';
+import { UserMsgService } from 'src/app/services/user-msg.service';
 @Component({
   selector: 'signup-modal',
   templateUrl: './signup-modal.component.html',
@@ -32,6 +33,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   @Output() typeChanged = new EventEmitter();
   constructor(
     private userService: UserService,
+    private userMsgService: UserMsgService,
     private sharedService: SharedService,
     private authService: SocialAuthService,
     private router: Router,
@@ -62,21 +64,36 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit() {
-    this.modalType === 'Login'
-      ? this.userService
-          .login(this.credentials)
-          .pipe(take(1))
-          .subscribe((user) => {
-            this.loggedInUser = user;
-          })
-      : this.userService
-          .signup(this.credentials)
-          .pipe(take(1))
-          .subscribe((user: User) => {
-            this.loggedInUser = user;
-          });
-    // this.sharedService.toggleSignUpModal();
-    // if (this.isLoginPage) this.router.navigateByUrl('/');
+    if (this.modalType === 'Login') {
+      this.userService
+        .login(this.credentials)
+        .pipe(
+          take(1),
+          catchError((err) => this.userMsgService.showUserErr(err))
+        )
+        .subscribe((user) => {
+          this.loggedInUser = user;
+        });
+    } else {
+      this.userService
+        .signup(this.credentials)
+        .pipe(
+          take(1),
+          catchError((err) => this.userMsgService.showUserErr(err))
+        )
+        .subscribe((user: User) => {
+          this.loggedInUser = user;
+        });
+    }
+  }
+  // this.sharedService.toggleSignUpModal();
+  // if (this.isLoginPage) this.router.navigateByUrl('/');
+
+  handleErr(err: any) {
+    return this.userMsgService.showUserErr(err).pipe(
+      take(1),
+      tap(() => (this.loggedInUser = null))
+    );
   }
 
   signInWithFB(): void {

@@ -19,6 +19,7 @@
       .btn {
         border: none;
         text-underline-offset: em(3px);
+        text-decoration-skip-ink: none;
         &:hover {
           background-color: transparent;
         }
