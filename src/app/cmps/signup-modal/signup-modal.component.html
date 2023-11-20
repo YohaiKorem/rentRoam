@@ -5,7 +5,9 @@
   <header class="signup-modal-header flex align-center space-between">
     <h2 class="fs22 fw500">Welcome to RentRoam</h2>
 
-    <div class="btn-container flex column align-center space-between">
+    <div
+      class="btn-container flex column align-center space-between text-center"
+    >
       <span class="fw300">{{
         modalType === "Login" ? "Not a Roamer yet?" : "Already a Roamer?"
       }}</span>
@@ -23,21 +25,56 @@
       *ngIf="modalType !== 'Login'"
       type="text"
       [(ngModel)]="credentials.fullname"
-      name="name"
+      name="fullname"
       placeholder="Enter your full name"
     />
     <input
       type="text"
       [(ngModel)]="credentials.username"
-      name="name"
+      name="username"
+      #username="ngModel"
       placeholder="Enter username"
+      minlength="4"
+      maxlength="20"
+      pattern="[a-zA-Z0-9]*"
+      required
     />
+    <div *ngIf="username.invalid && (username.dirty || username.touched)">
+      <div *ngIf="username.errors!['required']">Username is required.</div>
+      <ng-container *ngIf="modalType === 'Sign up'">
+        <div *ngIf="username.errors!['minlength']">
+          Username must be at least 4 characters long.
+        </div>
+        <div *ngIf="username.errors!['maxlength']">
+          Username cannot be more than 20 characters long.
+        </div>
+      </ng-container>
+      <div *ngIf="username.errors!['pattern']">
+        Username can only contain alphanumeric characters.
+      </div>
+    </div>
     <input
       type="password"
       [(ngModel)]="credentials.password"
       name="password"
+      #password="ngModel"
       placeholder="Enter password"
+      minlength="8"
+      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).*"
+      required
     />
+    <div *ngIf="password.invalid && (password.dirty || password.touched)">
+      <div *ngIf="password.errors!['required']">Password is required.</div>
+      <ng-container *ngIf="modalType === 'Sign up'">
+        <div *ngIf="password.errors!['minlength']">
+          Password must be at least 8 characters long.
+        </div>
+        <div *ngIf="password.errors!['pattern']">
+          Password must include uppercase, lowercase, a number, and a special
+          character.
+        </div>
+      </ng-container>
+    </div>
     <button
       class="btn btn-continue fw600"
       type="submit"

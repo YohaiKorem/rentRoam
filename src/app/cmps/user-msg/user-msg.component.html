@@ -1,6 +1,10 @@
-<dialog class="user-msg-dialog" [open]="isShowMsg">
-  <p>{{ msg }}</p>
-  <form method="dialog">
+<dialog
+  class="user-msg-dialog flex column align-center space-between gap1 p1"
+  [open]="true"
+  [class.open]="isShowMsg"
+>
+  <p class="full-width text-center">{{ msg }}</p>
+  <form class="full-width" method="dialog">
     <button class="btn btn-dialog">OK</button>
   </form>
 </dialog>

@@ -29,9 +29,7 @@ export class UserMsgService {
   }
 
   public showUserErr(err: any): Observable<any> {
-    const msg = err.error.msg;
-
-    this._msg$.next(msg);
+    this._msg$.next(err);
     return throwError(() => err);
   }
 }

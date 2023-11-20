@@ -69,7 +69,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
         .login(this.credentials)
         .pipe(
           take(1),
-          catchError((err) => this.userMsgService.showUserErr(err))
+          catchError((err) => this.userMsgService.showUserErr(err.error.err))
         )
         .subscribe((user) => {
           this.loggedInUser = user;
@@ -79,7 +79,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
         .signup(this.credentials)
         .pipe(
           take(1),
-          catchError((err) => this.userMsgService.showUserErr(err))
+          catchError((err) => this.userMsgService.showUserErr(err.error.msg))
         )
         .subscribe((user: User) => {
           this.loggedInUser = user;

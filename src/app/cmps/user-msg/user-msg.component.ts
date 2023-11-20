@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, delay, of, skip, takeUntil, tap } from 'rxjs';
+import { Observable, delay, of, filter, takeUntil, tap } from 'rxjs';
 import { Unsub } from 'src/app/services/unsub.class';
 import { UserMsgService } from 'src/app/services/user-msg.service';
 
@@ -20,7 +20,7 @@ export class UserMsgComponent extends Unsub implements OnInit {
     this.msg$ = this.userMsgService.msg$;
     this.msg$
       .pipe(
-        skip(1),
+        filter((msg) => !!msg),
         takeUntil(this.unsubscribe$),
         tap((msg) => {
           this.isShowMsg = true;
