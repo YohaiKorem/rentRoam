@@ -25,14 +25,14 @@ import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { Unsub } from 'src/app/services/unsub.class';
 import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject<void>();
+export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
   faPlusCircle = faPlusCircle;
   faHouse = faHouse;
   faList = faList;
@@ -54,11 +54,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private router: Router,
     private sharedService: SharedService,
     private authService: SocialAuthService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     const res = this.userService.loggedInUser$.pipe(
-      takeUntil(this.ngUnsubscribe),
+      takeUntil(this.unsubscribe$),
       switchMap((user) => {
         this.user = user!;
         return forkJoin({
@@ -66,9 +68,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
           stays: this.stayService.getAllHostStaysById(this.user._id),
         });
       }),
-      take(1)
+      takeUntil(this.unsubscribe$)
     );
-    res.pipe(take(1)).subscribe(({ orders, stays }) => {
+    res.pipe(takeUntil(this.unsubscribe$)).subscribe(({ orders, stays }) => {
+      console.log(stays);
+
       this.orders = orders;
       this.stays = stays;
 
@@ -128,8 +132,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.unsubscribe();
+  override ngOnDestroy(): void {
     this.sharedService.showElementOnMobile('.main-header');
+    super.ngOnDestroy();
   }
 }

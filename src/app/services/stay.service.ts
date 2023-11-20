@@ -340,10 +340,9 @@ export class StayService {
   }
 
   public getAllHostStaysById(hostId: string): Observable<Stay[]> {
-    return this.stays$.pipe(
-      take(1),
-      map((stays: Stay[]) => stays.filter((stay) => stay.host._id === hostId))
-    );
+    return this.httpService
+      .get(`${BASE_URL}/host/stays/${hostId}`)
+      .pipe(map((data) => data as Stay[]));
   }
 
   public findHostById(id: string): Observable<StayHost | null> {
