@@ -148,8 +148,8 @@ export class StayService {
     pagination = { ...pagination };
     const data = { ...stayFilter, ...search, ...pagination };
     return this.httpService.get(BASE_URL, data).pipe(
-      map((data: any) => data as Stay[]),
       debounceTime(500),
+      map((data: any) => data as Stay[]),
       tap((stays: Stay[]) => {
         const allStays = this.concatAndRemoveDuplicateStays(stays);
         console.log(allStays);
@@ -182,6 +182,22 @@ export class StayService {
         else return throwError(() => new Error(error.message));
       })
     );
+  }
+
+  public saveStay(stay: Stay): Observable<Stay> {
+    return stay._id ? this._updateStay(stay) : this._addStay(stay);
+  }
+
+  private _updateStay(stay: Stay): Observable<Stay> {
+    return this.httpService
+      .put(BASE_URL, stay)
+      .pipe(map((data: any) => data as Stay));
+  }
+
+  private _addStay(stay: Stay): Observable<Stay> {
+    return this.httpService
+      .post(BASE_URL, stay)
+      .pipe(map((data: any) => data as Stay));
   }
 
   public removeStay(stayId: string): Observable<string> {
@@ -345,18 +361,10 @@ export class StayService {
       .pipe(map((data) => data as Stay[]));
   }
 
-  public findHostById(id: string): Observable<StayHost | null> {
-    return this.stays$.pipe(
-      take(1),
-      map((stays: Stay[]) => {
-        const stay = stays.find((stay: Stay) => stay.host._id === id);
-        if (stay && stay.host) {
-          return stay.host;
-        } else {
-          return null;
-        }
-      })
-    );
+  public findHostById(hostId: string): Observable<StayHost | null> {
+    return this.httpService
+      .get(`${BASE_URL}/host/${hostId}`)
+      .pipe(map((data) => data as StayHost | null));
   }
 
   private _updateQueryParams(params: { [key: string]: string }) {

@@ -11,11 +11,7 @@ export class StayHost {
     public isSuperhost: boolean,
     public description: string
   ) {}
-  public static newHostFromUser(
-    user: User,
-    utilService: UtilService
-  ): StayHost {
-    const randId = utilService.getRandomId();
+  public static newHostFromUser(user: User): StayHost {
     return new StayHost(
       user._id,
       user.fullname,

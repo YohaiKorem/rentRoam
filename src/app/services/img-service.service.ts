@@ -12,8 +12,7 @@ export class imgService {
   constructor() {}
   uploadImageToCloudinary(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
-      const uploadPreset = environment.cloudinaryUploadPreset; // Replace with your preset
-
+      const uploadPreset = environment.cloudinaryUploadPreset;
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', uploadPreset);

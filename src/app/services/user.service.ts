@@ -98,6 +98,21 @@ export class UserService {
     }
   }
 
+  public updateUser(user: User): Observable<User> {
+    return this.httpService
+      .put(`${BASE_URL}/${user._id}`, user)
+      .pipe(
+        debounceTime(500),
+        map((data) => data as User),
+        retry(1),
+        catchError(this._handleError)
+      )
+      .pipe(
+        map((data: any) => data as User),
+        tap((user: User) => this.saveLocalUser(user))
+      );
+  }
+
   private saveLocalUser(user: User): Observable<User> {
     const userToSave = {
       _id: user._id,

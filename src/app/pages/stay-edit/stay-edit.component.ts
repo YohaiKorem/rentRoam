@@ -3,22 +3,22 @@ import { IStay, Labels, Stay, Amenities } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { StayHost } from 'src/app/models/host.model';
 import { StayService } from 'src/app/services/stay.service.local';
-import { UserService } from 'src/app/services/user.service.local';
+import { UserService } from 'src/app/services/user.service';
 import { GeocodingService } from 'src/app/services/geocoding.service';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil, Observable } from 'rxjs';
 import { imgService } from 'src/app/services/img-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { Unsub } from 'src/app/services/unsub.class';
 
 @Component({
   selector: 'stay-edit',
   templateUrl: './stay-edit.component.html',
   styleUrls: ['./stay-edit.component.scss'],
 })
-export class StayEditComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject<void>();
+export class StayEditComponent extends Unsub implements OnInit {
   user: User = {} as User;
   stay: IStay = Stay.getEmptyStay();
   allAmenities: string[] = ([] as string[]).concat(...Object.values(Amenities));
@@ -38,31 +38,30 @@ export class StayEditComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public trackByService: TrackByService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.userService.loggedInUser$
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         if (!user) {
           this.router.navigate(['/']);
           return;
         } else if (user && !user.isOwner) {
-          this.stayHost = StayHost.newHostFromUser(this.user, this.utilService);
+          this.stayHost = StayHost.newHostFromUser(this.user);
           console.log(this.stayHost);
         } else {
           this.stayService
             .findHostById(user._id)
-            .pipe(take(1))
+            .pipe(takeUntil(this.unsubscribe$))
             .subscribe((host) => {
               if (host) {
                 this.stay.host = host;
                 this.stayHost = host;
               } else {
-                this.stayHost = StayHost.newHostFromUser(
-                  user,
-                  this.utilService
-                );
+                this.stayHost = StayHost.newHostFromUser(user);
                 this.stay.host = this.stayHost;
                 console.log(this.stay.host);
                 console.log(this.stayHost);
@@ -96,9 +95,11 @@ export class StayEditComponent implements OnInit, OnDestroy {
       this.stayHost.thumbnailUrl
     ) {
       this.user.isOwner = true;
-      const newUser = this.userService.updateUser(this.user);
-      this.user = newUser;
-      this.stay.host = this.stayHost;
+      const newUser$: Observable<User> = this.userService.updateUser(this.user);
+      newUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((user: User) => {
+        this.user = user;
+        this.stay.host = this.stayHost;
+      });
     }
   }
 
@@ -123,7 +124,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
     ) {
       const newStay$ = this.stayService.saveStay(stay);
       let newStay;
-      newStay$.pipe(take(1)).subscribe((stay) => {
+      newStay$.pipe(takeUntil(this.unsubscribe$)).subscribe((stay) => {
         newStay = stay;
         if (newStay) this.stay = newStay;
       });
@@ -181,7 +182,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
         this.stay.loc.country
       );
       const stayCoords = this.geocodingService.getLatLng(strForCoords);
-      stayCoords.pipe(take(1)).subscribe((coords) => {
+      stayCoords.pipe(takeUntil(this.unsubscribe$)).subscribe((coords) => {
         const { lat, lng } = coords;
         this.stay.loc.lat = lat;
         this.stay.loc.lng = lng;
@@ -201,7 +202,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
       : this.stay[entity].push(str);
     console.log(this.stay);
   }
-  ngOnDestroy() {
+  override ngOnDestroy() {
     const stay = { ...this.stay };
 
     if (
@@ -219,7 +220,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
     ) {
       this.stayService
         .findHostById(this.user._id)
-        .pipe(take(1))
+        .pipe(takeUntil(this.unsubscribe$))
         .subscribe((host) => {
           if (!host) this.user.isOwner = false;
         });
@@ -228,8 +229,7 @@ export class StayEditComponent implements OnInit, OnDestroy {
     this.user.isOwner = true;
     this.userService.updateUser(this.user);
     this.stayService.saveStay(stay);
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
     this.sharedService.showElementOnMobile('.main-header');
+    super.ngOnDestroy();
   }
 }
