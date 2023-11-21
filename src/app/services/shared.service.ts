@@ -26,6 +26,8 @@ export class SharedService {
   }
 
   openSearchMenu() {
+    console.log('inside shared service');
+
     this.openSearchMenuSource.next();
   }
 

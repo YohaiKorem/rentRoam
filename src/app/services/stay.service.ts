@@ -188,16 +188,32 @@ export class StayService {
     return stay._id ? this._updateStay(stay) : this._addStay(stay);
   }
 
+  public getAllHostStaysById(hostId: string): Observable<Stay[]> {
+    return this.httpService.get(`${BASE_URL}/host/stays/${hostId}`).pipe(
+      debounceTime(500),
+      map((data) => data as Stay[])
+    );
+  }
+
+  public findHostById(hostId: string): Observable<StayHost | null> {
+    return this.httpService.get(`${BASE_URL}/host/${hostId}`).pipe(
+      debounceTime(500),
+      map((data) => data as StayHost | null)
+    );
+  }
+
   private _updateStay(stay: Stay): Observable<Stay> {
-    return this.httpService
-      .put(BASE_URL, stay)
-      .pipe(map((data: any) => data as Stay));
+    return this.httpService.put(BASE_URL, stay).pipe(
+      debounceTime(500),
+      map((data: any) => data as Stay)
+    );
   }
 
   private _addStay(stay: Stay): Observable<Stay> {
-    return this.httpService
-      .post(BASE_URL, stay)
-      .pipe(map((data: any) => data as Stay));
+    return this.httpService.post(BASE_URL, stay).pipe(
+      debounceTime(500),
+      map((data: any) => data as Stay)
+    );
   }
 
   public removeStay(stayId: string): Observable<string> {
@@ -353,18 +369,6 @@ export class StayService {
       { latitude: stay.loc.lat, longitude: stay.loc.lng },
       { latitude: coords.lat, longitude: coords.lng }
     );
-  }
-
-  public getAllHostStaysById(hostId: string): Observable<Stay[]> {
-    return this.httpService
-      .get(`${BASE_URL}/host/stays/${hostId}`)
-      .pipe(map((data) => data as Stay[]));
-  }
-
-  public findHostById(hostId: string): Observable<StayHost | null> {
-    return this.httpService
-      .get(`${BASE_URL}/host/${hostId}`)
-      .pipe(map((data) => data as StayHost | null));
   }
 
   private _updateQueryParams(params: { [key: string]: string }) {

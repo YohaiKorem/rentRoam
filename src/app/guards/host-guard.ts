@@ -8,8 +8,8 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, catchError, take } from 'rxjs/operators';
-import { UserService } from '../services/user.service.local';
-import { StayService } from '../services/stay.service.local';
+import { UserService } from '../services/user.service';
+import { StayService } from '../services/stay.service';
 
 @Injectable({
   providedIn: 'root',
@@ -34,22 +34,24 @@ export class HostGuard implements CanActivate {
 
     const user = this.userService.getLoggedInUser();
     if (!user) {
-      return this.router.createUrlTree(['/']); // you can also just return false
+      return of(false);
     }
     return this.stayService.getStayById(stayId).pipe(
       take(1),
       map((stay) => {
         if (stay && stay.host._id === user._id) {
           route.data = { ...route.data, fetchedStay: stay }; // Set the stay in the data
+          console.log(stay);
+
           return true;
         } else {
+          console.log(stay);
           return this.router.createUrlTree(['/']);
         }
       }),
       catchError((err) => {
         console.log(err);
-        this.router.createUrlTree(['/']);
-        return of(false);
+        return of(this.router.createUrlTree(['/']));
       })
     );
   }

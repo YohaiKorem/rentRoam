@@ -13,7 +13,7 @@
     <button
       *ngIf="searchParam && searchParam.guests"
       class="btn-search anywhere fw500"
-      (click)="openSearch('loc'); inputField.focus()"
+      (click)="openSearch('loc')"
     >
       {{ searchParam.location.name ? searchParam.location.name : "Anywhere" }}
     </button>
@@ -104,14 +104,15 @@
   </div>
   <div
     [class.inactive]="!isSearchOpen"
+    (click)="closeSearch()"
     class="search-menu-wrapper hidden-on-mobile flex column align-center space-around shadow"
   >
     <div class="search-overlay" (click)="closeSearch()"></div>
     <div class="search-bar-active flex align-center space-between">
       <button
-        clickOutside
-        (clickOutside)="handleClickOutside($event)"
-        (click)="setCurrSearch('loc'); inputField.focus()"
+        appPreventDefault
+        appStopPropagation
+        (click)="setCurrSearch('loc')"
         [ngClass]="{
           'active-btn': currSearch === 'loc',
         }"
@@ -119,7 +120,6 @@
       >
         <span>Where</span>
         <input
-          [autofocus]="currSearch === 'loc'"
           class="fw200 search-loc-input"
           placeholder="Search destinations"
           [(ngModel)]="locSearch"
@@ -130,6 +130,8 @@
 
       <span class="hidden-on-mobile"></span>
       <button
+        appPreventDefault
+        appStopPropagation
         class="btn-search Check-in fw500 flex column space-between align-start"
         [ngClass]="{
           'active-btn': currSearch === 'check-in',
@@ -148,6 +150,8 @@
       </button>
       <span class="hidden-on-mobile"></span>
       <button
+        appPreventDefault
+        appStopPropagation
         class="btn-search Check-out fw500 flex column space-between align-start"
         [ngClass]="{
           'active-btn': currSearch === 'check-out',
@@ -166,6 +170,8 @@
       </button>
       <span class="hidden-on-mobile"></span>
       <button
+        appPreventDefault
+        appStopPropagation
         class="btn-search guests flex space-between align-center"
         [ngClass]="{
           'active-btn': currSearch === 'guests'

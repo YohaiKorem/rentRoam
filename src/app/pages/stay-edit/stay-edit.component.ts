@@ -1,8 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  AfterViewInit,
+} from '@angular/core';
 import { IStay, Labels, Stay, Amenities } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { StayHost } from 'src/app/models/host.model';
-import { StayService } from 'src/app/services/stay.service.local';
+import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
 import { GeocodingService } from 'src/app/services/geocoding.service';
 import { Subject, take, takeUntil, Observable } from 'rxjs';
@@ -50,7 +55,7 @@ export class StayEditComponent extends Unsub implements OnInit {
           this.router.navigate(['/']);
           return;
         } else if (user && !user.isOwner) {
-          this.stayHost = StayHost.newHostFromUser(this.user);
+          this.stayHost = StayHost.newHostFromUser(user);
           console.log(this.stayHost);
         } else {
           this.stayService
@@ -77,6 +82,11 @@ export class StayEditComponent extends Unsub implements OnInit {
       this.stay = fetchedStay;
     }
     this.sharedService.hideElementOnMobile('.main-header');
+  }
+
+  ngAfterViewInit() {
+    this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
+    this.cdr.detectChanges();
   }
 
   test(str: any) {
@@ -147,7 +157,6 @@ export class StayEditComponent extends Unsub implements OnInit {
         console.log(error, 'could not upload file', file);
       }
     }
-    console.log(this.stay.imgUrls);
   }
 
   updateStayLoc(place: any) {
@@ -192,7 +201,6 @@ export class StayEditComponent extends Unsub implements OnInit {
       else throw new Error('stayHost is falsy');
     }
 
-    console.log(place);
     this.cdr.detectChanges();
   }
 

@@ -54,7 +54,6 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   endDate: Date | null = null;
   suggestions: any[] = [];
   autocompleteService: any;
-
   modalType: string = '';
   loggedInUser: User | null = null;
   loggedInUser$!: Observable<User | null>;
@@ -124,23 +123,32 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   }
 
   openSearch(str: string) {
-    this.isMobile
-      ? this.openSearchMenuMobile()
-      : this.sharedService.openSearchMenu();
+    if (this.isMobile) this.openSearchMenuMobile();
     this.isSearchOpen = true;
+    console.log(str);
+
     this.setCurrSearch(str);
   }
-  setCurrSearch(str: string) {
+
+  setCurrSearch(str: string, debug: string = 'debug') {
     if (str === 'loc') {
       this.guestsMenuTrigger.closeMenu();
       this.locMenuTrigger.openMenu();
+      this.inputField.nativeElement.focus();
+      this.picker.close();
     } else if (str === 'check-in' || str === 'check-out') {
       this.guestsMenuTrigger.closeMenu();
       this.locMenuTrigger.closeMenu();
     } else if (str === 'guests') {
       this.locMenuTrigger.closeMenu();
+      this.picker.close();
       this.guestsMenuTrigger.openMenu();
-      document.querySelector('.cdk-overlay-connected-position-bounding-box');
+    } else {
+      console.log(debug, 'inside else');
+
+      this.locMenuTrigger.closeMenu();
+      this.picker.close();
+      this.guestsMenuTrigger.closeMenu();
     }
     this.currSearch = str;
   }
@@ -159,7 +167,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   }
 
   onCloseMenu() {
-    this.setCurrSearch('');
+    this.setCurrSearch('', 'onclosemenu called this');
   }
   test(ev: any) {
     console.log(ev);
@@ -220,7 +228,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
 
   onOpenDatePicker() {
     let str = this.startDate ? 'check-out' : 'check-in';
-    this.setCurrSearch(str);
+    // this.setCurrSearch(str);
   }
   setSearchParams(ev: any) {
     ev.stopPropagation();
