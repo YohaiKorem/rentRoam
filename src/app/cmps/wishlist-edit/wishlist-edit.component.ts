@@ -6,13 +6,14 @@ import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { tap, takeUntil } from 'rxjs';
+import { Unsub } from 'src/app/services/unsub.class';
 @Component({
   selector: 'wishlist-edit',
   templateUrl: './wishlist-edit.component.html',
   styleUrls: ['./wishlist-edit.component.scss'],
 })
-export class WishlistEditComponent {
+export class WishlistEditComponent extends Unsub {
   @Input() isModal: boolean = true;
   @Input() stay!: Stay;
   @Input() user!: User;
@@ -26,7 +27,9 @@ export class WishlistEditComponent {
     private userSerivce: UserService,
     private sharedSerivce: SharedService,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
 
   onCreateWishlist() {
     const newWishlist = this.wishlistService.createWishlist(
@@ -34,7 +37,10 @@ export class WishlistEditComponent {
       this.stay
     );
 
-    this.userSerivce.addWishlistToUser(newWishlist, this.user);
+    this.userSerivce
+      .addWishlistToUser(newWishlist, this.user)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user: User) => (this.user = user));
 
     this.sharedSerivce.openModal();
   }
@@ -46,7 +52,8 @@ export class WishlistEditComponent {
     this.wishlist = updatedWishlist;
     this.userSerivce
       .updateWishlistInUser(updatedWishlist, this.user)
-      .pipe(tap((user: User) => (this.user = user)));
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user: User) => (this.user = user));
 
     this.onEditFinished();
   }
@@ -59,7 +66,8 @@ export class WishlistEditComponent {
     if (!this.wishlist?.id) return;
     this.userSerivce
       .removeWishlist(this.wishlist!.id, this.user)
-      .pipe(tap((user: User) => (this.user = user)));
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user: User) => (this.user = user));
     this.wishlist = null;
     this.onEditFinished();
     this.router.navigate([`/wishlist/${this.user._id}`]);

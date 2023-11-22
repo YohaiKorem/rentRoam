@@ -41,7 +41,8 @@ export class WishlistIndexComponent extends Unsub implements OnInit {
   removeWishlist(wishlistId: string) {
     this.userSerivce
       .removeWishlist(wishlistId, this.loggedInUser!)
-      .pipe(tap((user: User) => (this.loggedInUser = user)));
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user: User) => (this.loggedInUser = user));
   }
   override ngOnDestroy() {
     this.sharedService.showElementOnMobile('.main-header');

@@ -111,7 +111,9 @@ export class UserService {
       ? user.wishlists.push(wishlist)
       : user.wishlists.splice(wishlistIdx, 1, wishlist);
 
-    return this.updateUser(user);
+    const updatedUser$ = this.updateUser(user);
+    updatedUser$.pipe(take(1)).subscribe();
+    return updatedUser$;
   }
 
   public removeWishlist(wishlistId: string, user: User): Observable<User> {

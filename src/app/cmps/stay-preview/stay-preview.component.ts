@@ -62,8 +62,6 @@ export class StayPreviewComponent extends Unsub implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         this.loggedInUser = user;
-        console.log(user);
-
         this.isInWishlist = this.determineIsInWishlist();
         this.cdr.detectChanges();
       });

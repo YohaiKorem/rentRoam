@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
-import { OrderService } from './order.service.local';
+import { OrderService } from './order.service';
 import { inject } from '@angular/core';
 import { delay } from 'rxjs';
 
