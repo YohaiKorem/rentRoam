@@ -137,6 +137,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
       this.inputField.nativeElement.focus();
       this.picker.close();
     } else if (str === 'check-in' || str === 'check-out') {
+      this.picker.open();
       this.guestsMenuTrigger.closeMenu();
       this.locMenuTrigger.closeMenu();
     } else if (str === 'guests') {
@@ -207,7 +208,23 @@ export class AppHeaderComponent extends Unsub implements OnInit {
     this.searchParam.location.name = this.locSearch;
   }
 
-  openLoginSignup() {}
+  openLoginSignup() {
+    setTimeout(() => {
+      this.sharedService.addStyleToElement(
+        '.cdk-overlay-backdrop',
+        'visibility',
+        'visible'
+      );
+    }, 300);
+  }
+
+  onCloseLoginSignup() {
+    this.sharedService.addStyleToElement(
+      '.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing',
+      'visibility',
+      'hidden'
+    );
+  }
 
   changeModalType(type: string) {
     this.modalType = type;

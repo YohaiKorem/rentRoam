@@ -136,7 +136,7 @@
         [ngClass]="{
           'active-btn': currSearch === 'check-in',
         }"
-        (click)="picker.open()"
+        (click)="setCurrSearch('check-in')"
       >
         <span>Check in</span>
         <span class="fw200">{{
@@ -156,7 +156,7 @@
         [ngClass]="{
           'active-btn': currSearch === 'check-out',
         }"
-        (click)="picker.open()"
+        (click)="setCurrSearch('check-out')"
       >
         <span>Check out</span>
         <span class="fw200">{{
@@ -236,12 +236,7 @@
       guest
     </button>
   </div>
-  <mat-menu
-    class="hidden-on-mobile"
-    #locMenu="matMenu"
-    yPosition="below"
-    (close)="onCloseMenu()"
-  >
+  <mat-menu class="hidden-on-mobile" #locMenu="matMenu" yPosition="below">
     <h3 *ngIf="!locSearch">Search by region</h3>
 
     <div *ngIf="!locSearch" class="region-btns-container">
@@ -334,7 +329,6 @@
   <mat-date-range-picker
     class="hidden-on-mobile"
     (opened)="onOpenDatePicker()"
-    (closed)="onCloseMenu()"
     #picker
   ></mat-date-range-picker>
   <mat-menu
@@ -342,7 +336,6 @@
     #guestsMenu="matMenu"
     xPosition="before"
     yPosition="below"
-    (close)="onCloseMenu()"
   >
     <div class="guests-menu-wrapper flex column space-between">
       <div class="guests-item-container">
@@ -553,7 +546,11 @@
       </ng-template>
     </button>
   </div>
-  <mat-menu #loginSignup="matMenu" yPosition="below">
+  <mat-menu
+    #loginSignup="matMenu"
+    yPosition="below"
+    (closed)="onCloseLoginSignup()"
+  >
     <ng-container *ngIf="!loggedInUser; else userMenuOptions">
       <button
         mat-menu-item

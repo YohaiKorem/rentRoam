@@ -209,8 +209,13 @@ input[type="password"] {
 .cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
   // display: none !important;
   // pointer-events: none;
+  visibility: collapse;
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
+}
+
+.cdk-overlay-backdrop.mat-overlay-transparent-backdrop.mat-datepicker-0-backdrop.cdk-overlay-backdrop-showing {
+  visibility: collapse;
 }
 
 .mat-mdc-menu-panel.mat-mdc-menu-panel {
