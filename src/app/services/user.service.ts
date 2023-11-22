@@ -159,7 +159,9 @@ export class UserService {
   }
 
   public getLoggedInUser() {
-    return this._loggedInUser$.value;
+    console.log('hello freak bitches');
+
+    return this.sessionStorageUser;
   }
 
   public get sessionStorageUser(): User {

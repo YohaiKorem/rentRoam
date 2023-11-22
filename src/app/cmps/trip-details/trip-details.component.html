@@ -1,4 +1,4 @@
-<section class="trip-details-wrapper flex column 0 p1 shadow">
+<section class="trip-details-wrapper flex column 0 p0-5 shadow">
   <div *ngIf="stay" class="imgs-container shadow">
     <div
       *ngFor="
@@ -13,8 +13,8 @@
   </div>
   <div class="trip-info-container flex column space-between 0">
     <div class="txt-container flex column space-between 0">
-      <h4 class="fs18 fw500">{{ trip!.stay.name }}</h4>
-      <h5 class="fs16 fw500">{{ trip!.stay.address }}</h5>
+      <h4 class="fs16 fw500">{{ trip!.stay.name }}</h4>
+      <h5 class="fs14 fw500">{{ trip!.stay.address }}</h5>
       <p>
         <span class="fw500">Dates</span>:
         <span>{{ formattedDates.start }}</span> -

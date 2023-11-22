@@ -4,15 +4,8 @@ import {
   Observable,
   BehaviorSubject,
   throwError,
-  from,
-  tap,
-  retry,
   catchError,
-  take,
-  switchMap,
-  of,
   map,
-  combineLatest,
   debounceTime,
 } from 'rxjs';
 import { HttpService } from './http.service';

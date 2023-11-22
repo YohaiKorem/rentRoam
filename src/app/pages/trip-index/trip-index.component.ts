@@ -1,21 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, take, takeUntil } from 'rxjs';
+import { Observable, debounceTime, switchMap, takeUntil } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
-import { OrderService } from 'src/app/services/order.service.local';
+import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
-import { StayService } from 'src/app/services/stay.service.local';
-import { UserService } from 'src/app/services/user.service.local';
+import { StayService } from 'src/app/services/stay.service';
+import { Unsub } from 'src/app/services/unsub.class';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'trip-index',
   templateUrl: './trip-index.component.html',
   styleUrls: ['./trip-index.component.scss'],
 })
-export class TripIndexComponent implements OnInit, OnDestroy {
-  private ngUnsubscribe = new Subject<void>();
-
+export class TripIndexComponent extends Unsub implements OnInit {
   user!: User;
   orders$!: Observable<Order[]>;
   orders: Order[] = [];
@@ -26,27 +25,29 @@ export class TripIndexComponent implements OnInit, OnDestroy {
     private stayService: StayService,
     private sharedService: SharedService,
     private orderService: OrderService
-  ) {}
+  ) {
+    super();
+  }
   ngOnInit(): void {
     this.userService.loggedInUser$
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((user) => {
-        this.user = user!;
-        this.orders$ = this.orderService.getOrdersForEntityById(
-          user!._id,
-          'buyer'
-        );
+      .pipe(
+        switchMap((user) => {
+          this.user = user!;
+          return this.orderService.getOrdersForEntityById(user!._id, 'buyer');
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((orders: Order[]) => {
+        this.orders = orders;
       });
-    this.orders$.pipe(take(1)).subscribe((orders: Order[]) => {
-      this.orders = orders;
-    });
     this.sharedService.hideElementOnMobile('.main-header');
   }
   onSelectTrip(order: Order) {
     this.currTrip = order;
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this.sharedService.showElementOnMobile('.main-header');
+    super.ngOnDestroy();
   }
 }

@@ -3,7 +3,7 @@ import { Order } from 'src/app/models/order.model';
 import { Observable, map, take, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Stay } from 'src/app/models/stay.model';
-import { StayService } from 'src/app/services/stay.service.local';
+import { StayService } from 'src/app/services/stay.service';
 import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'book',

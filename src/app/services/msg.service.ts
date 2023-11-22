@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Msg } from '../models/msg.model';
 import { Order } from '../models/order.model';
-import { OrderService } from './order.service.local';
+import { OrderService } from './order.service';
 import { Observable } from 'rxjs';
 import { UtilService } from './util.service';
 @Injectable({

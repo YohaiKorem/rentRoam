@@ -6,23 +6,26 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
-import { StayService } from 'src/app/services/stay.service.local';
-import { take } from 'rxjs';
+import { StayService } from 'src/app/services/stay.service';
+import { takeUntil, debounceTime } from 'rxjs';
 import { Stay } from 'src/app/models/stay.model';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { Unsub } from 'src/app/services/unsub.class';
 @Component({
   selector: 'trip-details',
   templateUrl: './trip-details.component.html',
   styleUrls: ['./trip-details.component.scss'],
 })
-export class TripDetailsComponent implements OnInit {
+export class TripDetailsComponent extends Unsub implements OnInit {
   @Input() trip: Order | null = null;
   formattedDates!: { start: string; end: string };
   stay!: Stay;
   constructor(
     private stayService: StayService,
     public trackByService: TrackByService
-  ) {}
+  ) {
+    super();
+  }
   ngOnInit() {
     this.getStay();
     this.formattedDates = this.getFormattedDateForDisplay();
@@ -38,7 +41,7 @@ export class TripDetailsComponent implements OnInit {
   getStay() {
     this.stayService
       .getStayById(this.trip?.stay._id!)
-      .pipe(take(1))
+      .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
       .subscribe((stay: Stay) => (this.stay = stay));
   }
 

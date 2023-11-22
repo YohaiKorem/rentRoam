@@ -1,19 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { take, tap } from 'rxjs';
+import { take, tap, takeUntil } from 'rxjs';
 import { Buyer } from 'src/app/models/buyer.model';
 import { StayHost } from 'src/app/models/host.model';
 import { Msg } from 'src/app/models/msg.model';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
-import { StayService } from 'src/app/services/stay.service.local';
-import { UserService } from 'src/app/services/user.service.local';
+import { StayService } from 'src/app/services/stay.service';
+import { Unsub } from 'src/app/services/unsub.class';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'msg-preview',
   templateUrl: './msg-preview.component.html',
   styleUrls: ['./msg-preview.component.scss'],
 })
-export class MsgPreviewComponent implements OnInit {
+export class MsgPreviewComponent extends Unsub implements OnInit {
   @Input() msg!: Msg;
   @Input() user!: User;
   @Input() order!: Order;
@@ -26,14 +27,16 @@ export class MsgPreviewComponent implements OnInit {
   constructor(
     private userService: UserService,
     private stayService: StayService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.msg.fromId === this.user._id
       ? (this.msgSender = this.user)
       : this.userService
           .getUserById(this.msg.fromId)
-          .pipe(take(1))
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe((user) => (this.msgSender = user));
     this.formattedDate = this.formatDate(this.msg);
   }
