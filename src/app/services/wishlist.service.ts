@@ -3,7 +3,7 @@ import { Stay } from '../models/stay.model';
 import { User } from '../models/user.model';
 import { StayPreview } from '../models/stay-preview.model';
 import { Wishlist } from '../models/wishlist.model';
-import { StayService } from './stay.service.local';
+import { StayService } from './stay.service';
 import { Observable, forkJoin } from 'rxjs';
 @Injectable({
   providedIn: 'root',

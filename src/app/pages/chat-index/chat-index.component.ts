@@ -3,7 +3,7 @@ import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { Observable, tap, map, of, take } from 'rxjs';
 import { UserService } from 'src/app/services/user.service.local';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/services/order.service.local';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { Buyer } from 'src/app/models/buyer.model';

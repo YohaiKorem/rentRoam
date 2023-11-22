@@ -41,6 +41,7 @@
           *ngFor="
             let stay of stays;
             let i = index;
+            last as isLast;
             trackBy: trackByService.byId
           "
           class="stay-item-container"
@@ -87,9 +88,17 @@
               >
                 <fa-icon class="svg-container" [icon]="faEllipsisH"> </fa-icon>
               </button>
+              <div
+                appPreventDefault
+                appStopPropagation
+                *ngIf="stayIdToRmove === stay._id"
+                class="btn-overlay"
+                (click)="showRemoveOption('')"
+              ></div>
               <button
                 *ngIf="stayIdToRmove === stay._id"
                 class="btn btn-remove flex align-center gap0-5"
+                [ngStyle]="{ transform: isLast ? 'translateY(-100%)' : null }"
                 appPreventDefault
                 appStopPropagation
                 (click)="onRemoveStay(stay._id)"

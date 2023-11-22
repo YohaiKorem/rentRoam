@@ -7,7 +7,7 @@ import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service';
 import { take, Observable, of } from 'rxjs';
 import { MsgService } from 'src/app/services/msg.service';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/services/order.service.local';
 
 @Component({
   selector: 'chat-edit',

@@ -3,10 +3,10 @@ import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { Wishlist } from 'src/app/models/wishlist.model';
 import { SharedService } from 'src/app/services/shared.service';
-import { UserService } from 'src/app/services/user.service.local';
+import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { Router } from '@angular/router';
-
+import { tap } from 'rxjs';
 @Component({
   selector: 'wishlist-edit',
   templateUrl: './wishlist-edit.component.html',
@@ -44,10 +44,9 @@ export class WishlistEditComponent {
     wishlist.name = this.wishlistName;
     const updatedWishlist = this.wishlistService.editWishlist(wishlist);
     this.wishlist = updatedWishlist;
-    this.user = this.userSerivce.updateWishlistInUser(
-      updatedWishlist,
-      this.user
-    );
+    this.userSerivce
+      .updateWishlistInUser(updatedWishlist, this.user)
+      .pipe(tap((user: User) => (this.user = user)));
 
     this.onEditFinished();
   }
@@ -58,7 +57,9 @@ export class WishlistEditComponent {
 
   onRemoveWishlist() {
     if (!this.wishlist?.id) return;
-    this.user = this.userSerivce.removeWishlist(this.wishlist!.id, this.user);
+    this.userSerivce
+      .removeWishlist(this.wishlist!.id, this.user)
+      .pipe(tap((user: User) => (this.user = user)));
     this.wishlist = null;
     this.onEditFinished();
     this.router.navigate([`/wishlist/${this.user._id}`]);

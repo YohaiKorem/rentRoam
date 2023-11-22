@@ -11,7 +11,7 @@ import { Observable, map, take, takeUntil, debounceTime, tap } from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service.local';
+import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Order } from 'src/app/models/order.model';
@@ -44,6 +44,7 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
 
   currImgUrlIdx = 0;
   isMobile = window.innerWidth <= 780;
+  isInWishlist!: boolean;
   stay: Stay | null = null;
   stay$!: Observable<Stay>;
   user: User | null = null;
@@ -90,7 +91,10 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
 
     this.userService.loggedInUser$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((user) => (this.user = user));
+      .subscribe((user) => {
+        this.isInWishlist = this.determineIsInWishlist();
+        this.user = user;
+      });
 
     this.sharedService.openModal$
       .pipe(takeUntil(this.unsubscribe$))
@@ -166,10 +170,10 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
     return new Date(timestamp);
   }
 
-  isInWishlist() {
+  determineIsInWishlist(): boolean {
     return this.user?.wishlists.some((wishlist) => {
       return wishlist.stays.some((stay) => stay._id === this.stay!._id);
-    });
+    })!;
   }
 
   onRemoveFromWishlist() {
@@ -182,11 +186,9 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
       wishlistToUpdate!,
       this.stay!
     );
-    const updatedUser = this.userService.updateWishlistInUser(
-      updatedWishlist,
-      this.user!
-    );
-    this.user = updatedUser;
+    this.userService
+      .updateWishlistInUser(updatedWishlist, this.user!)
+      .pipe(tap((user: User) => (this.user = user)));
   }
 
   toggleModal(cmp: string) {
@@ -256,9 +258,7 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
       });
       return;
     }
-    this.isInWishlist()
-      ? this.onRemoveFromWishlist()
-      : this.toggleModal('save');
+    this.isInWishlist ? this.onRemoveFromWishlist() : this.toggleModal('save');
   }
 
   setDateRange(dateRange: any) {

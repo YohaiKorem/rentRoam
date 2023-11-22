@@ -98,34 +98,62 @@ export class UserService {
     }
   }
 
-  public updateUser(user: User): Observable<User> {
-    return this.httpService
-      .put(`${BASE_URL}/${user._id}`, user)
-      .pipe(
-        debounceTime(500),
-        map((data) => data as User),
-        retry(1),
-        catchError(this._handleError)
-      )
-      .pipe(
-        map((data: any) => data as User),
-        tap((user: User) => this.saveLocalUser(user))
-      );
+  public updateWishlistInUser(
+    wishlist: Wishlist,
+    user: User = this.sessionStorageUser
+  ): Observable<User> {
+    if (!user || !user.wishlists)
+      return throwError(() => new Error('Invalid user or wishlist'));
+
+    user = { ...user, wishlists: [...user.wishlists] };
+    const wishlistIdx = user.wishlists.findIndex((w) => w.id === wishlist.id);
+    wishlistIdx === -1
+      ? user.wishlists.push(wishlist)
+      : user.wishlists.splice(wishlistIdx, 1, wishlist);
+
+    return this.updateUser(user);
   }
 
-  private saveLocalUser(user: User): Observable<User> {
-    const userToSave = {
-      _id: user._id,
-      fullname: user.fullname,
-      imgUrl: user.imgUrl,
-      username: user.username,
-      wishlists: user.wishlists,
-      isOwner: user.isOwner,
-    };
+  public removeWishlist(wishlistId: string, user: User): Observable<User> {
+    const wishlistIdx = user.wishlists.findIndex(
+      (wishlist: Wishlist) => wishlist.id === wishlistId
+    );
+    const updatedUser: User = JSON.parse(JSON.stringify(user));
+    updatedUser.wishlists.splice(wishlistIdx, 1);
+    return this.updateUser(updatedUser);
+  }
+
+  public addWishlistToUser(wishlist: Wishlist, user: User): Observable<User> {
+    const updatedUser = { ...user };
+    updatedUser.wishlists.push(wishlist);
+    return this.updateUser(updatedUser);
+  }
+
+  public updateUser(user: User): Observable<User> {
+    console.log('updateuser', user);
+
+    return this.httpService.put(`${BASE_URL}/${user._id}`, user).pipe(
+      debounceTime(500),
+      map((data) => data as User),
+      tap((user: User) => this.saveLocalUser(user)),
+      retry(1),
+      catchError(this._handleError)
+    );
+  }
+
+  private saveLocalUser(user: User) {
+    const userToSave = new User(
+      user._id,
+      user.fullname,
+      user.imgUrl,
+      user.username,
+      user.wishlists,
+      user.isOwner
+    );
+
     this.sessionStorageUser = userToSave;
     this._loggedInUser$.next(userToSave);
-
-    return of(userToSave);
+    console.log('userToSave', userToSave);
   }
 
   public getLoggedInUser() {

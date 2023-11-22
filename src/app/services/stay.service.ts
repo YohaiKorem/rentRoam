@@ -191,33 +191,41 @@ export class StayService {
   public getAllHostStaysById(hostId: string): Observable<Stay[]> {
     return this.httpService.get(`${BASE_URL}/host/stays/${hostId}`).pipe(
       debounceTime(500),
-      map((data) => data as Stay[])
+      map((data) => data as Stay[]),
+      catchError(this._handleError)
     );
   }
 
   public findHostById(hostId: string): Observable<StayHost | null> {
     return this.httpService.get(`${BASE_URL}/host/${hostId}`).pipe(
       debounceTime(500),
-      map((data) => data as StayHost | null)
+      map((data) => data as StayHost | null),
+      catchError(this._handleError)
     );
   }
 
   private _updateStay(stay: Stay): Observable<Stay> {
     return this.httpService.put(BASE_URL, stay).pipe(
       debounceTime(500),
-      map((data: any) => data as Stay)
+      map((data: any) => data as Stay),
+      catchError(this._handleError)
     );
   }
 
   private _addStay(stay: Stay): Observable<Stay> {
     return this.httpService.post(BASE_URL, stay).pipe(
       debounceTime(500),
-      map((data: any) => data as Stay)
+      map((data: any) => data as Stay),
+      catchError(this._handleError)
     );
   }
 
   public removeStay(stayId: string): Observable<string> {
-    return of(stayId);
+    return this.httpService.delete(`${BASE_URL}/${stayId}`).pipe(
+      debounceTime(500),
+      map((data: any) => data as string),
+      catchError(this._handleError)
+    );
   }
 
   public setSearchParams(searchParam: SearchParam) {

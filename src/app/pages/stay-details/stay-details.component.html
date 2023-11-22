@@ -65,7 +65,7 @@
         </svg>
       </button>
       <button class="btn btn-save" (click)="onAddToWishlist()">
-        <ng-container *ngIf="user && isInWishlist(); else emptyHeartIcon">
+        <ng-container *ngIf="user && isInWishlist; else emptyHeartIcon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32 32"
@@ -264,7 +264,7 @@
           <span>Share</span>
         </button>
         <button class="btn btn-save" (click)="onAddToWishlist()">
-          <ng-container *ngIf="user && isInWishlist(); else emptyHeartIcon">
+          <ng-container *ngIf="user && isInWishlist; else emptyHeartIcon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"

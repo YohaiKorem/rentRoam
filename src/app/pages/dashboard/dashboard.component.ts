@@ -100,19 +100,21 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
   }
   onOrderStatChanged(order: Order) {
     const updatedOrder = this.orderService.saveOrder(order);
-    updatedOrder.pipe(take(1)).subscribe((updatedOrder: Order) => {
-      const idxToRemove = this.orders.findIndex(
-        (order: Order) => order._id === updatedOrder._id
-      );
-      this.orders.splice(idxToRemove, 1, updatedOrder);
-      this.updateOrderStatsMap();
-    });
+    updatedOrder
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((updatedOrder: Order) => {
+        const idxToRemove = this.orders.findIndex(
+          (order: Order) => order._id === updatedOrder._id
+        );
+        this.orders.splice(idxToRemove, 1, updatedOrder);
+        this.updateOrderStatsMap();
+      });
   }
 
   onLogout() {
     this.userService
       .logout()
-      .pipe(take(1))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => (this.user = user));
     this.authService.signOut();
 
@@ -126,7 +128,7 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
   onRemoveStay(stayId: string) {
     this.stayService
       .removeStay(stayId)
-      .pipe(take(1))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((removedStayId) => {
         this.stays = this.stays.filter((stay) => stay._id !== removedStayId);
       });

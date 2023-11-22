@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap, map, forkJoin, take } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/services/order.service.local';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service.local';
 
@@ -34,7 +34,7 @@ export class MessageIndexComponent implements OnInit {
       );
       const userGuestOrders$ = this.orderService.getOrdersForEntityById(
         this.user._id,
-        'guest'
+        'buyer'
       );
       this.orders$ = forkJoin([userGuestOrders$, userHostOrders$]).pipe(
         map(([guestOrders, hostOrders]) => [...guestOrders, ...hostOrders])

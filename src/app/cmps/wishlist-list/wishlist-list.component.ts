@@ -1,18 +1,19 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { Wishlist } from 'src/app/models/wishlist.model';
 import { SharedService } from 'src/app/services/shared.service';
 import { TrackByService } from 'src/app/services/track-by.service';
-import { UserService } from 'src/app/services/user.service.local';
+import { Unsub } from 'src/app/services/unsub.class';
+import { UserService } from 'src/app/services/user.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 @Component({
   selector: 'wishlist-list',
   templateUrl: './wishlist-list.component.html',
   styleUrls: ['./wishlist-list.component.scss'],
 })
-export class WishlistListComponent implements OnInit {
+export class WishlistListComponent extends Unsub implements OnInit {
   // @Input() wishlist!: Wishlist;
   @Input() user!: User;
   @Input() isModal: boolean = true;
@@ -26,7 +27,9 @@ export class WishlistListComponent implements OnInit {
     private userService: UserService,
     private wishlistService: WishlistService,
     public trackByService: TrackByService
-  ) {}
+  ) {
+    super();
+  }
   ngOnInit(): void {}
 
   addStayToWishlist(wishlist: Wishlist) {
@@ -34,11 +37,10 @@ export class WishlistListComponent implements OnInit {
       wishlist,
       this.stay
     );
-    const updatedUser = this.userService.updateWishlistInUser(
-      updatedWishlist,
-      this.user
-    );
-    this.user = updatedUser;
+    this.userService
+      .updateWishlistInUser(updatedWishlist, this.user)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user: User) => (this.user = user));
     this.sharedService.openModal();
   }
 

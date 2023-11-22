@@ -7,7 +7,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, first, takeUntil } from 'rxjs';
+import { Observable, Subject, first, takeUntil, take } from 'rxjs';
 import { SearchParam, Stay, StayDistance } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { SharedService } from 'src/app/services/shared.service';
@@ -41,6 +41,7 @@ export class StayPreviewComponent extends Unsub implements OnInit {
   currImgUrlIdx = 0;
   searchParam = {} as SearchParam;
   distance: number | undefined = undefined;
+  isInWishlist!: boolean;
   constructor(
     private stayService: StayService,
     private cdr: ChangeDetectorRef,
@@ -61,13 +62,17 @@ export class StayPreviewComponent extends Unsub implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         this.loggedInUser = user;
+        console.log(user);
+
+        this.isInWishlist = this.determineIsInWishlist();
+        this.cdr.detectChanges();
       });
   }
 
-  isInWishlist() {
+  determineIsInWishlist(): boolean {
     return this.loggedInUser?.wishlists.some((wishlist) => {
       return wishlist.stays.some((stay) => stay._id === this.stay._id);
-    });
+    })!;
   }
 
   onAddToWishlist(ev: any, id: string) {
@@ -80,7 +85,7 @@ export class StayPreviewComponent extends Unsub implements OnInit {
       });
       return;
     }
-    this.isInWishlist()
+    this.determineIsInWishlist()
       ? this.onRemoveFromWishlist()
       : this.sharedService.openModal('wishlist', this.stay);
   }
@@ -94,11 +99,10 @@ export class StayPreviewComponent extends Unsub implements OnInit {
       wishlistToUpdate!,
       this.stay
     );
-    // const updatedUser = this.userService.updateWishlistInUser(
-    //   updatedWishlist,
-    //   this.loggedInUser!
-    // );
-    // this.loggedInUser = updatedUser;
+    this.userService
+      .updateWishlistInUser(updatedWishlist, this.loggedInUser!)
+      .pipe(take(1))
+      .subscribe((user: User) => (this.loggedInUser = user));
   }
   scrollToLeft(event: Event) {
     event.stopPropagation();

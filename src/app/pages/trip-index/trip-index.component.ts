@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
-import { OrderService } from 'src/app/services/order.service';
+import { OrderService } from 'src/app/services/order.service.local';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service.local';
 import { UserService } from 'src/app/services/user.service.local';
