@@ -41,7 +41,7 @@ export class UserService {
   public locInterval: any;
   constructor(private httpService: HttpService) {}
 
-  public login(info: Credentials | SocialUser): Observable<User> {
+  public login(info: Credentials): Observable<User> {
     return this.httpService.post('auth/login', info).pipe(
       map((data) => data as User),
       tap((user: User) => this.saveLocalUser(user)),
@@ -49,8 +49,23 @@ export class UserService {
     );
   }
 
-  public signup(credentials: Credentials | SocialUser): Observable<User> {
+  public signup(credentials: Credentials): Observable<User> {
     return this.httpService.post('auth/signup', credentials).pipe(
+      map((data) => data as User),
+      tap((user: User) => this.saveLocalUser(user)),
+      catchError(this._handleError)
+    );
+  }
+  public socialLogin(info: SocialUser): Observable<User> {
+    return this.httpService.post('auth/login/social', info).pipe(
+      map((data) => data as User),
+      tap((user: User) => this.saveLocalUser(user)),
+      catchError(this._handleError)
+    );
+  }
+
+  public socialSignup(credentials: SocialUser): Observable<User> {
+    return this.httpService.post('auth/signup/social', credentials).pipe(
       map((data) => data as User),
       tap((user: User) => this.saveLocalUser(user)),
       catchError(this._handleError)
