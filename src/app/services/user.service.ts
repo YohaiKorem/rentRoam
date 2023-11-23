@@ -49,7 +49,7 @@ export class UserService {
     );
   }
 
-  public signup(credentials: Credentials): Observable<User> {
+  public signup(credentials: Credentials | SocialUser): Observable<User> {
     return this.httpService.post('auth/signup', credentials).pipe(
       map((data) => data as User),
       tap((user: User) => this.saveLocalUser(user)),

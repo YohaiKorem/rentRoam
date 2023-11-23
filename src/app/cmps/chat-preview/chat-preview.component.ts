@@ -56,6 +56,12 @@ export class ChatPreviewComponent extends Unsub implements OnInit {
       }),
     };
   }
+
+  onImgLoaded() {
+    this.isImgLoaded = true;
+    this.isImgErr = false;
+  }
+
   onImgErr() {
     console.log('error');
 

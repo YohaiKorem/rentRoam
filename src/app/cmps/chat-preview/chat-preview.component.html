@@ -7,7 +7,7 @@
       [src]="senderImg"
       loading="lazy"
       (error)="onImgErr()"
-      (load)="isImgLoaded = true"
+      (load)="onImgLoaded()"
     />
     <ng-container *ngIf="!isImgLoaded">
       <svg

@@ -52,10 +52,13 @@ export class SignupModalComponent implements OnInit, OnDestroy {
       this.user = user;
       this.isLoggedIn = user != null;
       console.log(user);
-
-      this.userService.login(this.user).subscribe((user) => {
-        this.loggedInUser = user;
-      });
+      this.modalType === 'Login'
+        ? this.userService.login(this.user).subscribe((user) => {
+            this.loggedInUser = user;
+          })
+        : this.userService.signup(this.user).subscribe((user) => {
+            this.loggedInUser = user;
+          });
     });
   }
 
