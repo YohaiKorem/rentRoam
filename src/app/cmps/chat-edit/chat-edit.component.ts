@@ -5,25 +5,29 @@ import { Msg } from 'src/app/models/msg.model';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service';
-import { take, Observable, of } from 'rxjs';
+import { take, Observable, takeUntil } from 'rxjs';
 import { MsgService } from 'src/app/services/msg.service';
-import { OrderService } from 'src/app/services/order.service.local';
+import { OrderService } from 'src/app/services/order.service';
+import { Unsub } from 'src/app/services/unsub.class';
 
 @Component({
   selector: 'chat-edit',
   templateUrl: './chat-edit.component.html',
   styleUrls: ['./chat-edit.component.scss'],
 })
-export class ChatEditComponent implements OnInit {
+export class ChatEditComponent extends Unsub implements OnInit {
   @Input() msg: Msg | null = null;
   @Input() order!: Order;
   @Input() user!: User;
+
   @Output() orderUpdated = new EventEmitter();
   constructor(
     private stayService: StayService,
     private msgService: MsgService,
     private orderService: OrderService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.initMsg();
@@ -57,8 +61,11 @@ export class ChatEditComponent implements OnInit {
       const msg = { ...this.msg };
       msg.sentTimeStamp = Date.now();
 
-      const order$ = this.msgService.saveMsg(msg, this.order);
-      order$.pipe(take(1)).subscribe((order: Order) => {
+      const order$: Observable<Order> = this.msgService.saveMsg(
+        msg,
+        this.order
+      );
+      order$.pipe(takeUntil(this.unsubscribe$)).subscribe((order: Order) => {
         this.order = order;
         this.orderUpdated.emit(order);
         this.initMsg();

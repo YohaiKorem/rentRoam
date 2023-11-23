@@ -91,7 +91,7 @@
     margin-block-start: 1em;
   }
 
-  &.map-active {
+  &.map-active:has(stay-index) {
     display: grid;
     gap: 1em;
     grid-template-columns: 1fr;

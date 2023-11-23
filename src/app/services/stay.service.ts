@@ -359,6 +359,15 @@ export class StayService {
     this._filterCount$.next(filterCount);
   }
 
+  public clearSearch() {
+    this.setSearchParams({
+      startDate: null,
+      endDate: null,
+      location: { name: null, coords: { lat: 24, lng: 26 } },
+      guests: { adults: 0, children: 0, infants: 0 },
+    });
+  }
+
   public clearFilter() {
     this.setFilter({
       labels: [],

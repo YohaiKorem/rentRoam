@@ -7,7 +7,18 @@ import {
 } from '@angular/core';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map, take, takeUntil, debounceTime, tap } from 'rxjs';
+import {
+  Observable,
+  map,
+  take,
+  takeUntil,
+  debounceTime,
+  switchMap,
+  tap,
+  of,
+  forkJoin,
+  combineLatest,
+} from 'rxjs';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
 import { StayService } from 'src/app/services/stay.service';
 import { User } from 'src/app/models/user.model';
@@ -24,7 +35,7 @@ declare var google: any;
   templateUrl: './stay-details.component.html',
   styleUrls: ['./stay-details.component.scss'],
 })
-export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
+export class StayDetailsComponent extends Unsub implements OnInit {
   @ViewChild('picker') picker!: MatDateRangePicker<any>;
 
   constructor(
@@ -41,6 +52,7 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
     super();
   }
   searchParam!: SearchParam;
+  searchParam$!: Observable<SearchParam>;
 
   currImgUrlIdx = 0;
   isMobile = window.innerWidth <= 780;
@@ -48,7 +60,7 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
   stay: Stay | null = null;
   stay$!: Observable<Stay>;
   user: User | null = null;
-  user$!: Observable<User>;
+  user$!: Observable<User | null>;
   currDate: Date = new Date();
   minEndDate: Date | null = null;
   nightSum: number = 5;
@@ -76,24 +88,37 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
   urlToShare: string = '';
   homeIcon: google.maps.Icon | null = null;
   ngOnInit(): void {
-    this.stay$ = this.activatedRoute.data.pipe(
-      map((data) => {
-        console.log(data);
+    this.user$ = this.userService.loggedInUser$;
+    this.searchParam$ = this.stayService.searchParams$;
+    this.activatedRoute.data
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        switchMap((data) => {
+          this.stay$ = of(data['stay']);
 
-        this.stay = data['stay'];
-        this.center = {
-          lat: this.stay?.loc.lat!,
-          lng: this.stay?.loc.lng!,
-        };
-        return data['stay'];
-      })
-    );
-
-    this.userService.loggedInUser$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((user) => {
-        this.isInWishlist = this.determineIsInWishlist();
+          return combineLatest({
+            user: this.user$,
+            stay: this.stay$,
+          });
+        })
+      )
+      .subscribe(({ user, stay }) => {
+        this.stay = stay;
         this.user = user;
+        this.center = {
+          lat: this.stay.loc.lat,
+          lng: this.stay.loc.lng,
+        };
+        this.setIsInWishlist(user, stay);
+      });
+
+    this.searchParam$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((searchParam: SearchParam) => {
+        this.searchParam = searchParam;
+        this.updateGuestsNumForDisplay(searchParam);
+        this.setDefaultLoc();
+        this.setDefaultDates();
       });
 
     this.sharedService.openModal$
@@ -101,15 +126,8 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
       .subscribe(() => {
         this.toggleModal('close');
       });
-
-    this.stayService.searchParams$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((searchParam) => {
-        this.searchParam = searchParam;
-        this.updateGuestsNumForDisplay(searchParam);
-        this.setDefaultLoc();
-        this.setDefaultDates();
-      });
+    this.user$.pipe(take(1)).subscribe((user) => console.log('User:', user));
+    this.stay$.pipe(take(1)).subscribe((stay) => console.log('Stay:', stay));
   }
 
   ngAfterViewInit() {
@@ -122,7 +140,11 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
       'map-active',
       'remove'
     );
+
+    // document.querySelector('.main-content')?.classList['remove']('.map-active');
     this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
+    this.setIsInWishlist();
+
     this.cdr.detectChanges();
 
     this.sharedService.hideElementOnMobile('app-header');
@@ -131,6 +153,10 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
 
   setSearchParams() {
     this.stayService.setSearchParams(this.searchParam);
+  }
+
+  debug() {
+    console.log(this.user);
   }
 
   onDateChange(): void {
@@ -170,10 +196,18 @@ export class StayDetailsComponent extends Unsub implements OnInit, OnDestroy {
     return new Date(timestamp);
   }
 
-  determineIsInWishlist(): boolean {
-    return this.user?.wishlists.some((wishlist) => {
-      return wishlist.stays.some((stay) => stay._id === this.stay!._id);
-    })!;
+  setIsInWishlist(
+    user: User | null = this.user,
+    stay: Stay | null = this.stay
+  ) {
+    if (!stay) return;
+    this.isInWishlist = !user
+      ? false
+      : user.wishlists.some((wishlist) => {
+          return wishlist.stays.some((_stay) => {
+            return _stay._id === stay._id;
+          });
+        });
   }
 
   onRemoveFromWishlist() {

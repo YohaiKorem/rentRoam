@@ -50,6 +50,8 @@
       class="inside-wishlist-details"
       [stays]="stays$ | async"
       [currDate]="currDate"
+      [searchParam]="searchParam"
+      [stayFilter]="stayFilter"
     ></stay-list>
   </section>
   <section *ngIf="!isMobile" class="map-container hidden-on-mobile">

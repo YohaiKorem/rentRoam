@@ -10,12 +10,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { StayService } from 'src/app/services/stay.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { Unsub } from 'src/app/services/unsub.class';
 @Component({
   selector: 'google-map-cmp',
   templateUrl: './google-map.component.html',
   styleUrls: ['./google-map.component.scss'],
 })
-export class GoogleMapCmpComponent implements OnInit {
+export class GoogleMapCmpComponent extends Unsub implements OnInit {
   @Input() stays!: Stay[] | null;
   @Input() zoom: number = 15;
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
@@ -23,19 +24,9 @@ export class GoogleMapCmpComponent implements OnInit {
     private stayService: StayService,
     public trackByService: TrackByService
   ) {
-    this.stayService.searchParams$
-      .pipe(takeUntil(this.destroySubject$))
-      .subscribe((searchParam) => {
-        let coords = { lat: 24, lng: 12 };
-        let { lat, lng } = searchParam.location.coords;
-        if (lat && lng) coords = { lat, lng };
-
-        this.searchParam = searchParam;
-        this.center = coords;
-      });
+    super();
   }
   searchParam = {} as SearchParam;
-  private destroySubject$ = new Subject<null>();
   center!: google.maps.LatLngLiteral;
 
   display!: google.maps.LatLngLiteral;
@@ -47,6 +38,16 @@ export class GoogleMapCmpComponent implements OnInit {
   selectedStay: Stay | null = null;
 
   ngOnInit(): void {
+    this.stayService.searchParams$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((searchParam) => {
+        let coords = { lat: 24, lng: 12 };
+        let { lat, lng } = searchParam.location.coords;
+        if (lat && lng) coords = { lat, lng };
+
+        this.searchParam = searchParam;
+        this.center = coords;
+      });
     this.updateStaysCoords();
   }
 

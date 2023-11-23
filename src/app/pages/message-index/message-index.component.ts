@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, switchMap, map, forkJoin, takeUntil } from 'rxjs';
+import {
+  Observable,
+  switchMap,
+  map,
+  forkJoin,
+  takeUntil,
+  combineLatest,
+} from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
@@ -42,7 +49,7 @@ export class MessageIndexComponent extends Unsub implements OnInit {
             user!._id,
             'buyer'
           );
-          return forkJoin([userGuestOrders$, userHostOrders$]);
+          return combineLatest([userGuestOrders$, userHostOrders$]);
         }),
         map(([guestOrders, hostOrders]) => [...guestOrders, ...hostOrders])
       )

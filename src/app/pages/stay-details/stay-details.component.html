@@ -1,4 +1,5 @@
 <section
+  (click)="debug()"
   *ngIf="stay$ | async as stay"
   class="stay-details-wrapper flex align-center column"
 >
@@ -309,7 +310,7 @@
               ></path>
             </svg>
           </ng-template>
-          <span>Save</span>
+          <span>Save<span *ngIf="isInWishlist">d</span></span>
         </button>
       </div>
     </div>

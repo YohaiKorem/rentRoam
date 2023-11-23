@@ -43,14 +43,14 @@ export class StayIndexComponent extends Unsub implements OnInit {
   subscription!: Subscription;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
+  stayFilter: StayFilter | null = null;
+  searchParam = {} as SearchParam;
+  distances!: Observable<StayDistance[]>;
   isFilterModalOpen = false;
   isWishlistModalOpen = false;
   isModalOpen: boolean = false;
   searchedLocation: any | null = null;
-  searchParam = {} as SearchParam;
   currDate = { start: new Date(), end: new Date() };
-  distances!: Observable<StayDistance[]>;
-  stayFilter: StayFilter | null = null;
   userLoc: { lat: number | null; lng: number | null } = {
     lat: null,
     lng: null,

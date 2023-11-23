@@ -9,29 +9,33 @@
         [currChat]="currChat"
       ></chat-list>
     </aside>
-    <section class="main-chat flex column align-center space-between shadow">
-      <div class="msg-list-container full-width">
+    <section class="main-chat flex column shadow">
+      <div *ngIf="currChat" class="msg-list-container full-width">
         <msg-list
           [order]="currChat"
           [user]="user"
           [msgs]="currChat.msgs"
         ></msg-list>
       </div>
-      <div class="chat-edit-container full-width p1">
+      <div
+        *ngIf="currChat"
+        class="chat-edit-container flex auto-center full-width"
+      >
         <chat-edit
+          class="full-width"
           (orderUpdated)="updateCurrChat($event)"
           [user]="user"
           [order]="currChat"
         ></chat-edit>
       </div>
     </section>
-    <aside class="order-details-wrapper">
+    <aside *ngIf="currChat" class="order-details-wrapper">
       <h3 class="dark-font fw500 p1">Order details</h3>
       <trip-details [trip]="currChat"></trip-details>
     </aside>
   </ng-container>
   <section class="narrow-layout show-on-mobile">
-    <section class="inbox">
+    <section *ngIf="currChat" class="inbox">
       <h3 class="dark-font fw500 p1">Inbox</h3>
       <chat-list
         (setCurrChat)="navToChat($event)"

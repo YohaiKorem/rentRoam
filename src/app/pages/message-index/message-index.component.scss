@@ -9,8 +9,15 @@
   }
 
   .main-chat {
+    height: calc(100dvh - $header-height);
+
+    .msg-list-container {
+      min-height: 85%;
+    }
     .chat-edit-container {
       border-block-start: 1px solid $secondaryClr3;
+      height: 100%;
+      padding: 0;
     }
   }
   @include for-mobile-layout {

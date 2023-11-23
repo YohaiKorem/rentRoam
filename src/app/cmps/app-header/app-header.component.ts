@@ -190,13 +190,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   }
 
   clearSearch() {
-    this.searchParam.startDate = null;
-    this.searchParam.endDate = null;
-    this.searchParam.location.name = null;
-    this.searchParam.guests.adults = 0;
-    this.searchParam.guests.children = 0;
-    this.searchParam.guests.infants = 0;
-    this.stayService.setSearchParams(this.searchParam);
+    this.stayService.clearSearch();
     this.router.navigate(['/stay'], {
       relativeTo: this.activatedRoute,
       queryParamsHandling: 'preserve',
