@@ -79,7 +79,6 @@ export class AppComponent extends Unsub {
       .subscribe((pagination: Pagination) => {
         this.pagination = pagination;
       });
-    this.socketService.setup();
   }
 
   ngAfterViewInit() {

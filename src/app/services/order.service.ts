@@ -8,6 +8,8 @@ import {
   map,
   debounceTime,
   tap,
+  switchMap,
+  of,
 } from 'rxjs';
 import { HttpService } from './http.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -54,28 +56,59 @@ export class OrderService {
     this.socketService.on(
       this.socketService.SOCKET_EVENT_ORDER_UPDATED,
       (updatedOrder: Order) => {
-        const currentOrders = this._orders$.getValue();
-        const updatedOrders = currentOrders.map((order) =>
-          order._id === updatedOrder._id ? updatedOrder : order
-        );
-        this._orders$.next(updatedOrders);
+        console.log('order in socket listener in order service', updatedOrder);
       }
     );
   }
+
+  emitObservableFromSocket() {}
 
   private _updateOrder(order: Order): Observable<Order> {
     return this.httpService.put(`${BASE_URL}/${order._id}`, order).pipe(
       debounceTime(500),
       map((data: any) => data as Order),
-      tap((order: Order) =>
+      tap((updatedOrder: Order) => {
+        // Emit the socket event
         this.socketService.emit(
           this.socketService.SOCKET_EVENT_ORDER_UPDATED,
-          order
-        )
-      ),
+          updatedOrder
+        );
+        // this.socketService.emit(
+        //   this.socketService.SOCKET_EVENT_USER_UPDATED,
+        //   updatedOrder
+        // );
+      }),
+      switchMap((updatedOrder: Order) => {
+        return this.socketService.listen(
+          this.socketService.SOCKET_EVENT_ORDER_UPDATED
+        );
+        // return new Observable<Order>((observer) => {
+        //   const handler = (socketOrder: Order) => {
+        //     if (socketOrder._id === updatedOrder._id) {
+        //       observer.next(socketOrder);
+        //       observer.complete();
+        //     }
+        //   };
+
+        //   // Listen for socket updates
+        //   this.socketService.on(
+        //     this.socketService.SOCKET_EVENT_ORDER_UPDATED,
+        //     handler
+        //   );
+
+        //   // Cleanup
+        //   return () => {
+        //     this.socketService.off(
+        //       this.socketService.SOCKET_EVENT_ORDER_UPDATED,
+        //       handler
+        //     );
+        //   };
+        // });
+      }),
       catchError(this._handleError)
     );
   }
+
   private _addOrder(order: Order): Observable<Order> {
     return this.httpService.post(`${BASE_URL}`, order).pipe(
       debounceTime(500),

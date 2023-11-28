@@ -37,7 +37,6 @@ export class HttpService {
 
     if (method === 'GET') {
       params = new HttpParams({ fromObject: this.serializeData(data) });
-      console.log(params);
     } else {
       body = data;
     }

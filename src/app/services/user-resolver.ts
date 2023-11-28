@@ -6,9 +6,6 @@ import { UserService } from './user.service';
 export function UserResolver(route: ActivatedRouteSnapshot) {
   const userId = route.params['userId'];
   const wishlistId = route.params['wishlistId'];
-  console.log(userId);
 
-  return inject(UserService)
-    .getUserById(userId)
-    .pipe(delay(10));
+  return inject(UserService).getUserById(userId).pipe(delay(10));
 }

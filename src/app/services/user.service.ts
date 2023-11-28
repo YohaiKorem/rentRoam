@@ -180,8 +180,6 @@ export class UserService {
   }
 
   public getLoggedInUser() {
-    console.log('hello freak bitches');
-
     return this.sessionStorageUser;
   }
 

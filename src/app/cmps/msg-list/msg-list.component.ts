@@ -26,13 +26,10 @@ export class MsgListComponent {
     private cdr: ChangeDetectorRef,
     public trackByService: TrackByService
   ) {}
-  ngOnInit() {
-    console.log(this.msgs);
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     // if (changes['msgs'] || changes['user'] || changes['order'])
     //   this.cdr.detectChanges();
-    console.log(this.msgs);
   }
 }
