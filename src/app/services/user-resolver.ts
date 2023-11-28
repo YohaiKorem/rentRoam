@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { debounceTime, delay } from 'rxjs';
+import { delay } from 'rxjs';
 import { UserService } from './user.service';
 
 export function UserResolver(route: ActivatedRouteSnapshot) {
@@ -10,5 +10,5 @@ export function UserResolver(route: ActivatedRouteSnapshot) {
 
   return inject(UserService)
     .getUserById(userId)
-    .pipe(debounceTime(500), delay(10));
+    .pipe(delay(10));
 }

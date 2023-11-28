@@ -12,6 +12,8 @@ import {
   switchMap,
   take,
   debounceTime,
+  Subject,
+  shareReplay,
 } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
@@ -27,6 +29,13 @@ const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
   providedIn: 'root',
 })
 export class UserService {
+  private userRequestSubject = new Subject<string>();
+  private userResponse$ = this.userRequestSubject.pipe(
+    debounceTime(500),
+    switchMap((userId) => this.httpService.get(`${BASE_URL}/${userId}`)),
+    shareReplay(1)
+  );
+
   private _users$ = new BehaviorSubject<User[]>([]);
   public users$ = this._users$.asObservable();
   private _loggedInUser$ = new BehaviorSubject<User | null>(
@@ -78,8 +87,10 @@ export class UserService {
   }
 
   public getUserById(userId: string): Observable<User> {
-    return this.httpService.get(`${BASE_URL}/${userId}`).pipe(
-      debounceTime(500),
+    const user: User = this.getLoggedInUser();
+    if (user._id === userId) return of(user);
+    this.userRequestSubject.next(userId);
+    return this.userResponse$.pipe(
       map((data: any) => data as User),
       catchError(this._handleError)
     );
