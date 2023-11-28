@@ -229,7 +229,7 @@ export class AppHeaderComponent extends Unsub implements OnInit {
       .logout()
       .pipe(take(1))
       .subscribe((user) => (this.loggedInUser = user));
-    // this.socialSignOut();
+    this.socialSignOut();
     this.router.navigate(['/stay']);
   }
 

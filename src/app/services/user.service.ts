@@ -57,15 +57,9 @@ export class UserService {
     );
   }
   public socialLogin(info: SocialUser): Observable<User> {
-    return this.httpService.post('auth/login/social', info).pipe(
-      map((data) => data as User),
-      tap((user: User) => this.saveLocalUser(user)),
-      catchError(this._handleError)
-    );
-  }
-
-  public socialSignup(credentials: SocialUser): Observable<User> {
-    return this.httpService.post('auth/signup/social', credentials).pipe(
+    const route = `auth/${info.provider.toLocaleLowerCase()}`;
+    return this.httpService.get(route, info).pipe(
+      debounceTime(500),
       map((data) => data as User),
       tap((user: User) => this.saveLocalUser(user)),
       catchError(this._handleError)
@@ -158,15 +152,16 @@ export class UserService {
     );
   }
 
-  private saveLocalUser(user: User) {
-    const userToSave = new User(
-      user._id,
-      user.fullname,
-      user.imgUrl,
-      user.username,
-      user.wishlists,
-      user.isOwner
-    );
+  private saveLocalUser(user: any) {
+    const userToSave = {
+      _id: user._id,
+      fullname: user.fullname,
+      imgUrl: user.imgUrl,
+      username: user.username,
+      wishlists: user.wishlists,
+      isOwner: user.isOwner,
+      id: user.id ? user.id : null,
+    };
 
     this.sessionStorageUser = userToSave;
     this._loggedInUser$.next(userToSave);

@@ -37,6 +37,7 @@ export class HttpService {
 
     if (method === 'GET') {
       params = new HttpParams({ fromObject: this.serializeData(data) });
+      console.log(params);
     } else {
       body = data;
     }
@@ -57,7 +58,7 @@ export class HttpService {
         if (typeof data[key] === 'object') {
           serialized[key] = JSON.stringify(data[key]);
         } else {
-          serialized[key] = data[key].toString();
+          if (data[key]) serialized[key] = data[key].toString();
         }
       }
     }

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user.model';
-import { Observable, tap, take, catchError } from 'rxjs';
+import { Observable, tap, take, catchError, takeUntil } from 'rxjs';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import {
   FacebookLoginProvider,
@@ -22,12 +22,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { Credentials } from 'src/app/models/credentials.model';
 import { UserMsgService } from 'src/app/services/user-msg.service';
+import { Unsub } from 'src/app/services/unsub.class';
 @Component({
   selector: 'signup-modal',
   templateUrl: './signup-modal.component.html',
   styleUrls: ['./signup-modal.component.scss'],
 })
-export class SignupModalComponent implements OnInit, OnDestroy {
+export class SignupModalComponent extends Unsub implements OnInit {
   @ViewChild('customGoogleBtn') customGoogleBtn!: ElementRef;
   @Input() modalType: string = 'Login';
   @Output() typeChanged = new EventEmitter();
@@ -38,7 +39,9 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     private authService: SocialAuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
   user!: SocialUser;
   isLoggedIn!: boolean;
   loggedInUser: User | null = null;
@@ -48,18 +51,19 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   elHeader = document.querySelector('.main-header');
 
   ngOnInit() {
-    this.authService.authState.subscribe((user: SocialUser) => {
-      this.user = user;
-      this.isLoggedIn = user != null;
-      console.log(user);
-      this.modalType === 'Login'
-        ? this.userService.socialLogin(this.user).subscribe((user) => {
-            this.loggedInUser = user;
-          })
-        : this.userService.socialSignup(this.user).subscribe((user) => {
+    this.authService.authState
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user: SocialUser) => {
+        this.user = user;
+        this.isLoggedIn = user != null;
+        console.log(user);
+        this.userService
+          .socialLogin(this.user)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((user) => {
             this.loggedInUser = user;
           });
-    });
+      });
   }
 
   ngAfterViewInit() {
@@ -132,7 +136,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
       .click();
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     this.elHeader?.classList.remove('hidden-on-mobile');
+    super.ngOnDestroy();
   }
 }
