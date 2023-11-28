@@ -7,6 +7,7 @@ import {
   forkJoin,
   takeUntil,
   combineLatest,
+  debounceTime,
 } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
@@ -38,6 +39,7 @@ export class MessageIndexComponent extends Unsub implements OnInit {
   ngOnInit(): void {
     this.usererService.loggedInUser$
       .pipe(
+        debounceTime(500),
         takeUntil(this.unsubscribe$),
         switchMap((user) => {
           this.user = user!;

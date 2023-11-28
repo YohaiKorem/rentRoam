@@ -1,7 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
-import { Observable, tap, map, of, take, takeUntil, switchMap } from 'rxjs';
+import {
+  Observable,
+  tap,
+  map,
+  of,
+  take,
+  takeUntil,
+  switchMap,
+  debounceTime,
+} from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ActivatedRoute } from '@angular/router';
@@ -32,6 +41,7 @@ export class ChatIndexComponent extends Unsub implements OnInit {
   ngOnInit(): void {
     this.route.data
       .pipe(
+        debounceTime(500),
         takeUntil(this.unsubscribe$),
         switchMap(({ order, user }) => {
           this.order = order;

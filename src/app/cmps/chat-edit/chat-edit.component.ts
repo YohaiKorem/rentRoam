@@ -5,7 +5,7 @@ import { Msg } from 'src/app/models/msg.model';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service';
-import { take, Observable, takeUntil } from 'rxjs';
+import { take, Observable, takeUntil, debounceTime } from 'rxjs';
 import { MsgService } from 'src/app/services/msg.service';
 import { OrderService } from 'src/app/services/order.service';
 import { Unsub } from 'src/app/services/unsub.class';
@@ -37,7 +37,7 @@ export class ChatEditComponent extends Unsub implements OnInit {
     if (this.order.buyer._id === this.user._id) {
       this.stayService
         .findHostById(this.order.hostId)
-        .pipe(take(1))
+        .pipe(debounceTime(500), take(1))
         .subscribe((host) => {
           if (host && host._id) {
             msg.toId = host._id;

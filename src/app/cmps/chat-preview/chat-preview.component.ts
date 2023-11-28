@@ -4,7 +4,7 @@ import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { StayService } from 'src/app/services/stay.service';
 import { UserService } from 'src/app/services/user.service';
-import { take, Observable, takeUntil } from 'rxjs';
+import { take, Observable, takeUntil, debounceTime } from 'rxjs';
 import { StayHost } from 'src/app/models/host.model';
 import { Unsub } from 'src/app/services/unsub.class';
 @Component({
@@ -31,7 +31,7 @@ export class ChatPreviewComponent extends Unsub implements OnInit {
     if (this.order.buyer._id === this.user._id) {
       this.userService
         .getUserById(this.order.hostId)
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
         .subscribe((user) => {
           this.messageSender = user!;
           this.senderImg = user.imgUrl;

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { take, tap, takeUntil } from 'rxjs';
+import { take, tap, takeUntil, debounceTime } from 'rxjs';
 import { Buyer } from 'src/app/models/buyer.model';
 import { StayHost } from 'src/app/models/host.model';
 import { Msg } from 'src/app/models/msg.model';
@@ -36,7 +36,7 @@ export class MsgPreviewComponent extends Unsub implements OnInit {
       ? (this.msgSender = this.user)
       : this.userService
           .getUserById(this.msg.fromId)
-          .pipe(takeUntil(this.unsubscribe$))
+          .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
           .subscribe((user) => (this.msgSender = user));
     this.formattedDate = this.formatDate(this.msg);
   }

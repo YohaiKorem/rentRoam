@@ -7,9 +7,11 @@ import {
   catchError,
   map,
   debounceTime,
+  tap,
 } from 'rxjs';
 import { HttpService } from './http.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SocketService } from './socket.service';
 const BASE_URL = 'order';
 
 @Injectable({
@@ -18,7 +20,12 @@ const BASE_URL = 'order';
 export class OrderService {
   private _orders$ = new BehaviorSubject<Order[]>([]);
   public orders$ = this._orders$.asObservable();
-  constructor(private httpService: HttpService) {}
+  constructor(
+    private httpService: HttpService,
+    private socketService: SocketService
+  ) {
+    this.listenToOrderUpdates();
+  }
 
   getOrderById(orderId: string): Observable<Order> {
     return this.httpService.get(`${BASE_URL}/${orderId}`).pipe(
@@ -43,10 +50,29 @@ export class OrderService {
     return order._id ? this._updateOrder(order) : this._addOrder(order);
   }
 
+  private listenToOrderUpdates() {
+    this.socketService.on(
+      this.socketService.SOCKET_EVENT_ORDER_UPDATED,
+      (updatedOrder: Order) => {
+        const currentOrders = this._orders$.getValue();
+        const updatedOrders = currentOrders.map((order) =>
+          order._id === updatedOrder._id ? updatedOrder : order
+        );
+        this._orders$.next(updatedOrders);
+      }
+    );
+  }
+
   private _updateOrder(order: Order): Observable<Order> {
     return this.httpService.put(`${BASE_URL}/${order._id}`, order).pipe(
       debounceTime(500),
       map((data: any) => data as Order),
+      tap((order: Order) =>
+        this.socketService.emit(
+          this.socketService.SOCKET_EVENT_ORDER_UPDATED,
+          order
+        )
+      ),
       catchError(this._handleError)
     );
   }
@@ -54,6 +80,12 @@ export class OrderService {
     return this.httpService.post(`${BASE_URL}`, order).pipe(
       debounceTime(500),
       map((data: any) => data as Order),
+      tap((order: Order) =>
+        this.socketService.emit(
+          this.socketService.SOCKET_EVENT_ORDER_ADDED,
+          order
+        )
+      ),
       catchError(this._handleError)
     );
   }

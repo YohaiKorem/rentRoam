@@ -24,8 +24,8 @@ import { StayService } from '../services/stay.service';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { environment } from 'src/environments/environment';
 import { SharedService } from '../services/shared.service';
-import { HttpClient } from '@angular/common/http';
 import { Unsub } from '../services/unsub.class';
+import { SocketService } from '../services/socket.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -44,7 +44,7 @@ export class AppComponent extends Unsub {
     private userService: UserService,
     private cdr: ChangeDetectorRef,
     private sharedService: SharedService,
-    private httpClient: HttpClient
+    private socketService: SocketService
   ) {
     super();
   }
@@ -79,6 +79,7 @@ export class AppComponent extends Unsub {
       .subscribe((pagination: Pagination) => {
         this.pagination = pagination;
       });
+    this.socketService.setup();
   }
 
   ngAfterViewInit() {
