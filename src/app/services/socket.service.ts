@@ -45,6 +45,14 @@ export class SocketService {
     this.clientSocket!.on(eventName, cb);
   }
 
+  // public on(eventName: string): Observable<any> {
+  //   return new Observable((observer) => {
+  //     this.clientSocket!.on(eventName, (data) => {
+  //       observer.next(data);
+  //     });
+  //   });
+  // }
+
   public off(eventName: string, cb: any = null) {
     if (!this.clientSocket!) return;
     if (!cb) this.clientSocket!.removeAllListeners(eventName);

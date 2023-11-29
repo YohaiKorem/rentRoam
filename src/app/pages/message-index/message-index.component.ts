@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   Observable,
@@ -13,6 +13,7 @@ import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { SocketService } from 'src/app/services/socket.service';
 import { Unsub } from 'src/app/services/unsub.class';
 import { UserService } from 'src/app/services/user.service';
 
@@ -25,9 +26,11 @@ export class MessageIndexComponent extends Unsub implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private orderService: OrderService,
     private usererService: UserService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private socketService: SocketService
   ) {
     super();
   }
@@ -43,21 +46,31 @@ export class MessageIndexComponent extends Unsub implements OnInit {
         takeUntil(this.unsubscribe$),
         switchMap((user) => {
           this.user = user!;
-          const userHostOrders$ = this.orderService.getOrdersForEntityById(
-            user!._id,
-            'host'
-          );
-          const userGuestOrders$ = this.orderService.getOrdersForEntityById(
-            user!._id,
-            'buyer'
-          );
-          return combineLatest([userGuestOrders$, userHostOrders$]);
-        }),
-        map(([guestOrders, hostOrders]) => [...guestOrders, ...hostOrders])
+          return this.orderService.getOrdersForEntityById(user!._id, '');
+          // const userHostOrders$ = this.orderService.getOrdersForEntityById(
+          //   user!._id,
+          //   'host'
+          // );
+          // const userGuestOrders$ = this.orderService.getOrdersForEntityById(
+          //   user!._id,
+          //   'buyer'
+          // );
+          // return combineLatest([userGuestOrders$, userHostOrders$]);
+        })
       )
       .subscribe((orders) => {
         this.orders = orders;
         this.setCurrChat(orders[0]?._id);
+        console.log(this.orders);
+
+        this.socketService.on(
+          this.socketService.SOCKET_EVENT_ORDER_UPDATED,
+          (order) => {
+            this.currChat._id === order._id
+              ? this.updateCurrChat(order)
+              : this.updateOrderInOrders(order);
+          }
+        );
       });
 
     this.sharedService.hideElementOnMobile('.main-header');
@@ -69,8 +82,19 @@ export class MessageIndexComponent extends Unsub implements OnInit {
   }
 
   updateOrderInOrders(order: Order) {
+    console.log('order in msgindex', order);
+    if (!this.orders) {
+      console.error('Orders array is undefined');
+      return;
+    }
     const idx = this.orders.findIndex((o) => o._id === order._id);
+    console.log('idx', idx);
+
+    console.log('this.orders before splice', this.orders);
     this.orders.splice(idx, 1, order);
+    console.log('this.orders after splice', this.orders);
+
+    this.cdr.detectChanges();
   }
 
   setCurrChat(orderId: string) {
@@ -84,6 +108,7 @@ export class MessageIndexComponent extends Unsub implements OnInit {
 
   override ngOnDestroy() {
     this.sharedService.showElementOnMobile('.main-header');
+    this.socketService.off(this.socketService.SOCKET_EVENT_ORDER_UPDATED);
     super.ngOnDestroy();
   }
 }
