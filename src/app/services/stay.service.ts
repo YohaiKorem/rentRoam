@@ -205,7 +205,7 @@ export class StayService {
   }
 
   private _updateStay(stay: Stay): Observable<Stay> {
-    return this.httpService.put(BASE_URL, stay).pipe(
+    return this.httpService.put(`${BASE_URL}/${stay._id}`, stay).pipe(
       debounceTime(500),
       map((data: any) => data as Stay),
       catchError(this._handleError)

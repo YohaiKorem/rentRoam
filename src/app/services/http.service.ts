@@ -46,6 +46,7 @@ export class HttpService {
       .request(method, `${this.BASE_URL}${endpoint}`, {
         body,
         params,
+        // withCredentials: true,
       })
       .pipe(catchError(this.handleError));
   }
@@ -65,8 +66,8 @@ export class HttpService {
   }
 
   private handleError(error: any) {
-    console.error('An error occurred:', error);
+    console.error('An error in http service:', error);
 
-    return throwError(error);
+    return throwError(() => error);
   }
 }

@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Unsub } from 'src/app/services/unsub.class';
+import { UserMsgService } from 'src/app/services/user-msg.service';
 
 @Component({
   selector: 'stay-edit',
@@ -42,7 +43,8 @@ export class StayEditComponent extends Unsub implements OnInit {
     private utilService: UtilService,
     private router: Router,
     private route: ActivatedRoute,
-    public trackByService: TrackByService
+    public trackByService: TrackByService,
+    private userMsgService: UserMsgService
   ) {
     super();
   }
@@ -68,8 +70,6 @@ export class StayEditComponent extends Unsub implements OnInit {
               } else {
                 this.stayHost = StayHost.newHostFromUser(user);
                 this.stay.host = this.stayHost;
-                console.log(this.stay.host);
-                console.log(this.stayHost);
               }
             });
         }
@@ -117,8 +117,6 @@ export class StayEditComponent extends Unsub implements OnInit {
     const stay = { ...this.stay };
     stay.host = this.stayHost;
 
-    console.log(stay);
-
     if (
       stay.name &&
       stay.price &&
@@ -141,7 +139,9 @@ export class StayEditComponent extends Unsub implements OnInit {
       this.userService.updateUser(this.user);
       this.router.navigate([`/stay/${this.stay._id}`]);
     } else {
-      console.log('not all inputs valid');
+      this.userMsgService.showUserErr(
+        "Stay wasn't saved because not all inputs were valid"
+      );
     }
   }
 
@@ -231,6 +231,9 @@ export class StayEditComponent extends Unsub implements OnInit {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((host) => {
           if (!host) this.user.isOwner = false;
+          this.userMsgService.showUserErr(
+            "Stay wasn't saved because not all inputs were valid"
+          );
         });
       return;
     }
