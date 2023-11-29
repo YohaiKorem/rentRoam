@@ -5,6 +5,7 @@ import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { SocketService } from 'src/app/services/socket.service';
 import { StayService } from 'src/app/services/stay.service';
 import { Unsub } from 'src/app/services/unsub.class';
 import { UserService } from 'src/app/services/user.service';
@@ -24,7 +25,8 @@ export class TripIndexComponent extends Unsub implements OnInit {
     private userService: UserService,
     private stayService: StayService,
     private sharedService: SharedService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private socketService: SocketService
   ) {
     super();
   }
@@ -39,6 +41,13 @@ export class TripIndexComponent extends Unsub implements OnInit {
       )
       .subscribe((orders: Order[]) => {
         this.orders = orders;
+        this.socketService.on(
+          this.socketService.SOCKET_EVENT_ORDER_UPDATED,
+          (order: Order) => {
+            const idx = this.orders.findIndex((o) => o._id === order._id);
+            if (idx !== -1) this.orders.splice(idx, 1, order);
+          }
+        );
       });
     this.sharedService.hideElementOnMobile('.main-header');
   }
@@ -48,6 +57,7 @@ export class TripIndexComponent extends Unsub implements OnInit {
 
   override ngOnDestroy(): void {
     this.sharedService.showElementOnMobile('.main-header');
+    this.socketService.off(this.socketService.SOCKET_EVENT_ORDER_UPDATED);
     super.ngOnDestroy();
   }
 }

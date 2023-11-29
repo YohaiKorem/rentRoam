@@ -23,6 +23,7 @@ import { Stay } from 'src/app/models/stay.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { SocketService } from 'src/app/services/socket.service';
 import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { Unsub } from 'src/app/services/unsub.class';
@@ -53,7 +54,8 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
     public trackByService: TrackByService,
     private router: Router,
     private sharedService: SharedService,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private socketService: SocketService
   ) {
     super();
   }
@@ -72,10 +74,17 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
     );
     res.pipe(takeUntil(this.unsubscribe$)).subscribe(({ orders, stays }) => {
       console.log(stays);
-
       this.orders = orders;
       this.stays = stays;
+      this.socketService.on(
+        this.socketService.SOCKET_EVENT_ORDER_ADDED,
+        (order: Order) => {
+          if (this.user && this.user._id === order.hostId)
+            this.orders.unshift(order);
+        }
+      );
 
+      this.updateOrderStatsMap();
       this.updateOrderStatsMap();
     });
 
