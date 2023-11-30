@@ -52,7 +52,10 @@ export class AppComponent extends Unsub {
   location: any | null = null;
   stays: Stay[] | null = null;
   stays$!: Observable<Stay[]>;
-  pagination!: Pagination;
+  pagination: Pagination = {
+    pageIdx: 0,
+    pageSize: 50,
+  };
   currentUrl!: string;
   userLoc: any = { lat: null, lng: null };
   ngOnInit(): void {

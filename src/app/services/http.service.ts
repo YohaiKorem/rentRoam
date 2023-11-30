@@ -40,13 +40,15 @@ export class HttpService {
     } else {
       body = data;
     }
+    console.log(body);
+
     console.log(method, `${this.BASE_URL}${endpoint}`);
 
     return this.http
       .request(method, `${this.BASE_URL}${endpoint}`, {
         body,
         params,
-        // withCredentials: true,
+        withCredentials: true,
       })
       .pipe(catchError(this.handleError));
   }
@@ -58,7 +60,7 @@ export class HttpService {
         if (typeof data[key] === 'object') {
           serialized[key] = JSON.stringify(data[key]);
         } else {
-          if (data[key]) serialized[key] = data[key].toString();
+          if (data[key] !== undefined) serialized[key] = data[key].toString();
         }
       }
     }

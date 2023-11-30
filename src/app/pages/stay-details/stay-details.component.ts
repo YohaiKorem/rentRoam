@@ -361,8 +361,14 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       !this.stay ||
       !this.searchParam.startDate ||
       !this.searchParam.endDate
-    )
+    ) {
+      this.router.navigate(['/login'], {
+        relativeTo: this.activatedRoute,
+        queryParamsHandling: 'preserve',
+      });
       return;
+    }
+
     const order = Order.createOrderFromInput(
       this.user,
       this.stay,

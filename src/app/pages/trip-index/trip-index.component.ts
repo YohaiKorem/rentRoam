@@ -1,12 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable, debounceTime, switchMap, takeUntil } from 'rxjs';
 import { Order } from 'src/app/models/order.model';
 import { User } from 'src/app/models/user.model';
 import { OrderService } from 'src/app/services/order.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { SocketService } from 'src/app/services/socket.service';
-import { StayService } from 'src/app/services/stay.service';
 import { Unsub } from 'src/app/services/unsub.class';
 import { UserService } from 'src/app/services/user.service';
 
@@ -23,7 +21,7 @@ export class TripIndexComponent extends Unsub implements OnInit {
   isMobile: boolean = window.innerWidth < 700;
   constructor(
     private userService: UserService,
-    private stayService: StayService,
+    private cdr: ChangeDetectorRef,
     private sharedService: SharedService,
     private orderService: OrderService,
     private socketService: SocketService
@@ -46,6 +44,7 @@ export class TripIndexComponent extends Unsub implements OnInit {
           (order: Order) => {
             const idx = this.orders.findIndex((o) => o._id === order._id);
             if (idx !== -1) this.orders.splice(idx, 1, order);
+            this.cdr.detectChanges();
           }
         );
       });

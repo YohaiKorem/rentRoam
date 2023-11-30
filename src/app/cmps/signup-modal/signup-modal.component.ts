@@ -45,7 +45,7 @@ export class SignupModalComponent extends Unsub implements OnInit {
   user!: SocialUser;
   isLoggedIn!: boolean;
   loggedInUser: User | null = null;
-  loggedInUser$!: Observable<User | null>;
+  loggedInUser$: Observable<User | null> = this.userService.loggedInUser$;
   credentials: Credentials = { username: '', password: '' };
   isLoginPage: boolean = this.determineIsLoginPage();
   elHeader = document.querySelector('.main-header');
@@ -64,6 +64,9 @@ export class SignupModalComponent extends Unsub implements OnInit {
             this.loggedInUser = user;
           });
       });
+
+    console.log('loggedInUser', this.loggedInUser);
+    console.log('user', this.user);
   }
 
   ngAfterViewInit() {

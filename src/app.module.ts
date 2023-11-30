@@ -11,7 +11,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppHeaderComponent } from './app/cmps/app-header/app-header.component';
 import { StayIndexComponent } from './app/pages/stay-index/stay-index.component';
 import { StayDetailsComponent } from './app/pages/stay-details/stay-details.component';
-import { LoginComponent } from './app/pages/login/login.component';
 import { StayListComponent } from './app/cmps/stay-list/stay-list.component';
 import { StayPreviewComponent } from './app/cmps/stay-preview/stay-preview.component';
 import { FilterModalComponent } from './app/cmps/filter-modal/filter-modal.component';
@@ -76,12 +75,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component';
 import { ShareMenuComponent } from './app/cmps/share-menu/share-menu.component';
 import { UserMsgComponent } from './app/cmps/user-msg/user-msg.component';
+import { environment } from './environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
     AppHeaderComponent,
     StayIndexComponent,
-    LoginComponent,
     StayDetailsComponent,
     StayListComponent,
     StayPreviewComponent,
@@ -169,12 +168,14 @@ import { UserMsgComponent } from './app/cmps/user-msg/user-msg.component';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '346749624393-mah9uga9dklfedeg946m1dlkknji4v6e.apps.googleusercontent.com'
+              `${environment.googleLoginId}.apps.googleusercontent.com`
             ),
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('644003741032425'),
+            provider: new FacebookLoginProvider(
+              `${environment.facebookLoginId}`
+            ),
           },
         ],
         onError: (err) => {
