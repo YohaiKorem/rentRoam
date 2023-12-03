@@ -32,6 +32,7 @@ export class WishlistIndexComponent extends Unsub implements OnInit {
         this.loggedInUser = user;
       });
     this.sharedService.hideElementOnMobile('.main-header');
+    this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
   }
 
   toggleEditMode() {

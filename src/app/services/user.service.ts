@@ -75,20 +75,24 @@ export class UserService {
     );
   }
 
-  public logout(): Observable<null> {
+  public logout(): Observable<any> {
     return this.httpService.post('auth/logout').pipe(
       tap(() => {
-        sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
+        this.clearLocalUser();
         this._loggedInUser$.next(null);
       }),
-      map(() => null),
+      map((res) => {
+        console.log('res in userservice logout', res);
+
+        return res;
+      }),
       catchError(this._handleError)
     );
   }
 
   public getUserById(userId: string): Observable<User> {
-    const user: User = this.getLoggedInUser();
-    if (user._id === userId) return of(user);
+    const user: User | null = this.getLoggedInUser();
+    if (user && user._id === userId) return of(user);
     this.userRequestSubject.next(userId);
     return this.userResponse$.pipe(
       map((data: any) => data as User),
@@ -120,7 +124,7 @@ export class UserService {
 
   public updateWishlistInUser(
     wishlist: Wishlist,
-    user: User = this.sessionStorageUser
+    user: User | null = this.sessionStorageUser
   ): Observable<User> {
     if (!user || !user.wishlists)
       return throwError(() => new Error('Invalid user or wishlist'));
@@ -179,16 +183,20 @@ export class UserService {
     console.log('userToSave', userToSave);
   }
 
+  private clearLocalUser() {
+    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
+  }
+
   public getLoggedInUser() {
     return this.sessionStorageUser;
   }
 
-  public get sessionStorageUser(): User {
+  public get sessionStorageUser(): User | null {
     const user = sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER);
     return user ? JSON.parse(user) : null;
   }
 
-  private set sessionStorageUser(user: User) {
+  private set sessionStorageUser(user: User | null) {
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user));
   }
 

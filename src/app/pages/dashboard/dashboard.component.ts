@@ -83,10 +83,9 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
             this.orders.unshift(order);
         }
       );
-
-      this.updateOrderStatsMap();
       this.updateOrderStatsMap();
     });
+    console.log('this.user', this.user);
 
     this.sharedService.hideElementOnMobile('.main-header');
   }
@@ -121,11 +120,16 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
   }
 
   onLogout() {
+    console.log('hey');
+
     this.userService
       .logout()
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((user) => (this.user = user));
-    this.authService.signOut();
+      .subscribe((user) => {
+        console.log('this.user inisde logout', this.user);
+        this.authService.signOut();
+        this.user = user;
+      });
 
     this.router.navigate(['/stay']);
   }

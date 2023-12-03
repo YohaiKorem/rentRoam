@@ -22,7 +22,10 @@ import { WishlistService } from 'src/app/services/wishlist.service';
   templateUrl: './stay-preview.component.html',
   styleUrls: ['./stay-preview.component.scss'],
 })
-export class StayPreviewComponent extends Unsub implements OnInit {
+export class StayPreviewComponent
+  extends Unsub
+  implements OnInit, AfterViewInit
+{
   @Input() stay!: Stay;
   @Input() areMonthsDifferent: boolean = false;
   @Input() endMonth: string = '';
@@ -62,15 +65,27 @@ export class StayPreviewComponent extends Unsub implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
         this.loggedInUser = user;
-        this.isInWishlist = this.determineIsInWishlist();
+        this.setIsInWishlist(this.loggedInUser, this.stay);
         this.cdr.detectChanges();
       });
   }
 
-  determineIsInWishlist(): boolean {
-    return this.loggedInUser?.wishlists.some((wishlist) => {
-      return wishlist.stays.some((stay) => stay._id === this.stay._id);
-    })!;
+  ngAfterViewInit() {
+    this.setIsInWishlist();
+  }
+
+  setIsInWishlist(
+    user: User | null = this.loggedInUser,
+    stay: Stay | null = this.stay
+  ) {
+    if (!stay) return;
+    this.isInWishlist = !user
+      ? false
+      : user.wishlists.some((wishlist) => {
+          return wishlist.stays.some((_stay) => {
+            return _stay._id === stay._id;
+          });
+        });
   }
 
   onAddToWishlist(ev: any, id: string) {
@@ -83,7 +98,7 @@ export class StayPreviewComponent extends Unsub implements OnInit {
       });
       return;
     }
-    this.determineIsInWishlist()
+    this.isInWishlist
       ? this.onRemoveFromWishlist()
       : this.sharedService.openModal('wishlist', this.stay);
   }
