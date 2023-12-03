@@ -19,4 +19,13 @@
     height: 100%;
     overflow-y: auto;
   }
+
+  @include for-mobile-layout {
+    .chat-header {
+      grid-template-columns: 30px 1fr;
+      h1 {
+        justify-self: center;
+      }
+    }
+  }
 }

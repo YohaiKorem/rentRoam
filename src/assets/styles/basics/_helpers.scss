@@ -606,13 +606,23 @@
   }
 }
 .show-on-mobile {
-  display: none;
+  @include for-tablet-layout {
+    display: none !important;
+  }
+  @include for-normal-layout {
+    display: none !important;
+  }
+  @include for-wide-layout {
+    display: none !important;
+  }
+  @include for-extra-wide-layout {
+    display: none !important;
+  }
   @include for-mobile-layout {
-    display: block;
+    display: block !important;
   }
 }
 .show-on-mobile.flex {
-  display: none;
   @include for-mobile-layout {
     display: flex;
   }

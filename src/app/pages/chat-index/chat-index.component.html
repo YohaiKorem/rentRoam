@@ -24,7 +24,7 @@
         </g>
       </svg>
     </a>
-    <h1>{{ messageSender.fullname }}</h1>
+    <h1 *ngIf="messageSender">{{ messageSender.fullname }}</h1>
   </header>
   <div class="msg-list-container full-width">
     <msg-list [order]="order" [user]="user" [msgs]="order.msgs"></msg-list>

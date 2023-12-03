@@ -41,7 +41,6 @@ export class ChatIndexComponent extends Unsub implements OnInit {
   ngOnInit(): void {
     this.route.data
       .pipe(
-        debounceTime(500),
         takeUntil(this.unsubscribe$),
         switchMap(({ order, user }) => {
           this.order = order;
@@ -57,6 +56,8 @@ export class ChatIndexComponent extends Unsub implements OnInit {
         })
       )
       .subscribe((sender) => {
+        console.log('sender', sender);
+
         this.messageSender = sender;
         this.senderImg = sender.imgUrl;
       });

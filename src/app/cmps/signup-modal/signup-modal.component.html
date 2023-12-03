@@ -1,21 +1,25 @@
-<ng-container *ngIf="loggedInUser$ | async as loggedInUser">
+<ng-container *ngIf="{ value: loggedInUser$ | async } as loggedInUser">
+  <!-- a workaround the ngif with async pipe not rendering at all when null -->
   <section
     [class.is-login-page]="isLoginPage"
+    [class.align-center]="loggedInUser.value || user"
     class="signup-modal-wrapper flex column modal-content-wrapper flex column"
   >
     <header
       class="signup-modal-header flex align-center space-between text-center"
     >
       <h2 class="fs22 fw500">
-        Welcome <span *ngIf="loggedInUser || user">back</span> to RentRoam
-        <span *ngIf="loggedInUser || user"
+        Welcome <span *ngIf="loggedInUser.value || user">back</span> to RentRoam
+        <span *ngIf="loggedInUser.value || user"
           ><br />
-          {{ loggedInUser ? loggedInUser.fullname : user.name }}</span
+          {{
+            loggedInUser.value ? loggedInUser.value.fullname : user.name
+          }}</span
         >
       </h2>
 
       <div
-        *ngIf="!loggedInUser && !user"
+        *ngIf="!loggedInUser.value && !user"
         class="btn-container flex column align-center space-between text-center"
       >
         <span class="fw300">{{
@@ -30,7 +34,7 @@
       </div>
     </header>
 
-    <form *ngIf="!loggedInUser && !user" class="simple-form full-width">
+    <form *ngIf="!loggedInUser.value && !user" class="simple-form full-width">
       <input
         *ngIf="modalType !== 'Login'"
         type="text"
@@ -93,9 +97,11 @@
         Continue
       </button>
     </form>
-    <div *ngIf="!loggedInUser && !user" class="or text-center fs12">or</div>
+    <div *ngIf="!loggedInUser.value && !user" class="or text-center fs12">
+      or
+    </div>
     <div
-      *ngIf="!loggedInUser && !user"
+      *ngIf="!loggedInUser.value && !user"
       class="sign-in-btns-container flex column align-center space-between gap0-5"
     >
       <button
@@ -169,7 +175,7 @@
       </button>
     </div>
 
-    <ng-container *ngIf="loggedInUser || user">
+    <ng-container *ngIf="loggedInUser.value || user">
       <a class="deco-underline fw500 fs20" routerLink="/"
         >Start searching for your next roam!</a
       >

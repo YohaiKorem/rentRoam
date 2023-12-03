@@ -1,6 +1,6 @@
 <section class="messages-page-wrapper">
   <ng-container class="wide-layout hidden-on-mobile">
-    <aside class="inbox">
+    <aside class="inbox hidden-on-mobile">
       <h3 class="dark-font fw500 p1">Inbox</h3>
       <chat-list
         (setCurrChat)="setCurrChat($event)"
@@ -9,7 +9,7 @@
         [currChat]="currChat"
       ></chat-list>
     </aside>
-    <section class="main-chat flex column shadow">
+    <section class="main-chat flex column shadow hidden-on-mobile">
       <div *ngIf="currChat" class="msg-list-container full-width">
         <msg-list
           [order]="currChat"
@@ -29,7 +29,7 @@
         ></chat-edit>
       </div>
     </section>
-    <aside *ngIf="currChat" class="order-details-wrapper">
+    <aside *ngIf="currChat" class="order-details-wrapper hidden-on-mobile">
       <h3 class="dark-font fw500 p1">Order details</h3>
       <trip-details [trip]="currChat"></trip-details>
     </aside>

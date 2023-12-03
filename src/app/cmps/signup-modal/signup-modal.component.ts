@@ -18,7 +18,6 @@ import {
   GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { SharedService } from 'src/app/services/shared.service';
 import { Credentials } from 'src/app/models/credentials.model';
 import { UserMsgService } from 'src/app/services/user-msg.service';

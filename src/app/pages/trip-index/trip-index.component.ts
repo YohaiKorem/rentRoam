@@ -49,6 +49,7 @@ export class TripIndexComponent extends Unsub implements OnInit {
         );
       });
     this.sharedService.hideElementOnMobile('.main-header');
+    this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
   }
   onSelectTrip(order: Order) {
     this.currTrip = order;

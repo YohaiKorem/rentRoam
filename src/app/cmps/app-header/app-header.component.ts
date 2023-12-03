@@ -81,6 +81,10 @@ export class AppHeaderComponent extends Unsub implements OnInit {
       .pipe(takeUntil(this.unsubscribe$), debounceTime(500))
       .subscribe(() => {
         this.stayService.setSearchParams(this.searchParam);
+        this.router.navigate(['/stay'], {
+          relativeTo: this.activatedRoute,
+          queryParamsHandling: 'preserve',
+        });
       });
 
     this.userService.loggedInUser$
