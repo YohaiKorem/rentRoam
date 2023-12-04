@@ -75,7 +75,7 @@ export class UserService {
     );
   }
 
-  public logout(): Observable<any> {
+  public logout(): Observable<null> {
     return this.httpService.post('auth/logout').pipe(
       tap(() => {
         this.clearLocalUser();
@@ -84,7 +84,7 @@ export class UserService {
       map((res) => {
         console.log('res in userservice logout', res);
 
-        return res;
+        return null;
       }),
       catchError(this._handleError)
     );

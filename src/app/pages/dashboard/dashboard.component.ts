@@ -1,5 +1,5 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faPlusCircle,
@@ -55,36 +55,39 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
     private router: Router,
     private sharedService: SharedService,
     private authService: SocialAuthService,
+    private cdr: ChangeDetectorRef,
     private socketService: SocketService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    const res = this.userService.loggedInUser$.pipe(
-      takeUntil(this.unsubscribe$),
-      switchMap((user) => {
-        this.user = user!;
-        return forkJoin({
-          orders: this.orderService.getOrdersForEntityById(this.user._id),
-          stays: this.stayService.getAllHostStaysById(this.user._id),
-        });
-      }),
-      takeUntil(this.unsubscribe$)
-    );
-    res.pipe(takeUntil(this.unsubscribe$)).subscribe(({ orders, stays }) => {
-      console.log(stays);
-      this.orders = orders;
-      this.stays = stays;
-      this.socketService.on(
-        this.socketService.SOCKET_EVENT_ORDER_ADDED,
-        (order: Order) => {
-          if (this.user && this.user._id === order.hostId)
-            this.orders.unshift(order);
-        }
-      );
-      this.updateOrderStatsMap();
-    });
+    this.userService.loggedInUser$
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        switchMap((user) => {
+          this.user = user!;
+          return forkJoin({
+            orders: this.orderService.getOrdersForEntityById(this.user._id),
+            stays: this.stayService.getAllHostStaysById(this.user._id),
+          });
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(({ orders, stays }) => {
+        console.log(stays);
+        this.orders = orders;
+        this.stays = stays;
+        this.socketService.on(
+          this.socketService.SOCKET_EVENT_ORDER_ADDED,
+          (order: Order) => {
+            if (this.user && this.user._id === order.hostId)
+              this.orders.unshift(order);
+          }
+        );
+        this.updateOrderStatsMap();
+      });
     console.log('this.user', this.user);
 
     this.sharedService.hideElementOnMobile('.main-header');
@@ -120,18 +123,17 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    console.log('hey');
-
     this.userService
       .logout()
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(take(1))
       .subscribe((user) => {
         console.log('this.user inisde logout', this.user);
-        this.authService.signOut();
-        this.user = user;
+        if (this.user && this.user.id) this.authService.signOut();
+        this.user = null;
+        this.router.navigate(['/stay']);
       });
 
-    this.router.navigate(['/stay']);
+    // this.router.navigate(['/stay']);
   }
 
   showRemoveOption(stayId: string) {

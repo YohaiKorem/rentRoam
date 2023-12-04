@@ -36,7 +36,11 @@ export class MobileFooterComponent
   ngOnInit() {
     this.userService.loggedInUser$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((user) => (this.user = user));
+      .subscribe((user) => {
+        console.log(user);
+
+        this.user = user;
+      });
   }
 
   ngAfterViewInit(): void {

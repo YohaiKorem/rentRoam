@@ -232,9 +232,12 @@ export class AppHeaderComponent extends Unsub implements OnInit {
     this.userService
       .logout()
       .pipe(take(1))
-      .subscribe((user) => (this.loggedInUser = user));
-    this.socialSignOut();
-    this.router.navigate(['/stay']);
+      .subscribe((user) => {
+        if (this.loggedInUser && this.loggedInUser.id) this.socialSignOut();
+        this.loggedInUser = null;
+        this.cdr.detectChanges();
+        this.router.navigate(['/stay']);
+      });
   }
 
   socialSignOut(): void {
