@@ -55,12 +55,15 @@ export class SignupModalComponent extends Unsub implements OnInit {
       .subscribe((user: SocialUser) => {
         this.user = user;
         this.isLoggedIn = user != null;
-        console.log(user);
         this.userService
           .socialLogin(this.user)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((user) => {
             this.loggedInUser = user;
+            this.router.navigate(['/stay'], {
+              relativeTo: this.activatedRoute,
+              queryParamsHandling: 'preserve',
+            });
           });
       });
 
@@ -82,6 +85,10 @@ export class SignupModalComponent extends Unsub implements OnInit {
         )
         .subscribe((user) => {
           this.loggedInUser = user;
+          this.router.navigate(['/stay'], {
+            relativeTo: this.activatedRoute,
+            queryParamsHandling: 'preserve',
+          });
         });
     } else {
       this.userService
@@ -92,6 +99,10 @@ export class SignupModalComponent extends Unsub implements OnInit {
         )
         .subscribe((user: User) => {
           this.loggedInUser = user;
+          this.router.navigate(['/stay'], {
+            relativeTo: this.activatedRoute,
+            queryParamsHandling: 'preserve',
+          });
         });
     }
   }
