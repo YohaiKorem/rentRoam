@@ -18,8 +18,6 @@ import { RadioFilterComponent } from './app/cmps/radio-filter/radio-filter.compo
 import { DynamicModalComponent } from './app/cmps/dynamic-modal/dynamic-modal.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ChartComponent } from './app/cmps/chart/chart.component';
-import { NgChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -87,7 +85,6 @@ import { environment } from './environments/environment';
     FilterModalComponent,
     RadioFilterComponent,
     DynamicModalComponent,
-    ChartComponent,
     ClickOutsideDirective,
     GoogleMapCmpComponent,
     ReviewPreviewComponent,
@@ -135,7 +132,6 @@ import { environment } from './environments/environment';
     FormsModule,
     FontAwesomeModule,
     MatSliderModule,
-    NgChartsModule,
     MatSlideToggleModule,
     MatMenuModule,
     BrowserAnimationsModule,
