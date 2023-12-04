@@ -19,8 +19,22 @@
     <div class="cancellation-info">
       <h3 class="dark-font fw500 0">Cancellation policy</h3>
       <p>
-        Free cancellation before <span>{{ order.checkin }}</span
-        >. Cancel before <span>{{ order.checkin }}</span> for a partial refund.
+        Free cancellation before
+        <span>{{
+          refundDate.free.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short"
+          })
+        }}</span
+        >. <br />
+        Cancel before
+        <span>{{
+          refundDate.partial.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short"
+          })
+        }}</span>
+        for a partial refund.
       </p>
     </div>
     <div class="separator"></div>
@@ -31,8 +45,8 @@
         great guest.
       </p>
       <ul>
-        <li>Follow the house rules</li>
-        <li>Treat your Host's home like your own</li>
+        <li>Follow the house rules.</li>
+        <li>Treat your Host's home like your own.</li>
       </ul>
     </div>
     <div class="separator"></div>

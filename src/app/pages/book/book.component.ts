@@ -19,9 +19,10 @@ export class BookComponent implements OnInit, OnDestroy {
 
   order$!: Observable<Order>;
   order!: Order;
-  currDate = {
-    start: new Date(),
-    end: new Date(),
+
+  refundDate = {
+    free: new Date(),
+    partial: new Date(),
   };
   stay$!: Observable<Stay>;
   stay!: Stay;
@@ -29,8 +30,15 @@ export class BookComponent implements OnInit, OnDestroy {
     this.order$ = this.route.data.pipe(
       tap(({ order }) => {
         this.order = order;
-        this.currDate.start = new Date(order.checkin);
-        this.currDate.end = new Date(order.checkout);
+        // this.orderDate.start = new Date(order.checkin);
+        // this.orderDate.end = new Date(order.checkout);
+
+        this.refundDate.free = new Date(
+          order.checkin - 1000 * 60 * 60 * 24 * 30
+        );
+        this.refundDate.partial = new Date(
+          order.checkin - 1000 * 60 * 60 * 24 * 5
+        );
       }),
       map(({ order }) => {
         this.stay$ = this.stayService

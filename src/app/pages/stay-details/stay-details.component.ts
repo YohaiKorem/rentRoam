@@ -140,6 +140,11 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       'map-active',
       'remove'
     );
+    this.sharedService.toggleClassOnElement(
+      'mobile-footer',
+      'show-on-mobile',
+      'remove'
+    );
 
     // document.querySelector('.main-content')?.classList['remove']('.map-active');
     this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
@@ -389,6 +394,11 @@ export class StayDetailsComponent extends Unsub implements OnInit {
   }
 
   override ngOnDestroy(): void {
+    this.sharedService.toggleClassOnElement(
+      'mobile-footer',
+      'show-on-mobile',
+      'add'
+    );
     this.sharedService.showElementOnMobile('app-header');
     this.sharedService.showElementOnMobile('mobile-footer');
     super.ngOnDestroy();

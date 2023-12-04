@@ -624,7 +624,7 @@
 }
 .show-on-mobile.flex {
   @include for-mobile-layout {
-    display: flex;
+    display: flex !important;
   }
 }
 .full-width {
