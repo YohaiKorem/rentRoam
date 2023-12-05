@@ -543,6 +543,10 @@
   display: none;
 }
 
+.visible {
+  visibility: visible !important;
+}
+
 .overlay.open {
   display: block;
   position: fixed;

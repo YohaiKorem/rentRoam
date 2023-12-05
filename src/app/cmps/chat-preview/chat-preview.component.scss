@@ -1,6 +1,7 @@
-@import "../../app-root/app.component.scss";
+@import "../../../assets/styles/setup/variables";
+@import "../../../assets/styles/setup/functions";
+@import "../../../assets/styles/setup/mixins";
 .chat-preview-wrapper {
-
   .img-container {
     width: 2em;
     height: 100%;

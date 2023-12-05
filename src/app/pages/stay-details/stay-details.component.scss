@@ -1,4 +1,10 @@
-@import "../../app-root/app.component.scss";
+@import "../../../assets/styles/setup/variables";
+@import "../../../assets/styles/setup/functions";
+@import "../../../assets/styles/setup/mixins";
+@import "../../../assets/styles/basics/base";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+// @import "../../app-root/app.component.scss";
 .stay-details-wrapper {
   position: relative;
   padding-block-start: 2em;

@@ -1,5 +1,4 @@
 <section
-  (click)="debug()"
   *ngIf="stay$ | async as stay"
   class="stay-details-wrapper flex align-center column"
 >
@@ -667,6 +666,8 @@
         <button
           class="btn-guests-menu-trigger"
           mat-button
+          (menuOpened)="handleGuestMenuTrigger('open')"
+          (menuClosed)="handleGuestMenuTrigger('close')"
           #guestsMenuTrigger="matMenuTrigger"
           [matMenuTriggerFor]="guestsMenu"
         >

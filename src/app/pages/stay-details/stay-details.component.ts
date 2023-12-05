@@ -29,6 +29,7 @@ import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { Unsub } from 'src/app/services/unsub.class';
+import { MatMenuTrigger } from '@angular/material/menu';
 declare var google: any;
 @Component({
   selector: 'stay-details',
@@ -37,6 +38,7 @@ declare var google: any;
 })
 export class StayDetailsComponent extends Unsub implements OnInit {
   @ViewChild('picker') picker!: MatDateRangePicker<any>;
+  @ViewChild('guestsMenuTrigger') guestsMenuTrigger!: MatMenuTrigger;
 
   constructor(
     private stayService: StayService,
@@ -126,8 +128,8 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       .subscribe(() => {
         this.toggleModal('close');
       });
-    this.user$.pipe(take(1)).subscribe((user) => console.log('User:', user));
-    this.stay$.pipe(take(1)).subscribe((stay) => console.log('Stay:', stay));
+    // this.user$.pipe(take(1)).subscribe((user) => console.log('User:', user));
+    // this.stay$.pipe(take(1)).subscribe((stay) => console.log('Stay:', stay));
   }
 
   ngAfterViewInit() {
@@ -145,15 +147,14 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       'show-on-mobile',
       'remove'
     );
-
-    // document.querySelector('.main-content')?.classList['remove']('.map-active');
+    this.sharedService.toggleClassOnElement('mobile-footer', 'hidden', 'add');
     this.sharedService.toggleClassOnElement('google-map-cmp', 'hidden', 'add');
+
     this.setIsInWishlist();
 
     this.cdr.detectChanges();
 
     this.sharedService.hideElementOnMobile('app-header');
-    this.sharedService.hideElementOnMobile('mobile-footer');
   }
 
   setSearchParams() {
@@ -328,6 +329,22 @@ export class StayDetailsComponent extends Unsub implements OnInit {
     this.summaryShowMore = true;
   }
 
+  handleGuestMenuTrigger(action: string) {
+    console.log(action);
+
+    action === 'open'
+      ? this.sharedService.toggleClassOnElement(
+          '.cdk-overlay-backdrop',
+          'visible',
+          'add'
+        )
+      : this.sharedService.toggleClassOnElement(
+          '.cdk-overlay-backdrop',
+          'visible',
+          'remove'
+        );
+  }
+
   updateGuestsNumForDisplay(searchParam: SearchParam) {
     if (!searchParam || !searchParam.guests) return;
 
@@ -398,6 +415,11 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       'mobile-footer',
       'show-on-mobile',
       'add'
+    );
+    this.sharedService.toggleClassOnElement(
+      'mobile-footer',
+      'hidden',
+      'remove'
     );
     this.sharedService.showElementOnMobile('app-header');
     this.sharedService.showElementOnMobile('mobile-footer');
