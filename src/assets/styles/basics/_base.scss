@@ -245,14 +245,14 @@ input[type="password"] {
 }
 
 // STAYDETAILS
-
-span.mdc-button__label {
-  display: flex !important;
-  flex-direction: column !important;
-
-  .guest-txt {
-    margin-block-end: -1em;
-    color: $secondaryClr3;
+.btn-guests-menu-trigger {
+  span.mdc-button__label {
+    display: flex !important;
+    flex-direction: column !important;
+    .guest-txt {
+      margin-block-end: -1em;
+      color: $secondaryClr3;
+    }
   }
 }
 // DATEPICKER

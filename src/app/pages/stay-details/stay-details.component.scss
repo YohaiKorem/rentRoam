@@ -1,383 +1,336 @@
 @import "../../../assets/styles/setup/variables";
 @import "../../../assets/styles/setup/functions";
 @import "../../../assets/styles/setup/mixins";
-@import "../../../assets/styles/basics/base";
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-// @import "../../app-root/app.component.scss";
 .stay-details-wrapper {
   position: relative;
-  padding-block-start: 2em;
   color: rgb(34, 34, 34);
-  gap: 1em;
 
   & > * {
     width: 100%;
   }
-  .stay-details-header {
-    &-info-wrapper {
-      width: 100%;
-      .stay-details-header-info {
-        gap: 0.5em;
-        .rate {
-          display: inline-flex;
-        }
+}
+.stay-details-header {
+  &-info-wrapper {
+    width: 100%;
+    .stay-details-header-info {
+      .rate {
+        display: inline-flex;
       }
-      .details-options-btns {
-        .btn {
-          background-color: transparent;
-          text-decoration: underline;
-          gap: 0.5em;
-          border: none;
-        }
+    }
+    .details-options-btns {
+      .btn {
+        background-color: transparent;
+        text-decoration: underline;
+        border: none;
       }
     }
   }
-  .imgs-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 1fr;
-    gap: 0.5em;
+}
+.imgs-container {
+  @include grid-template(4, 2, 0.5em);
+  .stay-img {
+    height: 100%;
+  }
+  .img-container:first-child {
+    grid-column: 1/3;
+    grid-row: 1/3;
     .stay-img {
-      height: 100%;
-    }
-    .img-container:first-child {
-      grid-column: 1/3;
-      grid-row: 1/3;
-      .stay-img {
-        border-top-left-radius: 0.5em;
-        border-bottom-left-radius: 0.5em;
-      }
-    }
-    .img-container:nth-child(3) {
-      .stay-img {
-        border-top-right-radius: 0.5em;
-      }
-    }
-    .img-container:nth-child(5) {
-      .stay-img {
-        border-bottom-right-radius: 0.5em;
-      }
+      @include border-radius(0.5em, 0.5em, 0, 0);
     }
   }
-  .stay-details-main {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1.5em;
-    .amenities-stay-desc {
-      &-header {
+  .img-container:nth-child(3) {
+    .stay-img {
+      border-top-right-radius: 0.5em;
+    }
+  }
+  .img-container:nth-child(5) {
+    .stay-img {
+      border-bottom-right-radius: 0.5em;
+    }
+  }
+}
+.stay-details-main {
+  @include grid-template(2, 1, 1em);
+  .amenities-stay-desc {
+    &-header {
+      position: relative;
+      .host-img-container {
         position: relative;
-        .host-img-container {
-          position: relative;
-          width: em(30px);
-          height: em(30px);
-          .host-img {
-            border-radius: 2em;
-          }
-          svg {
-            position: absolute;
-            bottom: 0em;
-            right: -0.1em;
-          }
-        }
-      }
-      .stay-bullet-points {
-        margin-block-start: 2em;
-        gap: 2em;
-        & li {
-          gap: 1em;
-        }
-      }
-      .amenities-list-container {
-        margin-block-start: 2em;
-        .amenities-list {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-auto-flow: dense;
-        }
-        .btn-show-amenities {
-          align-self: start;
-        }
-      }
-    }
-
-    .mat-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .reservation-form-container {
-      gap: 1em;
-      border-radius: 1em;
-      padding: 1em;
-      border: 1px solid $secondaryClr2;
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
-      max-height: 80vh;
-      position: sticky;
-      top: 5%;
-      grid-column: 2;
-      grid-row: 1 / 3;
-      & > * {
-        width: 100%;
-        gap: 1em;
-      }
-      .reservation-header {
-        .reservation-info-container {
-          gap: 0.5em;
-        }
-        .rate {
-          display: inline-flex;
-        }
-      }
-
-      .btn-reserve {
-        background: linear-gradient(
-          to right,
-          #e61e4d 0%,
-          #e31c5f 50%,
-          #d70466 100%
-        );
-        color: $fontClr2;
-        border-radius: em(8px);
-        font-weight: 600;
-      }
-      .menu-triggers-wrapper {
-        gap: 0;
-        border: 1px solid $secondaryClr3;
-        border-radius: 0.5em;
-        .check-in-out-btns-container {
-          border-bottom: 1px solid $secondaryClr3;
-          .btn-search {
-            background-color: transparent;
-            padding-block: 1em;
-            width: 100%;
-            margin-inline-start: 0.5em;
-            color: $secondaryClr3;
-          }
-        }
-        .btn-guests-menu-trigger {
-          align-self: start;
-          width: 100%;
-          height: 100%;
-          justify-content: start;
-        }
-      }
-      .price-info-container {
-        gap: 2em;
-        .total-price {
-          position: relative;
-          &::before {
-            position: absolute;
-            content: "";
-            width: 100%;
-            height: 1px;
-            background-color: $secondaryClr3;
-            top: -1em;
-            opacity: 0.6;
-          }
-        }
-      }
-    }
-  }
-
-  .host-sect {
-    padding-block-end: 2em;
-    header {
-      .img-container {
         width: em(30px);
         height: em(30px);
-        img {
+        .host-img {
           border-radius: 2em;
         }
-      }
-    }
-    button.btn.btn-contact {
-      align-self: start;
-      border-radius: 0.5em;
-      background-color: transparent;
-      border: 1px solid #333;
-      color: #333;
-      &:hover {
-        background-color: darken(#fff, 5%);
-      }
-    }
-  }
-
-  .reviews-container {
-    .reviews-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-auto-flow: dense;
-    }
-    .btn {
-      align-self: start;
-    }
-  }
-
-  .loc-container {
-    height: 400px;
-    display: grid;
-    grid-template-rows: 2em 1fr;
-  }
-
-  .separator {
-    position: relative;
-    margin-block: 1em;
-    padding-block: 1em;
-    &::after {
-      position: absolute;
-      content: "";
-      height: 1px;
-      width: 100%;
-      background-color: $secondaryClr3;
-      opacity: 0.7;
-      bottom: -1em;
-    }
-  }
-
-  .dynamic-modal.modal-content {
-    width: 100%;
-    max-width: 800px;
-    border-radius: 12px;
-    height: 500px;
-    &:has(wishlist-edit) {
-      max-width: em(300px);
-      max-height: em(350px);
-    }
-  }
-  .btn-edit-wishlist {
-    border: none;
-    align-self: self-start;
-    padding: 1em;
-    gap: 1.5em;
-    width: 100%;
-    justify-content: flex-start;
-    .plus-btn-img-container {
-      width: em(60px);
-    }
-  }
-  @include for-mobile-layout {
-    padding-block-start: 0;
-    overflow-x: hidden;
-
-    .separator {
-      margin-block: 0.2em;
-      padding-block: 0.2em;
-    }
-    .stay-details-mobile-header {
-      & > *:not(.img-container) {
-        padding-inline: 1em;
-      }
-      .img-container {
-        position: relative;
-        & > *:not(:first-child) {
+        svg {
           position: absolute;
-        }
-        & .btn {
-          top: em(10px);
-          background-color: #fff;
-          padding: 0.5em;
-          border-radius: 2em;
-
-          &.btn-back {
-            left: em(10px);
-          }
-          &.btn-share {
-            right: 4em;
-          }
-          &.btn-save {
-            right: em(10px);
-          }
-        }
-        span {
-          bottom: 10px;
-          right: em(10px);
-          color: #fff;
-          background-color: #333;
-          padding: 0.5em;
-          opacity: 0.7;
-        }
-      }
-      h1 {
-        margin-block: 0.5em;
-      }
-      .stay-details-header-info {
-        .loc {
-          flex-grow: 1;
+          bottom: 0em;
+          right: -0.1em;
         }
       }
     }
 
-    .stay-details-main {
-      padding-inline: 1em;
+    .amenities-list-container {
+      .amenities-list {
+        @include grid-template(2, 1, 1em);
+        grid-auto-flow: dense;
+      }
+      .btn-show-amenities {
+        align-self: start;
+      }
+    }
+  }
 
-      grid-template-columns: 1fr;
+  .mat-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 
-      .stay-summary {
-        margin-block-start: 1.5em;
-      }
-    }
-    dynamic-modal {
-      position: fixed !important;
-      top: 1.4em;
-      height: 100vh !important;
-    }
-    .date-picker {
-      margin-block-start: 2em;
-    }
-    .reviews-container {
-      padding-inline: 1em;
-      .reviews-list {
-        max-height: 300px;
-        overflow-x: scroll;
-        display: flex !important;
-      }
-    }
-    .loc-container {
-      padding-inline: 1em;
-      .map-container {
-        border-radius: 0.7em;
-      }
-    }
-    .host-sect {
-      padding-inline: 1em;
-      .btn-contact {
-        width: 100%;
-      }
-    }
-    .mobile-reservation-footer {
-      position: fixed;
-      top: calc(var(--full-height) - $footer-height - 1em);
-      left: 0;
+  .reservation-form-container {
+    border-radius: 1em;
+    border: 1px solid $secondaryClr2;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    max-height: 80vh;
+    position: sticky;
+    top: 5%;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    & > * {
       width: 100%;
-      min-height: $footer-height;
-      background-color: #fff;
-      background-color: #fff;
-      border-block-start: 1px solid $secondaryClr2;
-      z-index: 100;
-      .btn-reserve {
-        background: linear-gradient(
-          to right,
-          #e61e4d 0%,
-          #e31c5f 50%,
-          #d70466 100%
-        );
-        color: $fontClr2;
-        border-radius: em(8px);
-        font-weight: 600;
+      gap: 1em;
+    }
+    .reservation-header {
+      .rate {
+        display: inline-flex;
+      }
+    }
+
+    .btn-reserve {
+      background: linear-gradient(
+        to right,
+        #e61e4d 0%,
+        #e31c5f 50%,
+        #d70466 100%
+      );
+      color: $fontClr2;
+      border-radius: em(8px);
+    }
+    .menu-triggers-wrapper {
+      gap: 0;
+      border: 1px solid $secondaryClr3;
+      border-radius: 0.5em;
+      .check-in-out-btns-container {
+        border-bottom: 1px solid $secondaryClr3;
+        .btn-search {
+          background-color: transparent;
+          color: $secondaryClr3;
+        }
+      }
+      .btn-guests-menu-trigger {
+        align-self: start;
+        height: 100%;
+        justify-content: start;
+        padding-block-end: 1em;
+      }
+    }
+    .price-info-container {
+      .total-price {
+        position: relative;
+        &::before {
+          position: absolute;
+          content: "";
+          width: 100%;
+          height: 1px;
+          background-color: $secondaryClr3;
+          top: -1em;
+          opacity: 0.6;
+        }
       }
     }
   }
 }
 
-.icon-wrapper {
-  background-color: pink;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.host-sect {
+  header {
+    .img-container {
+      width: em(30px);
+      height: em(30px);
+      img {
+        border-radius: 2em;
+      }
+    }
+  }
+  button.btn.btn-contact {
+    align-self: start;
+    border-radius: 0.5em;
+    background-color: transparent;
+    border: 1px solid #333;
+    color: #333;
+    &:hover {
+      background-color: darken(#fff, 5%);
+    }
+  }
+}
+
+.reviews-container {
+  .reviews-list {
+    @include grid-template(2, 1, 0);
+    grid-auto-flow: dense;
+  }
+  .btn {
+    align-self: start;
+  }
+}
+
+.loc-container {
+  height: 400px;
+  display: grid;
+  grid-template-rows: 2em 1fr;
+}
+
+.separator {
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 100%;
+    background-color: $secondaryClr3;
+    opacity: 0.7;
+    bottom: -1em;
+  }
+}
+
+.dynamic-modal.modal-content {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  height: 500px;
+  &:has(wishlist-edit) {
+    max-width: em(300px);
+    max-height: em(350px);
+  }
+}
+.btn-edit-wishlist {
+  border: none;
+  align-self: self-start;
+
+  justify-content: flex-start;
+  .plus-btn-img-container {
+    width: em(60px);
+  }
+}
+
+@include for-mobile-layout {
+  .stay-details-wrapper {
+    padding-block-start: 0;
+    overflow-x: hidden;
+  }
+  .separator {
+    margin-block: 0.2em;
+    padding-block: 0.2em;
+  }
+  .stay-details-mobile-header {
+    & > *:not(.img-container) {
+      padding-inline: 1em;
+    }
+    .img-container {
+      position: relative;
+      & > *:not(:first-child) {
+        position: absolute;
+      }
+      & .btn {
+        top: em(10px);
+        background-color: #fff;
+        padding: 0.5em;
+        border-radius: 2em;
+
+        &.btn-back {
+          left: em(10px);
+        }
+        &.btn-share {
+          right: 4em;
+        }
+        &.btn-save {
+          right: em(10px);
+        }
+      }
+      span {
+        bottom: 10px;
+        right: em(10px);
+        color: #fff;
+        background-color: #333;
+        padding: 0.5em;
+        opacity: 0.7;
+      }
+    }
+    h1 {
+      margin-block: 0.5em;
+    }
+    .stay-details-header-info {
+      .loc {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .stay-details-main {
+    padding-inline: 1em;
+
+    grid-template-columns: 1fr;
+
+    .stay-summary {
+      margin-block-start: 1.5em;
+    }
+  }
+  dynamic-modal {
+    position: fixed !important;
+    top: 1.4em;
+    height: 100vh !important;
+  }
+  .date-picker {
+    margin-block-start: 2em;
+  }
+  .reviews-container {
+    padding-inline: 1em;
+    .reviews-list {
+      max-height: 300px;
+      overflow-x: scroll;
+      display: flex !important;
+    }
+  }
+  .loc-container {
+    padding-inline: 1em;
+    .map-container {
+      border-radius: 0.7em;
+    }
+  }
+  .host-sect {
+    padding-inline: 1em;
+    .btn-contact {
+      width: 100%;
+    }
+  }
+  .mobile-reservation-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: $footer-height;
+    background-color: #fff;
+    border-block-start: 1px solid $secondaryClr2;
+    z-index: 100;
+    .btn-reserve {
+      background: linear-gradient(
+        to right,
+        #e61e4d 0%,
+        #e31c5f 50%,
+        #d70466 100%
+      );
+      color: $fontClr2;
+      border-radius: em(8px);
+    }
+  }
 }
 
 .undesired-btn {

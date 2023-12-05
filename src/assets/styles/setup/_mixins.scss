@@ -100,3 +100,19 @@
     content: close-quote;
   }
 }
+
+// BORDER RADIUS MIXINS
+@mixin border-radius($top-left, $top-right, $bottom-right, $bottom-left) {
+  border-top-left-radius: $top-left;
+  border-top-right-radius: $top-right;
+  border-bottom-right-radius: $bottom-right;
+  border-bottom-left-radius: $bottom-left;
+}
+
+// GRID MIXINS
+@mixin grid-template($columns, $rows, $gap) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-template-rows: repeat($rows, 1fr);
+  gap: $gap;
+}

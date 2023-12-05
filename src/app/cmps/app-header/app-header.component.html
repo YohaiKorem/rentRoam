@@ -1,6 +1,6 @@
-<div class="wrapper">
+<div class="wrapper pbe1-5">
   <a class="hidden-on-mobile" routerLink="/" queryParamsHandling="preserve">
-    <div class="logo-container fs20">
+    <div class="logo-container fs20 fw700">
       <fa-icon class="logo fs34" [icon]="faAirbnb"></fa-icon>
       <span class="logo-txt">RentRoam</span>
     </div>
@@ -8,11 +8,11 @@
   <div
     *ngIf="searchParam"
     [class.inactive]="isSearchOpen"
-    class="search-bar shadow"
+    class="search-bar shadow align-center pi1"
   >
     <button
       *ngIf="searchParam && searchParam.guests"
-      class="btn-search anywhere fw500"
+      class="btn-search anywhere pi1 fw500"
       (click)="openSearch('loc')"
     >
       {{ searchParam.location.name ? searchParam.location.name : "Anywhere" }}
@@ -54,7 +54,7 @@
           !searchParam.guests.adults;
         else backBtn
       "
-      class="icon-container flex auto-center"
+      class="icon-container flex auto-center fs10"
       (click)="openSearch('loc')"
     >
       <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
@@ -108,7 +108,7 @@
     class="search-menu-wrapper hidden-on-mobile flex column align-center space-around shadow"
   >
     <div class="search-overlay" (click)="closeSearch()"></div>
-    <div class="search-bar-active flex align-center space-between">
+    <div class="search-bar-active flex align-center space-between mbe2">
       <button
         appPreventDefault
         appStopPropagation
@@ -116,7 +116,7 @@
         [ngClass]="{
           'active-btn': currSearch === 'loc',
         }"
-        class="btn-search destination fw500 flex column space-between align-start"
+        class="btn-search destination fw500 flex column space-between align-start pb1 pi2"
       >
         <span>Where</span>
         <input
@@ -132,7 +132,7 @@
       <button
         appPreventDefault
         appStopPropagation
-        class="btn-search Check-in fw500 flex column space-between align-start"
+        class="btn-search Check-in fw500 flex column space-between align-start pb1 pi2"
         [ngClass]="{
           'active-btn': currSearch === 'check-in',
         }"
@@ -152,7 +152,7 @@
       <button
         appPreventDefault
         appStopPropagation
-        class="btn-search Check-out fw500 flex column space-between align-start"
+        class="btn-search Check-out fw500 flex column space-between align-start pb1 pi2"
         [ngClass]="{
           'active-btn': currSearch === 'check-out',
         }"
@@ -172,14 +172,14 @@
       <button
         appPreventDefault
         appStopPropagation
-        class="btn-search guests flex space-between align-center"
+        class="btn-search guests flex space-between align-center p1 gap1"
         [ngClass]="{
           'active-btn': currSearch === 'guests'
         }"
         (click)="setCurrSearch('guests')"
       >
         <div
-          class="guests-btn-txt-container flex column align-start space-between"
+          class="guests-btn-txt-container flex column align-start space-between gap0-5"
         >
           <span class="fw500">Who</span>
           <span class="fw200" *ngIf="searchParam && searchParam.guests"
@@ -197,7 +197,7 @@
           >
         </div>
         <div
-          class="icon-container flex auto-center flex space-between align-center"
+          class="icon-container flex auto-center flex space-between align-center p1-5 gap0-5 pi2"
           (click)="setSearchParams($event)"
         >
           <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
@@ -239,7 +239,7 @@
   <mat-menu class="hidden-on-mobile" #locMenu="matMenu" yPosition="below">
     <h3 *ngIf="!locSearch">Search by region</h3>
 
-    <div *ngIf="!locSearch" class="region-btns-container">
+    <div *ngIf="!locSearch" class="region-btns-container gap1">
       <button mat-menu-item (click)="locSearch = 'I\'m flexible'">
         <img
           class="i17d61fu dir dir-ltr"
@@ -299,10 +299,10 @@
           let i = index;
           trackBy: trackByService.byIdx
         "
-        class="btn-suggestion flex align-center space-between gap0-5"
+        class="btn-suggestion flex align-center space-between gap0-5 p1"
         (click)="locSearch = place.description"
       >
-        <div class="img-container">
+        <div class="img-container p1">
           <svg
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
@@ -337,10 +337,10 @@
     xPosition="before"
     yPosition="below"
   >
-    <div class="guests-menu-wrapper flex column space-between">
-      <div class="guests-item-container">
+    <div class="guests-menu-wrapper flex column space-between gap1 pi1">
+      <div class="guests-item-container pb1">
         <h4>Adults</h4>
-        <span>Ages 13 or above</span>
+        <span class="fs14">Ages 13 or above</span>
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
@@ -393,9 +393,9 @@
           </button>
         </div>
       </div>
-      <div class="guests-item-container">
+      <div class="guests-item-container pb1">
         <h4>Children</h4>
-        <span>Ages 2-12</span>
+        <span class="fs14">Ages 2-12</span>
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
@@ -451,9 +451,9 @@
           </button>
         </div>
       </div>
-      <div class="guests-item-container">
+      <div class="guests-item-container pb1">
         <h4>Infants</h4>
-        <span>Under 2</span>
+        <span class="fs14">Under 2</span>
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"

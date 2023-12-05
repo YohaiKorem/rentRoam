@@ -1,6 +1,6 @@
 <section
   *ngIf="stay$ | async as stay"
-  class="stay-details-wrapper flex align-center column"
+  class="stay-details-wrapper flex align-center column gap1 pbs2"
 >
   <header class="stay-details-mobile-header show-on-mobile">
     <div
@@ -115,7 +115,7 @@
     </div>
     <h1>{{ stay.name }}</h1>
     <div
-      class="stay-details-header-info flex align-center space-between wrap gap1 separator"
+      class="stay-details-header-info flex align-center space-between wrap gap0-5 separator mb1 pb1"
     >
       <span class="rate flex align-center space-between gap0-5"
         ><span>
@@ -180,9 +180,11 @@
   >
     <h1>{{ stay.name }}</h1>
     <div
-      class="stay-details-header-info-wrapper flex align-center space-between"
+      class="stay-details-header-info-wrapper flex align-center space-between gap0-5"
     >
-      <div class="stay-details-header-info flex align-center space-between">
+      <div
+        class="stay-details-header-info flex align-center space-between gap0-5"
+      >
         <span class="rate align-center"
           ><span>
             <svg
@@ -238,7 +240,7 @@
         <span class="loc">{{ stay.loc.address }}</span>
       </div>
       <div class="details-options-btns flex align-center space-between">
-        <button class="btn btn-share" (click)="toggleModal('share')">
+        <button class="btn btn-share gap0-5" (click)="toggleModal('share')">
           <svg
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
@@ -333,10 +335,10 @@
     </div>
   </div>
 
-  <main class="stay-details-main separator">
+  <main class="stay-details-main separator mb1 pb1">
     <div class="amenities-stay-desc">
       <header
-        class="amenities-stay-desc-header flex align-center space-between separator"
+        class="amenities-stay-desc-header flex align-center space-between separator mb1 pb1"
       >
         <div class="txt-container">
           <h2>{{ stay.roomType }} hosted by {{ stay.host.fullname }}</h2>
@@ -410,8 +412,10 @@
           </svg>
         </div>
       </header>
-      <ul class="stay-bullet-points flex space-between column separator">
-        <li class="stay-bullet-points-room-type flex align-center">
+      <ul
+        class="stay-bullet-points flex space-between column separator mb1 pb1 mbs2 gap2"
+      >
+        <li class="stay-bullet-points-room-type flex align-center gap1">
           <div class="icon-container">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -508,7 +512,7 @@
           </div>
         </li>
       </ul>
-      <article class="stay-summary separator">
+      <article class="stay-summary separator mb1 pb1">
         <p class="stay-summary-txt">
           <span>
             {{
@@ -528,7 +532,7 @@
         </p>
       </article>
       <section
-        class="amenities-list-container separator flex column space-between gap1"
+        class="amenities-list-container separator mb1 pb1 flex column space-between gap1 mbs2"
       >
         <h4 class="fw600 fs24">What this place offers</h4>
         <ul class="amenities-list gap1">
@@ -563,13 +567,15 @@
     </div>
 
     <div
-      class="reservation-form-container flex align-center space-between column shadow mb1 hidden-on-mobile"
+      class="reservation-form-container flex align-center space-between column shadow mb1 gap1 p1 hidden-on-mobile"
     >
       <header class="reservation-header flex align-center space-between">
         <h3>
           <span class="fw700">${{ stay.price }}</span> night
         </h3>
-        <div class="reservation-info-container flex align-center space-between">
+        <div
+          class="reservation-info-container flex align-center space-between gap0-5"
+        >
           <span class="rate flex align-center"
             ><span>
               <svg
@@ -602,7 +608,7 @@
           class="check-in-out-btns-container flex align-center space-between full-width"
         >
           <button
-            class="btn-search check-in fw500 flex column space-between align-start"
+            class="btn-search check-in fw500 flex column space-between align-start full-width pb1 mis0-5"
             (click)="picker.open()"
           >
             <span class="fs12 fw500">CHECK-IN</span>
@@ -618,9 +624,9 @@
                   })
             }}</span>
           </button>
-          <span class="separator"></span>
+          <span class="separator mb1 pb1"></span>
           <button
-            class="btn-search check-out fw500 flex column space-between align-start"
+            class="btn-search check-out fw500 flex column space-between align-start full-width pb1 mis0-5"
             (click)="picker.open()"
           >
             <span class="fs12 fw500">CHECKOUT</span>
@@ -671,7 +677,7 @@
           #guestsMenuTrigger="matMenuTrigger"
           [matMenuTriggerFor]="guestsMenu"
         >
-          <span class="fs12 guest-txt fw500">GUESTS</span>
+          <span class="fs12 guest-txt fw500 full-width p1">GUESTS</span>
           <span>{{ guestsNumForDisplay }} </span>
         </button>
       </div>
@@ -870,9 +876,13 @@
           </div>
         </div>
       </mat-menu>
-      <button class="btn btn-reserve p1" (click)="onReserve()">Reserve</button>
+      <button class="btn btn-reserve p1 fw600" (click)="onReserve()">
+        Reserve
+      </button>
       <span class="text-center">You won't be charged yet</span>
-      <div class="price-info-container flex align-center space-between column">
+      <div
+        class="price-info-container flex align-center space-between column gap2"
+      >
         <div
           class="night-amout-price flex align-center space-between full-width"
         >
@@ -891,7 +901,9 @@
     </div>
   </main>
 
-  <div class="reviews-container separator flex column space-between gap1">
+  <div
+    class="reviews-container separator mb1 pb1 flex column space-between gap1"
+  >
     <header class="reviews-list-header flex align-center fs22 fw500 gap1">
       <span class="rate flex align-center gap0-5"
         ><span>
@@ -938,7 +950,10 @@
       Show all {{ stay.reviews.length }} reviews
     </button>
   </div>
-  <section *ngIf="homeIcon !== null" class="loc-container separator gap1">
+  <section
+    *ngIf="homeIcon !== null"
+    class="loc-container separator mb1 pb1 gap1"
+  >
     <h4 class="fw600 fs20">Where you'll be</h4>
     <google-map
       height="100%"
@@ -951,7 +966,7 @@
       <map-marker [icon]="homeIcon" [position]="center"> </map-marker>
     </google-map>
   </section>
-  <section class="host-sect flex column space-between gap1">
+  <section class="host-sect flex column space-between gap1 pbe2">
     <header class="host-header flex align-center gap1">
       <div class="img-container">
         <img imgError [src]="stay.host.thumbnailUrl" alt="picture of host" />
@@ -1072,7 +1087,7 @@
         ></amenity-list>
         <ng-container *ngSwitchCase="'wishlist-list'">
           <button
-            class="btn btn-edit-wishlist flex align-center gap1"
+            class="btn btn-edit-wishlist flex align-center gap1-5 p1 full-width"
             (click)="toggleModal('edit')"
           >
             <div class="plus-btn-img-container">
@@ -1130,6 +1145,8 @@
         }}</span>
       </p>
     </div>
-    <button (click)="onReserve()" class="btn btn-reserve p1">Reserve</button>
+    <button (click)="onReserve()" class="btn btn-reserve p1 fw600">
+      Reserve
+    </button>
   </footer>
 </section>
