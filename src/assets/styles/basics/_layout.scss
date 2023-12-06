@@ -56,7 +56,6 @@
   }
   @include for-extra-wide-layout {
     padding: em(20px) em(60px);
-    // max-width: $wide-breakpoint;
   }
 }
 
@@ -202,7 +201,7 @@
   }
 }
 
-// GRIDS
+/* GRIDS */
 .simple-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

@@ -2,9 +2,6 @@
 @import "../../../assets/styles/setup/functions";
 @import "../../../assets/styles/setup/mixins";
 .trip-details-wrapper {
-  //   display: grid;
-  //   grid-template-columns: 1fr;
-  //   grid-template-rows: 200px 1fr;
   position: sticky;
   top: 0;
   color: $fontClr3;

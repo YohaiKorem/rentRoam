@@ -1,22 +1,22 @@
-/* Breakpoint mixins - Mobile First */
-// @mixin for-narrow-layout {
-//     @media (min-width: $mobile-breakpoint) {
-//         @content;
-//     }
-// }
+/* Breakpoint mixins - Mobile First 
+ @mixin for-narrow-layout {
+     @media (min-width: $mobile-breakpoint) {
+         @content;
+     }
+ }
 
-// @mixin for-normal-layout {
-//     @media (min-width: $narrow-breakpoint) {
-//         @content;
-//     }
-// }
+ @mixin for-normal-layout {
+     @media (min-width: $narrow-breakpoint) {
+         @content;
+     }
+ }
 
-// @mixin for-wide-layout {
-//     @media (min-width: $normal-breakpoint) {
-//         @content;
-//     }
-// }
-
+ @mixin for-wide-layout {
+     @media (min-width: $normal-breakpoint) {
+         @content;
+     }
+ }
+*/
 /* Desktop First */
 /* Media Mixins */
 @mixin for-mobile-layout {
@@ -83,7 +83,7 @@
   }
 }
 
-// Mixin for removing hover effects on iphone screen
+/* Mixin for removing hover effects on iphone screen*/
 @mixin hover-supported {
   @media not all and (pointer: coarse) {
     &:hover {
@@ -101,7 +101,7 @@
   }
 }
 
-// BORDER RADIUS MIXINS
+/* BORDER RADIUS MIXINS*/
 @mixin border-radius($top-left, $top-right, $bottom-right, $bottom-left) {
   border-top-left-radius: $top-left;
   border-top-right-radius: $top-right;
@@ -109,7 +109,7 @@
   border-bottom-left-radius: $bottom-left;
 }
 
-// GRID MIXINS
+/* GRID MIXINS*/
 @mixin grid-template($columns, $rows, $gap) {
   display: grid;
   grid-template-columns: repeat($columns, 1fr);

@@ -102,7 +102,7 @@ input[type="password"] {
   padding: em(8px) em(12px);
 }
 
-// MAC like scrollbar
+/* MAC like scrollbar*/
 ::-webkit-scrollbar {
   width: $scrollbar-width;
   background-color: rgba(0, 0, 0, 0);
@@ -130,7 +130,7 @@ input[type="password"] {
   max-width: em(80px);
 }
 
-// PRICE RANGE SLIDER
+/* PRICE RANGE SLIDER */
 
 .mat-mdc-slider {
   height: em(150px) !important;
@@ -157,7 +157,7 @@ input[type="password"] {
   height: 1px !important;
 }
 
-// TOGGLE SUPERHOST BUTTON
+/* TOGGLE SUPERHOST BUTTON*/
 .mat-mdc-slide-toggle .mdc-switch:enabled .mdc-switch__track::after {
   background: #222222 !important;
 }
@@ -195,9 +195,9 @@ input[type="password"] {
   opacity: 0 !important;
 }
 
-// MatMenus
+/* MatMenus */
 
-// APPHEADER
+/* APPHEADER*/
 
 .cdk-overlay-container {
   pointer-events: none !important;
@@ -207,8 +207,6 @@ input[type="password"] {
 }
 
 .cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
-  // display: none !important;
-  // pointer-events: none;
   visibility: collapse;
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
@@ -244,7 +242,7 @@ input[type="password"] {
   border: 1px solid black !important;
 }
 
-// STAYDETAILS
+/* STAYDETAILS*/
 .btn-guests-menu-trigger {
   span.mdc-button__label {
     display: flex !important;
@@ -255,7 +253,7 @@ input[type="password"] {
     }
   }
 }
-// DATEPICKER
+/* DATEPICKER*/
 
 .mat-calendar-body-selected {
   background-color: $fontClr3;
@@ -279,16 +277,16 @@ mat-datepicker-content {
   background-color: rgb(255 255 255 / 30%) !important;
 }
 
-// DATEPICKER INSIDE STAYDETAILS
+/* DATEPICKER INSIDE STAYDETAILS*/
 
-// MAT MENNU INSIDE STAYDETAILS
+/* MAT MENNU INSIDE STAYDETAILS*/
 .guests-menu-in-stay-details {
   max-width: none !important;
   min-width: none !important;
   width: calc((100vw - 200px) / 4) !important;
   border-radius: 0.5em;
 }
-// MAPS
+/*MAPS*/
 .gm-style-iw-d {
   max-height: none !important;
   overflow: auto !important;
@@ -324,7 +322,7 @@ map-info-window.ng-star-inserted {
   }
 }
 
-// SHARE BUTTONS
+/*SHARE BUTTONS*/
 
 share-buttons {
   .sb-group {
@@ -344,7 +342,7 @@ share-buttons {
   }
 }
 
-// FOOTER
+/* FOOTER*/
 footer.mobile-footer-wrapper a fa-icon svg {
   width: 24px !important;
   height: 24px !important;

@@ -1,5 +1,5 @@
 @import "../setup/variables";
-// Buttons
+/* Buttons*/
 
 .btn {
   font-size: rem(14px);
@@ -66,7 +66,7 @@
   font-size: 1.5rem;
 }
 
-// Font Sizes
+/* Font Sizes*/
 .fs10 {
   font-size: rem(10px);
 }
@@ -133,7 +133,7 @@
   text-decoration: underline;
 }
 
-// FONT WEIGHTS
+/* FONT WEIGHTS*/
 
 .fw100 {
   font-weight: 100;
@@ -163,7 +163,7 @@
   font-weight: 900;
 }
 
-// List
+/*List*/
 .clean-list {
   margin: 0;
   padding: 0;
@@ -175,7 +175,7 @@
   }
 }
 
-// Positioning
+/* Positioning*/
 .flex {
   display: flex;
   &.column {
@@ -214,7 +214,7 @@
   }
 }
 
-// GRID
+/* GRID*/
 
 .dashboard-table-layout {
   border-bottom: 1px solid $secondaryClr2;
@@ -225,7 +225,7 @@
   align-items: center;
 }
 
-// GAP
+/* GAP*/
 
 .gap0-5 {
   gap: 0.5em;
@@ -246,7 +246,7 @@
   margin: 0 auto;
 }
 
-// Media helpers
+/* Media helpers*/
 .square-ratio {
   @include aspect-ratio(1, 1);
 }
@@ -259,7 +259,7 @@
   @include aspect-ratio(4, 3);
 }
 
-// Transitions
+/* Transitions*/
 .fast-trans {
   transition: 0.25s all;
 }
@@ -270,7 +270,7 @@
   transition: 0.7s all;
 }
 
-// Padding
+/* Padding*/
 .p0-5 {
   padding: 0.5em;
 }
@@ -373,7 +373,7 @@
 .pie2-5 {
   padding-inline-end: 2.5em;
 }
-// Margin
+/* Margin*/
 .m0-5 {
   margin: 0.5em;
 }
@@ -477,21 +477,21 @@
   margin-inline-end: 2.5em;
 }
 
-// Normalize Background
+/* Normalize Background*/
 .normBackground {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 
-// Dividing
+/* Dividing*/
 .bottom-divider {
   padding-bottom: 15px;
   margin-bottom: 15px;
   border-bottom: 1px solid lightgray;
 }
 
-// status helpers
+/* status helpers*/
 .pending {
   color: $pending;
 }
@@ -501,7 +501,7 @@
 .approved {
   color: $approved;
 }
-// Others
+/* Others*/
 .loading {
   opacity: 0;
   pointer-events: none;

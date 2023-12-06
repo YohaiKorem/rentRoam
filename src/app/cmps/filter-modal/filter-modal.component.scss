@@ -197,16 +197,6 @@
       input:checked + .custom-checkbox {
         background-color: #000000;
         opacity: 1;
-
-        // &::after {
-        //   content: "✔";
-        //   position: absolute;
-        //   top: 0;
-        //   width: 1em;
-        //   height: 1em;
-        //   color: #fff;
-        //   background-color: inherit;
-        // }
       }
     }
   }
