@@ -3,28 +3,22 @@
 @import "../../../assets/styles/setup/mixins";
 
 .stay-details-wrapper {
-  position: relative;
   color: rgb(34, 34, 34);
 
   & > * {
     width: 100%;
   }
 }
-.stay-details-header {
-  &-info-wrapper {
-    width: 100%;
-    .stay-details-header-info {
-      .rate {
-        display: inline-flex;
-      }
-    }
-    .details-options-btns {
-      .btn {
-        background-color: transparent;
-        text-decoration: underline;
-        border: none;
-      }
-    }
+.stay-details-header-info {
+  .rate {
+    display: inline-flex;
+  }
+}
+.details-options-btns {
+  .btn {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
   }
 }
 .imgs-container {
@@ -52,32 +46,27 @@
 }
 .stay-details-main {
   @include grid-template(2, 1, 1em);
-  .amenities-stay-desc {
-    &-header {
-      position: relative;
-      .host-img-container {
-        position: relative;
-        width: em(30px);
-        height: em(30px);
-        .host-img {
-          border-radius: 2em;
-        }
-        svg {
-          position: absolute;
-          bottom: 0em;
-          right: -0.1em;
-        }
+  .amenities-stay-desc-header {
+    .host-img-container {
+      width: em(30px);
+      height: em(30px);
+      .host-img {
+        border-radius: 2em;
+      }
+      svg {
+        bottom: 0em;
+        right: -0.1em;
       }
     }
+  }
 
-    .amenities-list-container {
-      .amenities-list {
-        @include grid-template(2, 1, 1em);
-        grid-auto-flow: dense;
-      }
-      .btn-show-amenities {
-        align-self: start;
-      }
+  .amenities-list-container {
+    .amenities-list {
+      @include grid-template(2, 1, 1em);
+      grid-auto-flow: dense;
+    }
+    .btn-show-amenities {
+      align-self: start;
     }
   }
 
@@ -91,7 +80,6 @@
     border: 1px solid $secondaryClr2;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
     max-height: 80vh;
-    position: sticky;
     top: 5%;
     grid-column: 2;
     grid-row: 1 / 3;
@@ -135,10 +123,7 @@
     }
     .price-info-container {
       .total-price {
-        position: relative;
         &::before {
-          position: absolute;
-          content: "";
           width: 100%;
           height: 1px;
           background-color: $secondaryClr3;
@@ -188,17 +173,12 @@
   grid-template-rows: 2em 1fr;
 }
 
-.separator {
-  position: relative;
-  &::after {
-    position: absolute;
-    content: "";
-    height: 1px;
-    width: 100%;
-    background-color: $secondaryClr3;
-    opacity: 0.7;
-    bottom: -1em;
-  }
+.separator ::after {
+  height: 1px;
+  width: 100%;
+  background-color: $secondaryClr3;
+  opacity: 0.7;
+  bottom: -1em;
 }
 
 .dynamic-modal.modal-content {
@@ -231,14 +211,7 @@
     padding-block: 0.2em;
   }
   .stay-details-mobile-header {
-    & > *:not(.img-container) {
-      padding-inline: 1em;
-    }
     .img-container {
-      position: relative;
-      & > *:not(:first-child) {
-        position: absolute;
-      }
       & .btn {
         top: em(10px);
         background-color: #fff;
@@ -260,13 +233,10 @@
         right: em(10px);
         color: #fff;
         background-color: #333;
-        padding: 0.5em;
         opacity: 0.7;
       }
     }
-    h1 {
-      margin-block: 0.5em;
-    }
+
     .stay-details-header-info {
       .loc {
         flex-grow: 1;
@@ -283,6 +253,12 @@
       margin-block-start: 1.5em;
     }
   }
+
+  .stay-bullet-points,
+  .amenities-list-container {
+    margin-block-start: 1.5em;
+  }
+
   dynamic-modal {
     position: fixed !important;
     top: 1.4em;
@@ -312,10 +288,8 @@
     }
   }
   .mobile-reservation-footer {
-    position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
     min-height: $footer-height;
     background-color: #fff;
     border-block-start: 1px solid $secondaryClr2;
@@ -334,7 +308,6 @@
 }
 
 .undesired-btn {
-  position: fixed;
   bottom: 0;
   opacity: 0;
 }

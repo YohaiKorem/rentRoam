@@ -1,10 +1,10 @@
 <section
   *ngIf="stay$ | async as stay"
-  class="stay-details-wrapper flex align-center column gap1 pbs2"
+  class="stay-details-wrapper flex align-center column gap1 pbs2 pos-relative"
 >
   <header class="stay-details-mobile-header show-on-mobile">
     <div
-      class="img-container"
+      class="img-container pos-relative"
       appSwipe
       (swipeLeft)="onSwipe(1)"
       (swipeRight)="onSwipe(-1)"
@@ -16,7 +16,7 @@
         loading="lazy"
         imgError
       />
-      <a class="btn btn-back shadow" routerLink="/">
+      <a class="btn btn-back shadow pos-absolute" routerLink="/">
         <svg
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,7 @@
           </g>
         </svg>
       </a>
-      <button class="btn btn-share" (click)="toggleModal('share')">
+      <button class="btn btn-share pos-absolute" (click)="toggleModal('share')">
         <svg
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@
           </g>
         </svg>
       </button>
-      <button class="btn btn-save" (click)="onAddToWishlist()">
+      <button class="btn btn-save pos-absolute" (click)="onAddToWishlist()">
         <ng-container *ngIf="user && isInWishlist; else emptyHeartIcon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -111,11 +111,13 @@
           </svg>
         </ng-template>
       </button>
-      <span>{{ currImgUrlIdx + 1 }} / {{ stay.imgUrls.length }}</span>
+      <span class="pos-absolute p0-5"
+        >{{ currImgUrlIdx + 1 }} / {{ stay.imgUrls.length }}</span
+      >
     </div>
-    <h1>{{ stay.name }}</h1>
+    <h1 class="pi1 mb0-5">{{ stay.name }}</h1>
     <div
-      class="stay-details-header-info flex align-center space-between wrap gap0-5 separator mb1 pb1"
+      class="stay-details-header-info flex align-center space-between wrap gap0-5 separator after-parent mb1 p1"
     >
       <span class="rate flex align-center space-between gap0-5"
         ><span>
@@ -180,7 +182,7 @@
   >
     <h1>{{ stay.name }}</h1>
     <div
-      class="stay-details-header-info-wrapper flex align-center space-between gap0-5"
+      class="stay-details-header-info-wrapper flex align-center space-between gap0-5 full-width"
     >
       <div
         class="stay-details-header-info flex align-center space-between gap0-5"
@@ -335,10 +337,10 @@
     </div>
   </div>
 
-  <main class="stay-details-main separator mb1 pb1">
+  <main class="stay-details-main separator after-parent mb1 pb1">
     <div class="amenities-stay-desc">
       <header
-        class="amenities-stay-desc-header flex align-center space-between separator mb1 pb1"
+        class="amenities-stay-desc-header flex align-center space-between separator after-parent mb1 pb1 pos-relative"
       >
         <div class="txt-container">
           <h2>{{ stay.roomType }} hosted by {{ stay.host.fullname }}</h2>
@@ -373,7 +375,7 @@
             </span>
           </p>
         </div>
-        <div class="host-img-container">
+        <div class="host-img-container pos-relative">
           <img
             [src]="stay.host.thumbnailUrl"
             alt="host image"
@@ -389,6 +391,7 @@
             role="img"
             focusable="false"
             style="display: block; height: 22px; width: 20px"
+            class="pos-absolute"
           >
             <linearGradient
               id="rauschgradient"
@@ -413,7 +416,7 @@
         </div>
       </header>
       <ul
-        class="stay-bullet-points flex space-between column separator mb1 pb1 mbs2 gap2"
+        class="stay-bullet-points flex space-between column separator after-parent mb1 pb1 mbs1-5 gap2"
       >
         <li class="stay-bullet-points-room-type flex align-center gap1">
           <div class="icon-container">
@@ -453,7 +456,7 @@
         </li>
         <li
           *ngIf="stay.amenities.includes('Dedicated workspace')"
-          class="stay-bullet-points-workspace flex align-center"
+          class="stay-bullet-points-workspace flex align-center gap1"
         >
           <div class="icon-container">
             <svg
@@ -481,7 +484,7 @@
         </li>
         <li
           *ngIf="stay.host.isSuperhost"
-          class="stay-bullet-points-superhost flex align-center"
+          class="stay-bullet-points-superhost flex align-center gap1"
         >
           <div class="icon-container">
             <svg
@@ -512,7 +515,7 @@
           </div>
         </li>
       </ul>
-      <article class="stay-summary separator mb1 pb1">
+      <article class="stay-summary separator after-parent mb1 pb1">
         <p class="stay-summary-txt">
           <span>
             {{
@@ -532,7 +535,7 @@
         </p>
       </article>
       <section
-        class="amenities-list-container separator mb1 pb1 flex column space-between gap1 mbs2"
+        class="amenities-list-container separator after-parent mb1 pb1 flex column space-between gap1 mbs2"
       >
         <h4 class="fw600 fs24">What this place offers</h4>
         <ul class="amenities-list gap1">
@@ -553,7 +556,7 @@
           Show all {{ stay.amenities.length }} amenities
         </button>
       </section>
-      <section class="date-picker">
+      <section class="date-picker mbs2">
         <mat-card class="mat-card flex hidden-on-mobile">
           <mat-calendar [(selected)]="searchParam.startDate"></mat-calendar>
           <mat-calendar [(selected)]="searchParam.endDate"></mat-calendar>
@@ -567,7 +570,7 @@
     </div>
 
     <div
-      class="reservation-form-container flex align-center space-between column shadow mb1 gap1 p1 hidden-on-mobile"
+      class="reservation-form-container flex align-center space-between column shadow mb1 gap1 p1 hidden-on-mobile pos-sticky"
     >
       <header class="reservation-header flex align-center space-between">
         <h3>
@@ -624,7 +627,7 @@
                   })
             }}</span>
           </button>
-          <span class="separator mb1 pb1"></span>
+          <span class="separator after-parent mb1 pb1"></span>
           <button
             class="btn-search check-out fw500 flex column space-between align-start full-width pb1 mis0-5"
             (click)="picker.open()"
@@ -643,7 +646,7 @@
             }}</span>
           </button>
         </div>
-        <button class="undesired-btn">
+        <button class="undesired-btn pos-fixed">
           <mat-date-range-input
             [dateFilter]="datePickerFilter"
             [rangePicker]="picker"
@@ -892,7 +895,7 @@
           <span>${{ stay.price * nightSum }}</span>
         </div>
         <div
-          class="total-price flex align-center space-between fw700 full-width"
+          class="total-price flex align-center space-between fw700 full-width before-parent"
         >
           <span>Total</span>
           <span>${{ stay.price * nightSum }}</span>
@@ -902,7 +905,7 @@
   </main>
 
   <div
-    class="reviews-container separator mb1 pb1 flex column space-between gap1"
+    class="reviews-container separator after-parent mb1 p1 flex column space-between gap1"
   >
     <header class="reviews-list-header flex align-center fs22 fw500 gap1">
       <span class="rate flex align-center gap0-5"
@@ -952,7 +955,7 @@
   </div>
   <section
     *ngIf="homeIcon !== null"
-    class="loc-container separator mb1 pb1 gap1"
+    class="loc-container separator after-parent mb1 pb1 gap1"
   >
     <h4 class="fw600 fs20">Where you'll be</h4>
     <google-map
@@ -1113,7 +1116,7 @@
   </div>
 
   <footer
-    class="mobile-reservation-footer show-on-mobile flex align-center space-between shadow p0-5"
+    class="mobile-reservation-footer show-on-mobile flex align-center space-between shadow p0-5 full-width pos-fixed"
   >
     <div class="txt-container flex column align-center space-between">
       <p>

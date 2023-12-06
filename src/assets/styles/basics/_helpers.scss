@@ -608,6 +608,42 @@
   border-radius: 3em;
 }
 
+/* POSITIONS */
+
+.pos-relative {
+  position: relative;
+}
+.pos-absolute {
+  position: absolute;
+}
+.pos-sticky {
+  position: sticky;
+}
+.pos-fixed {
+  position: fixed;
+}
+.pos-static {
+  position: static;
+}
+
+/* pseudo-element parents */
+
+.before-parent {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+  }
+}
+
+.after-parent {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+  }
+}
+
 .hidden-on-mobile {
   @include for-mobile-layout {
     display: none !important;
