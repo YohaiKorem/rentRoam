@@ -8,7 +8,7 @@
   <div
     *ngIf="searchParam"
     [class.inactive]="isSearchOpen"
-    class="search-bar shadow align-center pi1"
+    class="search-bar shadow align-center pi1 text-left border2"
   >
     <button
       *ngIf="searchParam && searchParam.guests"
@@ -86,7 +86,7 @@
     </ng-template>
     <button
       (click)="openFilterModal()"
-      class="btn btn-filter shadow flex align-center space-between show-on-mobile"
+      class="btn btn-filter shadow flex align-center space-between show-on-mobile border3"
     >
       <svg
         viewBox="0 0 16 16"
@@ -105,10 +105,10 @@
   <div
     [class.inactive]="!isSearchOpen"
     (click)="closeSearch()"
-    class="search-menu-wrapper hidden-on-mobile flex column align-center space-around shadow"
+    class="search-menu-wrapper hidden-on-mobile flex column align-center space-around shadow pos-fixed"
   >
-    <div class="search-overlay" (click)="closeSearch()"></div>
-    <div class="search-bar-active flex align-center space-between mbe2">
+    <div class="search-overlay pos-fixed" (click)="closeSearch()"></div>
+    <div class="search-bar-active flex align-center space-between mbe2 border2">
       <button
         appPreventDefault
         appStopPropagation
@@ -197,7 +197,7 @@
           >
         </div>
         <div
-          class="icon-container flex auto-center flex space-between align-center p1-5 gap0-5 pi2"
+          class="icon-container flex auto-center flex space-between align-center p1-5 gap0-5 pi2 pos-relative"
           (click)="setSearchParams($event)"
         >
           <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
@@ -206,7 +206,7 @@
       </button>
     </div>
   </div>
-  <div class="mat-btns-container flex space-between">
+  <div class="mat-btns-container flex space-between pos-absolute">
     <button
       mat-button
       #locMenuTrigger="matMenuTrigger"
@@ -242,7 +242,7 @@
     <div *ngIf="!locSearch" class="region-btns-container gap1">
       <button mat-menu-item (click)="locSearch = 'I\'m flexible'">
         <img
-          class="i17d61fu dir dir-ltr"
+          class="border3"
           alt=""
           src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg"
         />
@@ -250,7 +250,7 @@
       </button>
       <button mat-menu-item (click)="locSearch = 'France'">
         <img
-          class="i17d61fu dir dir-ltr"
+          class="border3"
           alt=""
           src="https://a0.muscache.com/im/pictures/f0ece7c0-d9b2-49d5-bb83-64173d29cbe3.jpg?im_w=320"
         />
@@ -258,7 +258,7 @@
       </button>
       <button mat-menu-item (click)="locSearch = 'United States'">
         <img
-          class="i17d61fu dir dir-ltr"
+          class="border3"
           alt=""
           src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg?im_w=320"
         />
@@ -266,7 +266,7 @@
       </button>
       <button mat-menu-item (click)="locSearch = 'Portugal'">
         <img
-          class="i17d61fu dir dir-ltr"
+          class="border3"
           alt=""
           src="https://a0.muscache.com/im/pictures/53a3d619-7012-4c3b-a7eb-e91553e96f6b.jpg?im_w=320"
         />
@@ -274,7 +274,7 @@
       </button>
       <button mat-menu-item (click)="locSearch = 'Spain'">
         <img
-          class="i17d61fu dir dir-ltr"
+          class="border3"
           alt=""
           src="https://a0.muscache.com/im/pictures/a0fd6dfc-6bec-4abb-850e-9ab78ed7bf37.jpg?im_w=320"
         />
@@ -282,7 +282,7 @@
       </button>
       <button mat-menu-item (click)="locSearch = 'Sydney, Australia'">
         <img
-          class="i17d61fu dir dir-ltr"
+          class="border3"
           alt=""
           src="https://a0.muscache.com/im/pictures/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.jpg?im_w=320"
         />
@@ -338,13 +338,13 @@
     yPosition="below"
   >
     <div class="guests-menu-wrapper flex column space-between gap1 pi1">
-      <div class="guests-item-container pb1">
+      <div class="guests-item-container">
         <h4>Adults</h4>
         <span class="fs14">Ages 13 or above</span>
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
-            class="btn btn-subtract adults"
+            class="btn btn-subtract border3 adults"
             (click)="updateGuests($event, -1)"
             [disabled]="searchParam.guests.adults <= 0"
             [class.disabled]="searchParam.guests.adults <= 0"
@@ -371,7 +371,10 @@
           <span *ngIf="searchParam && searchParam.guests">{{
             searchParam.guests.adults
           }}</span>
-          <button class="btn btn-add adults" (click)="updateGuests($event, 1)">
+          <button
+            class="btn btn-add border3 adults"
+            (click)="updateGuests($event, 1)"
+          >
             <svg
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
@@ -393,13 +396,13 @@
           </button>
         </div>
       </div>
-      <div class="guests-item-container pb1">
+      <div class="guests-item-container">
         <h4>Children</h4>
         <span class="fs14">Ages 2-12</span>
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
-            class="btn btn-subtract children"
+            class="btn btn-subtract border3 children"
             (click)="updateGuests($event, -1)"
             [disabled]="searchParam.guests.children <= 0"
             [class.disabled]="searchParam.guests.children <= 0"
@@ -427,7 +430,7 @@
             searchParam.guests.children
           }}</span>
           <button
-            class="btn btn-add children"
+            class="btn btn-add border3 children"
             (click)="updateGuests($event, 1)"
           >
             <svg
@@ -451,13 +454,13 @@
           </button>
         </div>
       </div>
-      <div class="guests-item-container pb1">
+      <div class="guests-item-container">
         <h4>Infants</h4>
         <span class="fs14">Under 2</span>
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
-            class="btn btn-subtract infants"
+            class="btn btn-subtract border3 infants"
             (click)="updateGuests($event, -1)"
             [disabled]="searchParam.guests.infants <= 0"
             [class.disabled]="searchParam.guests.infants <= 0"
@@ -484,7 +487,10 @@
           <span *ngIf="searchParam && searchParam.guests">{{
             searchParam.guests.infants
           }}</span>
-          <button class="btn btn-add infants" (click)="updateGuests($event, 1)">
+          <button
+            class="btn btn-add border3 infants"
+            (click)="updateGuests($event, 1)"
+          >
             <svg
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
@@ -509,7 +515,7 @@
     </div>
   </mat-menu>
   <div class="options-btns-container flex space-between hidden-on-mobile">
-    <a class="btn btn-options btn-mode" routerLink="/stay/edit">
+    <a class="btn btn-options btn-mode no-border" routerLink="/stay/edit">
       RentRoam your home
     </a>
     <!-- TODO: work on translation support -->
@@ -523,7 +529,7 @@
       mat-button
       #loginSignupTrigger="matMenuTrigger"
       [matMenuTriggerFor]="loginSignup"
-      class="btn btn-options btn-user flex align-center shadow"
+      class="btn btn-options btn-user flex align-center shadow border2"
       (click)="openLoginSignup()"
     >
       <fa-icon class="icon bars-icon fs14 fw800" [icon]="faBars"></fa-icon>
@@ -542,8 +548,13 @@
         </svg>
       </ng-container>
       <ng-template #userImg>
-        <div class="img-container">
-          <img imgError [src]="loggedInUser!.imgUrl" alt="User Image" />
+        <div class="img-container text-center">
+          <img
+            class="full-width"
+            imgError
+            [src]="loggedInUser!.imgUrl"
+            alt="User Image"
+          />
         </div>
       </ng-template>
     </button>

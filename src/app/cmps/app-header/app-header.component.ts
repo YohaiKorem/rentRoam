@@ -31,7 +31,7 @@ declare var google: any;
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss'],
   host: {
-    class: 'main-header ',
+    class: 'main-header after-parent',
   },
 })
 export class AppHeaderComponent extends Unsub implements OnInit {

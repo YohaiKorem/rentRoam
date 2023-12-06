@@ -181,37 +181,37 @@
   &.column {
     flex-direction: column;
   }
-  &.justify-center {
-    justify-content: center;
-  }
-  &.justify-start {
-    justify-content: start;
-  }
-  &.justify-end {
-    justify-content: end;
-  }
-  &.align-center {
-    align-items: center;
-  }
-  &.align-start {
-    align-items: start;
-  }
   &.wrap {
     flex-wrap: wrap;
-  }
-  &.space-between {
-    justify-content: space-between;
-  }
-  &.space-around {
-    justify-content: space-around;
-  }
-  &.auto-center {
-    justify-content: center;
-    align-items: center;
   }
   > *.full-grow {
     flex: 1;
   }
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-start {
+  justify-content: start;
+}
+.justify-end {
+  justify-content: end;
+}
+.align-center {
+  align-items: center;
+}
+.align-start {
+  align-items: start;
+}
+.space-between {
+  justify-content: space-between;
+}
+.space-around {
+  justify-content: space-around;
+}
+.auto-center {
+  justify-content: center;
+  align-items: center;
 }
 
 /* GRID*/
@@ -673,4 +673,18 @@
 }
 .full-width {
   width: 100%;
+}
+
+.no-border {
+  border: none;
+}
+
+.border1 {
+  border: 1px solid $secondaryClr1;
+}
+.border2 {
+  border: 1px solid $secondaryClr2;
+}
+.border3 {
+  border: 1px solid $secondaryClr3;
 }

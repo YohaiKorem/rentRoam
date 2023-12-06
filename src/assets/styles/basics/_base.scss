@@ -219,7 +219,7 @@ input[type="password"] {
 .mat-mdc-menu-panel.mat-mdc-menu-panel {
   max-width: em(460px) !important;
   border-radius: 2em !important;
-  padding: 1em !important;
+  padding: 0.5em !important;
   &:has(.btn-logout, .btn-login) {
     padding: 0 !important;
   }

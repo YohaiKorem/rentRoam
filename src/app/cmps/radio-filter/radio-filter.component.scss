@@ -178,7 +178,6 @@
 }
 :host {
   @include for-mobile-layout {
-    border-bottom: 0.5px solid $secondaryClr3;
     background-color: #fff;
     position: fixed;
     top: calc($header-height * 1.1);

@@ -103,16 +103,16 @@
 
 /* BORDER RADIUS MIXINS*/
 @mixin border-radius($top-left, $top-right, $bottom-right, $bottom-left) {
-  border-top-left-radius: $top-left;
-  border-top-right-radius: $top-right;
-  border-bottom-right-radius: $bottom-right;
-  border-bottom-left-radius: $bottom-left;
+  border-radius: $top-left $top-right $bottom-right $bottom-left;
 }
 
 /* GRID MIXINS*/
-@mixin grid-template($columns, $rows, $gap) {
+@mixin grid-template($columns, $rows, $gap, $column-unit: 1fr, $row-unit: 1fr) {
   display: grid;
-  grid-template-columns: repeat($columns, 1fr);
-  grid-template-rows: repeat($rows, 1fr);
+  grid-template: repeat($rows, $row-unit) / repeat($columns, $column-unit);
   gap: $gap;
+}
+
+@mixin grid-item($col-start, $col-end, $row-start, $row-end) {
+  grid-area: #{$row-start} / #{$col-start} / #{$row-end} / #{$col-end};
 }

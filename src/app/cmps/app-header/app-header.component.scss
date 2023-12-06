@@ -4,14 +4,11 @@
 
 :host.main-header {
   height: $header-height;
-  position: relative;
 
   &::after {
-    content: "";
     width: 110vw;
     height: 1px;
     background-color: $secondaryClr2;
-    position: absolute;
     bottom: 0;
     left: -10%;
     box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
@@ -33,11 +30,9 @@
     }
 
     &::after {
-      content: "";
       background-color: #fff;
       width: calc($scrollbar-width + 1em);
       height: calc($header-height + 8px);
-      position: absolute;
       top: 0;
       left: 100%;
       opacity: 1;
@@ -61,89 +56,13 @@
   }
 
   a {
-    grid-column: 1;
-    grid-row: 1;
+    @include grid-item(1, 2, 1, 2);
     justify-self: start;
 
     .logo-container {
       width: 125px;
       color: $primaryClr1;
       cursor: pointer;
-    }
-  }
-
-  .search-menu-wrapper {
-    position: fixed;
-    top: $header-height;
-    left: 0;
-    height: $header-height;
-    width: 100vw;
-    background-color: #fff;
-    z-index: 40;
-
-    &.inactive {
-      .search-overlay {
-        display: none;
-      }
-    }
-
-    .search-overlay {
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      top: em(170px);
-      left: 0;
-    }
-
-    .btn-stays {
-      background-color: transparent;
-    }
-    .search-bar-active {
-      background-color: $secondaryClr5;
-      border-radius: 32px;
-      border: 1px solid $secondaryClr2;
-
-      .btn-search {
-        background-color: transparent;
-        transition: 0.25s;
-        border-radius: 32px;
-        gap: 0.4em;
-
-        input {
-          background-color: transparent;
-          border: none;
-          outline: none;
-          pointer-events: all;
-        }
-
-        &.active-btn {
-          background-color: #fff;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        &:hover {
-          background-color: $secondaryClr2;
-        }
-      }
-      .icon-container {
-        cursor: pointer;
-        z-index: 40;
-        position: relative;
-        pointer-events: all;
-        border-radius: em(32px);
-        background-size: 200% 200%;
-        background-position: calc((100 - var(--mouse-x, 0)) * 1%)
-          calc((100 - var(--mouse-y, 0)) * 1%);
-        --mouse-x: 22.6171875;
-        --mouse-y: 52.083333333333336;
-        background-color: #ff385c;
-        background-image: $gradient1;
-        color: $fontClr2;
-        margin: 0;
-        margin-block: -1em;
-        padding-block: 1.2em;
-      }
     }
   }
 
@@ -154,100 +73,162 @@
     &::after {
       opacity: 0;
     }
+  }
+}
 
-    .search-bar {
-      gap: 1.2em;
-      width: 100%;
-      min-height: 4em;
-      display: grid;
-      grid-template-columns: 2em 1fr 1fr 2em;
-      grid-template-rows: 1fr 1fr;
-      grid-template-areas:
-        "search-icon anywhere anywhere btn-filter"
-        "search-icon anyweek guests btn-filter";
-      place-items: center;
+.search-menu-wrapper {
+  top: $header-height;
+  left: 0;
+  height: $header-height;
+  width: 100vw;
+  background-color: #fff;
+  z-index: 40;
 
-      .btn-search {
-        justify-self: start;
-        padding-block: 0;
-        height: auto;
-        margin-block-start: -2.5em;
-        &:not(.anywhere) {
-          margin-block-start: -0.5em;
-          margin-inline: 0.3em;
-          padding-block-end: 0.2em;
-        }
-      }
-      .anywhere {
-        grid-area: anywhere;
-        font-size: 14px;
-        align-self: end;
-        margin-block-end: -0.7em;
-      }
-      .anyweek {
-        grid-area: anyweek;
-        font-size: 12px;
-        opacity: 0.7;
-        font-weight: 500;
-        position: relative;
-        &::after {
-          content: "";
-          width: 3px;
-          height: 3px;
-          right: -0.5em;
-          top: 0.5em;
-          opacity: 0.6;
-          background-color: black;
-          position: absolute;
-        }
-      }
-      .guests {
-        grid-area: guests;
-        font-size: 12px;
-        transform: translateX(-50%);
-        font-weight: 500;
-      }
-      .icon-container {
-        justify-self: start;
-        grid-area: search-icon;
-        color: $secondaryClr3;
-        background-color: transparent;
-      }
-      .btn-filter {
-        grid-area: btn-filter;
-        border: 1px solid $secondaryClr3;
-        background-color: transparent;
-        width: 40px;
-        height: 40px;
-        border-radius: 2em;
-      }
-    }
-    .modal-wrapper {
-      position: static;
+  &.inactive {
+    .search-overlay {
+      display: none;
     }
   }
 }
 
+.search-overlay {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  top: em(170px);
+  left: 0;
+}
+
+.btn-stays {
+  background-color: transparent;
+}
+.search-bar-active {
+  background-color: $secondaryClr5;
+  border-radius: 32px;
+
+  .btn-search {
+    background-color: transparent;
+    transition: 0.25s;
+    border-radius: 32px;
+    gap: 0.4em;
+
+    input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      pointer-events: all;
+    }
+
+    &.active-btn {
+      background-color: #fff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    &:hover {
+      background-color: $secondaryClr2;
+    }
+  }
+  .icon-container {
+    cursor: pointer;
+    z-index: 40;
+    pointer-events: all;
+    border-radius: em(32px);
+    background-size: 200% 200%;
+    background-position: calc((100 - var(--mouse-x, 0)) * 1%)
+      calc((100 - var(--mouse-y, 0)) * 1%);
+    --mouse-x: 22.6171875;
+    --mouse-y: 52.083333333333336;
+    background-color: #ff385c;
+    background-image: $gradient1;
+    color: $fontClr2;
+    margin: 0;
+    margin-block: -1em;
+    padding-block: 1.2em;
+  }
+}
+.modal-wrapper {
+  position: static;
+}
 .search-bar,
 .search-menu-wrapper {
   transition: 0.65s ease-in;
 }
 
 .search-bar {
-  grid-column: 2;
-  grid-row: 1;
+  @include grid-item(2, 3, 1, 2);
   display: inline-flex;
   background-color: $secondaryClr1;
-  border: 1px solid $secondaryClr2;
   border-radius: 40px;
-  text-align: left;
-  align-items: center;
   color: $fontClr3;
   max-width: 100%;
   vertical-align: middle;
   line-height: em(20px);
   gap: 0.6em;
   white-space: nowrap;
+
+  @include for-mobile-layout {
+    display: grid;
+    gap: 0;
+    column-gap: 0.5em;
+    width: 100%;
+    min-height: 4em;
+    grid-template-columns: 2em 1fr 1fr 2em;
+    grid-template-rows: 2em 2em;
+    grid-template-areas:
+      "search-icon anywhere anywhere btn-filter"
+      "search-icon anyweek guests btn-filter";
+    place-items: center;
+
+    .btn-search {
+      justify-self: start;
+      margin: 0;
+      padding: 0;
+      height: 1.5em;
+      &:not(.anywhere) {
+      }
+    }
+    .anywhere {
+      grid-area: anywhere;
+      font-size: 14px;
+      align-self: start;
+    }
+    .anyweek {
+      grid-area: anyweek;
+      font-size: 12px;
+      opacity: 0.7;
+      font-weight: 500;
+      position: relative;
+      &::after {
+        content: "";
+        width: 3px;
+        height: 3px;
+        right: -50%;
+        top: 50%;
+        opacity: 0.6;
+        background-color: black;
+        position: absolute;
+      }
+    }
+    .guests {
+      grid-area: guests;
+      font-size: 12px;
+      transform: translateX(-50%);
+      font-weight: 500;
+    }
+    .icon-container {
+      justify-self: start;
+      grid-area: search-icon;
+      color: $secondaryClr3;
+      background-color: transparent;
+    }
+    .btn-filter {
+      grid-area: btn-filter;
+      background-color: transparent;
+      width: 40px;
+      height: 40px;
+      border-radius: 2em;
+    }
+  }
 
   @include for-tablet-layout {
     grid-row: 2;
@@ -298,7 +279,6 @@
 
 .mat-btns-container {
   background-color: #bd1e59;
-  position: absolute;
   top: 7em;
   left: 26em;
   min-width: 300px;
@@ -311,19 +291,17 @@
 }
 
 .options-btns-container {
-  grid-column: 3;
-  grid-row: 1;
+  @include grid-item(3, 4, 1, 2);
+
   justify-self: end;
   .btn-options {
     background-color: inherit;
     padding: 0.7em;
-    border: none;
     &:hover {
       background-color: $secondaryClr4;
     }
     &:last-child {
       background-color: $secondaryClr1;
-      border: 1px solid $secondaryClr2;
       border-radius: 40px;
       padding: 5px 5px 5px 12px;
       height: em(42px);
@@ -333,10 +311,8 @@
         border: 1px solid $secondaryClr2;
         border-radius: 2em;
         padding: 2px;
-        text-align: center;
         img {
           max-width: none;
-          width: 100%;
           border-radius: 2em;
         }
       }
@@ -352,7 +328,6 @@
     }
     img {
       border-radius: 1em;
-      border: 1px solid $secondaryClr3;
       transition: 0.25s;
     }
     &:hover {
@@ -362,44 +337,38 @@
     }
   }
 }
-.loc-suggestions-container {
-  .btn-suggestion {
-    background-color: transparent;
-    &:hover {
-      background-color: rgb(247, 247, 247);
-    }
-  }
-  .img-container {
-    border-radius: 1em;
-    background-color: $secondaryClr2;
-    opacity: 0.7;
+.btn-suggestion {
+  background-color: transparent;
+  &:hover {
+    background-color: rgb(247, 247, 247);
   }
 }
-.guests-menu-wrapper {
-  .guests-item-container {
-    @include grid-template(2, 3, 0);
-    &:not(:last-child) {
-      border-bottom: 1px solid $secondaryClr2;
-    }
+.img-container {
+  border-radius: 1em;
+  background-color: $secondaryClr2;
+  opacity: 0.7;
+}
+.guests-item-container {
+  @include grid-template(2, 3, 0);
+  &:not(:last-child) {
+    border-bottom: 1px solid $secondaryClr2;
+  }
 
-    & > span {
-      grid-row: 2;
-      opacity: 0.6;
-    }
-    .plus-minus-btns-container {
-      grid-row: 1/-1;
-      grid-column: 3;
-      .btn {
-        width: em(24px);
-        height: em(24px);
-        border-radius: 50%;
-        border: 1px solid $secondaryClr3;
-        background-color: transparent;
-        padding: 5px;
-        &.disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
+  & > span {
+    grid-row: 2;
+    opacity: 0.6;
+  }
+  .plus-minus-btns-container {
+    @include grid-item(3, 4, 1, -1);
+    .btn {
+      width: em(24px);
+      height: em(24px);
+      border-radius: 50%;
+      background-color: transparent;
+      padding: 5px;
+      &.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
       }
     }
   }
@@ -414,7 +383,6 @@
 }
 
 .inactive {
-  position: relative;
   transform: translateY(-200%);
   scale: 0.6;
   opacity: 0;
