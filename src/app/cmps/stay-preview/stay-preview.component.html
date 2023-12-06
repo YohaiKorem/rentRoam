@@ -1,10 +1,10 @@
 <article
   [class.is-loading]="isLoadingImg"
-  class="stay-preview-container flex column"
+  class="stay-preview-container flex column gap1"
 >
   <stay-preview-loader *ngIf="isLoadingImg"></stay-preview-loader>
   <div
-    class="img-container flex"
+    class="img-container flex pos-relative"
     [class.loading]="isLoadingImg"
     appSwipe
     (swipeLeft)="onSwipe(1)"
@@ -20,14 +20,14 @@
       (load)="onImageLoad()"
       (error)="onImageError()"
     />
-    <div class="img-idx-container flex">
+    <div class="img-idx-container flex pos-absolute">
       <div
         *ngFor="
           let img of stay.imgUrls;
           let i = index;
           trackBy: trackByService.byIdx
         "
-        class="img-idx"
+        class="img-idx bgc1"
         [ngClass]="{
           active: i === currImgUrlIdx,
           'next-prev': i === currImgUrlIdx + 1 || i === currImgUrlIdx - 1
@@ -81,10 +81,12 @@
         </svg>
       </ng-template>
     </span>
-    <span *ngIf="stay.host.isSuperhost" class="superhost">superhost</span>
+    <span *ngIf="stay.host.isSuperhost" class="superhost pos-absolute bgc1 p0-5"
+      >superhost</span
+    >
     <button
       (click)="scrollToLeft($event)"
-      class="btn btn-left btn-dir shadow"
+      class="btn btn-left btn-dir shadow pos-absolute"
       [class.hidden]="isFirstElementInView"
     >
       <svg
@@ -138,7 +140,7 @@
         </g>
       </svg>
     </button>
-    <div class="host-img-container hidden-on-mobile">
+    <div class="host-img-container hidden-on-mobile pos-absolute">
       <img
         imgError
         [src]="stay.host.thumbnailUrl"
@@ -185,6 +187,13 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
+
+
+
+
+
+
+
 
 
 

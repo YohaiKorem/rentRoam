@@ -23,11 +23,7 @@ dynamic-modal.dynamic-modal.modal-content {
   max-width: 800px;
   border-radius: 12px;
   .btn-edit-wishlist {
-    border: none;
     align-self: self-start;
-    padding: 1em;
-    gap: 1.5em;
-    width: 100%;
     justify-content: flex-start;
     .plus-btn-img-container {
       width: em(60px);
@@ -35,8 +31,6 @@ dynamic-modal.dynamic-modal.modal-content {
   }
 
   .filter-modal-container {
-    display: flex;
-    width: 100%;
     @include for-extra-wide-layout {
       max-height: 500px;
     }

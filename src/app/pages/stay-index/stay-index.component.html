@@ -23,14 +23,14 @@
         [stays]="stays$ | async"
         [nights]="5"
         (closeModal)="toggleModal()"
-        class="filter-modal-container"
+        class="filter-modal-container flex full-width"
       ></filter-modal>
     </ng-container>
 
     <ng-container *ngIf="modalTitle === 'wishlist' && loggedInUser">
       <div class="wrapper-inside-modal flex column">
         <button
-          class="btn btn-edit-wishlist flex align-center gap1"
+          class="btn btn-edit-wishlist flex align-center gap1-5 p1 full-width no-border"
           (click)="toggleModal('wishlistEdit', selectedStay)"
         >
           <div class="plus-btn-img-container">

@@ -3,150 +3,141 @@
 @import "../../../assets/styles/setup/mixins";
 
 .stay-preview-container {
-  gap: 1em;
   width: var(--stay-preview-width);
   cursor: pointer;
   &:hover .img-container .btn-dir {
     opacity: 1;
   }
+}
 
-  .img-container {
-    position: relative;
-    width: var(--stay-preview-width);
-    height: var(--stay-preview-height);
+.img-container {
+  width: var(--stay-preview-width);
+  height: var(--stay-preview-height);
 
-    &.loading {
-      opacity: 0;
-      visibility: hidden;
-      height: 0;
-      width: 0;
-      overflow: hidden;
-      position: absolute;
+  &.loading {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .btn-dir {
+    top: 50%;
+    transition: 0.45s ease;
+    opacity: 0;
+    &:hover {
+      scale: 1.08;
     }
+  }
+  .btn-right {
+    right: 0;
+    transform: translate(-50%, -50%);
+  }
+  .btn-left {
+    left: 0;
+    transform: translate(50%, -50%);
+  }
 
-    .btn-dir {
-      position: absolute;
-      top: 50%;
-      transition: 0.45s ease;
-      opacity: 0;
-      &:hover {
-        scale: 1.08;
+  .superhost {
+    left: em(-30px);
+    transform: translate(50%, 50%);
+    color: #333;
+    border-radius: 3px;
+  }
+
+  .img-idx-container {
+    bottom: 1em;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    gap: 0.3em;
+    .img-idx {
+      width: 0.2em;
+      height: 0.2em;
+      border-radius: 3em;
+      opacity: 0.6;
+      &.next-prev {
+        width: 0.3em;
+        height: 0.3em;
       }
-    }
-    .btn-right {
-      right: 0;
-      transform: translate(-50%, -50%);
-    }
-    .btn-left {
-      left: 0;
-      transform: translate(50%, -50%);
-    }
-
-    .superhost {
-      position: absolute;
-      left: em(-30px);
-      transform: translate(50%, 50%);
-      background-color: #fff;
-      color: #333;
-      padding: 0.5em;
-      border-radius: 3px;
-    }
-
-    .img-idx-container {
-      position: absolute;
-      bottom: 1em;
-      left: 50%;
-      transform: translate(-50%, 50%);
-      gap: 0.3em;
-      .img-idx {
-        width: 0.2em;
-        height: 0.2em;
-        background-color: $secondaryClr1;
-        border-radius: 3em;
-        opacity: 0.6;
-        &.next-prev {
-          width: 0.3em;
-
-          height: 0.3em;
-        }
-        &.active {
-          opacity: 1;
-          width: 0.3em;
-          height: 0.3em;
-        }
-      }
-    }
-    img {
-      width: 100%;
-      border-radius: 1em;
-    }
-
-    .heart-icon {
-      position: absolute;
-      right: 0;
-      transform: translate(-50%, 50%);
-      svg {
-        display: block;
-        fill: rgba(0, 0, 0, 0.5);
-        height: 24px;
-        width: 24px;
-        stroke: $secondaryClr1;
-        stroke-width: 2;
-        overflow: visible;
-      }
-    }
-    .host-img-container {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: em(50px);
-      img {
-        border-radius: 2em;
+      &.active {
+        opacity: 1;
+        width: 0.3em;
+        height: 0.3em;
       }
     }
   }
-  .txt-container {
-    display: grid;
-    grid-template-columns: 70% 1fr;
-    grid-template-rows: 25px;
-    align-items: center;
-    gap: 0.5em;
-    color: $fontClr3;
-    .stay {
-      &-rate {
-        justify-self: start;
-        grid-column: 2;
-        color: $fontClr3;
-        width: 100%;
-        gap: 0.3em;
-      }
-      &-name {
-        grid-row: 1;
-        grid-column: 1;
-        color: $fontClr3;
-      }
-      &-km-away {
-        grid-row: 2;
-        color: $secondaryClr3;
-      }
-      &-dates {
-        grid-row: 3;
-        color: $secondaryClr3;
-      }
-      &-price {
-        grid-row: 4;
-      }
+  img {
+    width: 100%;
+    border-radius: 1em;
+  }
+
+  .heart-icon {
+    position: absolute;
+    right: 0;
+    transform: translate(-50%, 50%);
+    svg {
+      display: block;
+      fill: rgba(0, 0, 0, 0.5);
+      height: 24px;
+      width: 24px;
+      stroke: $secondaryClr1;
+      stroke-width: 2;
+      overflow: visible;
     }
-    &.loading {
-      opacity: 0;
-      visibility: hidden;
-      height: 0;
-      width: 0;
-      overflow: hidden;
-      position: absolute;
+  }
+  .host-img-container {
+    left: 0;
+    bottom: 0;
+    width: em(50px);
+    img {
+      border-radius: 2em;
     }
   }
 }
+.txt-container {
+  display: grid;
+  grid-template-columns: 70% 1fr;
+  grid-template-rows: 25px;
+  align-items: center;
+  gap: 0.5em;
+  color: $fontClr3;
+  .stay {
+    &-rate {
+      justify-self: start;
+      grid-column: 2;
+      color: $fontClr3;
+      width: 100%;
+      gap: 0.3em;
+    }
+    &-name {
+      grid-row: 1;
+      grid-column: 1;
+      color: $fontClr3;
+    }
+    &-km-away {
+      grid-row: 2;
+      color: $secondaryClr3;
+    }
+    &-dates {
+      grid-row: 3;
+      color: $secondaryClr3;
+    }
+    &-price {
+      grid-row: 4;
+    }
+  }
+  &.loading {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+}
+
 @include for-mobile-layout {
   :host {
     width: 100%;

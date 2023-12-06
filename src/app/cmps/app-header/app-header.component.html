@@ -18,7 +18,7 @@
       {{ searchParam.location.name ? searchParam.location.name : "Anywhere" }}
     </button>
 
-    <span class="hidden-on-mobile"></span>
+    <span class="hidden-on-mobile bgc2"></span>
     <button class="btn-search anyweek fw500" (click)="openSearch('check-in')">
       {{
         searchParam.startDate && searchParam.endDate
@@ -34,7 +34,7 @@
           : "Any week"
       }}
     </button>
-    <span class="hidden-on-mobile"></span>
+    <span class="hidden-on-mobile bgc2"></span>
     <button
       *ngIf="searchParam && searchParam.guests"
       class="btn-search guests fw400"
@@ -54,14 +54,17 @@
           !searchParam.guests.adults;
         else backBtn
       "
-      class="icon-container flex auto-center fs10"
+      class="icon-container flex auto-center fs10 bgc-transparent"
       (click)="openSearch('loc')"
     >
       <fa-icon class="icon search-icon fs12" [icon]="faSearch"></fa-icon>
     </div>
 
     <ng-template #backBtn>
-      <div class="icon-container flex auto-center" (click)="clearSearch()">
+      <div
+        class="icon-container flex auto-center bgc-transparent"
+        (click)="clearSearch()"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32"
@@ -86,7 +89,7 @@
     </ng-template>
     <button
       (click)="openFilterModal()"
-      class="btn btn-filter shadow flex align-center space-between show-on-mobile border3"
+      class="btn btn-filter shadow flex align-center space-between show-on-mobile border3 bgc-transparent"
     >
       <svg
         viewBox="0 0 16 16"
@@ -116,11 +119,11 @@
         [ngClass]="{
           'active-btn': currSearch === 'loc',
         }"
-        class="btn-search destination fw500 flex column space-between align-start pb1 pi2"
+        class="btn-search bgc-transparent destination fw500 flex column space-between align-start pb1 pi2"
       >
         <span>Where</span>
         <input
-          class="fw200 search-loc-input"
+          class="fw200 search-loc-input bgc-transparent no-border"
           placeholder="Search destinations"
           [(ngModel)]="locSearch"
           (input)="getSuggestions($event)"
@@ -132,7 +135,7 @@
       <button
         appPreventDefault
         appStopPropagation
-        class="btn-search Check-in fw500 flex column space-between align-start pb1 pi2"
+        class="btn-search bgc-transparent Check-in fw500 flex column space-between align-start pb1 pi2"
         [ngClass]="{
           'active-btn': currSearch === 'check-in',
         }"
@@ -152,7 +155,7 @@
       <button
         appPreventDefault
         appStopPropagation
-        class="btn-search Check-out fw500 flex column space-between align-start pb1 pi2"
+        class="btn-search bgc-transparent Check-out fw500 flex column space-between align-start pb1 pi2"
         [ngClass]="{
           'active-btn': currSearch === 'check-out',
         }"
@@ -299,10 +302,10 @@
           let i = index;
           trackBy: trackByService.byIdx
         "
-        class="btn-suggestion flex align-center space-between gap0-5 p1"
+        class="btn-suggestion flex align-center space-between gap0-5 p1 bgc-transparent"
         (click)="locSearch = place.description"
       >
-        <div class="img-container p1">
+        <div class="img-container p1 bgc2">
           <svg
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
@@ -344,7 +347,7 @@
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
-            class="btn btn-subtract border3 adults"
+            class="btn btn-subtract bgc-transparent border3 adults"
             (click)="updateGuests($event, -1)"
             [disabled]="searchParam.guests.adults <= 0"
             [class.disabled]="searchParam.guests.adults <= 0"
@@ -372,7 +375,7 @@
             searchParam.guests.adults
           }}</span>
           <button
-            class="btn btn-add border3 adults"
+            class="btn btn-add bgc-transparent border3 adults"
             (click)="updateGuests($event, 1)"
           >
             <svg
@@ -402,7 +405,7 @@
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
-            class="btn btn-subtract border3 children"
+            class="btn btn-subtract bgc-transparent border3 children"
             (click)="updateGuests($event, -1)"
             [disabled]="searchParam.guests.children <= 0"
             [class.disabled]="searchParam.guests.children <= 0"
@@ -430,7 +433,7 @@
             searchParam.guests.children
           }}</span>
           <button
-            class="btn btn-add border3 children"
+            class="btn btn-add bgc-transparent border3 children"
             (click)="updateGuests($event, 1)"
           >
             <svg
@@ -460,7 +463,7 @@
         <div class="plus-minus-btns-container flex align-center space-between">
           <button
             *ngIf="searchParam && searchParam.guests"
-            class="btn btn-subtract border3 infants"
+            class="btn btn-subtract bgc-transparent border3 infants"
             (click)="updateGuests($event, -1)"
             [disabled]="searchParam.guests.infants <= 0"
             [class.disabled]="searchParam.guests.infants <= 0"
@@ -488,7 +491,7 @@
             searchParam.guests.infants
           }}</span>
           <button
-            class="btn btn-add border3 infants"
+            class="btn btn-add bgc-transparent border3 infants"
             (click)="updateGuests($event, 1)"
           >
             <svg

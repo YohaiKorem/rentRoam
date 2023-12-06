@@ -674,7 +674,7 @@
 .full-width {
   width: 100%;
 }
-
+/* BORDERS */
 .no-border {
   border: none;
 }
@@ -687,4 +687,19 @@
 }
 .border3 {
   border: 1px solid $secondaryClr3;
+}
+
+/* BGC */
+
+.bgc-transparent {
+  background-color: transparent;
+}
+.bgc1 {
+  background-color: $secondaryClr1;
+}
+.bgc2 {
+  background-color: $secondaryClr2;
+}
+.bgc3 {
+  background-color: $secondaryClr3;
 }

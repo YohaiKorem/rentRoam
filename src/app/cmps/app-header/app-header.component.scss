@@ -99,21 +99,16 @@
   left: 0;
 }
 
-.btn-stays {
-  background-color: transparent;
-}
 .search-bar-active {
   background-color: $secondaryClr5;
   border-radius: 32px;
 
   .btn-search {
-    background-color: transparent;
     transition: 0.25s;
     border-radius: 32px;
     gap: 0.4em;
 
     input {
-      background-color: transparent;
       border: none;
       outline: none;
       pointer-events: all;
@@ -184,8 +179,6 @@
       margin: 0;
       padding: 0;
       height: 1.5em;
-      &:not(.anywhere) {
-      }
     }
     .anywhere {
       grid-area: anywhere;
@@ -219,11 +212,9 @@
       justify-self: start;
       grid-area: search-icon;
       color: $secondaryClr3;
-      background-color: transparent;
     }
     .btn-filter {
       grid-area: btn-filter;
-      background-color: transparent;
       width: 40px;
       height: 40px;
       border-radius: 2em;
@@ -240,7 +231,6 @@
   span {
     height: 24px;
     width: 1px;
-    background-color: $secondaryClr2;
   }
 
   .btn-search {
@@ -338,14 +328,12 @@
   }
 }
 .btn-suggestion {
-  background-color: transparent;
   &:hover {
     background-color: rgb(247, 247, 247);
   }
 }
 .img-container {
   border-radius: 1em;
-  background-color: $secondaryClr2;
   opacity: 0.7;
 }
 .guests-item-container {
@@ -364,7 +352,6 @@
       width: em(24px);
       height: em(24px);
       border-radius: 50%;
-      background-color: transparent;
       padding: 5px;
       &.disabled {
         opacity: 0.6;

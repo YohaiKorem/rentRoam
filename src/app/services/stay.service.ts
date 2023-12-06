@@ -152,7 +152,6 @@ export class StayService {
       map((data: any) => data as Stay[]),
       tap((stays: Stay[]) => {
         const allStays = this.concatAndRemoveDuplicateStays(stays);
-        console.log(allStays);
         this._stays$.next(allStays);
         this.setAvgPrice(allStays);
         this.setHigheststPrice(allStays);

@@ -32,13 +32,16 @@
 </div>
 <div
   *ngIf="stays && !stays!.length && !hasNoFilter"
-  class="no-stays-container flex column space-between align-start"
+  class="no-stays-container flex column space-between align-start gap1"
 >
   <h3 class="fw700 fs24">No exact matches</h3>
   <h4>
     Try changing or removing some of your filters or adjusting your search area.
   </h4>
-  <button (click)="onClearFilter()" class="btn btn-remove-filters flex column">
+  <button
+    (click)="onClearFilter()"
+    class="btn btn-remove-filters flex column border3 bgc-transparent"
+  >
     <span>Remove all filters</span>
     <span>+360 stays</span>
   </button>
