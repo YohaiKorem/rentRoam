@@ -72,7 +72,17 @@ export class SignupModalComponent extends Unsub implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.elHeader?.classList.add('hidden-on-mobile');
+    if (this.isLoginPage) {
+      this.sharedService.hideElementOnMobile('google-map-cmp');
+      this.sharedService.hideElementOnMobile('app-header');
+    } else {
+      this.sharedService.toggleClassOnElement(
+        'google-map-cmp',
+        'hidden',
+        'add'
+      );
+      this.sharedService.toggleClassOnElement('app-header', 'hidden', 'add');
+    }
   }
 
   handleSubmit() {
@@ -150,7 +160,17 @@ export class SignupModalComponent extends Unsub implements OnInit {
   }
 
   override ngOnDestroy() {
-    this.elHeader?.classList.remove('hidden-on-mobile');
+    if (this.isLoginPage) {
+      this.sharedService.showElementOnMobile('google-map-cmp');
+      this.sharedService.showElementOnMobile('app-header');
+    } else {
+      this.sharedService.toggleClassOnElement(
+        'google-map-cmp',
+        'hidden',
+        'remove'
+      );
+      this.sharedService.toggleClassOnElement('app-header', 'hidden', 'remove');
+    }
     super.ngOnDestroy();
   }
 }

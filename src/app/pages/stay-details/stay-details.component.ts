@@ -421,6 +421,12 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       'hidden',
       'remove'
     );
+    this.sharedService.toggleClassOnElement(
+      'google-map-cmp',
+      'hidden',
+      'remove'
+    );
+
     this.sharedService.showElementOnMobile('app-header');
     this.sharedService.showElementOnMobile('mobile-footer');
     super.ngOnDestroy();
