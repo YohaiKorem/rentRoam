@@ -78,7 +78,6 @@ export class SignupModalComponent extends Unsub implements OnInit {
         'hidden',
         'add'
       );
-      this.sharedService.toggleClassOnElement('app-header', 'hidden', 'add');
     }
   }
 
@@ -166,7 +165,6 @@ export class SignupModalComponent extends Unsub implements OnInit {
         'hidden',
         'remove'
       );
-      this.sharedService.toggleClassOnElement('app-header', 'hidden', 'remove');
     }
     super.ngOnDestroy();
   }

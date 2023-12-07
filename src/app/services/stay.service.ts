@@ -32,6 +32,7 @@ import { StayHost } from '../models/host.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './user.service';
 import { storageService } from './async-storage.service';
+import { UtilService } from './util.service';
 const BASE_URL = 'stay';
 const ENTITY = 'stays';
 
@@ -83,7 +84,8 @@ export class StayService {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private geocodingService: GeocodingService,
-    private userService: UserService
+    private userService: UserService,
+    private utilService: UtilService
   ) {
     this.loadStays().subscribe((stays: Stay[]) => {
       this._stays$.next(stays);
@@ -94,8 +96,10 @@ export class StayService {
   public loadStays(shouldQueryServer: boolean = false): Observable<Stay[]> {
     return this.loadCachedStays().pipe(
       switchMap((cachedStays) => {
-        if (!shouldQueryServer && cachedStays && cachedStays.length)
+        console.log('shouldQueryServer', shouldQueryServer);
+        if (!shouldQueryServer && cachedStays && cachedStays.length) {
           return of(cachedStays);
+        }
         return combineLatest([
           this.stayFilter$,
           this.searchParams$,
@@ -232,7 +236,11 @@ export class StayService {
       searchParam.startDate = new Date(searchParam.startDate);
     if (searchParam.endDate)
       searchParam.endDate = new Date(searchParam.endDate);
-    if (searchParam.location && searchParam.location.name) {
+    if (
+      searchParam.location &&
+      searchParam.location.name &&
+      searchParam.location.name !== "I'm flexible"
+    ) {
       this.geocodingService
         .getLatLng(searchParam.location.name)
         .pipe(
@@ -272,7 +280,10 @@ export class StayService {
   private concatAndRemoveDuplicateStays(newStays: Stay[]): Stay[] {
     const combinedStays = [...this._cachedStays$.value, ...newStays];
     const uniqueStays = new Map(combinedStays.map((stay) => [stay._id, stay]));
-    return Array.from(uniqueStays.values());
+    const shuffledStays = this.utilService.shuffleArray(
+      Array.from(uniqueStays.values())
+    );
+    return shuffledStays;
   }
 
   public setPagination(pagination: Pagination) {

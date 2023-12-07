@@ -11,21 +11,22 @@
   position: relative;
   width: 100vw;
   @include for-tablet-layout {
-    left: -2px;
+    left: -1px;
     padding-inline: 2px;
   }
 
   @include for-normal-layout {
-    left: em(-100px);
+    left: em(-37px);
     padding-inline: em(100px);
   }
 
   @include for-wide-layout {
-    left: em(-100px);
+    left: em(-37px);
+
     padding-inline: em(100px);
   }
   @include for-extra-wide-layout {
-    left: em(-60px);
+    left: em(-25px);
     padding-inline: em(60px);
   }
   button.btn.btn-right.shadow {

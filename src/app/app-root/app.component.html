@@ -1,7 +1,17 @@
 <app-header> </app-header>
-<radio-filter [class.map-active]="location?.name" class="hidden"></radio-filter>
-<main #mainContent [class.map-active]="location?.name" class="main-content">
-  <google-map-cmp [stays]="stays$ | async" *ngIf="location?.name">
+<radio-filter
+  [class.map-active]="location?.name && location?.name !== 'I\'m flexible'"
+  class="hidden"
+></radio-filter>
+<main
+  #mainContent
+  [class.map-active]="location?.name && location?.name !== 'I\'m flexible'"
+  class="main-content"
+>
+  <google-map-cmp
+    [stays]="stays$ | async"
+    *ngIf="location?.name && location?.name !== 'I\'m flexible'"
+  >
   </google-map-cmp>
 
   <router-outlet></router-outlet>
