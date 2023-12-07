@@ -10,9 +10,11 @@ import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject, takeUntil } from 'rxjs';
 import { SearchParam } from 'src/app/models/stay.model';
+import { AutoCompleteService } from 'src/app/services/auto-complete.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { StayService } from 'src/app/services/stay.service';
 import { TrackByService } from 'src/app/services/track-by.service';
+import { Unsub } from 'src/app/services/unsub.class';
 import { environment } from 'src/environments/environment';
 declare var google: any;
 @Component({
@@ -20,7 +22,7 @@ declare var google: any;
   templateUrl: './mobile-search-menu.component.html',
   styleUrls: ['./mobile-search-menu.component.scss'],
 })
-export class MobileSearchMenuComponent implements OnInit, OnDestroy {
+export class MobileSearchMenuComponent extends Unsub implements OnInit {
   @ViewChild('locMenuTrigger') locMenuTrigger!: MatMenuTrigger;
   @ViewChild('guestsMenuTrigger') guestsMenuTrigger!: MatMenuTrigger;
   // @ViewChild('picker') picker!: MatDateRangePicker<any>;
@@ -28,8 +30,11 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   constructor(
     private sharedService: SharedService,
     private stayService: StayService,
-    public trackByService: TrackByService
-  ) {}
+    public trackByService: TrackByService,
+    private autoCompleteService: AutoCompleteService
+  ) {
+    super();
+  }
   isOpen: boolean = false;
   searchParam = {} as SearchParam;
   guestsNumStrForDisplay = '';
@@ -39,23 +44,27 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   startDate: Date | null = null;
   endDate: Date | null = null;
   suggestions: any[] = [];
-  autocompleteService: any;
-  private destroySubject$ = new Subject<null>();
+  autoComplete: any;
 
   ngOnInit() {
     this.sharedService.openSearchMenuMobile$.subscribe(() => {
       this.toggleMenu();
     });
     this.stayService.searchParams$
-      .pipe(takeUntil(this.destroySubject$))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((searchParam) => {
         this.searchParam = searchParam;
         this.updateGuestsNumForDisplay(this.searchParam);
       });
+    this.autoCompleteService.apiLoaded$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((isLoaded) => {
+        isLoaded
+          ? (this.autoComplete = this.autoCompleteService.autoComplete)
+          : (this.autoComplete = null);
+      });
   }
-  ngAfterViewInit() {
-    this.autocompleteService = new google.maps.places.AutocompleteService();
-  }
+  ngAfterViewInit() {}
 
   updateGuestsNumForDisplay(searchParam: SearchParam) {
     if (!searchParam || !searchParam.guests) return;
@@ -109,11 +118,11 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
   }
 
   getSuggestions(event: any) {
-    if (!event.target.value) {
+    if (!event.target.value || !this.autoComplete) {
       this.suggestions = [];
       return;
     }
-    this.autocompleteService.getQueryPredictions(
+    this.autoCompleteService.autoComplete.getQueryPredictions(
       { input: this.locSearch },
       (predictions: any) => {
         this.suggestions = predictions;
@@ -126,14 +135,14 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
     this.isLocSearchMenuOpen = false;
   }
 
-  autoComplete() {
-    if (!this.locSearch) return;
+  // autoComplete() {
+  //   if (!this.locSearch) return;
 
-    let inputElement = document.querySelector(
-      '.search-loc-input'
-    ) as HTMLInputElement;
-    let autocomplete = new google.maps.places.Autocomplete(inputElement);
-  }
+  //   let inputElement = document.querySelector(
+  //     '.search-loc-input'
+  //   ) as HTMLInputElement;
+  //   let autocomplete = new google.maps.places.Autocomplete(inputElement);
+  // }
 
   setLoc() {
     this.searchParam.location.name = this.locSearch;
@@ -180,9 +189,5 @@ export class MobileSearchMenuComponent implements OnInit, OnDestroy {
     this.isOpen = !this.isOpen;
     if (!this.isOpen) this.toggleSearchClosed.emit();
     console.log(this.isOpen ? 'search open' : 'search closed');
-  }
-  ngOnDestroy(): void {
-    this.destroySubject$.next(null);
-    this.destroySubject$.unsubscribe();
   }
 }

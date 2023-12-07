@@ -1,7 +1,7 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
@@ -74,6 +74,7 @@ import { ChatIndexComponent } from './app/pages/chat-index/chat-index.component'
 import { ShareMenuComponent } from './app/cmps/share-menu/share-menu.component';
 import { UserMsgComponent } from './app/cmps/user-msg/user-msg.component';
 import { environment } from './environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -129,6 +130,7 @@ import { environment } from './environments/environment';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     FormsModule,
     FontAwesomeModule,
     MatSliderModule,

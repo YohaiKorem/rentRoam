@@ -4,7 +4,7 @@
   places
 </p>
 
-<ul class="stay-list clean-list">
+<ul class="stay-list clean-list" (scroll)="emitScroll($event)">
   <a
     class="stay-link"
     *ngFor="let stay of stays; trackBy: trackByService.byId"

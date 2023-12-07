@@ -6,11 +6,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { SearchParam, Stay } from 'src/app/models/stay.model';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { StayService } from 'src/app/services/stay.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { TrackByService } from 'src/app/services/track-by.service';
 import { Unsub } from 'src/app/services/unsub.class';
+import { AutoCompleteService } from 'src/app/services/auto-complete.service';
+
 @Component({
   selector: 'google-map-cmp',
   templateUrl: './google-map.component.html',
@@ -22,10 +24,12 @@ export class GoogleMapCmpComponent extends Unsub implements OnInit {
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   constructor(
     private stayService: StayService,
-    public trackByService: TrackByService
+    public trackByService: TrackByService,
+    private autoCompleteService: AutoCompleteService
   ) {
     super();
   }
+  isApiLoaded$!: Observable<boolean>;
   searchParam = {} as SearchParam;
   center!: google.maps.LatLngLiteral;
 
@@ -38,6 +42,7 @@ export class GoogleMapCmpComponent extends Unsub implements OnInit {
   selectedStay: Stay | null = null;
 
   ngOnInit(): void {
+    this.isApiLoaded$ = this.autoCompleteService.apiLoaded$;
     this.stayService.searchParams$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((searchParam) => {
@@ -48,7 +53,11 @@ export class GoogleMapCmpComponent extends Unsub implements OnInit {
         this.searchParam = searchParam;
         this.center = coords;
       });
-    this.updateStaysCoords();
+    this.isApiLoaded$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((isLoaded) => {
+        if (isLoaded) this.updateStaysCoords();
+      });
   }
 
   ngOnChanges(changes: any): void {

@@ -14,6 +14,7 @@ import {
   take,
   pipe,
   map,
+  tap,
   fromEvent,
   debounceTime,
 } from 'rxjs';
@@ -95,16 +96,21 @@ export class AppComponent extends Unsub {
       'scroll'
     );
     this.scrollSubscription = scrollObservable
-      .pipe(takeUntil(this.unsubscribe$), debounceTime(300))
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        tap((event) => {
+          this.onScroll(event);
+        }),
+        debounceTime(300)
+      )
       .subscribe((event) => {
-        this.onScroll(event);
+        this.loadMoreStays(event);
       });
   }
 
   onScroll(event: any) {
     event.stopPropagation();
 
-    this.loadMoreStays(event);
     this.onScrollWithMap(event);
   }
 
@@ -127,7 +133,7 @@ export class AppComponent extends Unsub {
       '.map-active stay-index'
     ) as HTMLElement;
     if (elStayIndex && scrollPosition <= 200) {
-      elStayIndex!.style.transform = `translateY(${-scrollPosition}px)`;
+      elStayIndex!.style.transform = `translateY(${-scrollPosition * 0.7}px)`;
     }
   }
 }

@@ -114,7 +114,7 @@
     </button>
     <button
       (click)="scrollToRight($event)"
-      class="btn btn-right btn-dir shadow"
+      class="btn btn-right btn-dir shadow pos-absolute"
       [class.hidden]="isLastElementInView"
     >
       <svg
@@ -187,6 +187,7 @@
           currDate.start.toLocaleDateString("en-GB", {
             day: "2-digit",
           })
+
 
 
 
