@@ -520,9 +520,6 @@ export class StayService {
     },
     searchParams: SearchParam
   ) {
-    // console.log('userLoc', userLoc);
-    // console.log('searchParams', searchParams);
-
     if (searchParams && searchParams.location && searchParams.location.coords) {
       return searchParams.location.coords;
     } else if (userLoc && userLoc.lat !== null && userLoc.lng !== null) {
@@ -532,7 +529,7 @@ export class StayService {
   }
 
   private _handleError(err: HttpErrorResponse) {
-    console.log('error in stay service:', err);
+    // console.log('error in stay service:', err);
     return throwError(() => err);
   }
 }

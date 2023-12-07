@@ -76,7 +76,6 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
       )
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(({ orders, stays }) => {
-        console.log(stays);
         this.orders = orders;
         this.stays = stays;
         this.socketService.on(
@@ -88,7 +87,6 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
         );
         this.updateOrderStatsMap();
       });
-    console.log('this.user', this.user);
 
     this.sharedService.hideElementOnMobile('.main-header');
   }
@@ -127,7 +125,6 @@ export class DashboardComponent extends Unsub implements OnInit, OnDestroy {
       .logout()
       .pipe(take(1))
       .subscribe((user) => {
-        console.log('this.user inisde logout', this.user);
         if (this.user && this.user.id) this.authService.signOut();
         this.user = null;
         this.router.navigate(['/stay']);

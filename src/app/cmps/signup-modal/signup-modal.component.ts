@@ -66,9 +66,6 @@ export class SignupModalComponent extends Unsub implements OnInit {
             });
           });
       });
-
-    console.log('loggedInUser', this.loggedInUser);
-    console.log('user', this.user);
   }
 
   ngAfterViewInit() {

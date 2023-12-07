@@ -47,21 +47,11 @@ export class MessageIndexComponent extends Unsub implements OnInit {
         switchMap((user) => {
           this.user = user!;
           return this.orderService.getOrdersForEntityById(user!._id, '');
-          // const userHostOrders$ = this.orderService.getOrdersForEntityById(
-          //   user!._id,
-          //   'host'
-          // );
-          // const userGuestOrders$ = this.orderService.getOrdersForEntityById(
-          //   user!._id,
-          //   'buyer'
-          // );
-          // return combineLatest([userGuestOrders$, userHostOrders$]);
         })
       )
       .subscribe((orders) => {
         this.orders = orders;
         this.setCurrChat(orders[0]?._id);
-        console.log(this.orders);
 
         this.socketService.on(
           this.socketService.SOCKET_EVENT_ORDER_UPDATED,
@@ -82,18 +72,12 @@ export class MessageIndexComponent extends Unsub implements OnInit {
   }
 
   updateOrderInOrders(order: Order) {
-    console.log('order in msgindex', order);
     if (!this.orders) {
       console.error('Orders array is undefined');
       return;
     }
     const idx = this.orders.findIndex((o) => o._id === order._id);
-    console.log('idx', idx);
-
-    console.log('this.orders before splice', this.orders);
     this.orders.splice(idx, 1, order);
-    console.log('this.orders after splice', this.orders);
-
     this.cdr.detectChanges();
   }
 

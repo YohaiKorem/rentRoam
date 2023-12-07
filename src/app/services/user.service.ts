@@ -82,8 +82,6 @@ export class UserService {
         this._loggedInUser$.next(null);
       }),
       map((res) => {
-        console.log('res in userservice logout', res);
-
         return null;
       }),
       catchError(this._handleError)
@@ -156,8 +154,6 @@ export class UserService {
   }
 
   public updateUser(user: User): Observable<User> {
-    console.log('updateuser', user);
-
     return this.httpService.put(`${BASE_URL}/${user._id}`, user).pipe(
       debounceTime(500),
       map((data) => data as User),
@@ -180,7 +176,6 @@ export class UserService {
 
     this.sessionStorageUser = userToSave;
     this._loggedInUser$.next(userToSave);
-    console.log('userToSave', userToSave);
   }
 
   private clearLocalUser() {
@@ -201,7 +196,7 @@ export class UserService {
   }
 
   private _handleError(err: HttpErrorResponse) {
-    console.log('error in user service:', err);
+    // console.log('error in user service:', err);
     return throwError(() => err);
   }
 }

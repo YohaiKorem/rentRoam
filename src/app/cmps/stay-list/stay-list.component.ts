@@ -112,10 +112,6 @@ export class StayListComponent
     this.ro.disconnect();
   }
 
-  emitScroll(event: any) {
-    console.log(event);
-  }
-
   onClearFilter() {
     this.clearFilter.emit();
   }

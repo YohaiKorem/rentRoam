@@ -30,8 +30,5 @@ export class WishlistPreviewComponent implements OnInit {
   getImgsForShortList() {
     const stay = this.stayService.getStayById(this.wishlist.stays[0]._id);
     stay.subscribe((stay) => (this.extraImgs = stay.imgUrls));
-
-    console.log(this.wishlist.stays.length);
-    console.log(this.isShortList);
   }
 }

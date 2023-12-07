@@ -41,8 +41,6 @@ export class MsgPreviewComponent extends Unsub implements OnInit {
     this.formattedDate = this.formatDate(this.msg);
   }
   onImgErr() {
-    console.log('error');
-
     this.isImgLoaded = false;
     this.isImgErr = true;
   }

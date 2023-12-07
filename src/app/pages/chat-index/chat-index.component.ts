@@ -56,8 +56,6 @@ export class ChatIndexComponent extends Unsub implements OnInit {
         })
       )
       .subscribe((sender) => {
-        console.log('sender', sender);
-
         this.messageSender = sender;
         this.senderImg = sender.imgUrl;
       });

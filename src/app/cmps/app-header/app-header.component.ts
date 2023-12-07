@@ -130,10 +130,6 @@ export class AppHeaderComponent extends Unsub implements OnInit {
     );
   }
 
-  callback() {
-    console.log('het there callback');
-  }
-
   toggleSignupModal() {
     this.sharedService.toggleSignUpModal();
   }
@@ -149,8 +145,6 @@ export class AppHeaderComponent extends Unsub implements OnInit {
   openSearch(str: string) {
     if (this.isMobile) this.openSearchMenuMobile();
     this.isSearchOpen = true;
-    console.log(str);
-
     this.setCurrSearch(str);
   }
 
@@ -169,8 +163,6 @@ export class AppHeaderComponent extends Unsub implements OnInit {
       this.picker.close();
       this.guestsMenuTrigger.openMenu();
     } else {
-      console.log(debug, 'inside else');
-
       this.locMenuTrigger.closeMenu();
       this.picker.close();
       this.guestsMenuTrigger.closeMenu();
@@ -178,24 +170,8 @@ export class AppHeaderComponent extends Unsub implements OnInit {
     this.currSearch = str;
   }
 
-  handleClickOutside(ev: any) {
-    // this.inputField.nativeElement.focus();
-  }
-
-  // autoComplete() {
-  //   if (!this.locSearch) return;
-
-  //   let inputElement = document.querySelector(
-  //     '.search-loc-input'
-  //   ) as HTMLInputElement;
-  //   let autocomplete = new google.maps.places.Autocomplete(inputElement);
-  // }
-
   onCloseMenu() {
     this.setCurrSearch('', 'onclosemenu called this');
-  }
-  test(ev: any) {
-    console.log(ev);
   }
 
   updateGuests(ev: any, num: number) {

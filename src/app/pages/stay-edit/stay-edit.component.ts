@@ -58,7 +58,6 @@ export class StayEditComponent extends Unsub implements OnInit {
           return;
         } else if (user && !user.isOwner) {
           this.stayHost = StayHost.newHostFromUser(user);
-          console.log(this.stayHost);
         } else {
           this.stayService
             .findHostById(user._id)
@@ -89,13 +88,7 @@ export class StayEditComponent extends Unsub implements OnInit {
     this.cdr.detectChanges();
   }
 
-  test(str: any) {
-    console.log(this.stay);
-  }
-
   handleHostFormSubmit() {
-    console.log(this.user);
-    console.log(this.stayHost);
     this.stayHost.fullname = this.user.fullname;
     this.stayHost.thumbnailUrl = this.user.imgUrl;
     if (
@@ -159,10 +152,6 @@ export class StayEditComponent extends Unsub implements OnInit {
     }
   }
 
-  updateStayLoc(place: any) {
-    console.log(place);
-  }
-
   detectChanges() {
     this.cdr.detectChanges();
   }
@@ -176,7 +165,6 @@ export class StayEditComponent extends Unsub implements OnInit {
       this.selectedCountry = place.address_components[0].short_name;
       this.stay.loc.countryCode = this.selectedCountry;
       this.stay.loc.country = place.name;
-      console.log(this.selectedCountry);
     } else if (type === 'stay-city') {
       this.selectedCity = place.address_components[0].long_name;
       this.stay.loc.city = place.address_components[0].long_name;
@@ -208,7 +196,6 @@ export class StayEditComponent extends Unsub implements OnInit {
     this.stay[entity].includes(str)
       ? this.stay[entity].filter((e: string) => e === str)
       : this.stay[entity].push(str);
-    console.log(this.stay);
   }
   override ngOnDestroy() {
     const stay = { ...this.stay };

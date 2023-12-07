@@ -40,10 +40,6 @@ export class HttpService {
     } else {
       body = data;
     }
-    console.log(body);
-
-    console.log(method, `${this.BASE_URL}${endpoint}`);
-
     return this.http
       .request(method, `${this.BASE_URL}${endpoint}`, {
         body,

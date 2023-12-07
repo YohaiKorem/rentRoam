@@ -128,8 +128,6 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       .subscribe(() => {
         this.toggleModal('close');
       });
-    // this.user$.pipe(take(1)).subscribe((user) => console.log('User:', user));
-    // this.stay$.pipe(take(1)).subscribe((stay) => console.log('Stay:', stay));
   }
 
   ngAfterViewInit() {
@@ -159,10 +157,6 @@ export class StayDetailsComponent extends Unsub implements OnInit {
 
   setSearchParams() {
     this.stayService.setSearchParams(this.searchParam);
-  }
-
-  debug() {
-    console.log(this.user);
   }
 
   onDateChange(): void {
@@ -285,8 +279,6 @@ export class StayDetailsComponent extends Unsub implements OnInit {
       };
       this.searchParam.startDate = startDate;
       this.searchParam.endDate = endDate;
-      console.log(this.searchParam);
-      // this._searchParamSubject$.next(this.searchParam);
     }
   }
 
@@ -330,8 +322,6 @@ export class StayDetailsComponent extends Unsub implements OnInit {
   }
 
   handleGuestMenuTrigger(action: string) {
-    console.log(action);
-
     action === 'open'
       ? this.sharedService.toggleClassOnElement(
           '.cdk-overlay-backdrop',

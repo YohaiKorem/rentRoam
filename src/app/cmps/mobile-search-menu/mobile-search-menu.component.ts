@@ -92,18 +92,13 @@ export class MobileSearchMenuComponent extends Unsub implements OnInit {
 
   setCurrSearch(str: string) {
     if (str === 'loc') {
-      console.log(str);
     } else if (str === 'dates') {
-      // this.picker.open();
-      console.log(str);
     } else if (str === 'guests') {
-      console.log(str);
     }
     this.currSearch = str;
   }
 
   setDateRange(dateRange: any) {
-    console.log(dateRange);
     this.searchParam.startDate = dateRange.start;
     this.searchParam.endDate = dateRange.end;
   }
@@ -188,6 +183,5 @@ export class MobileSearchMenuComponent extends Unsub implements OnInit {
   toggleMenu() {
     this.isOpen = !this.isOpen;
     if (!this.isOpen) this.toggleSearchClosed.emit();
-    console.log(this.isOpen ? 'search open' : 'search closed');
   }
 }

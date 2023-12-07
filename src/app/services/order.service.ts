@@ -82,7 +82,7 @@ export class OrderService {
   }
 
   private _handleError(err: HttpErrorResponse) {
-    console.log('error in order service:', err);
+    // console.log('error in order service:', err);
     return throwError(() => err);
   }
 }
