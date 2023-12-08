@@ -4,7 +4,7 @@
 .trip-index-wrapper {
   border-radius: 1em;
   overflow: auto !important;
-  height: calc(100vh - 84px);
+  height: calc(100dvh - 84px);
   position: relative;
   background-color: $secondaryClr2;
   header {

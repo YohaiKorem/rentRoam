@@ -23,7 +23,7 @@ body {
     Helvetica neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   @include for-mobile-layout {
     overflow-x: hidden;

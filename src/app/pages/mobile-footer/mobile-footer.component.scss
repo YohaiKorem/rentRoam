@@ -3,7 +3,7 @@
 @import "../../../assets/styles/setup/mixins";
 .mobile-footer-wrapper {
   position: fixed;
-  top: calc(100vh - 84px);
+  top: calc(100dvh - 84px);
   line-height: 15px;
   background-color: #fff;
   height: $header-height;
