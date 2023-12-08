@@ -6,7 +6,7 @@
   width: 100%;
   margin-block-start: 2em;
   @include for-mobile-layout {
-    padding-block-end: rem(74px);
+    padding-block-end: 1rem;
   }
   .modal-content-wrapper {
     margin-block-end: 1em;
