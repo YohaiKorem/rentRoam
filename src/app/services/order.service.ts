@@ -12,6 +12,7 @@ import {
 import { HttpService } from './http.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SocketService } from './socket.service';
+import { Msg } from '../models/msg.model';
 const BASE_URL = 'order';
 
 @Injectable({
@@ -52,6 +53,20 @@ export class OrderService {
 
   public saveOrder(order: Order): Observable<Order> {
     return order._id ? this._updateOrder(order) : this._addOrder(order);
+  }
+
+  public addMsg(orderId: string, msg: Msg): Observable<Order> {
+    return this.httpService.post(`${BASE_URL}/${orderId}/msg`, msg).pipe(
+      debounceTime(500),
+      map((data: any) => data as Order),
+      tap((order: Order) =>
+        this.socketService.emit(
+          this.socketService.SOCKET_EVENT_ORDER_UPDATED,
+          order
+        )
+      ),
+      catchError(this._handleError)
+    );
   }
 
   private _updateOrder(order: Order): Observable<Order> {

@@ -24,10 +24,9 @@ export class MsgService {
   }
 
   private _addMsg(msg: Msg, order: Order) {
-    const updatedOrder = { ...order };
     const msgToAdd = { ...msg };
-    msgToAdd.id = this.utilsService.getRandomId();
-    updatedOrder.msgs = updatedOrder.msgs.concat(msgToAdd);
-    return this.orderService.saveOrder(updatedOrder);
+    // msgToAdd.id = this.utilsService.getRandomId();
+    // updatedOrder.msgs = updatedOrder.msgs.concat(msgToAdd);
+    return this.orderService.addMsg(order._id, msgToAdd);
   }
 }
