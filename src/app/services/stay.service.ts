@@ -96,7 +96,6 @@ export class StayService {
   public loadStays(shouldQueryServer: boolean = false): Observable<Stay[]> {
     return this.loadCachedStays().pipe(
       switchMap((cachedStays) => {
-        console.log('shouldQueryServer', shouldQueryServer);
         if (!shouldQueryServer && cachedStays && cachedStays.length) {
           return of(cachedStays);
         }
@@ -301,13 +300,11 @@ export class StayService {
       .pipe(take(1))
       .subscribe(([userLoc, searchParams, stays]) => {
         if (!stays || !stays.length) {
-          console.log('Stays not available');
           return;
         }
 
         const targetCoords = this._getTargetCoords(userLoc, searchParams);
         if (!targetCoords) {
-          console.log('No location or userLoc available');
           return;
         }
 
