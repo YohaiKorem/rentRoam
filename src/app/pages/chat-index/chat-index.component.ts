@@ -47,6 +47,7 @@ export class ChatIndexComponent extends Unsub implements OnInit {
           this.order$ = of(order);
           this.user = user;
           this.user$ = of(user);
+          console.log('user in chat preview', user);
 
           if (this.order.buyer._id === this.user._id) {
             return this.userService.getUserById(this.order.hostId);

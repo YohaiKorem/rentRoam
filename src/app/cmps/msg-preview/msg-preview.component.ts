@@ -37,7 +37,11 @@ export class MsgPreviewComponent extends Unsub implements OnInit {
       : this.userService
           .getUserById(this.msg.fromId)
           .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
-          .subscribe((user) => (this.msgSender = user));
+          .subscribe((user) => {
+            console.log('user in msg preview', user);
+
+            this.msgSender = user;
+          });
     this.formattedDate = this.formatDate(this.msg);
   }
   onImgErr() {

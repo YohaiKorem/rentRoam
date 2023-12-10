@@ -28,11 +28,15 @@ export class ChatPreviewComponent extends Unsub implements OnInit {
   isImgErr: boolean = false;
 
   ngOnInit(): void {
+    console.log('order in chat preview', this.order);
+
     if (this.order.buyer._id === this.user._id) {
       this.userService
         .getUserById(this.order.hostId)
         .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
         .subscribe((user) => {
+          console.log('user in chat preview', user);
+
           this.messageSender = user!;
           this.senderImg = user.imgUrl;
         });
