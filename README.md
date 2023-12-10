@@ -1,29 +1,62 @@
-# Airbnb clone with angular
+# rentRoam
 
-in development
+## Introduction
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
+**rentRoam** is an Airbnb clone, crafted with Angular and RxJS to deliver a high-performance and responsive user interface. This project offers a streamlined experience for property rentals, incorporating advanced features and custom directives for an intuitive user experience.
 
-## Development server
+## Key Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular and RxJS:** Utilizes Angular for a dynamic and responsive UI, enhanced with RxJS for efficient state management.
+- **Custom Directives:** Includes unique Angular directives such as `GooglePlacesAutocompleteDirective`, `ImgErrorDirective`, and `SwipeDirectiveDirective` for enriched UI components.
+- **Unsub Class:** Implements the `Unsub` class, an abstract class leveraging RxJS to handle efficient unsubscription and prevent memory leaks.
 
-## Code scaffolding
+## Custom Directives
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **GooglePlacesAutocompleteDirective:** Integrates Google Places Autocomplete for location inputs.
+- **ImgErrorDirective:** Provides a fallback image source in case of loading errors.
+- **SwipeDirectiveDirective:** Adds swipe functionalities for touch-enabled devices.
+- **PreventDefaultDirective:** Prevents default action on click events.
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Ensure you have the latest version of Node.js and Angular CLI installed.
 
-## Running unit tests
+Clone the repository:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+git clone https://github.com/YohaiKorem/rentRoam.git
+```
 
-## Running end-to-end tests
+Navigate to the project directory:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+cd rentRoam
+```
 
-## Further help
+Install dependencies:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm install
+```
+
+## Usage
+
+Start the project locally with Hot Module Replacement (HMR) for a better development experience:
+
+```bash
+npm start
+```
+
+## Contributing
+
+We welcome contributions! If you'd like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Create a new Pull Request.
+
+---
+
+For more details and updates, visit the [rentRoam GitHub repository](https://github.com/YohaiKorem/rentRoam).
