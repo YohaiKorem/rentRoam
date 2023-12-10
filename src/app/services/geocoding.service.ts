@@ -9,7 +9,7 @@ export class GeocodingService {
   constructor(private http: HttpClient) {}
 
   public getLatLng(place: string): Observable<any> {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${environment.geocodeAPI}-7eLf1Y`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${environment.googleMapsAPI}`;
     return this.http.get(url).pipe(
       map((response: any) => {
         if (response.status === 'OK') {
