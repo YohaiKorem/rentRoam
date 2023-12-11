@@ -1,7 +1,7 @@
 <div class="chat-preview-wrapper flex align-center gap1 pi0-5 pb1">
   <div class="img-container">
     <img
-      *ngIf="!isImgErr"
+      *ngIf="senderImg && !isImgErr"
       class="sender-img full-width"
       [class]="isImgLoaded ? '' : 'loading'"
       [src]="senderImg"
@@ -38,7 +38,12 @@
       </span>
       {{ order.msgs[order.msgs.length - 1].txt | slice : 0 : 25 }}
       <span
-        *ngIf="order.msgs[order.msgs.length - 1].txt.length >= 25"
+        *ngIf="
+          order &&
+          order.msgs &&
+          order.msgs[order.msgs.length - 1].txt &&
+          order.msgs[order.msgs.length - 1].txt.length >= 25
+        "
         class="three-dots"
         >...</span
       >

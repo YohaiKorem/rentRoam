@@ -88,14 +88,22 @@ export class UserService {
     );
   }
 
+  // public getUserById(userId: string): Observable<User> {
+  //   const user: User | null = this.getLoggedInUser();
+  //   if (user && user._id === userId) return of(user);
+  //   this.userRequestSubject.next(userId);
+  //   return this.userResponse$.pipe(
+  //     map((data: any) => data as User),
+  //     catchError(this._handleError)
+  //   );
+  // }
   public getUserById(userId: string): Observable<User> {
     const user: User | null = this.getLoggedInUser();
     if (user && user._id === userId) return of(user);
     this.userRequestSubject.next(userId);
-    return this.userResponse$.pipe(
-      map((data: any) => data as User),
-      catchError(this._handleError)
-    );
+    return this.httpService
+      .get(`${BASE_URL}/${userId}`)
+      .pipe(map((data: any) => data as User));
   }
 
   public getUserLoc() {

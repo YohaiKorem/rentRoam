@@ -36,7 +36,7 @@ export class MsgPreviewComponent extends Unsub implements OnInit {
       ? (this.msgSender = this.user)
       : this.userService
           .getUserById(this.msg.fromId)
-          .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe((user) => {
             console.log('user in msg preview', user);
 
