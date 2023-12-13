@@ -44,7 +44,7 @@ npm install
 Start the project locally with Hot Module Replacement (HMR) for a better development experience:
 
 ```bash
-npm start
+ng s
 ```
 
 ## Contributing
