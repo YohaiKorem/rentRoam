@@ -20,10 +20,7 @@ export class GooglePlacesAutocompleteDirective {
   @Input() cityRestriction: string = '';
   private autocomplete: any;
 
-  constructor(
-    private elRef: ElementRef,
-    private sharedService: SharedService
-  ) {}
+  constructor(private elRef: ElementRef) {}
 
   ngAfterViewInit() {
     const options: any = {
@@ -52,15 +49,14 @@ export class GooglePlacesAutocompleteDirective {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['countryRestriction'] && this.autocomplete) {
+    if (changes['countryRestriction'] && this.autocomplete)
       this.autocomplete.setComponentRestrictions({
         country: this.countryRestriction,
       });
-    }
-    if (changes['cityRestriction' && this.autocomplete]) {
+
+    if (changes['cityRestriction' && this.autocomplete])
       this.autocomplete.setComponentRestrictions({
         country: this.countryRestriction,
       });
-    }
   }
 }

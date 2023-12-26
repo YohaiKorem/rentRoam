@@ -1,0 +1,70 @@
+<section class="login-signup">
+  <ng-container *ngIf="!loggedInUser && isLoginClicked">
+    <article class="login-form flex column">
+      <h2>Log in to Mister-bitcoin</h2>
+      <form (ngSubmit)="handleLogIn()" class="flex column align-center">
+        <input
+          type="text"
+          [(ngModel)]="credentials.name"
+          name="name"
+          placeholder="Enter name"
+        />
+        <input
+          type="password"
+          [(ngModel)]="credentials.password"
+          name="password"
+          placeholder="Enter password"
+        />
+        <button class="btn btn-purple" type="submit">Log in</button>
+      </form>
+      <div class="flex column align-center status">
+        <p class="seperator">OR</p>
+        <p class="toggle-status btn btn-purple" (click)="handleToggleForm()">
+          Sign up for an account
+        </p>
+      </div>
+    </article>
+  </ng-container>
+  <ng-container *ngIf="!loggedInUser && isSignupClicked">
+    <article class="login-form flex column">
+      <h2>Signup to Mister-bitcoin</h2>
+      <form (ngSubmit)="handleSignup()" class="flex column align-center">
+        <input
+          type="text"
+          [(ngModel)]="signupInfo.name"
+          name="name"
+          placeholder="Full name"
+        />
+        <input
+          type="text"
+          [(ngModel)]="signupInfo.username"
+          name="username"
+          placeholder="Username"
+        />
+        <input
+          type="password"
+          [(ngModel)]="signupInfo.password"
+          name="password"
+          placeholder="Password"
+        />
+        <button class="btn btn-purple btn-login" type="submit">Signup</button>
+      </form>
+      <div class="flex column status">
+        <p class="seperator">Already have an account?</p>
+        <p class="toggle-status btn btn-purple" (click)="handleToggleForm()">
+          Log in
+        </p>
+      </div>
+    </article>
+  </ng-container>
+  <ng-container *ngIf="loggedInUser">
+    <article class="login-form logout flex column">
+      <h2>You are connected as:</h2>
+      <div class="flex gap align-center">
+        <div class="member-img"></div>
+        <p class="fs16">{{ loggedInUser.fullname }}</p>
+      </div>
+      <button class="btn btn-red" (click)="handleLogout()">Logout</button>
+    </article>
+  </ng-container>
+</section>

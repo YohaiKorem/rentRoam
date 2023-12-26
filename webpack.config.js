@@ -1,5 +1,5 @@
 const purgecss = require("@fullhuman/postcss-purgecss");
-
+const s = require('../airbnb-backend/public')
 module.exports = {
   module: {
     rules: [

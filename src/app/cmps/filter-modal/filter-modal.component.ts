@@ -161,7 +161,6 @@ export class FilterModalComponent extends Unsub implements OnInit {
     const range = this.maxSlider - this.minSlider;
 
     const itemPercentage = (30 / this.histogramData!.length) * 100;
-    this.setFilter(false);
     return (itemPercentage * range) / 100;
   }
 
